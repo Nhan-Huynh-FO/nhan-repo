@@ -1,0 +1,56 @@
+<?php
+//1 - mobile , 0 - web, tablet
+$device = DEVICE_ENV & 1;
+?>
+<div id="col_660" class="left">
+    <?php echo $this->render('lich-thi-dau/chitiet_'.$device.'.phtml'); ?>
+</div>
+<div id="col_300" class="right">
+    <?php
+    if(DEVICE_ENV == 4)
+    {
+    ?>
+    <div id="box_calenda" class="width_common box_category">
+        <div class="title_box_category width_common">
+            <div class="txt_main_category"><a title="Tra cứu theo ngày" href="javascript:;">Tra cứu theo ngày</a></div>
+        </div>
+        <div class="content_box_category width_common">
+            <div id="datepicker"></div>
+        </div>
+    </div>
+    <?php
+    }
+    echo $this->GetBlock('left'); ?>
+</div>
+<script type="text/javascript" src="<?php echo $this->configView['js'] . '/jquery-ui-1.8.18.custom.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->configView['js'] . '/fixture.js'; ?>"></script>
+<script lang="javascript" type="text/javascript">
+    fixture.init({
+        date: '<?php echo date('Y-m-d', isset($this->currUnixTime) ? $this->currUnixTime : time()); ?>',
+        leagueid: <?php echo isset($this->leagueId) ? $this->leagueId : 0; ?>,
+        url: '<?php echo $this->configView['url']; ?>',
+        group: '<?php echo $this->group; ?>',
+        gmt: <?php echo isset($this->gmt) ? $this->gmt : 0; ?>,
+        id: 'col_660',
+        selectGmtEleID: 'select-gmt',
+        displayGmtEleID: 'display-gmt',
+        loadGMTType: <?php echo isset($this->loadGmtType) ? $this->loadGmtType : 0; ?>
+    });
+    if(device_env == 4)
+    {
+        $( "#datepicker" ).datepicker({
+            dayNames        : ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'],
+            dayNamesMin     : ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+            dayNamesShort   : ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+            monthNames      : ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            monthNamesShort : ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            dateFormat      : 'yy-mm-dd',
+            defaultDate     : '<?php echo date('Y-m-d', isset($this->currUnixTime) ? $this->currUnixTime : time()); ?>',
+            changeMonth     : true,
+            changeYear      : true,
+            onSelect        : function(dateText) {
+                fixture.changeDate(dateText);
+            }
+        });
+    }
+</script>

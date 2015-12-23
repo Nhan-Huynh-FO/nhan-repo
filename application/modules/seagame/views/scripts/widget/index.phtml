@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="image/x-icon" href="<?php echo $this->configView['images']; ?>/favicon.ico" rel="shortcut icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Vnexpress.net" />
+        <meta name="robots" content="noindex,nofollow" />
+        <!-- iPad icons -->
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/72x72.png" sizes="72x72">
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/114x114.png" sizes="144x144">
+        <!-- iPhone and iPod touch icons -->
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/57x57.png" sizes="57x57">
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/114x114.png" sizes="114x114">
+        <!-- Nokia Symbian -->
+        <link rel="nokia-touch-icon" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/57x57.png">
+        <!-- Android icon precomposed so it takes precedence -->
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/114x114.png" sizes="1x1">
+        <!-- CSS -->
+        <link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/widget_seagame.css" media="all" />
+        <script src="<?php echo $this->configView['vnecdn']['libs']; ?>/jquery-1.7.1.min.js"></script>
+    </head>
+    <body>
+        <?php echo $this->render('/widget/box/style_' . $this->type . '.phtml');?>
+    </body>
+</html>

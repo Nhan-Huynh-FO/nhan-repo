@@ -1,0 +1,312 @@
+<?php
+$arrData = $this->arrArticleDetail;
+$liveBlog = ((($arrData['privacy'] & 8) == 8) ? 'true' : 'false');
+?>
+<div id="detail_page_live" class="width_common line_col">
+    <div id="col_660" class="left width_common">
+        <div class="box_width_common" id="box_details_news" data-sort-newest="<?php echo (($arrData['privacy'] & 16384) ? 'true' : 'false'); ?>" data-matchsport="true" data-liveblog-active="<?php echo $liveBlog; ?>" data-link-video="<?php echo empty($this->strLinkVideo) ? 'false':'true'; ?>">
+            <div class="w670 left width_common">
+                <div class="main_content_detail width_common">
+                    <?php
+                    if (DEVICE_ENV != 1)
+                    {
+                    ?>
+                    <div class="block_timer_share">
+                        <div class="block_timer left txt_666">
+                            <?php
+                            echo $this->DateTimeFormat($arrData['publish_time'], 'long');
+                            ?>
+                        </div>
+                        <div class="block_share right">
+                            <?php echo $this->render('detail/box/box_share_photo.phtml'); ?>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    else {
+                    ?>
+                    <div class="div-fbook width_common title_div_fbook">
+                        <div class="block_timer left txt_666">
+                            <?php
+                            echo $this->DateTimeFormat($arrData['publish_time'], 'long');
+                            ?>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    ?>
+                    <div class="title_news">
+                        <h1><?php echo $arrData['title_format']; ?></h1>
+                    </div>
+                    <div class="short_intro txt_666"><?php echo $arrData['lead']; ?></div>
+                    <?php
+                    if (!empty($arrData['reference_detail']))
+                    {
+                        $arrRef = array();
+                        foreach ($arrData['reference_detail'] as $reference)
+                        {
+                            $reference['share_url'] = $this->ShareurlSeagame($reference['share_url']);
+                            $arrRef[] = '<a alt="' . $reference['title_format'] . '" title="' . $reference['title_format'] . '" href="' . $reference['share_url'] . '">' . $reference['title'] . '</a>';
+                        }
+                        ?>
+                        <div class="relative_new">
+                            <ul class="list_news_dot_3x3_300">
+                                <li>
+                                    <?php
+                                    echo DEVICE_ENV==1?implode('&nbsp;&nbsp;/&nbsp;&nbsp;', $arrRef):implode('&nbsp;/&nbsp;', $arrRef);
+                                    ?>
+                                </li>
+                            </ul>
+                        </div>
+                        <?php
+                    }
+                    if (isset($this->articleExtra['key_infor']) && !empty($this->articleExtra['key_infor']))
+                    {
+                        ?>
+                        <div class="fck_detail news_lead">
+                            <?php echo $this->articleExtra['key_infor']; ?>
+                            <script type="text/javascript">
+                                if (typeof(common.resizeImageDetail) != 'undefined') {
+                                    common.resizeImageDetail();
+                                    $(window).resize(function() {
+                                        common.delayFireOnce(1000).done(function() {
+                                            common.resizeImageDetail();
+                                        });
+                                    });
+                                }
+                            </script>
+                        </div>
+                        <?php
+                    }
+                    if ($this->isReview)
+                    {
+                        ?>
+                        <div class="vongloai_vongbang tab_content">
+                            <ul class="tabs">
+                                <li><a class="tab active" title="Diễn biến">Diễn biến</a></li>
+                                <li><a class="tab" title="Tổng thuật" href="<?php echo $this->strLinkTongThuat; ?>">Lịch thi đấu & kết quả</a></li>
+                            </ul>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                    <div class="block_filter_live">
+                        <div class="filter_left">
+                            <span class="active highlight_filter" style="display: none"><input type="checkbox" id="checkNew" class="checking_filter"> <label for="checkNew">Nổi bật</label></span>
+                            <?php if (DEVICE_ENV != 1 && !empty($this->articleExtra['location_live'])) { ?>
+                            <a><?php echo 'Giờ '. ($this->articleExtra['location_live']) . ' (GMT'. $this->articleExtra['timezone']. ')'; ?></a>
+                            <?php } ?>
+                        </div>
+                        <div class="filter_right">
+                            <a href="javascript:;" class="sort-live latest">Mới nhất</a>
+                            <a href="javascript:;" class="sort-live oldest">Cũ nhất</a>
+                        </div>
+                    </div>
+                    <?php
+                    if (DEVICE_ENV == 1 && !empty($this->articleExtra['location_live'])){?>
+                        <div class="block_filter_live">
+                        <div class="filter_left">
+                            <a><?php echo 'Giờ '. ($this->articleExtra['location_live']) . ' (GMT'. $this->articleExtra['timezone']. ')'; ?></a>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <div class="live_post_status" id="live_post_status" style="display: none">
+                        <a href="javascript:;" class="short_live">Có <span id="live-updates-counter"></span> tin mới được cập nhật</a>
+                    </div>
+                    <div id="container_tab_live" class="width_common" data-update-uri="<?php echo $this->configView['url_vne'] . '/detail/block?id=', $arrData['article_id']; ?>" data-article-id="<?php echo $arrData['article_id']; ?>">
+                        <ul id="list_live" <?php echo (($arrData['privacy'] & 16384) ? '' : 'class="reversed"'); ?>>
+                            <?php
+                            echo (($arrData['privacy'] & 16384) ? '<li id="live-updates-wrapper" class="no_space"></li>' : '');
+                            if (!empty($this->arrBlockDataId))
+                            {
+                                foreach ($this->arrBlockDataId as $blockId)
+                                {
+                                    $blockDetail = $this->objLive->getBlockDetail($blockId);
+
+                                    if(empty($blockDetail))
+                                    {
+                                        continue;
+                                    }
+                                    $share_url = $this->configView['url_vne'] . '/detail/share-block?id='.$arrData['article_id'].'&blockid='.$blockId;
+                                    //class High light
+                                    $classHighLight = $blockDetail['highlight'] ? ' high-light' : '';
+                                    $count = count($blockDetail['article_reference_id']);
+                                    ?>
+                                    <li id="block-<?php echo $blockDetail['published_time']; ?>" data-datetime="<?php echo date('Y-m-d',$blockDetail['published_time']); ?>" data-block-id="<?php echo $blockId; ?>" class="block<?php echo $classHighLight; ?>">
+                                        <div class="minutes">
+                                            <?php
+                                            $time = trim($blockDetail['display_time']);
+                                            if ((!empty($time)) && (strpos($time, '#') === false))
+                                            {
+                                                ?>
+                                                <span class="text_minutes <?php echo ($blockDetail['highlight'] ? 'special_time' : ''); ?>" datetime="<?php echo $blockDetail['published_time']; ?>">
+                                                    <strong><?php echo $time; ?></strong>
+                                                </span>
+                                            <?php
+                                            }?>
+                                            <img src="<?php echo $this->configView['images'],'/graphics/img_blank.gif'; ?>" alt="icon" class="icon_live <?php echo empty($blockDetail['icon']) ? 'icon_dot_live' : $blockDetail['icon']; ?>">
+                                        </div>
+                                        <div class="text_live">
+                                            <?php
+                                            echo $blockDetail['block_content'];
+                                            if (!empty($blockDetail['article_reference_id']))
+                                            {
+                                                $this->objArticle->setIdBasic($blockDetail['article_reference_id']);
+
+                                                if ($count == 1)
+                                                {
+                                                    $article = $this->objArticle->getArticleBasic($blockDetail['article_reference_id'][0]);
+                                                    ?>
+                                                    <div class="block_image_news width_common">
+                                                        <?php
+                                                        if(!empty($article['thumbnail_url'])) {
+                                                            ?>
+                                                            <div class="thumb">
+                                                                <a href="<?php echo $article['share_url']; ?>">
+                                                                    <img src="<?php echo $this->ImageurlArticle($article, 'size6', -1); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                                                </a>
+                                                                <?php echo $this->ArticleTypeIcon($article); ?>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                        <div class="title_news">
+                                                            <a href="<?php echo $article['share_url']; ?>" class="txt_link">
+                                                                <?php echo $article['title'] ?>
+                                                                <span class="no_wrap">
+                                                                    <?php echo $this->ArticleViewIcon($article); ?>
+                                                                </span>
+                                                            </a>
+
+                                                        </div>
+                                                        <div class="news_lead" data-mobile-href="<?php echo $article['share_url']; ?>">
+                                                            <?php echo $article['lead']; ?>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                }
+                                                else {
+                                                    ?>
+                                                    <div class="list_dot_3x3">
+                                                        <?php
+                                                        foreach($blockDetail['article_reference_id'] as $id)
+                                                        {
+                                                            $article = $this->objArticle->getArticleBasic($id);
+                                                            if(empty($article))
+                                                            {
+                                                                continue;
+                                                            }
+                                                            ?>
+                                                            <div class="dot_item">
+                                                                <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                                    <?php echo $article['title']; ?>
+                                                                </a>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <?php
+                                                }
+                                            }
+                                            if (DEVICE_ENV == 4)
+                                            {
+                                                ?>
+                                                <div class="social_share right">
+                                                    <div class="content_inner">
+                                                        <div class="item_social hidden_320">
+                                                            <a title="Chia sẻ bài viết lên facebook" class="left" target="_blank" href="http://www.facebook.com/sharer.php?u=<?php echo urlencode($share_url); ?>">
+                                                                <img alt="Chia sẻ bài viết lên facebook" src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/icon_fb.gif">
+                                                            </a>
+                                                        </div>
+                                                        <div class="item_social hidden_320">
+                                                            <a title="Chia sẻ bài viết lên twitter" class="left" target="_blank" href="http://twitter.com/share?url=<?php echo urlencode($share_url); ?>&text=<?php echo $arrData['title_format']; ?>">
+                                                                <img alt="Chia sẻ bài viết lên twitter" src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/icon_tw.gif">
+                                                            </a>
+                                                        </div>
+                                                        <div class="item_social hidden_320">
+                                                            <a title="Chia sẻ bài viết lên google+" class="left" target="_blank" href="https://plus.google.com/share?url=<?php echo urlencode($share_url); ?>">
+                                                                <img alt="Chia sẻ bài viết lên google+" src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/icon_google.gif">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </li>
+                                    <?php
+                                }
+                            }
+                            echo (($arrData['privacy'] & 16384) ? '' : '<li id="live-updates-wrapper" class="no_space"></li>');
+                            ?>
+                        </ul>
+                        <?php
+                        if (!empty($arrData['content']))
+                        {
+                            ?>
+                            <div class="width_common info_befo">
+                                <div class="minutes"><img src="<?php echo $this->configView['images']; ?>/icons/before_match.png" alt="Thông tin trước trận" title="Thông tin trước trận"/></div>
+                                <div class="text_live">
+                                    <div class="width_common fck_detail">
+                                        <?php echo $arrData['content'];?>
+                                    </div>
+                                    <script type="text/javascript">
+                                        if (typeof(common.resizeImageDetail) != 'undefined') {
+                                            common.resizeImageDetail();
+                                            $(window).resize(function() {
+                                                common.delayFireOnce(1000).done(function() {
+                                                    common.resizeImageDetail();
+                                                });
+                                            });
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <script language="javascript" type="text/javascript" src="<?php echo $this->configView['vnecdn']['js']; ?>/require.min.js"></script>
+                    <script type="text/javascript">
+                        (function() {
+                            var req = require.config({
+                                context: 'main_content_detail',
+                                baseUrl: '<?php echo $this->configView['vnecdn']['js'],'/live'; ?>'
+
+                            });
+                            req(['livenews']);
+                        })();
+                    </script>
+                    <?php
+                    echo $this->render('/common/box_share_bottom.phtml');
+                    if (!empty($arrData['list_tag'])) : ?>
+                        <div class="block_tag width_common space_bottom_20">
+                            <div class="txt_tag">Tags</div>
+                            <?php foreach ($arrData['list_tag'] as $list_tag) : ?>
+                                <a href="<?php echo $list_tag['tag_url']; ?>" title="<?php echo $list_tag['tag_name_format']; ?>" class="tag_item"><?php echo $list_tag['tag_name']; ?></a>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <input type="hidden" name="article_id" id="article_id" value="<?php echo $arrData['article_id']; ?>"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="col_300" class="right width_common">
+        <?php
+        //Check permission comment
+        if ($arrData['iscomment'])
+        {
+            echo DEVICE_ENV != 4 ? $this->render('/block/comment.phtml') : $this->render('/block/comment_live.phtml');
+        }//end if
+        ?>
+    </div>
+</div>
+
+<div class="banner_980x60">
+    <?php //echo $this->GetBlock('footer'); ?>
+</div>
+<div class="clear">&nbsp;</div>

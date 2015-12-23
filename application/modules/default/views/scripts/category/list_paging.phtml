@@ -1,0 +1,102 @@
+<?php
+if (!empty ($this->arrData))
+{
+?>
+<div class="block_mid_new">
+    <ul class="list_news" id="news_home">
+        <?php
+        $count = count($this->arrData);
+        $j = 1;
+        foreach ($this->arrData as $id)
+        {
+            $articleDetail = $this->objArticle->getArticleBasic($id);
+        ?>
+        <li <?php echo $j==$count ? 'class="end"':''; ?>>
+            <h2 class="title_news">
+                <a href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>" alt="<?php echo $articleDetail['title_format']; ?>" class="txt_link">
+                    <?php echo $articleDetail['title']; ?>
+                </a>
+                <span class="no_wrap">
+                    <?php echo $this->ArticleViewIcon($articleDetail); ?>
+                    <?php echo $this->ArticleComment($articleDetail); ?>
+                </span>
+            </h2>
+            <div class="block_image_news width_common">
+                <?php
+                if (!empty($articleDetail['thumbnail_url']))
+                {
+                    ?>
+                <div class="thumb">
+                    <a href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>" alt="<?php echo $articleDetail['title_format']; ?>">
+                        <img src="<?php echo $this->ImageurlArticle($articleDetail, 'size1'); ?>" alt="<?php echo $articleDetail['title_format']; ?>" title="<?php echo $articleDetail['title_format']; ?>" />
+                    </a>
+                    <?php echo $this->ArticleTypeIcon($articleDetail); ?>
+                </div>
+                <?php
+                }
+                ?>
+                <div class="news_lead">
+                    <?php
+                    echo $articleDetail['lead'];
+                    ?>
+                </div>
+                <?php
+                if (sizeof($articleDetail['reference_detail']) > 0) {
+                    $i = 1;
+                    $arrRef = array();
+                    foreach($articleDetail['reference_detail'] as $reference)
+                    {
+                        if($i > 2) {
+                            break;
+                        }
+                        $arrRef[] = '<a href="' . $reference['share_url'] . '" title="' . $reference['title_format'] . '" alt="' . $reference['title_format'] . '">' . $reference['title'] . '</a>';
+                        $i++;
+                    }
+                    ?>
+                    <ul class="list_news_dot_3x3">
+                        <li>
+                            <strong>
+                            <?php echo implode(' / ', $arrRef); ?>
+                            </strong>
+                        </li>
+                    </ul>
+                    <?php
+                    unset($arrRef);
+                }
+                //icon tai tro
+                echo $this->IconCommercial($articleDetail, $this->intCategoryId);
+                ?>
+            </div>
+        </li>
+        <?php
+            $j++;
+        }
+        ?>
+    </ul>
+    <div class="bottom_pagination width_common">
+        <?php
+        if (DEVICE_ENV == 4)
+        {
+        ?>
+        <div id="calendar" class="view_date_time"></div>
+        <script>
+            $( document ).ready(function() {
+                if(typeof(CalendarParser) != "undefined")
+                {
+                    CalendarParser.calendar_parser_id = "calendar";
+                    CalendarParser.calendar_parser_parent = <?php echo SITE_ID; ?>;
+                    CalendarParser.calendar_parser_child = 0;
+                    CalendarParser.calendar_parser_child_recursive = 0;
+                    CalendarParser.parse();
+                }
+            });
+        </script>
+        <?php
+        }
+        echo $this->Pagination($this->arrParamPaging);
+        ?>
+    </div>
+</div>
+<?php
+}
+?>

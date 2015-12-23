@@ -1,0 +1,132 @@
+<?php
+if (!empty ($this->arrData))
+{
+    $total = count($this->arrData);
+    ?>
+    <div class="line_gray line_page_anh_video width_common page_anh_video">
+        <div class="block_top_anh_video width_common">
+            <div class="col_left_anh_video">
+                <?php
+                $article = $this->objArticle->getArticleBasic(array_shift($this->arrData));
+                if (!empty ($article))
+                {
+                    $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                    ?>
+                    <div class="block_image_left">
+                        <a class="txt_image" href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                            <img src="<?php echo $this->ImageurlArticle($article, 'size4', -1); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>" />
+                        </a>
+                        <div class="block_title_anh">
+                            <a class="txt_title" href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                <?php echo $article['title']; ?>
+                                <span class="no_wrap">
+                                    <?php echo $this->ArticleViewIcon($article); ?>
+                                </span>
+                            </a>
+                            <?php echo $this->ArticleComment($article); ?>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <div class="col_right_anh_video">
+                <div class="block_image_right">
+                    <?php
+                    if (!empty($this->arrData))
+                    {
+                        $i = 0;
+                        foreach ($this->arrData as $id)
+                        {
+                            $article = $this->objArticle->getArticleBasic($id);
+                            if (empty($article))
+                            {
+                                continue;
+                            }
+                            $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                            ?>
+                            <div class="image_item width_common <?php echo $i==1?'last':''; ?>">
+                                <a href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                    <img class="left" src="<?php echo $this->ImageurlArticle($article, 'size2', -1); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>" />
+                                </a>
+                                <div class="block_title_anh">
+                                    <a class="txt_title" href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                        <?php echo $article['title']; ?>
+                                        <span class="no_wrap">
+                                            <?php echo $this->ArticleViewIcon($article); ?>
+                                        </span>
+                                    </a>
+                                    <?php echo $this->ArticleComment($article); ?>
+                                </div>
+                            </div>
+                            <?php
+                            unset($this->arrData[$i]);
+                            $i++;
+                            if($i==2) {
+                                break;
+                            }
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+        <div class="list_anh_video_inner width_common list_anh_inner">
+            <?php
+            if (!empty($this->arrData))
+            {
+                ?>
+                <ul class="list_anh_video" id="list_anh_video">
+                    <?php
+                    foreach ($this->arrData as $id)
+                    {
+                        $article = $this->objArticle->getArticleBasic($id);
+                        if(empty($article))
+                        {
+                            continue;
+                        }
+                        $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                        ?>
+                        <li>
+                            <?php
+                            if (!empty($article['thumbnail_url']))
+                            {
+                                ?>
+                                <div class="thumb_anh_video">
+                                    <a href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                        <img src="<?php echo $this->ImageurlArticle($article, 'size6', -1); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>" />
+                                    </a>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                            <div class="title_news">
+                                <a class="txt_link" href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                    <?php echo $article['title']; ?>
+                                    <span class="no_wrap">
+                                        <?php echo $this->ArticleViewIcon($article); ?>
+                                        <?php echo $this->ArticleComment($article); ?>
+                                    </span>
+                                </a>
+                            </div>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+                <?php
+                if ($this->intTotalAlbum > $total)
+                {
+                    ?>
+                    <div class="more_btn">
+                        <a href="<?php echo $this->configView['url'] . '/category/othernews'; ?>" data-container="#list_anh_video" data-params="<?php echo $this->escape(Zend_Json::encode(array('limit' => LIMIT_PHOTO_MORE, 'offset' => $this->intOffset, 'total' => $this->intTotalAlbum, 'exclude' => array(), 'category_id' => $this->intCategoryId))); ?>">Xem tiếp</a>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+}
+?>

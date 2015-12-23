@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media all{
+#print_page{
+width: 480px;
+margin:0 auto;
+}
+.block_col_480{
+	width:100%;
+}
+.header_right_print{
+	margin:45px 0 0 0;
+}
+
+.header_right_print a{
+color:#666;
+font:400 11px/15px Arial;
+padding-left:20px;
+margin:40px 0 0 0;
+}
+
+#detail_page{
+	margin:20px 0 0 0;
+	padding:10px 0 0  0;
+	border-top:1px solid #cccccc;
+}
+
+.header_right_print span{
+text-decoration:underline;
+margin:0 0 0 5px;
+}
+#box_details_news .fck_detail table.tplCaption{
+	width:auto;
+}
+}

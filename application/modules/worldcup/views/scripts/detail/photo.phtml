@@ -1,0 +1,208 @@
+<div class="line_gray line_page width_common">
+    <div id="col_left">
+        <?php
+        if(DEVICE_ENV != 1)
+        {
+        ?>
+        <div class="block_slder_top space_box" id="top_fixture_worldcup">
+            <div style="text-align: center;"><p style="padding: 25px 0;">Đang tải dữ liệu...</p></div>
+        </div>
+        <?php
+        }
+        ?>
+        <div class="box_width_common" id="box_details_news">
+			<?php
+            //1 - mobile , 0 - web, tablet
+            $device = DEVICE_ENV & 1;
+            if (!empty($this->arrArticleDetail))
+            {
+                $this->Snippet .= '<div itemscope itemtype="http://schema.org/Recipe" style="display: none !important;"><span itemprop="name">' . $this->arrArticleDetail['title'] . '</span><img itemprop="image" src="' . $this->ImageurlArticle($this->arrArticleDetail, 'size1') . '" alt="' . $this->arrArticleDetail['title_format'] . '" style="border-width:0px;" /></div>';
+                ?>
+                <div class="w670 left">
+                    <div class="main_content_detail width_common">
+                        <div class="block_timer_share">
+                            <div class="block_timer left txt_666"><?php echo $this->DateTimeFormat($this->arrArticleDetail['publish_time'], 'long'); ?></div>
+                            <?php
+                            if (DEVICE_ENV == 4) {
+                            ?>
+                            <div class="block_clear_men"><a target="_blank" onclick="thethao.trackingImpression()" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=10045207&PluID=0&ord=<?php echo time();?>" title="Clear Men"><img src="<?php echo $this->configView['images']; ?>/graphics/img_clearmen.png" /></a></div>
+                            <?php
+                            }
+                            if (DEVICE_ENV != 1)
+                            {
+                            ?>
+                            <div class="block_share right">
+                                <?php echo $this->render('detail/box/box_share_photo.phtml'); ?>
+                            </div>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <div class="div-fbook width_common title_div_fbook">
+                            <div class="block_timer left txt_666"><?php echo $this->DateTimeFormat($this->arrArticleDetail['publish_time'], 'long'); ?></div>
+                        </div>
+                        <div class="title_news">
+                            <h1><?php echo $this->arrArticleDetail['title']; ?></h1>
+                        </div>
+                        <div class="short_intro txt_666"><?php echo $this->arrArticleDetail['lead']; ?></div>
+						<?php
+                        if (!empty($this->arrArticleDetail['reference_detail']))
+                        {
+                            $arrRef = array();
+                            foreach ($this->arrArticleDetail['reference_detail'] as $reference)
+                            {
+                                $arrRef[] = '<a alt="'.$reference['title_format'].'" title="'.$reference['title_format'].'" href="'.$reference['share_url'].'">'.$reference['title'].'</a>';
+                            }
+                            ?>
+                            <div class="relative_new">
+                                <ul class="list_news_dot_3x3_300">
+                                    <li>
+                                    <?php
+                                    echo DEVICE_ENV==1?implode('&nbsp;&nbsp;/&nbsp;&nbsp;', $arrRef):implode('&nbsp;/&nbsp;', $arrRef);
+                                    ?>
+                                    </li>
+                                </ul>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        <div class="width_common space_bottom_20">
+                            <div class="block_content_slide_showdetail">
+                                <div id="article_content">
+                                    <?php
+                                    if (!empty($this->arrPhoto))
+                                    {
+                                        foreach ($this->arrPhoto as $photo)
+                                        {
+                                            $captionCheck   = trim(strip_tags($photo['caption']));
+                                            $captionCheck   = !empty($captionCheck);
+
+                                            $photo['thumbnail_url'] = $photo['url'];
+                                        ?>
+                                        <div class="item_slide_show">
+                                            <div class="block_thumb_slide_show">
+                                                <img data-reference-id="<?php echo $photo['reference_id']; ?>"  src="<?php echo $this->ImageurlArticle($photo, 'size3'); ?>" alt="image photo" class="left" data-component-caption="<?php echo $captionCheck?$this->escape($photo['caption']):''; ?>" />
+                                                <a href="javascript:;" class="btn_icon_show_slide_show">&nbsp;</a>
+                                            </div>
+                                            <?php
+                                            if ( $captionCheck )
+                                            {
+                                            ?>
+                                            <div class="desc_cation"><?php echo $photo['caption']; ?></div>
+                                            <?php
+                                            }//end if
+                                            ?>
+                                            <div class="clear">&nbsp;</div>
+                                        </div>
+                                        <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <script type="text/javascript">
+                                    if (typeof(common.resizeImagePhoto) != 'undefined') {
+                                        common.resizeImagePhoto();
+                                        $(window).resize(function() {
+                                            common.delayFireOnce(1000).done(function() {
+                                                common.resizeImagePhoto();
+                                            });
+                                        });
+                                    }
+                                </script>
+
+                                <div class="fck_detail width_common"><?php echo $this->arrArticleDetail['content']; ?></div>
+                                <?php
+                                echo $this->render('/common/box_share_bottom.phtml');
+                                ?>
+                            </div>
+                            <div class="clear">&nbsp;</div>
+                            <?php
+                            if (DEVICE_ENV != 1)
+                            {
+                                ?>
+                                <!-- Article_BANNER 468x90-->
+                                <div class="banner_468 box_category">
+                                    <div class="banner_468x90">
+                                        <script language="javascript">try{Poly_Article();}catch(e){}</script>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                        <?php
+                        //Check permission comment
+                        if ($this->arrArticleDetail['iscomment'])
+                        {
+                            echo $this->render('/block/comment.phtml');
+                        }//end if
+                        ?>
+						<?php
+                        if (!empty($this->arrArticleDetail['list_tag']))
+                        {
+                            ?>
+                            <div class="block_tag width_common space_bottom_20">
+                                <div class="txt_tag">Tags</div>
+                                <?php
+                                foreach ($this->arrArticleDetail['list_tag'] as $tagDetail)
+                                {
+                                    ?>
+                                    <a href="<?php echo $this->configView['url_vne'].$tagDetail['tag_url']; ?>" title="<?php echo $tagDetail['tag_name_format']; ?>" class="tag_item"><?php echo $this->MbUcfirst($tagDetail['tag_name']); ?></a>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        	<?php
+                    	}
+                    	?>
+						<?php
+                    	// get other news
+                    	if (!empty($this->arrOrtherArticle))
+                    	{
+                        	?>
+                        	<div id="box_tinkhac_detail" class="box_category width_common style_03">
+                            	<?php echo $this->render('detail/box/othernews_'.$device.'.phtml'); ?>
+        	                </div>
+        	                <?php
+        	            }
+        	            ?>
+					</div>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+    </div>
+    <div id="col_right">
+        <?php echo $this->GetBlock('left'); ?>
+    </div>
+</div>
+<script type="text/javascript">
+    var article_title = "<?php echo addslashes($this->arrArticleDetail['title_format']), ' - VnExpress Worldcup'; ?>";
+    var article_description = "<?php echo urlencode($this->arrArticleDetail['lead']); ?>";
+    var article_image = "<?php echo !empty($this->arrArticleDetail['thumbnail_url']) ? $this->ImageurlArticle($this->arrArticleDetail, 'size1') : ''; ?>";
+    $(function(){
+        if (device_env != 1) {
+            if(typeof(sh_fullscreen) != "undefined"){
+                sh_fullscreen.params = {
+                    title: '<?php echo addslashes($this->arrArticleDetail['title_format']); ?>',
+                    lead: '<?php echo (urlencode(addslashes($this->arrArticleDetail['lead']))); ?>',
+                    time:  '<?php echo $this->DateTimeFormat($this->arrArticleDetail['publish_time'], 'custom'); ?>',
+                    arrdata:'<?php echo $this->Articlelike($this->arrArticleDetail['article_id']);?>',
+                    masterial: '<?php echo (!empty($this->urlSongMp3)) ? '<iframe frameborder="0" src="'.$this->configView['url_vne'].'/parser.php?al='. $this->urlSongMp3 .'&ft=audio_slideshow&title='. $this->songName .'&artist='. $this->artistName .'"  height="18" width="500"></iframe>' : '' ?>',
+                    started: <?php echo $this->imageShare; ?>
+                };
+                sh_fullscreen.run();
+            }
+            sendmail.init({
+                article_link: '<?php echo $this->arrArticleDetail['share_url']; ?>',
+                article_title: article_title,
+                url_post: '<?php echo $this->configView['url']; ?>/detail/ajaxsendmail'
+            });
+        } else {
+            slideshow._init();
+        }
+    });
+</script>
+<script type="text/javascript">
+</script>

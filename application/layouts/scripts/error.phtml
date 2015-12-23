@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="image/x-icon" href="<?php echo $this->configView['images']; ?>/favicon.ico" rel="shortcut icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Vnexpress.net" />
+        <!-- iPad icons -->
+        <link rel="apple-touch-icon-precomposed" href="http://st.f1.vnexpress.net/images/logos/72x72.png" sizes="72x72">
+        <link rel="apple-touch-icon-precomposed" href="http://st.f1.vnexpress.net/images/logos/114x114.png" sizes="144x144">
+        <!-- iPhone and iPod touch icons -->
+        <link rel="apple-touch-icon-precomposed" href="http://st.f1.vnexpress.net/images/logos/57x57.png" sizes="57x57">
+        <link rel="apple-touch-icon-precomposed" href="http://st.f1.vnexpress.net/images/logos/114x114.png" sizes="114x114">
+        <!-- Nokia Symbian -->
+        <link rel="nokia-touch-icon" href="http://st.f1.vnexpress.net/images/logos/57x57.png">
+        <!-- Android icon precomposed so it takes precedence -->
+        <link rel="apple-touch-icon-precomposed" href="http://st.f1.vnexpress.net/images/logos/114x114.png" sizes="1x1">
+        <?php
+        if (!$this->notRefreshPage) {?>
+            <meta http-equiv="REFRESH" content="1800" />
+        <?php }?>
+
+        <!--Meta Tag-->
+        <?php echo $this->headMeta(); ?>
+        <!--Title-->
+        <?php echo $this->headTitle(); ?>
+        <!-- CSS -->
+        <link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/general.css" media="all"/>
+        <link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/iphone.css" media="all" />
+        <?php echo $this->headLink(); ?>
+        <!-- JS -->
+        <script type="text/javascript">
+            var site_id     = <?php echo SITE_ID; ?>,
+                img_url   = '<?php echo $this->configView['images']; ?>',
+                css_url     = '<?php echo $this->configView['css']; ?>',
+                base_url    = '<?php echo $this->configView['url']; ?>';
+            document.domain = '<?php echo DOMAIN_VNE ?>';
+        </script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->configView['js']; ?>/library.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->configView['js']; ?>/thethao.js"></script>
+        <!--Script-->
+        <?php echo $this->render('common/tracking.phtml'); ?>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper_header">
+                <?php echo $this->render('common/header_ipad.phtml'); ?>
+            </div>
+        </div>
+        <div id="header_web" class="width_common">
+            <div id="header_main">
+                <div class="header_logo width_common">
+                    <a href="<?php echo $this->configView['url']; ?>"><img src="<?php echo $this->configView['images']; ?>/graphics/img_logo_vne_web.gif" alt=""  class="left logo_web"/></a>
+                    <div class="banner_728x90 right">
+                        <script type="text/javascript">Poly_TOP_735x90();</script>
+                    </div>
+                </div>
+                <ul id="menu_web" class="width_common">
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>"><img src="<?php echo $this->configView['images']; ?>/graphics/img_logo_home.gif" alt /></a></li>
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>tin-tuc/thoi-su/" class="mnu_thoisu">Thời sự</a></li>
+                    <li><a href="<?php echo $this->configView['url_dso']; ?>" class="mnu_doisong">Gia đình</a></li>
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>tin-tuc/the-gioi" class="mnu_thegioi">Thế giới</a></li>
+                    <li><a href="<?php echo $this->configView['url_kdo']; ?>" class="mnu_kinhdoanh">Kinh doanh</a></li>
+                    <li><a href="<?php echo $this->configView['url_gti']; ?>" class="mnu_giaitri">Giải trí</a></li>
+                    <li class="active"><a href="<?php echo $this->configView['url']; ?>" class="mnu_thethao">Thể thao</a></li>
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>tin-tuc/phap-luat/" class="mnu_phapluat">Pháp luật</a></li>
+                    <li><a href="<?php echo $this->configView['url_dli']; ?>" class="mnu_dulich">Du lịch</a></li>
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>tin-tuc/khoa-hoc/" class="mnu_khoahoc">Khoa học</a></li>
+                    <li><a href="<?php echo $this->configView['url_sho']; ?>" class="mnu_sohoa">Số hóa</a></li>
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>tin-tuc/oto-xe-may/" class="mnu_xe">Xe</a></li>
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>tin-tuc/ban-doc-viet/" class="mnu_bandoc">Bạn đọc</a></li>
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>tin-tuc/tam-su" class="mnu_tamsu">Tâm sự</a></li>
+                    <li><a href="<?php echo $this->configView['url_rva']; ?>" class="mnu_raovat">Rao vặt</a></li>
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>video" class="mnu_video">Video</a></li>
+                    <li><a href="<?php echo $this->configView['url_vne']; ?>tin-tuc/cuoi" class="mnu_cuoi end">Cười</a></li>
+                </ul>
+                <div class="mid_header width_common">
+                    <ul id="breakumb_web">
+                        <li class="start"><a href="<?php echo $this->configView['url']; ?>"><?php echo $this->breakName; ?></a><span class="arrow_breakumb">&nbsp;</span></li>
+                    </ul>
+                    <div class="right">
+                        <?php
+                        if (empty($this->breakCumbSub))
+                        {
+                        ?>
+                        <div class="txt_timer" id="clockDiv"></div>
+                        <?php
+                        }
+                        ?>
+                        <a href="<?php echo $this->configView['url'], '/24h-qua/' ?>" class="txt_24h">24h qua</a>
+                        <a href="<?php echo $this->configView['url'], '/rss/' ?>" class="img_rss left"><img src="<?php echo $this->configView['css']; ?>/images/graphics/img_rss_2.gif" alt="" /></a>
+                        <div class="block_search_web left">
+                            <input type="text" class="txt_input" />
+                            <input type="button" class="icon_seach_web" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="wrapper_container">
+            <div id="container">
+                <div class="width_common">
+                    <div class="breakumb_timer width_common">
+                        <div class="timer_header">
+                            <div class="left">Báo tiếng Việt nhiều người xem nhất</div>
+                            <div class="left txt_timer_header txt_666"><span class="drash">|</span> Thứ sáu, 4/10/2013 <span class="drash">|</span> 10:21 GMT+7</div>
+                        </div>
+                        <div class="rss right">
+                            <div class="txt_location"><a href="#">Hồ Chí Minh</a></div>
+                            <div class="temprature left"> <a href="javascript:;"><img alt="" src="<?php echo $this->configView['images']; ?>/graphics/icon_thoitiet_xam_01.gif"> <span class="txt_doC_den">27</span> </a> </div>
+                            <div class="left txt_rss">RSS</div>
+                        </div>
+                    </div>
+                    <?php echo $this->layout()->content;?>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <?php
+        echo $this->render('common/footer.phtml');
+        echo $this->headScript();
+        echo $this->render('common/footer_script.phtml'); ?>
+    </body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <?php
+        echo $this->headMeta();
+        $tt_category_id = isset($this->intCategoryId) ? $this->intCategoryId : SITE_ID;
+        $tt_article_id = isset($this->intArticleId) ? $this->intArticleId : $tt_category_id;
+        ?>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <meta name="tt_category_id" content="<?php echo $tt_category_id; ?>" />
+        <meta name="tt_article_id" content="<?php echo $tt_article_id; ?>" />
+        <meta name="tt_site_id" content="<?php echo SITE_ID; ?>" />
+        <!--Title-->
+        <?php echo $this->headTitle(); ?>
+        <!-- CSS -->
+        <link rel="stylesheet" href="<?php echo $this->configView['vnecdn']['css']; ?>/mgeneral.css" media="all" />
+        <link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/mseagame.css" media="all" />
+        <?php echo $this->headLink(); ?>
+        <!-- JS -->
+        <script type="text/javascript">
+            var site_id     = <?php echo SITE_ID; ?>,
+            img_url   = '<?php echo $this->configView['images']; ?>',
+            css_url     = '<?php echo $this->configView['css']; ?>',
+            base_url    = '<?php echo $this->configView['url']; ?>',
+            device_env  = <?php echo DEVICE_ENV; ?>,
+            article_id  = <?php echo isset($this->intArticleId) ? $this->intArticleId : 0; ?>,
+            vne_url     = '<?php echo $this->configView['url_vne']; ?>',
+            interactions_url = '<?php echo $this->configView['comment']; ?>';
+            var predict_with_captcha = 0;
+            document.domain = '<?php echo DOMAIN_VNE ?>';
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-249346-5']);
+            _gaq.push(['_trackPageview']);
+            _gaq.push(['b._setAccount', 'UA-249346-18']);
+            _gaq.push(['b._trackPageview']);
+            _gaq.push(['c._setAccount', 'UA-249346-37']);
+            _gaq.push(['c._trackPageview']);
+            _gaq.push(['d._setAccount', 'UA-29374284-26']);
+            _gaq.push(['d._trackPageview']);
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+            var _siteId="11";
+            (function(){
+                var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="http://st.l.a.eclick.vn/ea.js";
+                var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)
+            })();
+        </script>
+        <style type="text/css">
+            .item_slide_show{
+                margin:0 auto 10px;
+                clear:both;
+                float:none;
+            }
+        </style>
+		<script language="javascript" type="text/javascript" src="<?php echo $this->configView['vnecdn']['libs']; ?>/jquery-1.7.1.min.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->configView['vnecdn']['js']; ?>/utils/mutils.js"></script>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper_container">
+                <div id="container">
+                    <div class="line_gray line_page width_common">
+                        <div id="col_left">
+                            <div class="block_2mid_col line_mid_col width_common" id="box_details_news">
+                                <?php
+                                if (!empty($this->arrArticleDetail))
+                                {
+                                    ?>
+                                    <div class="main_content_detail width_common">
+                                        <div class="div-fbook width_common title_div_fbook">
+                                            <div class="block_timer left txt_666"><?php echo $this->DateTimeFormat($this->arrArticleDetail['publish_time'], 'long'); ?></div>
+                                        </div>
+                                        <div class="title_news">
+                                            <h1><?php echo $this->arrArticleDetail['title']; ?></h1>
+                                        </div>
+                                        <div class="short_intro txt_666"><?php echo $this->arrArticleDetail['lead']; ?></div>
+                                        <?php
+                                        if (!empty($this->arrArticleDetail['reference_detail']))
+                                        {
+                                            $arrRef = array();
+                                            foreach ($this->arrArticleDetail['reference_detail'] as $reference)
+                                            {
+                                                $reference['share_url'] = $this->ShareurlSeagame($reference['share_url']);
+                                                $arrRef[] = '<a alt="'.$reference['title_format'].'" title="'.$reference['title_format'].'" href="'.$reference['share_url'].'">'.$reference['title'].'</a>';
+                                            }
+                                            ?>
+                                            <div class="relative_new">
+                                                <ul class="list_news_dot_3x3_300">
+                                                    <li>
+                                                        <?php
+                                                        echo DEVICE_ENV==1?implode('&nbsp;&nbsp;/&nbsp;&nbsp;', $arrRef):implode('&nbsp;/&nbsp;', $arrRef);
+                                                        ?>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
+                                        <div class="width_common space_bottom_20">
+                                            <div class="block_content_slide_showdetail">
+                                                <div id="article_content">
+                                                    <?php
+                                                    if (!empty($this->arrPhoto))
+                                                    {
+                                                        foreach ($this->arrPhoto as $photo)
+                                                        {
+                                                            if (empty($photo['url']))
+                                                            {
+                                                                ?>
+                                                                <div class="">
+                                                                    <div class="desc_cation"><?php echo $photo['caption']; ?></div>
+                                                                    <div class="clear">&nbsp;</div>
+                                                                </div>
+                                                            <?php
+                                                            }
+                                                            else
+                                                            {
+                                                                $captionCheck   = trim(strip_tags($photo['caption']));
+                                                                $captionCheck   = !empty($captionCheck);
+
+                                                                $photo['thumbnail_url'] = $photo['url'];
+
+                                                                ?>
+                                                                <div class="item_slide_show">
+                                                                    <div class="block_thumb_slide_show">
+                                                                        <img data-reference-id="<?php echo $photo['reference_id']; ?>"  src="<?php echo $this->ImageurlArticle($photo, 'size12', -1); ?>" alt="image photo" class="left" data-component-caption="<?php echo $captionCheck?$this->escape($photo['caption']):''; ?>" />
+                                                                        <a href="javascript:;" class="btn_icon_show_slide_show">&nbsp;</a>
+                                                                    </div>
+                                                                    <?php
+                                                                    if ( $captionCheck )
+                                                                    {
+                                                                        ?>
+                                                                        <div class="desc_cation"><?php echo $photo['caption']; ?></div>
+                                                                    <?php
+                                                                    }//end if
+                                                                    ?>
+                                                                    <div class="clear">&nbsp;</div>
+                                                                </div>
+                                                            <?php
+                                                            }
+                                                        }
+                                                    }
+                                                    ?>
+                                                </div>
+                                                <div class="fck_detail width_common"><?php echo $this->arrArticleDetail['content']; ?></div>
+                                                <script type="text/javascript">
+                                                    if (typeof(common.resizeImagePhoto) != 'undefined') {
+                                                        common.resizeImagePhoto();
+                                                        $(window).resize(function() {
+                                                            common.delayFireOnce(1000).done(function() {
+                                                                common.resizeImagePhoto();
+                                                            });
+                                                        });
+                                                    }
+                                                </script>
+                                            </div>
+                                            <div class="clear">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="block_close_menu">&nbsp;</div>
+        </div>
+        <div class="clear"></div>
+        <script type="text/javascript">
+            $(function(){
+                if(typeof(common) != "undefined"){
+                    common.initCommon();
+                }
+            });
+        </script>
+    </body>
+</html>

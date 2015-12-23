@@ -1,0 +1,161 @@
+<?php
+//1 - mobile , 0 - web, tablet
+$device = DEVICE_ENV & 1;
+?>
+<div id="page_bxh" class="width_common">
+    <div class="width_common line_mid_980_300">
+        <div id="col_660" class="left">
+            <div id="cate_bang_xep_hang" class="w670 left">
+                <div class="title_cate_bxh width_common dot_bottom">
+                    <div class="left txt_title_cate_bxh"><b>Top 100</b></div>
+                    <div class="right">
+                        <span class="txt_chon_giai">Năm</span>
+                        <select class="right w150 year" id="year">
+                            <?php
+                            $arrYear = range(2012, date('Y'));
+                            arsort($arrYear);
+                            foreach ($arrYear as $year)
+                            {
+                                ?>
+                                <option name="year" <?php echo $this->year == $year ? 'selected' : '' ?>><?php echo $year; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <span class="txt_chon_giai txt_mua_giai">Hạng</span>
+                        <select class="right w150 leagua" id="gender">
+                            <option value="1" <?php echo $this->gender == 1 ? 'selected' : '' ?> >Xếp hạng ATP</option>
+                            <option value="0" <?php echo $this->gender == 0 ? 'selected' : '' ?> >Xếp hạng WTA</option>
+                        </select>
+                    </div>
+                    <div class="clear">&nbsp;</div>
+                </div>
+                <div class="block_tennis_top100" id="box_ranking_tennis">
+                    <?php
+                    if (is_array($this->arrTennisRanking) && count($this->arrTennisRanking))
+                    {
+                        ?>
+                        <table cellspacing="0" cellpadding="0" border="0">
+                            <tbody><tr class="first_row">
+                                    <td class="w30"><b>Hạng</b></td>
+                                    <td class="w390"><b>Tay vợt</b></td>
+                                    <?php
+                                    if (!$device) {
+                                    ?>
+                                    <td class="w60"><b>Quốc tịch</b></td>
+                                    <td class="w70"><b>Xu hướng</b></td>
+                                    <?php
+                                    }
+                                    ?>
+                                    <td class="txt_right w50"><b>Điểm số</b></td>
+                                </tr>
+                                <?php
+                                $timeUpdate = time();
+                                $i = 0;
+                                foreach ($this->arrTennisRanking as $id => $playerRanking)
+                                {
+                                    $detail = $this->objTennis->getDetailObjectBasic($id);
+                                    if (empty($detail))
+                                    {
+                                        continue;
+                                    }
+                                    $classRank = '';
+                                    if ($playerRanking['Movement'] == 0)
+                                    {
+                                        $classRank = 'muiten_right';
+                                    }
+                                    elseif ($playerRanking['Movement'] > 0)
+                                    {
+                                        $classRank = 'muiten_up';
+                                    }
+                                    elseif ($playerRanking['Movement'] < 0)
+                                    {
+                                        $classRank = 'muiten_down';
+                                    }
+                                    ?>
+                                    <tr class="<?php echo $i % 2 ? 'bg_chan' : '' ?>">
+                                        <td class="txt_center"><?php echo $playerRanking['RankingPosition']; ?></td>
+                                        <td>
+                                            <a class="txt_blue" href="<?php echo $detail['share_url']; ?>" title="<?php echo $detail['name_format']; ?>">
+                                                <?php echo $detail['name']; ?>
+                                            </a>
+                                        </td>
+                                        <?php
+                                        if (!$device)
+                                        {
+                                        ?>
+                                        <td><?php echo $detail['nationality_name']; ?></td>
+                                        <td>
+                                            <a class="left icon_portal_thethao <?php echo $classRank; ?>" href="javascript:;">&nbsp;</a>
+                                            <span class="right"><?php echo Abs($playerRanking['Movement']); ?></span>
+                                            <div class="clear"></div>
+                                        </td>
+                                        <?php
+                                        }
+                                        ?>
+                                        <td class="txt_right"><?php echo number_format($playerRanking['RankingPoint'], 0, '.', ',') ?></td>
+                                    </tr>
+                                    <?php
+                                    $timeUpdate = $playerRanking['UpdateTime'];
+                                    $i++;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                        <p class="txt_666 txt_11"><b>Ngày cập nhật : <?php echo $this->DateTimeFormat($timeUpdate, 'long'); ?></b></p>
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <span class="txt_666">Rất tiếc, chúng tôi chưa cập nhật thông tin.</span>
+                        <?php
+                    }
+                    ?>
+                </div>
+
+            </div>
+
+        </div>
+        <div id="col_300" class="right">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+</div>
+<div class="banner_980x60"><?php echo $this->GetBlock('footer'); ?></div>
+<script language="javascript">
+    var gender = $('#gender');
+    var year = $('#year');
+    $(document).ready(function(){
+        $("#gender").change(function(){
+            $.ajax({
+                type: "GET",
+                url: base_url + "/bang-xep-hang/ajaxtennis",
+                data: {
+                    gender:gender.val(),
+                    year:year.val()
+                },
+                dataType: "json",
+                beforeSend: function () {},
+                success: function (result) {
+                    $("#box_ranking_tennis").html("").html(result.body);
+                }
+            })
+        });
+        $("#year").change(function(){
+            $.ajax({
+                type: "GET",
+                url: base_url + "/bang-xep-hang/ajaxtennis",
+                data: {
+                    gender:gender.val(),
+                    year:year.val()
+                },
+                dataType: "json",
+                beforeSend: function () {},
+                success: function (result) {
+                    $("#box_ranking_tennis").html("").html(result.body);
+                }
+            })
+        });
+    });
+</script>

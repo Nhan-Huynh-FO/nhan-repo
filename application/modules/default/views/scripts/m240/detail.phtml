@@ -1,0 +1,164 @@
+<div class="width_common line_col" id="detail_page">
+    <div class="left" id="col_660">
+        <div id="box_details_news" class="box_width_common">
+            <div class="w670 left">
+                <div class="main_content_detail width_common">
+                    <div class="width_common line_col_480 space_bottom_20">
+                        <!--Col 480 left-->
+                        <div class="block_col_480">
+                            <div id="left_calculator">
+                                <div class="div-fbook width_common title_div_fbook">
+                                    <div class="block_timer left txt_666"><?php echo $this->DateTimeFormat($this->arrArticleDetail['publish_time'], 'long'); ?></div>
+                                </div>
+                                <div class="title_news">
+                                    <h1><?php echo $this->arrArticleDetail['title_format']; ?></h1>
+                                </div>
+                                <div class="short_intro txt_666"><?php echo $this->arrArticleDetail['lead']; ?></div>
+                                <!--Tin lien quan-->
+                                <?php
+                                if ( !empty($this->arrArticleDetail['reference_detail']) )
+                                {
+                                ?>
+                                <div class="relative_new">
+                                    <ul class="list_news_dot_3x3_300">
+                                        <li>
+                                        <?php
+                                        $arrRefDetail   = array();
+                                        foreach ( $this->arrArticleDetail['reference_detail'] as $reference )
+                                        {
+                                            $arrRefDetail[] = '<a href="' . $this->ShareurlM240($reference['share_url']) . '" title="' . $reference['title_format'] . '">' . $reference['title_format'] . '</a>';
+                                        }//end foreach
+                                        echo DEVICE_ENV==1?implode('&nbsp;&nbsp;/&nbsp;&nbsp;', $arrRefDetail):implode('&nbsp;/&nbsp;', $arrRefDetail);
+                                        unset($arrRefDetail);
+                                        ?>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <?php
+                                }//end if
+                                ?>
+                                <div class="fck_detail width_common">
+                                    <?php echo $this->arrArticleDetail['content'];?>
+                                </div>
+                                <?php
+                                //********************* Process Tin liên quan: Topic + Link chéo *************************//
+                                //Check empty
+                                $notEmptyTopic         = !empty($this->arrArticleDetail['list_topic_id']) && is_array($this->arrArticleDetail['list_topic_id']);
+                                $notEmptyReferenceSite = !empty($this->arrArticleDetail['list_reference_sites_id']) && is_array($this->arrArticleDetail['list_reference_sites_id']);
+                                //Check
+                                if ( $notEmptyTopic || $notEmptyReferenceSite )
+                                {
+                                ?>
+                                <div class="width_common mg_bottom_20" id="box_tinlienquan">
+                                    <div class="title_box_category style_02">
+                                        <h2 class="txt_main_category"><a href="<?php echo $notEmptyTopic ? $this->ShareurlM240($this->arrTopicDetail['share_url']) : 'javascript:;'; ?>">Tin liên quan</a></h2>
+                                    </div>
+                                    <div class="content_box_category width_common">
+                                        <?php
+                                        //********************* Process Topic *************************//
+                                        if ( $notEmptyTopic )
+                                        {
+                                        ?>
+                                        <ul class="list_news_dot_3x3">
+                                            <?php
+                                            foreach ( $this->arrTopic as $id )
+                                            {
+                                                $articleDetail = $this->objArticle->getArticleBasic($id);
+                                                if ( empty($articleDetail) ) continue;
+                                            ?>
+                                            <li>
+                                                <a href="<?php echo $this->ShareurlM240($articleDetail['share_url']); ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title_format']; ?></a> <span class="txt_666">(<?php echo $this->DateTimeFormat($articleDetail['publish_time'], 'short'); ?>)</span>
+                                                <span class="no_wrap">
+                                                    <img class="icon_content icon_title_<?php echo intval($articleDetail['article_icon']); ?>" alt="" src="<?php echo $this->configView['images'];?>/graphics/img_blank.gif">
+                                                </span>
+                                            </li>
+                                            <?php
+                                            }//end foreach
+                                            ?>
+                                        </ul>
+                                        <div class="block_view_more">
+                                            <a class="txt_view_more" href="<?php echo $this->ShareurlM240($this->arrTopicDetail['share_url']); ?>" title="Xem thêm">Xem thêm</a>
+                                        </div>
+                                        <?php
+                                        }//end if
+
+                                        //********************* Process Link chéo *************************//
+                                        //==== Khi đọc các tin thuộc VNEx hoặc các Vertical ====//
+                                        //Click link của VNEx hoặc Vertical sẽ đi chính trang
+                                        //Click link khác của NgôiSao hoặc iOne sẽ mở Tab mới
+                                        if ( $notEmptyReferenceSite )
+                                        {
+                                            //Set flags to know which situation
+                                            $flag_vne       = false;
+                                            $flag_ione      = false;
+                                            $flag_ngoisao   = false;
+                                            foreach ( $this->arrArticleDetail['list_reference_sites_id'] as $reference )
+                                            {
+                                                if (empty($reference)) continue;
+                                                switch ( $reference['site_id'] )
+                                                {
+                                                    case $this->configView['othersite']['ione']:
+                                                        $flag_ione = true;
+                                                        break;
+                                                    case $this->configView['othersite']['ngoisao']:
+                                                        $flag_ngoisao = true;
+                                                        break;
+                                                    default:
+                                                        $flag_vne = true;
+                                                        break;
+                                                }//end switch
+                                            }//end foreach
+                                            echo $this->partial('m240/box/includelink.phtml', array(
+                                                            'list_reference'    => $this->arrArticleDetail['list_reference_sites_id'],
+                                                            'flag_vne'          => $flag_vne,
+                                                            'flag_ione'         => $flag_ione,
+                                                            'flag_ngoisao'      => $flag_ngoisao,
+                                                            'has_topic'         => $notEmptyTopic,
+                                                            'configView'        => $this->configView));
+                                        }//end if
+                                        ?>
+                                    </div>
+                                </div>
+                                <?php
+                                }//end if
+                                ?>
+                                <div class="clear">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="clear">&nbsp;</div>
+                    </div>
+                    <?php
+                    //********************* block Tag *************************//
+                    if ( !empty($this->arrArticleDetail['list_tag']) )
+                    {
+                    ?>
+                        <div class="block_tag width_common space_bottom_20">
+                            <div class="txt_tag">Tags</div>
+                            <?php
+                            foreach ( $this->arrArticleDetail['list_tag'] as $tagDetail )
+                            {
+                            ?>
+                                <a href="<?php echo $this->configView['url_vne'],$tagDetail['tag_url']; ?>" title="<?php echo $tagDetail['tag_name_format']; ?>" class="tag_item"><?php echo $this->MbUcfirst($tagDetail['tag_name']); ?></a>
+                            <?php
+                            }//end foreach
+                            ?>
+                        </div>
+                    <?php
+                    }//end if
+
+                    //********************* block Tin Khác *************************//
+                    //Check tin khac
+                    if ( !empty($this->arrOtherNews['data']) )
+                    {
+                    ?>
+                    <div class="box_category width_common style_03" data-tracking="true" id="box_tinkhac_detail">
+                        <?php echo $this->render('m240/box/othernews.phtml');?>
+                    </div>
+                    <?php
+                    }//end if
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

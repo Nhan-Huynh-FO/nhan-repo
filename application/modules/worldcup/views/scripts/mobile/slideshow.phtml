@@ -1,0 +1,59 @@
+<?php
+$arrData = $this->arrData;
+$arrDetail = $this->arrDetail;
+$total = count($arrData);
+if (!empty($arrData))
+{
+    ?>
+    <div id="main">
+        <div class="wrap">
+            <section id="exemple">
+                <?php
+                foreach ($arrData as $data)
+                {
+                    $captionCheck   = trim(strip_tags($data['caption']));
+                    if ( !empty($captionCheck) )
+                    {
+                        //Dem tu
+                        $wordCount = str_word_count(Fpt_Filter::setSeoLink($data['caption_format'], ' '));
+                        if ($wordCount <= LIMIT_COUNT_CAPTION_PHOTO)
+                        {
+                            $show = 0;
+                            $caption = $data['caption_format'];
+                        }
+                        else
+                        {
+                            $show = 1;
+                            $caption = $this->CropWord($data['caption_format'], LIMIT_CAPTION_PHOTO);
+                        }
+                        $summary = $this->CropWord($data['caption_format'], 32); //Cat 32 tu
+                    }
+                    else
+                    {
+                        $show = 0;
+                        $data['caption_format'] = $caption = $summary = '';
+                    }//end if
+                    ?>
+                    <div class="box">
+                        <a class="swipebox" href="<?php echo $this->ImageurlArticle($data, 'size0'); ?>" title="<?php echo $arrDetail['title_format']; ?>" summary="<?php echo $summary; ?>" rel="<?php echo $caption; ?>" relfull="<?php echo $data['caption_format']; ?>" link="<?php echo $arrDetail['share_url']; ?>" show="<?php echo $show; ?>" total="<?php echo $total; ?>"></a>
+                    </div>
+                    <?php
+                }
+                ?>
+                <div class="clear">&nbsp;</div>
+            </section>
+            <input type="hidden" name="share_url" value="<?php echo $arrDetail['share_url']; ?>">
+            <input type="hidden" name="article_id" value="<?php echo $arrDetail['article_id']; ?>">
+            <input type="hidden" name="category_id" value="<?php echo $arrDetail['category_id']; ?>">
+            <input type="hidden" name="article_type" value="<?php echo $arrDetail['article_type']; ?>">
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                window.scrollTo(0, 10);
+                $('.swipebox').swipebox();
+            });
+        </script>
+    </div>
+    <?php
+}
+?>

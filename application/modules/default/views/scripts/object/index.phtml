@@ -1,0 +1,91 @@
+<?php
+$this->GetBlock();
+$arrData        = $this->arrData;
+$name           = $this->name;
+$arrParamPaging = $this->arrParamPaging;
+?>
+<div id="col_left" class="w672 left bg_white">
+    <div id="box_hot_news_670" class="box_width_common bg_soc">
+        <div class="sub_cate_page">
+        </div>
+    </div>
+    <div id="box_list_news_sub" class="box_width_common bg_white">
+        <div class="content_block">
+            <div class="title_tag box_width_common"><b class="txt_18 txt_red">Tag: <?php echo $name; ?></b></div>
+            <div class="line_tag_bottom box_width_common">&nbsp;</div>
+            <?php
+            if (!empty($arrData['data']))
+            {
+                ?>
+                <ul class="list_news">
+                    <?php
+                    foreach ($arrData['data'] as $id)
+                    {
+                        $article = $this->article->getArticleBasic($id);
+                        ?>
+                        <li>
+                            <?php
+                            if ($article['thumbnail_url'] != '')
+                            {
+                                ?>
+                                <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                    <img src="<?php echo $this->ImageurlArticle($article, 'size18'); ?>" width="165" height="124" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>" class="img_space_right_10" />
+                                </a>
+                            <?php } ?>
+                            <h2>
+                                <p>
+                                    <b><a class="txt_black_hover_blue txt_16" href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>"><?php echo $article['title']; ?></a></b>
+                                    <span class="icon_portal_thethao icon_have_<?php echo $article['article_icon']; ?>">&nbsp;</span>
+                                </p>
+                            </h2>
+                            <p class="txt_666 txt_11"><?php echo $article['publish_time_format']; ?>  <span class="icon_portal_thethao icon_commend">&nbsp;</span> <?php echo $this->Articlecomment($article); ?></p>
+                            <p><?php echo $article['lead']; ?></p>
+                            <?php
+                            if (!empty($article['reference_detail']))
+                            {
+                                ?>
+                                <div class="relative_new">
+                                    <p><span class="icon_tinlienquan">&nbsp;</span>
+                                        <?php
+                                        if (count($article['reference_detail']) > 3)
+                                        {
+                                            $article['reference_detail'] = array_slice($article['reference_detail'], 0, 3);
+                                        }
+                                        foreach ($article['reference_detail'] as $reference)
+                                        {
+                                            $arrRef[] = '<b><a href="' . $reference['share_url'] . '" title="' . $reference['title_format'] . '" alt="' . $reference['title_format'] . '" class="txt_11 txt_666">' . $reference['title'] . '</a></b>';
+                                        }
+                                        echo implode(' / ', $arrRef);
+                                        unset($arrRef);
+                                        ?>
+                                    </p>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+                <div class="more_bottom_detal box_width_common">
+                    <?php
+                    echo $this->Pagination($arrParamPaging, $arrParamPaging['perpage']);
+                    ?>
+                </div>
+                <div class="clear">&nbsp;</div>
+                <?php
+            }
+            else
+            {
+                echo "<p>Hiện tại chưa có bài viết liên quan.</p>";
+            }
+            ?>
+
+        </div>
+
+    </div>
+</div>
+<div id="col_right" class="w300 right">
+    <?php echo $this->GetBlock('right'); ?>
+</div>

@@ -1,0 +1,37 @@
+<ul class="list_photo_dulich">
+    <?php
+    foreach ($this->arrData as $id)
+    {
+        $photo = $this->objArticle->getArticleBasic($id);
+    ?>
+        <li>
+            <?php
+            if (!empty($photo['thumbnail_url']))
+            {
+            ?>
+            <div class="thumb_140">
+                <a href="<?php echo $this->ShareurlWorldcup($photo['share_url']); ?>" title="<?php echo $photo["title_format"]; ?>" alt="<?php echo $photo["title_format"]; ?>">
+                    <img alt="<?php echo $photo["title_format"]; ?>" src="<?php echo $this->Imageurl($photo['thumbnail_url'], 'size6'); ?>">
+                </a>
+                <?php echo $this->ArticleTypeIcon($photo); ?>
+            </div>
+            <?php
+            }
+            ?>
+            <div class="title_news">
+                <a class="txt_link" href="<?php echo $this->ShareurlWorldcup($photo['share_url']); ?>" title="<?php echo $photo["title_format"]; ?>" alt="<?php echo $photo["title_format"]; ?>">
+                    <?php echo $photo["title"]; ?>
+                </a>
+            </div>
+        </li>
+    <?php
+    }
+    ?>
+</ul>
+<div class="bottom_pagination width_common">
+    <div class="bottom_pagination width_common">
+        <?php
+        echo $this->PaginationAjax($this->arrParamPaging);
+        ?>
+    </div>
+</div>

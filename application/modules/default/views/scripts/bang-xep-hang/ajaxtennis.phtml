@@ -1,0 +1,84 @@
+<?php
+//1 - mobile , 0 - web, tablet
+$device = DEVICE_ENV & 1;
+?>
+<?php
+if (is_array($this->arrTennisRanking) && count($this->arrTennisRanking))
+{
+    ?>
+    <div class="block_tennis_top100" id="box_ranking_tennis">
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody><tr class="first_row">
+                    <td class="w30"><b>Hạng</b></td>
+                    <td class="w390"><b>Tay vợt</b></td>
+                    <?php
+                    if (!$device)
+                    {
+                    ?>
+                    <td class="w60"><b>Quốc tịch</b></td>
+                    <td class="w70"><b>Xu hướng</b></td>
+                    <?php
+                    }
+                    ?>
+                    <td class="txt_right w50"><b>Điểm số</b></td>
+                </tr>
+                <?php
+                $i = 0;
+                foreach ($this->arrTennisRanking as $id => $playerRanking)
+                {
+                    $detail = $this->objTennis->getDetailObjectBasic($id);
+                    if (empty($detail))
+                    {
+                        continue;
+                    }
+                    $classRank = '';
+                    if ($playerRanking['Movement'] == 0)
+                    {
+                        $classRank = 'muiten_right';
+                    }
+                    elseif ($playerRanking['Movement'] > 0)
+                    {
+                        $classRank = 'muiten_up';
+                    }
+                    elseif ($playerRanking['Movement'] < 0)
+                    {
+                        $classRank = 'muiten_down';
+                    }
+                    ?>
+                    <tr class="<?php echo $i % 2 ? 'bg_chan' : '' ?>">
+                        <td class="txt_center"><?php echo $playerRanking['RankingPosition']; ?></td>
+                        <td><a class="txt_blue" href="<?php echo $detail['share_url']; ?>" title="<?php echo $detail['name_format'] ?>"><?php echo $detail['name'] ?></a></td>
+                        <?php
+                        if (!$device)
+                        {
+                        ?>
+                        <td><?php echo $detail['nationality_name']; ?></td>
+                        <td>
+                            <a class="left icon_portal_thethao <?php echo $classRank; ?>" href="javascript:;">&nbsp;</a>
+                            <span class="right"><?php echo Abs($playerRanking['Movement']); ?></span>
+                            <div class="clear"></div>
+                        </td>
+                        <?php
+                        }
+                        ?>
+                        <td class="txt_right"><?php echo number_format($playerRanking['RankingPoint'], 0, '.', ',') ?></td>
+                    </tr>
+                    <?php
+                    $timeUpdate = $playerRanking['UpdateTime'];
+                    $i++;
+                }
+                ?>
+            </tbody>
+        </table>
+        <p class="txt_666 txt_11"><b>Ngày cập nhật : <?php echo $this->DateTimeFormat($timeUpdate, 'long'); ?></b></p>
+    </div>
+    <?php
+}
+else
+{
+    ?>
+    <span class="txt_666">Rất tiếc, chúng tôi chưa cập nhật thông tin.</span>
+    <?php
+}
+?>
+

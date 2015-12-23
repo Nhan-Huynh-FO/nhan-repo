@@ -1,0 +1,71 @@
+<?php
+$arrData    = $this->arrData;
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title><?php echo $arrData['title_format']; ?></title>
+        <link type="image/x-icon" href="<?php echo $this->configView['images']; ?>/favicon.ico" rel="shortcut icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href='<?php echo $this->configView['vnexpress']['css']; ?>/mgeneral.css' media='screen' rel='stylesheet' type='text/css' />
+        <link href='<?php echo $this->configView['css']; ?>/print.css' media='screen' rel='stylesheet' type='text/css' />
+    </head>
+    <body>
+        <div id="print_page">
+            <div class="header_page">
+                <div class="header_left_logo left">
+                    <a href="<?php echo $this->configView['url_vne'];?>" title="VnExpress"><img src="<?php echo $this->configView['images']; ?>/graphics/img_logo_vne_web.gif" alt="vnexpress logo" /></a>
+                </div>
+                <div class="header_right_print right">
+                    <a href="javascript:;" onclick="return window.print();" title="In trang"><img src="<?php echo $this->configView['images']; ?>/graphics/icon_print.gif" /><span>&nbsp;In trang</span>&nbsp;(Ctr + P)</a>
+                </div>
+            </div>
+            <div id="detail_page" class="width_common">
+                <div class="box_width_common" id="box_details_news">
+                    <div class="w670 left">
+                        <div class="main_content_detail width_common">
+                            <div class="block_timer_share">
+                                <div class="block_timer left txt_666">
+                                    <?php echo $this->DateTimeFormat($arrData['publish_time'], 'long'); ?>
+                                </div>
+                            </div>
+                            <div class="title_news">
+                                <h1><?php echo $arrData['title_format']; ?></h1>
+                            </div>
+                            <div class="short_intro txt_666"><?php echo $arrData['lead']; ?></div>
+                            <?php
+                            if ( !empty($arrData['reference_detail']) )
+                            {
+                            ?>
+                            <div class="relative_new">
+                                <ul class="list_news_dot_3x3_300">
+                                    <?php
+                                    foreach ( $arrData['reference_detail'] as $reference )
+                                    {
+                                    ?>
+                                        <li>
+                                            <a href="<?php echo $this->ShareurlM240($reference['share_url']); ?>" title="<?php echo $reference['title_format']; ?>"><?php echo $reference['title_format']; ?></a>
+                                        </li>
+                                    <?php
+                                    }//end foreach
+                                    ?>
+                                </ul>
+                            </div>
+                            <?php
+                            }//end if
+                            ?>
+                            <div class="width_common space_bottom_20">
+                                <div class="block_col_480">
+                                    <div class="fck_detail width_common">
+                                        <?php echo $arrData['content'];?>
+                                    </div>
+                                </div>
+                                <div class="clear">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<div class="block_widget">
+    <div class="title_widget width_common_widget">
+        <div class="title_widget_left">
+            <a target="_blank" href="<?php echo $this->cateInfo['cate']['share_url']; ?>" title="<?php echo $this->cateInfo['cate']['name']; ?>" class="title_txt pt_thethao"><?php echo $this->cateInfo['cate']['name']; ?></a>
+        </div>
+        <div class="title_widget_right">
+            <a target="_blank" href="/" class="txt_name_portal">thethao.vnexpress.net</a>
+        </div>
+    </div>
+    <?php
+    if (!empty($this->arrData))
+    {
+        ?>
+        <div class="content_widget width_common_widget">
+            <ul class="list_news_widget_2">
+                <?php
+                $i = 0;
+                foreach ($this->arrData as $id)
+                {
+                    $article = $this->objArticle->getArticleBasic($id);
+                    if (empty($article))
+                    {
+                        continue;
+                    }
+                    $class = '';
+                    if($i == 0)
+                    {
+                        $class = 'class="first_line line_thethao"';
+                    }
+                    else if($i == 2)
+                    {
+                        $class = 'class="line_xam"';
+                    }
+                    ?>
+                    <li <?php echo $class; ?>>
+                        <a target="_blank" href="<?php echo $article['share_url']; ?>" class="wg_image_thumb" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                            <img src="<?php echo $this->ImageurlArticle($article, 'size1'); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>" class="wg_image" />
+                        </a>
+                        <a target="_blank" href="<?php echo $article['share_url']; ?>" class="txt_wg_title" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                            <?php
+                            echo $article['title'];
+                            ?>
+                        </a>
+                    </li>
+                    <?php
+                    $i++;
+                }
+                ?>
+            </ul>
+        </div>
+    <?php
+    }
+    ?>
+    <div class="clear"></div>
+</div>

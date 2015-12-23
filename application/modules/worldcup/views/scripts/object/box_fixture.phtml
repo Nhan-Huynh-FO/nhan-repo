@@ -1,0 +1,147 @@
+<?php
+if (!empty($this->arrFixture))
+{
+    $objTeam    = $this->objObject->getTeam();
+    $objMatch   = $this->objObject->getMatch();
+    $team1 = $team2 = array();
+    if ($this->countItem > LIMIT_MATCH_IN_TEAM) {
+    ?>
+    <a class="btn_control_top_team prev_slider" data-type="prev" href="javascript:;"><i class="ico"></i></a>
+    <a class="btn_control_top_team next_slider" data-type="next" href="javascript:;"><i class="ico"></i></a>
+    <?php
+    }
+    ?>
+    <div class="content_slider_top_team">
+        <?php
+        foreach ($this->arrFixture as $matchId => $score)
+        {
+            //get detail match
+            $matchDetail = $objMatch->getDetailObjectBasic($matchId);
+
+            if (empty($matchDetail))
+            {
+                continue;
+            }
+            $objTeam->setId(array($matchDetail['team1'],$matchDetail['team2']));
+            $team1 = $objTeam->getDetailObjectBasic($matchDetail['team1']);
+            $team2 = $objTeam->getDetailObjectBasic($matchDetail['team2']);
+            ?>
+            <div class="board">
+                <div class="date">
+                    <span class="week"><?php echo 'Tuần ', date('W', $matchDetail['datetime_happen']); ?></span>
+                    <span class="time">
+                        <?php
+                        if ($matchDetail['status'] == 1)
+                        {
+                            echo '<b>', date('H:i', $matchDetail['datetime_happen']), '</b> | ', date('d/m/Y', $matchDetail['datetime_happen']);
+                        }
+                        elseif ($matchDetail['status'] == 2)
+                        {
+                            echo '<b>', date('H:i', $matchDetail['datetime_happen']), '</b> | ', date('d/m/Y', $matchDetail['datetime_happen']);
+                        }
+                        else
+                        {
+                            echo '<b>', date('H:i', $matchDetail['datetime_happen']), '</b> | ', date('d/m/Y', $matchDetail['datetime_happen']);
+                        }
+                        ?>
+                    </span>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="team">
+                                <?php if(!empty($team1['thumbnail']))
+                                {?>
+                                <a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>">
+                                    <img width="36" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>" title="<?php echo $team1['name_format']; ?>" />
+                                </a>
+                                <?php
+                                }
+                                ?>
+                                <span>
+                                    <a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>">
+                                    <?php echo $team1['abbreviation']; ?>
+                                    </a>
+                                </span>
+                            </td>
+                            <td class="score">
+                                <?php
+                                if ($matchDetail['status'] == 1)
+                                {
+                                    echo '<strong> - </strong><small></small>';
+                                }
+                                elseif ($matchDetail['status'] == 2)
+                                {
+                                    echo '<strong>', $matchDetail['goal1'], ' - ' ,$matchDetail['goal2'] ,'</strong><small>FT</small>';
+                                }
+                                else
+                                {
+                                    echo '<strong>', $matchDetail['goal1'], ' - ' ,$matchDetail['goal2'] ,'</strong><small></small>';
+                                }
+                                ?>
+                            </td>
+                            <td class="team">
+                                <?php if(!empty($team2['thumbnail']))
+                                {?>
+                                <a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>">
+                                    <img width="36" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size1'); ?>" alt="<?php echo $team2['name_format']; ?>" title="<?php echo $team2['name_format']; ?>" />
+                                </a>
+                                <?php
+                                }
+                                ?>
+                                <span>
+                                    <a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>">
+                                    <?php echo $team2['abbreviation']; ?>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                <div class="some_more">
+                    <?php
+                    if($matchDetail['status'] == 1 || $matchDetail['status'] == 2) //chua dien ra or da ket thuc
+                    {
+                    ?>
+                    <a href="<?php echo $this->configView['url']. '/thong-ke/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchDetail['id'])  ?>" title="<?php echo 'Tường thuật trận ', $team1['name'], ' vs ', $team2['name']; ?>">Chi tiết</a>
+                    <?php
+                    }
+                    else
+                    {
+                    ?>
+                    <a href="<?php echo $this->configView['url']. '/tuong-thuat/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchDetail['id'])  ?>" title="<?php echo 'Tường thuật trận ', $team1['name'], ' vs ', $team2['name']; ?>">Trực tiếp</a>
+                    <?php
+                    }
+                    ?>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+    <script type="text/javascript">
+    var owl_slider_team = $(".slider_top_team  .content_slider_top_team");
+        owl_slider_team.owlCarousel({
+            autoPlay:4000,
+            items : <?php echo LIMIT_MATCH_IN_TEAM; ?>,
+            itemsDesktop : [1199,3],
+            itemsTablet: [600,3], //2 items between 600 and 0
+            itemsDesktopSmall : [900,3],// betweem 900px and 601px
+            itemsMobile		:[479,1],
+            pagination:false
+        });
+        <?php
+        if ($this->countItem > LIMIT_MATCH_IN_TEAM) {
+        ?>
+        $(".slider_top_team .next_slider").click(function() {
+            owl_slider_team.trigger('owl.next');
+        });
+        $(".slider_top_team .prev_slider").click(function() {
+            owl_slider_team.trigger('owl.prev');
+        });
+        <?php
+        }
+        ?>
+    </script>
+<?php
+}
+?>

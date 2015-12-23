@@ -1,0 +1,48 @@
+<?php
+header ("Content-Type:text/xml");
+echo '<?xml version = "1.0" encoding = "utf-8" ?>';
+?>
+<rss version="2.0">
+<channel>
+<title></title>
+<link>http://thethao.vnexpress.net></link>
+<description><![CDATA[]]></description>
+<language>vi-VN</language>
+<lastBuildDate><?php
+if(isset($this->arrArticle))
+{
+   echo date('m/d/Y h:i:s A',time());
+}
+?></lastBuildDate>
+<copyright>Copyright 2012 Thể thao</copyright>
+<image>http://st.f1.thethao.vnexpress.net/i/v1/graphics/img_vnexpress.jpg></image>
+<webMaster>webmaster@vnexpress.net</webMaster>
+<generator>TheThao</generator>
+
+    <?php if(!empty($this->arrArticle)){foreach($this->arrArticle as $id):
+		$arrArticle = $this->objArticle->getArticleFull($id);
+
+
+		$arrArticle['lead'] = preg_replace('/^target(.*)\"$/i','',$arrArticle['lead']);
+		$arrArticle['lead'] = preg_replace('/<a/i','<a target="_blank" ',$arrArticle['lead']);
+
+        ?>
+    <item>
+        <guid><?php if($arrArticle['article_id'] > 0)  echo $arrArticle['article_id']; else echo $arrArticle['hot_id']; ?></guid>
+        <link><![CDATA[<?php
+		if($arrArticle['article_id'] > 0) echo $this->configView['url'];
+		echo $arrArticle['share_url'];
+		?>]]></link>
+        <title><![CDATA[<?php echo $arrArticle['title'];?>]]></title>
+        <header><![CDATA[<?php echo trim($arrArticle['lead']);?>]]></header>
+        <description><![CDATA[<?php echo trim($arrArticle['lead']);?><?php echo trim($arrArticle['content']);?>]]></description>
+        <pubDate><?php echo date('m/d/Y h:i:s A',$arrArticle['publish_time']);?></pubDate>
+        <enclosure url="<?php echo $this->Imageurl($arrArticle['thumbnail_url'], '');?>" length="" width="" height="" type="image/jpeg">
+            <caption><![CDATA[]]></caption>
+            <credits><![CDATA[]]></credits>
+        </enclosure>
+        <category id="<?php echo $arrArticle['category_id'];?>"><![CDATA[<?php echo $this->Categoryname($arrArticle['category_id']);?>]]></category>
+    </item>
+    <?php endforeach; }?>
+</channel>
+</rss>

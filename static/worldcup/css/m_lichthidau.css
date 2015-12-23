@@ -1,0 +1,103 @@
+.page_schedule .m_sub_guess caption{
+	font-weight: bold;
+	background: #dedede;
+}
+.page_schedule .m_sub_guess table td{
+	padding: 5px 0 0 0;
+}
+.page_schedule .m_sub_guess .m_time{
+	font: 400 16px Arial;
+	text-align: center;
+	color: #9f224e;
+}
+.page_schedule .m_sub_guess .m_info .m_team{
+	text-align: center;
+	width:80%;
+	float:right;
+}
+.page_schedule .m_sub_guess .m_info .m_team img{
+	width: 41px;
+	height: 27px;
+}
+.page_schedule .m_sub_guess .m_info .m_team span{
+	display: block;
+	font-size: 16px;
+}
+.page_schedule .m_sub_guess .m_info .m_score{
+	text-align: center;
+	font: 700 30px Arial;
+	vertical-align: top;
+}
+.page_schedule .m_sub_guess .m_info .m_board{
+	font-size: 18px;
+	color: #999;
+}
+.page_schedule .m_sub_guess .m_info .m_team_b .m_team{
+	float: left !important;
+}
+.page_schedule .m_sub_guess .m_info .m_team_b .m_btn_next{
+	width: 12px;
+	height: 21px;
+	float: right;
+	background-position: 0px -68px;
+}
+.page_schedule .m_sub_guess .m_guess{
+	background: #f4f4f4;
+}
+.page_schedule .m_sub_guess .m_guess .m_txt{
+	text-align: center;
+	font-size: 14px;
+	color: #999;
+}
+.page_schedule .m_sub_guess .m_guess .m_score{
+	font-weight: bold;
+	font-size: 18px;
+	text-align: center;
+	margin: 5px 0 10px;
+}
+.page_schedule .m_sub_guess .m_guess .m_score input{
+	width: 25px;
+	height: 25px;
+	border: 1px solid #ddd;
+	background: #fff;
+	font-size: 18px;
+	text-align: center;
+	font-weight: bold;
+}
+.page_schedule .m_sub_guess .m_guess .m_btn_gr{
+	text-align: center;
+	margin-bottom: 5px;
+}
+.page_schedule .m_sub_guess .m_guess .m_btn_gr .btn{
+	width: 70px;
+	cursor: pointer;
+}
+
+.page_schedule .m_sub_guess table.m_none .m_time{
+	font-size: 400 16px Arial;
+	color: #666;
+}
+.page_schedule .m_sub_guess table.m_none .m_score{
+	font-size: 18px;
+	width:26%;
+}
+.page_schedule .m_sub_guess table.m_none .m_team_a,
+.page_schedule .m_sub_guess table.m_none .m_team_b{
+	width:37%;
+	vertical-align:top;
+} 
+.page_schedule .m_sub_guess table.m_none .m_score input{
+	width: 25px;
+	height: 25px;
+	border: 1px solid #ddd;
+	background: #fff;
+	font-size: 18px;
+	text-align: center;
+	font-weight: bold;
+}
+.page_schedule .m_sub_guess table.m_none td{
+	border-bottom: 1px dotted #ddd;
+}
+.page_schedule .m_sub_guess table.m_none tr:last-child td{
+	border-bottom: none;
+}

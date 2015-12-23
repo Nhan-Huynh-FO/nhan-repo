@@ -1,0 +1,46 @@
+<div class="width_common " id="header_trandau">
+    <div class="title_page_trandau width_common">
+        <?php
+		if (isset($this->timeUpdate))
+		{
+            $timeUpdate = (isset($this->timeUpdate) && !empty($this->timeUpdate)) ? $this->timeUpdate : time();
+			echo '<div class="block_timer left txt_666" id="timer_update">';
+			echo '<b>Cập nhật:</b> ', $this->DateTimeFormat($timeUpdate, 'long');
+			echo '</div>';
+		}
+		else
+		{
+			echo '<div class="block_txt_title_page left">Thông tin trận đấu</div>';
+		}
+        if (DEVICE_ENV ==4) {
+		?>
+        <div class="right">
+            <div class="social_share width_common">
+                <div class="social_share width_common" id="social_like">
+                    <?php echo $this->Articlelike($this->matchDetail['id'], 11); ?>
+                </div>
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+    </div>
+    <div class="block_thongtintrandau width_common">
+        <div class="content_capdau width_common">
+            <div class="main_capdau">
+                <?php
+                if (DEVICE_ENV != 1)
+                {
+                    echo $this->render('/object/common/ratio_info_subpage.phtml');
+                    echo $this->render('/object/common/vote_subpage.phtml');
+                }
+                else {
+                    echo $this->render('/object/common/ratio_info.phtml');
+                }
+                ?>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear">&nbsp;</div>
+    </div>
+</div>

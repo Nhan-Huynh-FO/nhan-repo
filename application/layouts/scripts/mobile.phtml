@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="image/x-icon" href="<?php echo $this->configView['images']; ?>/favicon.ico" rel="shortcut icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="VnExpress.net" />
+        <meta name="dc.description" content="Tin nhanh video clip hình ảnh các môn thể thao: bóng đá quyền anh đua xe bóng chuyền cầu lông… đang diễn ra ở VN & thế giới.." />
+        <meta name="dc.subject" content="Thể Thao - Vnexpress" />
+        <meta name="dc.created" content="2001-02-26" />
+        <meta name="dc.publisher" content="VnExpress" />
+        <meta name="dc.rights.copyright" content="VnExpress" />
+        <meta name="dc.creator.name" content="VnExpress" />
+        <meta name="dc.creator.email" content="webmaster@vnexpress.net" />
+        <meta name="dc.identifier" content="http://vnexpress.net" />
+        <meta name="copyright" content="VnExpress" />
+        <meta name="author" content="VnExpress" />
+        <meta name="dc.language" content="vi-VN" />
+        <meta name="robots" content="index,follow" />
+        <meta http-equiv="content-language" content="vi"/>
+        <meta name="geo.placename" content="Ha Noi, Viet Nam" />
+        <meta name="geo.region" content="VN-HN" />
+        <meta name="geo.position" content="21.030624;105.782431" />
+        <meta name="ICBM" content="21.030624, 105.782431" />
+        <meta name="revisit-after" content="days">
+        <!-- iPad icons -->
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/72x72.png" sizes="72x72">
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/114x114.png" sizes="144x144">
+        <!-- iPhone and iPod touch icons -->
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/57x57.png" sizes="57x57">
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/114x114.png" sizes="114x114">
+        <!-- Nokia Symbian -->
+        <link rel="nokia-touch-icon" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/57x57.png">
+        <!-- Android icon precomposed so it takes precedence -->
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/114x114.png" sizes="1x1">
+        <?php
+        if (!$this->notRefreshPage)
+        {
+            ?>
+            <meta http-equiv="REFRESH" content="1800" />
+            <?php
+        }
+        ?>
+        <meta content="VnExpress" property="og:site_name" />
+        <meta content="<?php echo $this->escape($this->ogType); ?>" property="og:type" />
+        <meta content="<?php echo $this->escape($this->ogTitle); ?>" itemprop="headline" property="og:title" />
+        <meta content="<?php echo $this->ogUrl; ?>" itemprop="url" property="og:url" />
+        <meta content="<?php echo $this->ogImage; ?>" itemprop="thumbnailUrl" property="og:image" />
+        <meta content="<?php echo $this->escape($this->ogDescription); ?>" itemprop="description" property="og:description" />
+        <link rel="alternate" href="<?php echo $this->configView['url']; ?>" hreflang="vi-vn" />
+        <!--Meta Tag-->
+        <?php echo $this->headMeta();
+        $tt_category_id = isset($this->intCategoryId) ? $this->intCategoryId : SITE_ID;
+        $tt_article_id  = isset($this->intArticleId) ? $this->intArticleId : $tt_category_id;
+        if ($tt_category_id == 1003240) {
+            echo '<meta name="robots" content="noindex">';
+        }
+        ?>
+        <meta name="tt_category_id" content="<?php echo $tt_category_id; ?>" />
+        <meta name="tt_article_id" content="<?php echo $tt_article_id; ?>" />
+        <meta name="tt_site_id" content="<?php echo SITE_ID; ?>" />
+        <!--Title-->
+        <?php echo $this->headTitle(); ?>
+        <!-- JS -->
+        <script type="text/javascript">
+            //GA
+            var _gaq = _gaq || [];
+            _gaq.push(["_setAccount", "UA-249346-5"]);
+            _gaq.push(["_trackPageview"]);
+            _gaq.push(["c._setAccount", "UA-249346-37"]);
+            _gaq.push(["c._trackPageview"]);
+            _gaq.push(["d._setAccount", "UA-249346-18"]);
+            _gaq.push(["d._trackPageview"]);
+            _gaq.push(["e._setAccount", "UA-50285069-12"]);
+            _gaq.push(["e._trackPageview"]);
+            (function() {
+                var a = document.createElement("script");
+                a.type = "text/javascript";
+                a.async = !0;
+                a.src = ("https:" == document.location.protocol ? "https://" : "http://") + "stats.g.doubleclick.net/dc.js";
+                var b = document.getElementsByTagName("script")[0];
+                b.parentNode.insertBefore(a, b)
+            })();
+            //E-click
+            var _siteId = "11";
+            (function() {
+                var a = document.createElement("script");
+                a.type = "text/javascript";
+                a.async = !0;
+                a.src = "http://st.l.a.eclick.vn/ea.js";
+                var b = document.getElementsByTagName("script")[0];
+                b.parentNode.insertBefore(a, b)
+            })();
+            //Begin comScore Tag
+            var _comscore = _comscore || [];
+            _comscore.push({ c1: "2", c2: "19747654" });
+            (function() {
+                var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+                s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+                el.parentNode.insertBefore(s, el);
+            })();
+            (function() {
+                var csid = "F09828";
+                var bpid = "fpt_vn";
+                var e = document.createElement("script");
+                var s = document.getElementsByTagName("script")[0];
+                e.src = "//js.revsci.net/gateway/gw.js?auto=t&csid=" + csid + "&bpid=" + bpid;
+                e.async = true;
+                s.parentNode.insertBefore(e, s);
+            })();
+        </script>
+        <noscript>
+            <img src="http://b.scorecardresearch.com/p?c1=2&c2=19747654&cv=2.0&cj=1" />
+        </noscript>
+        <!-- End comScore Tag -->
+        <!-- CSS -->
+        <link rel="stylesheet" href="<?php echo $this->configView['vnecdn']['css']; ?>/mobile_common.css" media="all" />
+        <link rel="stylesheet" href="<?php echo $this->configView['vnecdn']['css']; ?>/<?php echo isset($this->intArticleId) ? 'detail' : 'portal'; ?>_common.css" media="all" />
+        <link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/msport.css" media="all" />
+        <link rel="stylesheet" href="<?php echo $this->configView['myvne']['css']; ?>/m_my_index.css" media="all" />
+        <link rel="stylesheet" href="<?php echo $this->configView['myvne']['css']; ?>/lib/jquery.fancybox.css"  media="all"/>
+        <?php echo $this->headLink(); ?>
+        <script src="<?php echo $this->configView['vnecdn']['libs']; ?>/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript">
+            var SITE_ID     = <?php echo SITE_ID; ?>,
+                img_url   = '<?php echo $this->configView['images']; ?>',
+                css_url     = '<?php echo $this->configView['css']; ?>',
+                base_url    = '<?php echo $this->configView['url']; ?>',
+                device_env  = <?php echo DEVICE_ENV; ?>,
+                article_id  = <?php echo isset($this->intArticleId) ? $this->intArticleId : 0; ?>,
+                vne_url     = '<?php echo $this->configView['url_vne']; ?>',
+                ads_full_screen = <?php echo isset($this->isAdsFullScreen) ? $this->isAdsFullScreen : 0; ?>,
+                interactions_url = '<?php echo $this->configView['comment']; ?>';
+            predict_with_captcha = 0;
+            document.domain = '<?php echo DOMAIN_VNE ?>';
+            var paramsBlock = $.parseJSON('<?php echo isset($this->paramsBlock) ? $this->paramsBlock : "[]"; ?>');
+            paramsBlock.part = [];
+        </script>
+        <?php
+        if (isset($this->intArticleId))
+        {
+            ?>
+            <script src="<?php echo $this->configView['vnecdn']['js']; ?>/interactions/parser_v3.js"></script>
+            <?php
+        }
+        ?>
+        <script src="<?php echo $this->configView['polyads']['core']; ?>/MobileShowAds.js"></script>
+    </head>
+    <body>
+        <div id="myvne_taskbar"></div>
+        <div class="block_more_info" id="box_col_left">
+            <div class="box_width_common">
+                <div class="btn_control_col_left"><img class="icon_total_vne icon_hambermenu" src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/img_blank.gif" alt="" /></div>
+                <div class="block_scoll_menu">
+                    <div class="block_search">
+                        <form action="http://timkiem.vnexpress.net/thethao" method="get" target="_blank" id="search">
+                            <input type="text" name="q" value="Tìm kiếm" maxlength="80" class="input_search" onblur="if(this.value=='') this.value=this.defaultValue" onfocus="if(this.value==this.defaultValue) this.value=''"/>
+                            <input type="submit" value="" class="icon_menu_phone btn_search" />
+                        </form>
+                        <div class="clear">&nbsp;</div>
+                    </div>
+                    <ul class="list_item_panel">
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>" class="bg_666" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Trang chủ']);" title="Trang chủ"><span class="icon_menu_phone ico_menu_01">&nbsp;</span>Trang chủ</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/thoi-su" class="" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Thời sự']);" title="Thời sự"><span class="icon_menu_phone ico_menu_02">&nbsp;</span>Thời sự</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/goc-nhin" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Góc nhìn']);"><span class="icon_menu_phone ico_menu_03">&nbsp;</span>Góc nhìn</a></
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/the-gioi" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Thế giới']);" title="Thế giới"><span class="icon_menu_phone ico_menu_05">&nbsp;</span>Thế giới</a></li>
+                        <li><a href="<?php echo $this->configView['url_kdo']; ?>" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Kinh doanh']);" title="Kinh doanh"><span class="icon_menu_phone ico_menu_06">&nbsp;</span>Kinh doanh</a></li>
+                        <li><a href="<?php echo $this->configView['url_gti']; ?>" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Giải trí']);" title="Giải trí"><span class="icon_menu_phone ico_menu_07">&nbsp;</span>Giải trí</a></li>
+                        <li class="active"><a href="/" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Thể thao']);" title="Thể thao"><span class="icon_menu_phone ico_menu_08">&nbsp;</span>Thể thao</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/phap-luat" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Pháp luật']);" title="Pháp luật"><span class="icon_menu_phone ico_menu_09">&nbsp;</span>Pháp luật</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/giao-duc" class="" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Giáo dục']);" title="Giáo dục"><span class="icon_menu_phone ico_menu_25">&nbsp;</span>Giáo dục</a></li>
+                        <li><a href="<?php echo $this->configView['url_skh']; ?>" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Sức khỏe']);" title="Sức khỏe"><span class="icon_menu_phone ico_menu_27">&nbsp;</span>Sức khỏe</a></li>
+                        <li><a href="<?php echo $this->configView['url_dso']; ?>" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Đời sống']);" title="Gia đình"><span class="icon_menu_phone ico_menu_10">&nbsp;</span>Gia đình</a></li>
+                        <li><a href="<?php echo $this->configView['url_dli']; ?>" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Du lịch']);" title="Du lịch"><span class="icon_menu_phone ico_menu_23">&nbsp;</span>Du lịch</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/khoa-hoc" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Khoa học']);" title="Khoa học"><span class="icon_menu_phone ico_menu_11">&nbsp;</span>Khoa học</a></li>
+                        <li><a href="<?php echo $this->configView['url_sho']; ?>" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Số hóa']);" title="Số hóa"><span class="icon_menu_phone ico_menu_12">&nbsp;</span>Số hóa</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/oto-xe-may" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Xe']);" title="Xe"><span class="icon_menu_phone ico_menu_13">&nbsp;</span>Xe</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/cong-dong" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Cộng đồng']);" title="Cộng đồng"><span class="icon_menu_phone ico_menu_04">&nbsp;</span>Cộng đồng</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/tam-su" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Tâm sự']);" title="Tâm sự"><span class="icon_menu_phone ico_menu_15">&nbsp;</span>Tâm sự</a></li>
+                        <li><a href="<?php echo 'http://video.vnexpress.net'; ?>" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Video']);" title="Video"><span class="icon_menu_phone ico_menu_17">&nbsp;</span>Video</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/cuoi" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Cười']);" title="Cười"><span class="icon_menu_phone ico_menu_19">&nbsp;</span>Cười</a></li>
+                        <li><a href="http://raovat.vnexpress.net" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', 'Rao vặt']);" title="Rao vặt"><span class="icon_menu_phone ico_menu_16">&nbsp;</span>Rao vặt</a></li>
+                        <li><a class="bg_666" href="<?php echo $this->configView['url_vne']; ?>/24h-qua" onclick="_gaq.push(['c._trackEvent', 'Menu', 'Click', '24h qua']);" title="24h qua"><span class="icon_menu_phone ico_menu_24">&nbsp;</span>24h qua</a></li>
+                        <li><a class="bg_666" href="javascript:;" id="switch-to-desktop"><span class="icon_menu_phone ico_menu_20">&nbsp;</span>Phiên bản Desktop</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/lien-he-toa-soan/?p=thethao" class="bg_666"><span class="icon_menu_phone ico_menu_21">&nbsp;</span>Liên hệ Toà soạn</a></li>
+                        <li class="end"><a href="<?php echo $this->configView['url_vne']; ?>/contact.htm" class="bg_666"><span class="icon_menu_phone ico_menu_22">&nbsp;</span>Thông tin Toà soạn</a></li>
+                    </ul>
+                    <div class="coppy_right_left width_common">
+                        <div class="txt_coppy_right">
+                            <p>&copy; Copyright 1997 - VnExpress.net, All rights reserved.</p>
+                            <p>&reg; VnExpress giữ bản quyền nội dung trên website này.</p>
+                        </div>
+                        <div class="txt_lienhe"> Hotline:<br>
+                            <a href="tel:012388801238">0123.888.0123 (Hà Nội)</a><br />
+                            <a href="tel:01292333555">0129.233.3555 (TP HCM) </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear">&nbsp;</div>
+        </div>
+        <div id="page">
+            <div  class="banner_mobile_300x50 banner_mobile">
+                <script type="text/javascript">try{Poly_Top();}catch(e){}</script>
+            </div>
+            <div id="wrapper_header">
+                <div id="header">
+                    <div class="width_common">
+                        <div class="logovne">
+                            <a href="<?php echo $this->configView['url_vne']; ?>"><img src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/logo.png" alt="vnexpress logo" class="img_logo" /></a>
+                        </div>
+                        <div class="clear">&nbsp;</div>
+                    </div>
+                    <div class="clear">&nbsp;</div>
+                </div>
+            </div>
+
+            <div id="wrapper_container">
+                <div id="container">
+                    <div class="width_common">
+                        <div class="breakumb_timer width_common">
+                            <div class="timer_header">
+                                <ul>
+                                    <?php
+                                    if (!empty($this->arrActiveMenu) && $this->arrActiveMenu[0] == SITE_ID)
+                                    {
+                                        unset($this->arrActiveMenu);
+                                    }
+                                    ?>
+                                    <li class="start<?php echo !empty($this->arrActiveMenu) ? ' have_cap2' : ''; ?>"><a href="/">Thể thao</a><span class="arrow_breakumb">&nbsp;</span></li>
+                                    <?php
+                                    if (!empty($this->menuDetail) && $this->menuDetail['category_id'] != SITE_ID)
+                                    {
+                                        ?>
+                                        <li class="cap2"><a href="<?php echo $this->menuDetail['link']; ?>"><?php echo $this->menuDetail['catename']; ?></a><span class="arrow_breakumb">&nbsp;</span></li>
+                                        <?php
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+                            <div class="rss right">
+                                <?php
+                                if ($this->intCategoryId == CATE_ID_TAITRO)
+                                {
+                                ?>
+                                <a href="#" class="txt_thongtinnhataitro">Thông tin nhà tài trợ</a>
+                                <?php
+                                }
+                                else {
+                                ?>
+                                <div class="block_timer left txt_666" id="clockMobile"></div>
+                                <?php
+                                }
+                                ?>
+                                <a href="#" class="img_arrow_timer">&nbsp;</a>
+                            </div>
+                            <div class="block_show_breakumb" style="display: none;">
+                                <ul>
+                                    <?php
+                                    foreach ($this->arrMenu as $menu)
+                                    {
+                                        if ($menu['cate_type'] != 1 || !$menu['show_folder']
+                                                || $menu['catecode'] == 'lich-thi-dau')
+                                        {
+                                            continue;
+                                        }
+                                        if ($menu['category_id'] == CATE_ID_VIDEO)
+                                        {
+                                            $menu['link'] = 'http://video.vnexpress.net/the-thao';
+                                        }
+                                        ?>
+                                        <li><a href="<?php echo $menu['link']; ?>"><?php echo $menu['catename']; ?></a></li>
+                                        <?php
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
+                        <?php echo $this->layout()->content;?>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div  class="banner_mobile_300x50 banner_footer_mobile">
+                <script type="text/javascript">try{Poly_Footer();}catch(e){}</script>
+            </div>
+            <div id="wrapper_footer">
+                <div id="footer">
+                    <ul class="list_menu_small">
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>">Trang chủ</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/thoi-su">Thời sự</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/goc-nhin">Góc nhìn</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/the-gioi">Thế giới</a></li>
+                        <li><a href="<?php echo $this->configView['url_kdo']; ?>">Kinh doanh</a></li>
+                        <li><a href="<?php echo $this->configView['url_gti']; ?>">Giải trí</a></li>
+                        <li><a href="/">Thể thao</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/phap-luat">Pháp luật</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/giao-duc">Giáo dục</a></li>
+                        <li><a href="<?php echo $this->configView['url_skh']; ?>">Sức khỏe</a></li>
+                        <li><a href="<?php echo $this->configView['url_dso']; ?>">Gia đình</a></li>
+                        <li><a href="<?php echo $this->configView['url_dli']; ?>">Du lịch</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/khoa-hoc">Khoa học</a></li>
+                        <li><a href="<?php echo $this->configView['url_sho']; ?>">Số hóa</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/oto-xe-may">Xe</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/cong-dong">Cộng đồng</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/tam-su">Tâm sự</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/video">Video</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/cuoi">Cười</a></li>
+                        <li><a href="http://raovat.vnexpress.net">Rao vặt</a></li>
+                    </ul>
+                    <div class="ft-bot">
+                        <div class="coppy_right_small">
+                            <div class="tttoasoan">
+                                <div class="txt_up width_common">
+                                    <div class="width_50">
+                                        <a href="<?php echo $this->configView['url_vne']; ?>/lien-he-toa-soan/?p=thethao" class="bg_666">
+                                            <img class="icon_total_vne icon_hotline" src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/img_blank.gif" alt="liên hệ tòa soạn" />Liên hệ Toà soạn
+                                        </a>
+                                    </div>
+                                    <div class="width_50">
+                                        <a href="<?php echo $this->configView['url_vne']; ?>/contact.htm" class="bg_666">
+                                            <img class="icon_total_vne icon_thongtintx" src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/img_blank.gif" alt="thông tin tòa soạn" />Thông tin Toà soạn
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="txt_down width_common">
+                                    <div class="width_50"><b><a href="tel:01238880123">0123.888.0123</a></b> (HN) </div>
+                                    <div class="width_50"><b><a href="tel:01292333555">0129.233.3555</a></b> (TP HCM)</div>
+                                </div>
+                            </div>
+                            <div class="coppy_right">
+                                <p>&copy; <span>Copyright 1997 VnExpress.net,</span>  All rights reserved</p>
+                                <p>&reg; VnExpress giữ bản quyền nội dung trên website này.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block_close_menu">&nbsp;</div>
+        </div>
+        <a href="javascript:;" id="to_top">
+            <img src="<?php echo $this->configView['vnecdn']['images']; ?>/icons/go_to_top_m.png" alt="totop" />
+        </a>
+        <div id="slideshow_popup" style="background:#000000; display: none;"></div>
+		<div class="clear"></div>
+        <script type="text/javascript">
+            var domain = '<?php echo $this->configView['url']; ?>',
+                PAGE_DETAIL = <?php echo isset($this->intArticleId) ? 1 : 0 ?>,
+                PageHot = <?php echo $this->isArticleHotVnE ? 1 : 0; ?>,
+                PAGE_FOLDER = <?php echo $this->isArticleHotVnE ? '20000' : $tt_category_id; ?>,
+                weather_data = <?php echo Zend_Json::encode($this->crawler); ?>;
+        </script>
+        <?php
+        if (!isset($this->intArticleId))
+        {
+            ?>
+            <script src="<?php echo $this->configView['vnecdn']['js']; ?>/interactions/parser_v3.js"></script>
+            <script src="<?php echo $this->configView['vnecdn']['js']; ?>/utils/mutilscate.js"></script>
+            <script src="<?php echo $this->configView['js']; ?>/msportcate.js"></script>
+        <?php
+        }
+        else {
+            ?>
+            <script src="<?php echo $this->configView['vnecdn']['js']; ?>/utils/mutilsdetail.js"></script>
+            <script type="text/javascript">
+                if (PAGE_DETAIL == 1 && typeof(common.parserAdsFullScreen) != 'undefined') {
+                    common.parserAdsFullScreen();
+                }
+                $(function() {
+                    if (typeof(ArticleShare) != 'undefined') {
+                        ArticleShare.renderSocialPlugins();
+                        ArticleShare.SocialButtonLike();
+                    }
+                    common.initCommon();
+                    common.switchToDesktop();
+                });
+            </script>
+        <?php
+        }
+        ?>
+        <?php
+        echo $this->headScript();
+        ?>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                if(typeof(Parser) != "undefined"){
+                    Parser.SITE_URL = "<?php echo $this->configView['url_vne']; ?>";
+                    Parser.URL = "<?php echo $this->configView['vnecdn']['js']; ?>";
+                    Parser.FLASH_URL = "<?php echo $this->configView['flash']; ?>";
+                    Parser.SITE_ID = <?php echo SITE_ID; ?>;
+                    Parser.AUTO_PLAY = 1;
+                    Parser.parseAll();
+                }
+                common.parseLinkNewsLead();
+                common.setCoverImageHeight();
+                $(window).resize(function() {
+                    common.setCoverImageHeight();
+                });
+                <?php /*if (isset($this->paramsBlock)) {
+                    ?>
+                    if (typeof(partialVne) != 'undefined' && PAGE_DETAIL == 0) {
+                        partialVne.init(paramsBlock);
+                    }
+                    <?php
+                }*/ ?>
+				<?php
+                if ($_SERVER['HTTP_HOST'] == 'demo.thethao.vnexpress.net')
+                {
+                    ?>
+                    var serverHostName = window.location.hostname == 'demo.thethao.vnexpress.net' ? 'demo.' : '';
+                    if (serverHostName == 'demo.') {
+                        $('a').each(function(){
+                            var value1 = $(this).attr('href');
+                            if (typeof (value1) != 'undefined'){
+                                if (value1.indexOf('ione.vnexpress.net') < 0 && value1.indexOf('raovat.vnexpress.net') < 0 && value1.indexOf('vnexpress.net') > 0 && value1.indexOf(serverHostName) < 0) {
+                                    var new_val = value1.replace('http://', 'http://' + serverHostName);
+                                    $(this).attr('href', new_val);
+                                }
+                            }
+                        });
+                    }
+                    <?php
+                }
+                ?>
+            });
+        </script>
+        <script src="<?php echo $this->configView['vnecdn']['js']; ?>/interactions/cmt.widget.js"></script>
+        <script src="<?php echo $this->configView['myvne']['js']; ?>/myvne_users.js"></script>
+        <script src="<?php echo $this->configView['myvne']['js']; ?>/plugins/vne.js"></script>
+        <script src="<?php echo $this->configView['polyads']['core']; ?>/m_r2.js"></script>
+        <script src="<?php echo $this->configView['polyads']['url']; ?>/Vals/35/0/1001/Val.js"></script>
+        <script type="text/javascript">try{Poly_showads();}catch(e){}</script>
+        <script id="image_load_ajax" type="text/x-handlebars-template">
+            <div style="text-align: center;"><p style="padding: 25px 0;"><img src="<?php echo $this->configView['images'] . '/graphics/icon-loading.gif'; ?>"></p></div>
+        </script>
+    </body>
+</html>

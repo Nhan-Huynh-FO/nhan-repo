@@ -1,0 +1,247 @@
+<div id="page_bxh" class="width_common">
+    <div class="width_common line_mid_980_300">
+        <div id="col_660" class="left">
+            <div id="cate_bang_xep_hang" class="w670 left">
+                <div class="title_cate_bxh width_common dot_bottom">
+                    <div class="left txt_title_cate_bxh"><b><?php echo $this->leagueDetail['Name'] ?></b> <span class="txt_666">| <?php echo date('d - m - Y', $this->maxUpdateTime); ?></span></div>
+                    <div class="right">
+                        <span class="txt_chon_giai">Giải</span>
+                        <select class="right w150 leagua" onchange="tableRanking.changeTable(this.value)">
+                            <?php
+                            $i = 0;
+                            foreach ($this->allLeague as $league)
+                            {
+                                ?>
+                                <option <?php if ($this->leagueDetail['LeagueID'] == $league['LeagueID']) echo 'selected="selected"'; ?> value="<?php echo $league['LeagueID']; ?>"><?php echo $league['Name']; ?></option>
+                                <?php
+                                $i++;
+                                if ($i == 7)
+                                    break;
+                            }
+                            ?>
+                        </select>
+                        <span class="txt_chon_giai txt_mua_giai">Mùa giải</span>
+                        <select class="right w150 year" onchange="tableRanking.changeTable(<?php echo $this->leagueDetail['LeagueID'] ?>, this.value);">
+                            <?php
+                            foreach ($this->arrSeasonByLeague as $id => $season)
+                            {
+                                ?>
+                                <option <?php if ($this->seasonDetail['SeasonID'] == $id) echo 'selected="selected"'; ?> value="<?php echo $id; ?>"><?php echo $season; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="clear">&nbsp;</div>
+                </div>
+                <div class="content_bxh">
+                    <?php
+                    $numberTeam = count($this->tableRanking);
+                    if ($numberTeam)
+                    {
+                        ?>
+                        <table cellspacing="0" cellpadding="0" border="0" class="table_bxh">
+                            <tbody>
+                                <tr class="top">
+                                    <td class="w40 bxh_vitri">Vị trí</td>
+                                    <td class="w190 bxh_tendoi"><span class="txt_tendoi">Tên đội</span></td>
+                                    <td class="w40 bxh_tran">Trận</td>
+                                    <td class="w40 bxh_thang">Thắng</td>
+                                    <td class="w40 bxh_hoa">Hòa</td>
+                                    <td class="w40 bxh_thua">Thua</td>
+                                    <td class="w40 bxh_bt">BT</td>
+                                    <td class="w40 bxh_bb">BB</td>
+                                    <td class="w60 bxh_hieuso">Hiệu số</td>
+                                    <td class="w40 bxh_diem">Điểm</td>
+                                    <td class="w60 bxh_phongdo">Phong độ*</td>
+                                </tr>
+                                <?php
+                                $i = 0;
+                                $objPlayer = $this->objObject->getTeam();
+                                $arrTeamError = array();
+                                foreach ($this->tableRanking as $teamID => $teamRanking)
+                                {
+                                    if ($teamRanking['NumMatch'] == 0)
+                                    {
+                                        $arrTeamError[$teamID] = $teamRanking;
+                                        continue;
+                                    }                                                                        
+                                    $className = '';
+                                    if ($i < 3)
+                                    {
+                                        $className = 'no1 ';
+                                    }
+                                    if ($i % 2)
+                                    {
+                                        $className .= 'chan';
+                                    }
+                                    $posChangIcon = 'icon_down';
+                                    if ($teamRanking['PosChange'] == 1)
+                                    {
+                                        $posChangIcon = 'icon_up';
+                                    }
+                                    else if ($teamRanking['PosChange'] == 2)
+                                    {
+                                        $posChangIcon = 'icon_deuce';
+                                    }
+
+                                    //get detail player
+                                    $playerDetail = $objPlayer->getDetailObjectBasic($teamRanking['TeamID']);
+
+                                    ?>
+                                    <tr class="<?php echo $className; ?>" data-id="<?php echo $teamID; ?>">
+                                        <td class="w40 bxh_vitri"><?php echo $teamRanking['Position']; ?></td>
+                                        <td class="w190 bxh_tendoi">
+                                            <span class="icon_portal_thethao <?php echo $posChangIcon; ?>">&nbsp;</span>
+                                            &nbsp;
+                                            <a href="<?php echo $playerDetail['share_url']; ?>" title="<?php echo $playerDetail['name_format']; ?>" class="txt_black_hover_blue">
+                                                <?php echo $playerDetail['name'] ?>
+                                            </a>
+                                        </td>
+                                        <td class="w40 bxh_tran"><?php echo $teamRanking['NumMatch']; ?></td>
+                                        <td class="w40 bxh_thang"><?php echo $teamRanking['Won']; ?></td>
+                                        <td class="w40 bxh_hoa"><?php echo $teamRanking['Drawn']; ?></td>
+                                        <td class="w40 bxh_thua"><?php echo $teamRanking['Lost']; ?></td>
+                                        <td class="w40 bxh_bt"><?php echo $teamRanking['GoalScore']; ?></td>
+                                        <td class="w40 bxh_bb"><?php echo $teamRanking['GoalAgainst']; ?></td>
+                                        <td class="w40 bxh_hieuso"><?php echo $teamRanking['GoalDiffenrence']; ?></td>
+                                        <td class="w40 bxh_diem"><b><?php echo $teamRanking['Point']; ?></b></td>
+                                        <td class="w60  bxh_phongdo">
+                                            <ul class="list_info_5tran">
+                                                <?php
+                                                if (!empty($teamRanking['LastGameResult']))
+                                                {
+                                                    $resultLast5 = explode(',', $teamRanking['LastGameResult'], 6);
+                                                    unset($resultLast5[5]);
+                                                    foreach ($resultLast5 as $resultMatch)
+                                                    {
+                                                        $resultMatch = intval($resultMatch);
+                                                        $classWin    = '';
+                                                        if ($resultMatch == 3)
+                                                        {
+                                                            $classWin = 'win';
+                                                        }
+                                                        else if ($resultMatch == 0)
+                                                        {
+                                                            $classWin = 'lose';
+                                                        }
+                                                        ?>
+                                                        <li class="<?php echo $classWin; ?>"><span>&nbsp;</span></li>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    $i++;                                    
+                                }
+                                //************************ Xu ly case: doi bong chua thi dau ***********************//
+                                foreach ($arrTeamError as $teamID => $teamRanking)
+                                {                                                                        
+                                    $className = '';
+                                    if ($i < 3)
+                                    {
+                                        $className = 'no1 ';
+                                    }
+                                    if ($i % 2)
+                                    {
+                                        $className .= 'chan';
+                                    }
+                                    
+                                    $posChangIcon = 'icon_deuce';
+                                    
+
+                                    //get detail player
+                                    $playerDetail = $objPlayer->getDetailObjectBasic($teamRanking['TeamID']);
+
+                                    ?>
+                                    <tr class="<?php echo $className; ?>" data-id="<?php echo $teamID; ?>">
+                                        <td class="w40 bxh_vitri"><?php echo ++$i + 1; ?></td>
+                                        <td class="w190 bxh_tendoi">
+                                            <span class="icon_portal_thethao <?php echo $posChangIcon; ?>">&nbsp;</span>
+                                            &nbsp;
+                                            <a href="<?php echo $playerDetail['share_url']; ?>" title="<?php echo $playerDetail['name_format']; ?>" class="txt_black_hover_blue">
+                                                <?php echo $playerDetail['name'] ?>
+                                            </a>
+                                        </td>
+                                        <td class="w40 bxh_tran"><?php echo $teamRanking['NumMatch']; ?></td>
+                                        <td class="w40 bxh_thang"><?php echo $teamRanking['Won']; ?></td>
+                                        <td class="w40 bxh_hoa"><?php echo $teamRanking['Drawn']; ?></td>
+                                        <td class="w40 bxh_thua"><?php echo $teamRanking['Lost']; ?></td>
+                                        <td class="w40 bxh_bt"><?php echo $teamRanking['GoalScore']; ?></td>
+                                        <td class="w40 bxh_bb"><?php echo $teamRanking['GoalAgainst']; ?></td>
+                                        <td class="w40 bxh_hieuso"><?php echo $teamRanking['GoalDiffenrence']; ?></td>
+                                        <td class="w40 bxh_diem"><b><?php echo $teamRanking['Point']; ?></b></td>
+                                        <td class="w60  bxh_phongdo">
+                                            <ul class="list_info_5tran">
+                                                <?php
+                                                if (!empty($teamRanking['LastGameResult']))
+                                                {
+                                                    $resultLast5 = explode(',', $teamRanking['LastGameResult'], 6);
+                                                    unset($resultLast5[5]);
+                                                    foreach ($resultLast5 as $resultMatch)
+                                                    {
+                                                        $resultMatch = intval($resultMatch);
+                                                        $classWin    = '';
+                                                        if ($resultMatch == 3)
+                                                        {
+                                                            $classWin = 'win';
+                                                        }
+                                                        else if ($resultMatch == 0)
+                                                        {
+                                                            $classWin = 'lose';
+                                                        }
+                                                        ?>
+                                                        <li class="<?php echo $classWin; ?>"><span>&nbsp;</span></li>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <?php                                 
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                        <div class="txt_decs_bxh box_width_common">
+                            <div class="left"><b>(*)</b> Kết quả 5 trận đấu gần đây nhất</div>
+                            <div class="right">
+                                <span class="win icon_status">&nbsp;</span> <b>Thắng</b>       <span class="duce icon_status">&nbsp;</span> <b>Hòa</b>       <span class="lose icon_status">&nbsp;</span> <b>Thua</b>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <span class="txt_666">Rất tiếc, chúng tôi chưa cập nhật thông tin.</span>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+
+        </div>
+        <div id="col_300" class="right">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+</div>
+<div class="banner_980x60"><?php echo $this->GetBlock('footer'); ?></div>
+<script>
+    $(document).ready(function(){
+        tableRanking.init({
+            url:'<?php echo $this->config['url']; ?>',
+            leagueId: <?php echo $this->leagueID; ?>,
+            seasonId: <?php echo $this->seasonID; ?>,
+            data:{
+                leagues: <?php echo $this->arrLeagueJson; ?>,
+                seasons: <?php echo $this->arrSeasonJson; ?>
+            }
+        });
+    })
+</script>

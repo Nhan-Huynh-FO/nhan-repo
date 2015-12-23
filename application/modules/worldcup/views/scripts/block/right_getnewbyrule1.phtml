@@ -1,0 +1,79 @@
+<?php
+if (!empty($this->data['data']))
+{
+    $share_url = $this->data['info']['share_url'];
+    ?>
+    <div class="box_category width_common news_box_300 space_box">
+        <div class="title_box_category width_common">
+            <div class="txt_main_category">
+                <a href="<?php echo $this->configView['url'], $share_url; ?>" title="<?php echo $this->data['info']['name']; ?>">
+                    <?php
+                    echo!empty($this->layout['title']) ? $this->layout['title'] : $this->data['info']['name'];
+                    ?>
+                </a>
+            </div>
+        </div>
+        <div class="content_box_category width_common">
+            <ul class="list_tin_300">
+                <?php
+                foreach ($this->data['data'] as $id)
+                {
+                    $article = $this->objArticle->getArticleBasic($id);
+                    if (empty($article))
+                    {
+                        continue;
+                    }
+                    ?>
+                    <li>
+                        <div class="block_image_news width_common">
+                            <div class="title_news">
+                                <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" class="txt_link"><?php echo $article['title']; ?></a>
+                                <span class="no_wrap">
+                                    <?php echo $this->ArticleViewIcon($article['article_icon']); ?>
+                                    <?php echo $this->ArticleComment($article); ?>
+                                </span>
+                            </div>
+                            <div class="block_thumb_lead">
+                                <?php
+                                if (!empty($article['thumbnail_url']))
+                                {
+                                    ?>
+                                    <div class="thumb">
+                                        <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>">
+                                            <img src="<?php echo $this->ImageurlArticle($article, 'size1'); ?>" alt="<?php echo $article['title_format']; ?>" />
+                                        </a>
+                                        <?php echo $this->ArticleTypeIcon($article); ?>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                                <div class="news_lead"><?php echo $article['lead']; ?></div>
+                            </div>
+                            <?php
+                            if (sizeof($article['reference_detail']) > 0)
+                            {
+                                $arrRef = array();
+                                foreach ($article['reference_detail'] as $reference)
+                                {
+                                    $arrRef[] = '<a href="' . $this->ShareurlWorldcup($reference['share_url']) . '" title="' . $reference['title_format'] . '" alt="' . $reference['title_format'] . '">' . $reference['title'] . '</a>';
+                                }
+                                ?>
+                                <div class="list_dot">
+                                    <?php echo implode(' / ', $arrRef); ?>
+                                </div>
+                                <?php
+                                unset($arrRef);
+                            }
+                            ?>
+                        </div>
+                    </li>
+                    <?php
+                }
+                ?>
+            </ul>
+            <div class="txt_view_more"><a class="txt_666" href="<?php echo $this->configView['url'], $share_url; ?>" title="<?php echo $this->data['info']['name']; ?>">Xem tất cả</a></div>
+        </div>
+    </div>
+    <?php
+}
+?>

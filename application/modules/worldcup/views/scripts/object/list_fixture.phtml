@@ -1,0 +1,79 @@
+<?php
+if (!empty($this->arrFixture))
+{
+    $objTeam = $this->objObject->getTeam();
+    $objMatch = $this->objObject->getMatch();
+    $team1 = $team2 = array();    
+    foreach ($this->arrFixture as $matchId => $score)
+    {
+        //get detail match
+        $matchDetail = $objMatch->getDetailObjectBasic($matchId);
+        if (empty($matchDetail))
+        {
+            continue;
+        }
+        $objTeam->setId(array($matchDetail['team1'],$matchDetail['team2']));
+        $team1 = $objTeam->getDetailObjectBasic($matchDetail['team1']);
+        $team2 = $objTeam->getDetailObjectBasic($matchDetail['team2']);
+?>
+        <table class="width_common tb_lichthidau_clb">
+            <caption><?php echo $this->DateTimeFormat($matchDetail['datetime_happen'], 'long_fixture'); ?></caption>
+            <tbody>
+                <tr class="now">
+                    <td class="time"><div class="ct_time"><?php echo date('H:i', $matchDetail['datetime_happen']); ?></div></td>
+                    <td class="group"><?php echo !empty($matchDetail['round'])?trim(substr($matchDetail['round'],-1)):""; ?></td>
+                    <td class="main_team">
+                        <span>
+                            <a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>">
+                                <?php echo $team1['name']; ?>
+                            </a>
+                        </span>
+                        <?php if(!empty($team1['thumbnail']))
+                        {?>
+                        <a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>">
+                            <img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>" title="<?php echo $team1['name_format']; ?>" />
+                        </a>
+                        <?php
+                        }
+                        ?>
+                    </td>
+                    <td class="score"><?php echo ($matchDetail['status'] != 1) ? "{$matchDetail['goal1']} - {$matchDetail['goal2']}" : ' - '; ?></td>
+                    <td class="sub_team">
+                        <?php if(!empty($team2['thumbnail']))
+                        {?>
+                        <a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>">
+                            <img width="18" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size1'); ?>" alt="<?php echo $team2['name_format']; ?>" title="<?php echo $team2['name_format']; ?>" />
+                        </a>
+                        <?php
+                        }
+                        ?>
+                        <span>
+                            <a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>">
+                                <?php echo $team2['name']; ?>
+                            </a>
+                        </span>
+                    </td>
+                    <td class="group"></td>
+                    <td class="live">
+                        <?php
+                        if ($matchDetail['status'] != 1 || $matchDetail['status'] != 2)
+                        {
+                        ?>
+                            <a class="txt_666" href="<?php echo $this->configView['url'].'/thong-ke/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchDetail['id']) ?>" title="<?php echo 'Tường thuật trận ', $team1['name'], ' vs ', $team2['name']; ?>">Chi tiết</a>
+                        <?php
+                        }
+                        else
+                        {
+                        ?>
+                            <a class="txt_666" href="<?php echo $this->configView['url'].'/tuong-thuat/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchDetail['id']) ?>" title="<?php echo 'Tường thuật trận ', $team1['name'], ' vs ', $team2['name']; ?>">Trực tiếp</a>
+                        <?php
+                        }
+                        ?>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+<?php
+    }
+}
+?>

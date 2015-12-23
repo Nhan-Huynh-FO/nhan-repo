@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/page_style.css" media="all" />
+<?php
+	$arrData1 = $this->arrData1;
+    $arrData2 = $this->arrData2;
+    $arrData3 = $this->arrData3;
+    $arrData4 = $this->arrData4;
+    $arrData5 = $this->arrData5;
+    $arrData6 = $this->arrData6;
+	$objNews = Thethao_Model_News::getInstance();
+	
+    //if(!empty($arrData1))
+//    {
+?>
+
+
+<div id="dovui_page" class="line_gray line_page width_common">
+    <div id="col_left">
+        <div class="banner_dovui">
+            <img src="<?php echo $this->configView['images']; ?>/graphics/banner_dovui.jpg">
+        </div>
+        <div id="box_dovui_ds_trungthuong">
+            <div class="main_title">Danh sách trúng thưởng</div>
+            <div class="group">
+                <?php
+                   if(!empty($arrData6))
+                   {
+                        echo $objNews->genHtmlListAward($arrData6,6,'Tuần 6 <span>(15/7-21/07)</span>');
+                   }
+                   if(!empty($arrData5))
+                   {
+                        echo $objNews->genHtmlListAward($arrData5,5,'Tuần 5 <span>(08/07-14/07)</span>');
+                   }
+                   if(!empty($arrData4))
+                   {
+                        echo $objNews->genHtmlListAward($arrData4,4,'Tuần 4 <span>(01/7-07/07)</span>');
+                   }
+                   if(!empty($arrData3))
+                   {
+                        echo $objNews->genHtmlListAward($arrData3,3,'Tuần 3 <span>(24/6-30/6)</span>');
+                   }
+                   if(!empty($arrData2))
+                   {
+                        echo $objNews->genHtmlListAward($arrData2,2,'Tuần 2 <span>(17/6-23/6)</span>');
+                   }
+                   if(!empty($arrData1))
+                   {
+                        echo $objNews->genHtmlListAward($arrData1,1,'Tuần 1 <span>(10/6-16/6)</span>');
+                   }
+                ?>
+            </div>
+        </div>
+    </div>
+    <div id="col_right">
+        <div class="banner_300x250 banner_common space_box">
+            <img alt="" src="<?php echo $this->configView['images']; ?>/graphics/banner_300x300.jpg">
+        </div>
+        <?php echo $this->render('dovui/box/danh-sach-trung-thuong-v2.phtml'); ?>  
+        <?php echo $this->render('dovui/box/chung-cuoc.phtml'); ?>   
+    </div>
+
+</div>
+<?php
+	//}
+?>

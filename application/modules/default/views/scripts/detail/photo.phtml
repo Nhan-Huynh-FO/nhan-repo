@@ -1,0 +1,419 @@
+<div id="detail_page" class="width_common line_col">
+    <div id="col_660" class="left">
+        <div class="box_width_common" id="box_details_news">
+			<?php
+            //1 - mobile , 0 - web, tablet
+            $device = DEVICE_ENV & 1;
+            if (!empty($this->arrArticleDetail))
+            {
+                $this->Snippet .= '<div itemscope itemtype="http://schema.org/Recipe" style="display: none !important;"><span itemprop="name">' . $this->arrArticleDetail['title'] . '</span><img itemprop="image" src="' . $this->ImageurlArticle($this->arrArticleDetail, 'size1', -1) . '" alt="' . $this->arrArticleDetail['title_format'] . '" style="border-width:0px;" /></div>';
+                ?>
+                <div class="w670 left">
+                    <div class="main_content_detail width_common">
+                        <?php if (!$device) { ?>
+                            <div class="block_timer_share">
+                                <div class="block_timer left txt_666">
+                                    <?php echo $this->DateTimeFormat($this->arrArticleDetail['publish_time'], 'long'); ?>
+                                </div>
+                                <div class="block_share right">
+                                    <?php echo $this->render('detail/box/box_share_photo.phtml'); ?>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                        else {
+                            ?>
+                            <div class="div-fbook width_common title_div_fbook">
+                                <div class="block_timer left txt_666"><?php echo $this->DateTimeFormat($this->arrArticleDetail['publish_time'], 'long'); ?></div>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                        <div class="title_news">
+                            <h1><?php echo $this->arrArticleDetail['title']; ?></h1>
+                        </div>
+                        <div class="short_intro txt_666"><?php echo $this->arrArticleDetail['lead']; ?></div>
+						<?php
+                        if (!empty($this->arrArticleDetail['reference_detail']))
+                        {
+                            $arrRef = array();
+                            foreach ($this->arrArticleDetail['reference_detail'] as $reference)
+                            {
+                                $arrRef[] = '<a alt="'.$reference['title_format'].'" title="'.$reference['title_format'].'" href="'.$reference['share_url'].'">'.$reference['title'].'</a>';
+                            }
+                            ?>
+                            <div class="relative_new">
+                                <ul class="list_news_dot_3x3_300">
+                                    <li>
+                                    <?php
+                                    echo DEVICE_ENV==1?implode('&nbsp;&nbsp;/&nbsp;&nbsp;', $arrRef):implode('&nbsp;/&nbsp;', $arrRef);
+                                    ?>
+                                    </li>
+                                </ul>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        <div class="width_common space_bottom_20">
+                            <div class="block_content_slide_showdetail">
+                                <div id="article_content">
+                                    <?php
+                                    if (!empty($this->arrPhoto))
+                                    {
+                                        foreach ($this->arrPhoto as $photo)
+                                        {
+                                            if (empty($photo['url']))
+                                            {
+                                                ?>
+                                                <div class="">
+                                                        <div class="desc_cation"><?php echo $photo['caption']; ?></div>
+                                                    <div class="clear">&nbsp;</div>
+                                                </div>
+                                                <?php
+                                            }
+                                            else
+                                            {
+                                                $captionCheck   = trim(strip_tags($photo['caption']));
+                                                $captionCheck   = !empty($captionCheck);
+                                                $photo['thumbnail_url'] = $photo['url'];
+                                                ?>
+                                                <div class="item_slide_show">
+                                                    <div class="block_thumb_slide_show">
+                                                        <img data-reference-id="<?php echo $photo['reference_id']; ?>"  src="<?php echo $this->ImageurlArticle($photo, 'size3', -1); ?>" alt="<?php echo $this->arrArticleDetail['title_format']; ?> - ảnh thể thao" class="left" data-component-caption="<?php echo $captionCheck ? htmlspecialchars($photo['caption']):''; ?>" />
+                                                        <a href="javascript:;" class="btn_icon_show_slide_show">&nbsp;</a>
+                                                    </div>
+                                                    <?php
+                                                    if ( $captionCheck )
+                                                    {
+                                                        ?>
+                                                        <div class="desc_cation"><?php echo $photo['caption']; ?></div>
+                                                        <?php
+                                                    }//end if
+                                                    ?>
+                                                    <div class="clear">&nbsp;</div>
+                                                </div>
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <script type="text/javascript">
+                                    if (device_env != 1 && typeof(common.resizeImagePhoto) != 'undefined') {
+                                        common.resizeImagePhoto();
+                                        $(window).resize(function() {
+                                            common.delayFireOnce(1000).done(function() {
+                                                common.resizeImagePhoto();
+                                            });
+                                        });
+                                    }
+                                </script>
+                                <div class="fck_detail width_common"><?php echo $this->arrArticleDetail['content']; ?></div>
+                                <?php
+                                if ($device)
+                                {
+                                ?>
+                                <div class="box_category width_common">
+                                    <div>
+                                        <script type="text/javascript">
+                                            try{Poly_Large(2);}catch(e){}
+                                        </script>
+                                    </div>
+                                </div>
+                                <?php
+                                }
+                                echo $this->render('/common/box_share_bottom.phtml');
+                                //********************* Process Tin liên quan: Topic + Link chéo *************************//
+                                //Check empty
+                                $notEmptyTopic         = !empty($this->arrArticleDetail['list_topic_id']) && is_array($this->arrArticleDetail['list_topic_id']);
+                                $notEmptyReferenceSite = !empty($this->arrArticleDetail['list_reference_sites_id']) && is_array($this->arrArticleDetail['list_reference_sites_id']);
+                                //Check
+                                if ( $notEmptyTopic || $notEmptyReferenceSite )
+                                {
+									//set utm topic
+									$utm_topic = '?utm_source=detail&utm_medium=box_topic&utm_campaign=boxtracking';
+										
+                                    //set id
+                                    $id_box_tinlienquan = 'box_tinlienquan';
+
+                                    //set class
+                                    $class_mg_bottom_20	= "mg_bottom_20";
+
+                                    //check show style topic = 2
+                                    if ($notEmptyTopic && $this->topic_show_style==2 )
+                                    {
+                                        ?>
+                                        <div id="<?php echo $id_box_tinlienquan; ?>" class="block_maybay width_common <?php echo $class_mg_bottom_20;?> titlelong">
+                                            <div class="title_maybay width_common">
+                                                <a class="left txt_vne" href="<?php echo $this->arrTopicDetail['share_url']; ?>" title="<?php echo $this->arrTopicDetail['title_format']; ?>"><?php echo $this->arrTopicDetail['title']; ?></a>
+                                            </div>
+                                            <div class="content_maybay width_common">
+                                                <div class="list_3image_inrow">
+                                                    <ul class="list_news_image">
+                                                        <?php
+                                                        foreach ( $this->arrTopic as $id )
+                                                        {
+                                                            $articleDetail = $this->objArticle->getArticleBasic($id);
+                                                            if ( empty($articleDetail) ) continue;
+                                                            ?>
+                                                            <li>
+                                                                <?php
+                                                                if ( !empty($articleDetail['thumbnail_url']) )
+                                                                {
+                                                                    ?>
+                                                                    <div class="thumb">
+                                                                        <a href="<?php echo $articleDetail['share_url'] . $utm_topic; ?>" title="<?php echo $articleDetail['title_format']; ?>">
+                                                                            <img alt="<?php echo $articleDetail['title_format']; ?>" src="<?php echo $this->ImageurlArticle($articleDetail, 'size1'); ?>" />
+                                                                        </a>
+                                                                    </div>
+                                                                <?php
+                                                                }//end if
+                                                                ?>
+                                                                <h2 class="title_news">
+                                                                    <a href="<?php echo $articleDetail['share_url'] . $utm_topic; ?>" class="txt_link" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title_format']; ?></a>
+                                                                </h2>
+                                                            </li>
+                                                        <?php
+                                                        }//end foreach
+                                                        ?>
+                                                    </ul>
+                                                    <div class="block_view_more">
+                                                        <a class="txt_view_more" href="<?php echo $this->arrTopicDetail['share_url']; ?>" title="Xem thêm">Xem thêm</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $class_mg_bottom_20 = '';
+                                    }//end if
+                                    //check list refrence or show style topic = 1
+                                    if ( $notEmptyReferenceSite || ($notEmptyTopic && $this->topic_show_style==1) )
+                                    {
+                                        ?>
+                                        <div id="<?php echo $id_box_tinlienquan; ?>" class="width_common titlelong <?php echo $class_mg_bottom_20;?>">
+                                            <?php
+                                            if ( $notEmptyTopic && $this->topic_show_style==1 )
+                                            {
+                                                ?>
+                                                <div class="title_box_category style_02 width_common">
+                                                    <h2 class="txt_main_category">
+                                                        <a href="<?php echo $this->arrTopicDetail['share_url']; ?>"><?php echo $this->arrTopicDetail['title_format'];?></a>
+                                                    </h2>
+                                                </div>
+                                            <?php
+                                            }//end if
+                                            ?>
+                                            <div class="content_box_category width_common">
+                                                <?php
+                                                //********************* Process Topic *************************//
+                                                if ( $notEmptyTopic && $this->topic_show_style==1 )
+                                                {
+                                                    ?>
+                                                    <ul class="list_news_dot_3x3">
+                                                        <?php
+                                                        foreach ( $this->arrTopic as $id )
+                                                        {
+                                                            $articleDetail = $this->objArticle->getArticleBasic($id);
+                                                            if ( empty($articleDetail) ) continue;
+                                                            ?>
+                                                            <li>
+                                                                <a href="<?php echo $articleDetail['share_url'] . $utm_topic; ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title_format']; ?></a> <span class="txt_666">(<?php echo $this->DateTimeFormat($articleDetail['publish_time'], 'short'); ?>)</span>
+																<span class="no_wrap">
+																	<img class="icon_content icon_title_<?php echo intval($articleDetail['article_icon']); ?>" alt="" src="<?php echo $this->configView['images'];?>/graphics/img_blank.gif">
+																	<?php echo $this->ArticleComment($articleDetail); ?>
+																</span>
+                                                            </li>
+                                                        <?php
+                                                        }//end foreach
+                                                        ?>
+                                                    </ul>
+                                                    <div class="block_view_more">
+                                                        <a class="txt_view_more" href="<?php echo $this->arrTopicDetail['share_url']; ?>" title="Xem thêm">Xem thêm</a>
+                                                    </div>
+                                                <?php
+                                                }//end if
+
+                                                //********************* Process Link chéo *************************//
+                                                //==== Khi đọc các tin thuộc VNEx hoặc các Vertical ====//
+                                                //Click link của VNEx hoặc Vertical sẽ đi chính trang
+                                                //Click link khác của NgôiSao hoặc iOne sẽ mở Tab mới
+                                                if ($notEmptyReferenceSite)
+                                                {
+                                                    //Set flags to know which situation
+                                                    $flag_vne       = false;
+                                                    $flag_ione      = false;
+                                                    $flag_ngoisao   = false;
+                                                    foreach ( $this->arrArticleDetail['list_reference_sites_id'] as $reference )
+                                                    {
+                                                        if (empty($reference)) continue;
+                                                        switch ( $reference['site_id'] )
+                                                        {
+                                                            case $this->configView['othersite']['ione']:
+                                                                $flag_ione = true;
+                                                                break;
+                                                            case $this->configView['othersite']['ngoisao']:
+                                                                $flag_ngoisao = true;
+                                                                break;
+                                                            default:
+                                                                $flag_vne = true;
+                                                                break;
+                                                        }//end switch
+                                                    }//end foreach
+                                                    //echo 1;die;
+                                                    echo $this->partial('detail/box/box_includelink.phtml', array(
+                                                        'list_reference'    => $this->arrArticleDetail['list_reference_sites_id'],
+                                                        'flag_vne'          => $flag_vne,
+                                                        'flag_ione'         => $flag_ione,
+                                                        'flag_ngoisao'      => $flag_ngoisao,
+                                                        'has_topic'         => $notEmptyTopic,
+                                                        'config'            => $this->configView));
+                                                }//end if
+                                                ?>
+                                            </div>
+                                        </div>
+                                    <?php
+                                    }//end if
+                                }//end if
+                                ?>
+								
+								<?php
+								// Reconmmendation news
+								if (!empty($this->arrRecommend['data']))
+								{
+									?>
+									<div class="width_common mg_bottom_20" id="box_tinlienquan">
+										<div class="title_box_category width_common style_02">
+											<div class="txt_main_category">
+												<a>Bạn có thể quan tâm</a>
+											</div>
+										</div>
+										<div class="content_box_category width_common">
+											<ul class="list_news_dot_3x3">
+												<?php
+												//set utm recommend
+												$utm_rc = '?utm_source=detail&utm_medium=box_recommend&utm_campaign=boxtracking';
+												foreach ($this->arrRecommend['data'] as $id_rc)
+												{
+													$articleDetail = $this->objArticle->getArticleBasic($id_rc);
+													if (empty($articleDetail)) continue;
+													?>
+													<li>
+														<a href="<?php echo $articleDetail['share_url'] . $utm_rc; ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title_format']; ?></a> <span class="txt_666">(<?php echo $this->DateTimeFormat($articleDetail['publish_time'], 'short'); ?>)</span>
+														<span class="no_wrap">
+															<img class="icon_content icon_title_<?php echo intval($articleDetail['article_icon']); ?>" alt="" src="<?php echo $this->configView['images'];?>/graphics/img_blank.gif">
+															<?php echo $this->ArticleComment($articleDetail); ?>
+														</span>
+													</li>
+												<?php
+												}//end foreach
+												?>
+											</ul>
+										</div>
+									</div>
+								<?php
+								}//end if
+								?>
+								
+                                <div class="clear">&nbsp;</div>
+                            </div>
+                            <div class="clear">&nbsp;</div>
+                            <?php
+                            if (DEVICE_ENV != 1)
+                            {
+                                ?>
+                                <!-- Article_BANNER 468x90-->
+                                <div class="banner_468 box_category">
+                                    <div class="banner_468x90">
+                                        <script language="javascript">try{Poly_Article();}catch(e){}</script>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                        <?php
+                        //Check permission comment
+                        if ($this->arrArticleDetail['iscomment'])
+                        {
+                            echo $this->render('/block/comment.phtml');
+                        }//end if
+                        ?>
+						<?php
+                        if (!empty($this->arrArticleDetail['list_tag']))
+                        {
+                            ?>
+                            <div class="block_tag width_common space_bottom_20">
+                                <div class="txt_tag">Tags</div>
+                                <?php
+                                foreach ($this->arrArticleDetail['list_tag'] as $tagDetail)
+                                {
+                                    ?>
+                                    <a href="<?php echo $tagDetail['tag_url']; ?>" title="<?php echo $tagDetail['tag_name_format']; ?>" class="tag_item"><?php echo $this->MbUcfirst($tagDetail['tag_name']); ?></a>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        	<?php
+                    	}
+                    	?>
+						<?php
+                    	// get other news
+                    	if (!empty($this->arrOrtherArticle))
+                    	{
+                        	?>
+                        	<div id="box_tinkhac_detail" data-tracking="true" class="box_category width_common style_03">
+                            	<?php echo $this->render('detail/box/othernews_'.$device.'.phtml'); ?>
+        	                </div>
+        	                <?php
+        	            }
+        	            ?>
+					</div>
+				</div>
+				<?php
+			}
+			?>
+		</div>
+	</div>
+    <div id="col_300" class="right">
+        <?php echo $this->GetBlock('top_news_right'); ?>
+        <?php echo $this->GetBlock('left'); ?>
+    </div>
+</div>
+<div class="banner_980x60"><?php echo $this->GetBlock('footer'); ?></div>
+<script type="text/javascript">
+    var article_title = "<?php echo addslashes($this->arrArticleDetail['title_format']) , ' - VnExpress Thể Thao'; ?>",
+    article_description = "<?php echo urlencode($this->arrArticleDetail['lead']); ?>",
+    article_image = "<?php echo!empty($this->arrArticleDetail['thumbnail_url']) ? $this->ImageurlArticle($this->arrArticleDetail, 'size1', -1) : ''; ?>";
+    $(function(){
+        if (device_env != 1) {
+            if(typeof(sh_fullscreen) != "undefined"){
+                sh_fullscreen.params = {
+                    title: '<?php echo addslashes($this->arrArticleDetail['title_format']); ?>',
+                    lead: '<?php echo (urlencode(addslashes($this->arrArticleDetail['lead']))); ?>',
+                    time:  '<?php echo $this->DateTimeFormat($this->arrArticleDetail['publish_time'], 'custom'); ?>',
+                    arrdata:'<?php echo $this->Articlelike($this->arrArticleDetail['article_id']);?>',
+                    masterial: '<?php echo (!empty($this->urlSongMp3)) ? '<iframe frameborder="0" src="'.$this->configView['url_vne'].'/parser.php?al='. $this->urlSongMp3 .'&ft=audio_slideshow"  height="18" width="500"></iframe>' : '' ?>',
+                    started: <?php echo $this->imageShare; ?>
+                };
+                sh_fullscreen.run();
+            };
+
+            sendmail.init({
+                article_link: '<?php echo $this->arrArticleDetail['share_url']; ?>',
+                article_title: article_title,
+                url_post: '<?php echo $this->configView['url']; ?>/detail/ajaxsendmail'
+            });
+
+        } else {
+            if (typeof(common.resizeImagePhoto) != 'undefined') {
+                common.resizeImagePhoto();
+                $(window).resize(function() {
+                    common.delayFireOnce(1000).done(function() {
+                        common.resizeImagePhoto();
+                    });
+                });
+            }
+            slideshow._init();
+        }
+    });
+</script>

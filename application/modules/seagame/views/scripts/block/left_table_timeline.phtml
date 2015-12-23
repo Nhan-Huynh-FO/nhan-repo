@@ -1,0 +1,71 @@
+<?php
+$arrData = $this->data;
+$currDate = strtotime(date('d-m-Y'));
+if (!isset($arrData[$currDate]))
+{
+	$arrKey = array_keys($arrData);
+    $data = array_shift($arrData);
+    $currDate = $arrKey[0];    
+}
+else
+{
+    $data = $arrData[$currDate];
+}
+?>
+<div class="box_category news_box_300 width_common space_box category_list_lich">
+    <div class="title_box_category width_common">
+        <span class="icon_lv"></span>
+        <div class="txt_main_category"><a href="<?php echo $this->configView['url'] . '/lich-thi-dau/'; ?>"><?php echo $this->layout['title']; ?></a></div>
+    </div>
+    <div class="content_box_category width_common">
+        <div class="scroll-pane">
+            <div class="content_scoller width_common">
+                <table class="width_common">
+                    <thead>
+                    <tr>
+                        <th colspan="3" class="date"><?php echo 'Ngày ', date('d/m/Y', $currDate); ?></th>
+                    </tr>
+                    </thead>
+                    <thead>
+                    <tr>
+                        <th class="mon" style="width:50%">Nội dung</th>
+                        <th>Bắt đầu</th>
+                        <th>Thông tin vòng</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if (!empty ($data))
+                    {
+                        ?>
+                        <?php
+                        $i = 1;
+                        foreach ($data as $schedule)
+                        {
+                            ?>
+                            <tr class="<?php echo $i?'bg_efefef':'' ?>">
+                                <td class="mon">
+                                    <?php echo $schedule['subject']; ?>
+                                </td>
+                                <td><?php echo $schedule['time']; ?></td>
+                                <td><?php echo $schedule['event']; ?></td>
+                            </tr>
+                            <?php
+                            $i=1-$i;
+                        }
+                        ?>
+
+                    <?php
+                    }
+                    else {
+                        ?>
+                        <tr><td colspan="3" style="text-align: center">Chưa có dữ liệu</td></tr>
+                    <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

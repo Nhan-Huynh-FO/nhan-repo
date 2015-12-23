@@ -1,0 +1,270 @@
+<table class="tbl_main width_common space_box">
+    <thead>
+        <tr>
+            <?php
+            if ($this->matchDetail['status'] == 2)
+            {
+                //Ket qua
+                ?>
+                <td colspan="3" id="time-socre" class="time" style="color:#666666;">Kết thúc</td>
+                <?php
+            }
+            else
+            {
+                //Truoc tran dau
+                if ($this->matchDetail['status'] == 1)
+                {
+                    ?>
+                    <td colspan="3" class="time" id="time-socre" style="color:#666666;"><?php echo date('d/m - H:i', $this->matchDetail['datetime_happen']); ?></td>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <td colspan="3" id="time-socre" class="time">
+                        <?php
+                        $text = '';
+                        switch ((int)$this->matchDetail['status'])
+                        {
+                            case 4:
+                                $text = 'Hết hiệp 1';
+                                break;
+                            case 6:
+                                $text = 'Hết hiệp 2';
+                                break;
+                            case 8:
+                                $text = 'Hết hiệp phụ thứ nhất';
+                                break;
+                            case 10:
+                                $text = 'Hết hiệp phụ thứ hai';
+                                break;
+                            case 11:
+                                $text = 'Penalty';
+                                break;
+                            default:
+                                $text = $this->matchDetail['matchTime'] . "'";
+                                break;
+                        }
+                        echo $text;
+                        ?>
+                    </td>
+                    <?php
+                }
+            }
+            ?>
+        </tr>
+        <tr>
+            <td colspan="3" class="time">
+                <div class="daiphatsong" data-schedule-match="<?php echo $this->matchDetail['id']; ?>"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="team a">
+                <a href="<?php echo $this->ShareurlWorldcup($this->team1['share_url']); ?>" title="<?php echo $this->team1['name_format']; ?>"><?php echo $this->team1['name']; ?></a>
+                <?php
+                if (!empty($this->team1['thumbnail']))
+                {
+                ?>
+                <a href="<?php echo $this->ShareurlWorldcup($this->team1['share_url']); ?>" title="<?php echo $this->team1['name_format']; ?>">
+                    <img width="38" src="<?php echo $this->Imageurl($this->team1['thumbnail'], 'size1'); ?>" alt="<?php echo $this->team1['name_format']; ?>">
+                </a>
+                <?php
+                }
+                ?>
+            </td>
+            <?php
+            if ($this->matchDetail['status'] == 2)
+            {
+                //Ket qua
+                ?>
+                <td id="score-data" class="score">
+                    <?php
+                    echo $this->matchDetail['goal1'] . ' - ' . $this->matchDetail['goal2'];
+                    if($this->matchDetail['penalty1'] > 0 || $this->matchDetail['penalty2'] > 0)
+                    {
+                    ?>
+                    <p class="txt_11">penalty</p>
+                    <p style="color:red" class="txt_11">(<?php echo $this->matchDetail['penalty1'],' - ', $this->matchDetail['penalty2']; ?>)</p>
+                    <?php
+                    }
+                    else if((int)$this->matchDetail['matchTime'] > 119) {
+                        echo '<p class="txt_11">(Sau 120 phút)</p>';
+                    }
+                    ?>
+                </td>
+                <?php
+            }
+            else
+            {
+                //Truoc tran dau
+                if ($this->matchDetail['status'] == 1)
+                {
+                    ?>
+                    <td id="score-data" class="score">V</td>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <td id="score-data" class="score">
+                        <?php
+                        echo $this->matchDetail['goal1'] . ' - ' . $this->matchDetail['goal2'];
+                        if($this->matchDetail['penalty1'] > 0 || $this->matchDetail['penalty2'] > 0)
+                        {
+                        ?>
+                        <p class="txt_11">penalty</p>
+                        <p style="color:red" class="txt_11">(<?php echo $this->matchDetail['penalty1'],' - ', $this->matchDetail['penalty2']; ?>)</p>
+                        <?php
+                        }
+                        ?>
+                    </td>
+                    <?php
+                }
+            }
+            ?>
+            <td class="team b">
+                <?php
+                if (!empty($this->team2['thumbnail']))
+                {
+                ?>
+                <a href="<?php echo $this->ShareurlWorldcup($this->team2['share_url']); ?>" title="<?php echo $this->team2['name_format']; ?>"><img width="38" src="<?php echo $this->Imageurl($this->team2['thumbnail'], 'size1'); ?>" alt="<?php echo $this->team1['name_format']; ?>"></a>
+                <?php
+                }
+                ?>
+                <a href="<?php echo $this->ShareurlWorldcup($this->team2['share_url']); ?>" title="<?php echo $this->team2['name_format']; ?>"><?php echo $this->team2['name']; ?></a>
+            </td>
+        </tr>
+        <tr class="last"><td colspan="3"><div data-component-type="likematch" data-component-matchid="<?php echo $this->matchDetail['id']; ?>" data-component-siteid="<?php echo SITE_ID; ?>"></div></td></tr>
+    </thead>
+    <tbody id="main-score-card">
+        <?php
+        if ($this->matchDetail['status'] != 1)
+        {
+            $arrDetailMatchExtendScorecard = $this->matchDetail['scoreCard'];
+            $arrGoal = array();
+            $arrCard = array();
+            $arrSubs = array();
+            if (!empty($arrDetailMatchExtendScorecard))
+            {
+                foreach ($arrDetailMatchExtendScorecard as $key => $value)
+                {
+                    if (isset($value['score']))
+                    {
+                        foreach ($value['score'] as $score)
+                        {
+                            if(isset($arrGoal[$score['!scoreType']][$score['!teamId']][$score['!playerId']]))
+                            {
+                                $arrGoal[$score['!scoreType']][$score['!teamId']][$score['!playerId']] .= ', '. $key;
+                            }
+                            else
+                            {
+                                $arrGoal[$score['!scoreType']][$score['!teamId']][$score['!playerId']] = $score['Name'] . ' ' . $key;
+                            }
+                        }
+                    }
+                    if (isset($value['card']))
+                    {
+                        foreach ($value['card'] as $card)
+                        {
+                            $arrCard[$card['!cardType']][$card['!teamId']][] = $card['Name'] . ' ' . $key;
+                        }
+                    }
+                    if ($value['substitution'])
+                    {
+                        foreach ($value['substitution'] as $substitution)
+                        {
+                            foreach ($substitution['substitution'] as $player)
+                            {
+                                if(!empty($player['Player'][0]['Name']))
+                                {
+                                    $arrSubs[$substitution['!teamId']][] = $player['Player'][0]['Name'] . ' - ' . '<span class="text_999">' . $player['Player'][1]['Name'] . '</span>' . ' ' . $key;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (isset($arrGoal) && !empty($arrGoal))
+            {
+                foreach ($arrGoal as $goalType => $goal)
+                {
+                    if($goalType == 'OwnGoal')
+                    {
+                        $textIcon = '&nbsp;(o.g)';
+                    }
+                    else if($goalType == 'Penalty')
+                    {
+                        $textIcon = '&nbsp;(pen)';
+                    }
+                    else
+                    {
+                        $textIcon = '';
+                    }
+                    ?>
+                    <tr class="goal">
+                        <td class="text_right"><?php echo implode(', ', $goal[$this->matchDetail['team1']]),!empty($goal[$this->matchDetail['team1']])?$textIcon:''; ?></td>
+                        <td class="text_center">
+                            <img src="<?php echo $this->configView['images']; ?>/icons/<?php echo $goalType; ?>.png" alt="Ghi bàn">
+                        </td>
+                        <td><?php echo implode(', ', $goal[$this->matchDetail['team2']]), !empty($goal[$this->matchDetail['team2']])?$textIcon:''; ?></td>
+                    </tr>
+                    <?php
+                }
+            }
+            if (isset($arrCard) && !empty($arrCard))
+            {
+                foreach ($arrCard as $cardType => $card)
+                {
+                    ?>
+                    <tr class="ticket">
+                        <td class="text_right"><?php echo implode(', ', $card[$this->matchDetail['team1']]); ?></td>
+                        <td class="text_center">
+                            <img src="<?php echo $this->configView['images']; ?>/icons/<?php echo $cardType; ?>.png" alt="Thẻ phạt">
+                        </td>
+                        <td><?php echo implode(', ', $card[$this->matchDetail['team2']]); ?></td>
+                    </tr>
+                    <?php
+                }
+            }
+            if (isset($arrSubs) && !empty($arrSubs))
+            {
+                ?>
+                <tr class="ticket">
+                    <td class="text_right">
+                        <?php
+                        if(isset($arrSubs[$this->matchDetail['team1']]))
+                        {
+                            echo implode(', ', $arrSubs[$this->matchDetail['team1']]);
+                        }
+                        ?>
+                    </td>
+                    <td class="text_center">
+                        <img src="<?php echo $this->configView['images']; ?>/icons/in_out.png" alt="Thay người">
+                    </td>
+                    <td>
+                        <?php
+                        if(isset($arrSubs[$this->matchDetail['team2']]))
+                        {
+                            echo implode(', ', $arrSubs[$this->matchDetail['team2']]);
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <?php
+            }
+        }
+        ?>
+    </tbody>
+    <?php
+    if ($this->matchDetail['status'] ==1 || $this->flag_dd)
+    {
+        ?>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="summit"><input type="submit" value="Dự đoán" class="btn_guess go-predict-match" style="cursor:pointer;" data-rel="<?php echo $this->_matchDetail['id']; ?>"></td>
+            </tr>
+        </tfoot>
+        <?php
+    }
+    ?>
+</table>

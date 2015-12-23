@@ -1,0 +1,95 @@
+<div id="rsspage" class="width_common line_page">
+    <div class="left block_rss">
+        <div class="title_block width_common">Kênh do VnExpress cung cấp</div>
+        <ul class="title_cate_rss width_common">
+            <li class="star">
+                <div class="txt_14">Các kênh chính</div>
+            </li>
+            <li><a href="<?php echo $this->configView['url_vne'], '/rss'; ?>">Thời sự</a></li>
+            <li><a href="<?php echo $this->configView['url_dso'], '/rss'; ?>">Gia đình</a></li>
+            <li><a href="<?php echo $this->configView['url_kdo'], '/rss'; ?>">Kinh doanh</a></li>
+            <li><a href="<?php echo $this->configView['url_vne'], '/rss'; ?>">Thế giới</a></li>
+            <li><a href="<?php echo $this->configView['url_gti'], '/rss'; ?>">Giải trí</a></li>
+            <li class="end active">
+                <a href="<?php echo $this->configView['url'], '/rss'; ?>" title="Thể thao" class="have_subcate">Thể thao</a>
+                <div class="sub_cate_rss"></div>
+            </li>
+        </ul>
+        <div class="content_block width_common">
+            <div class="line_mid_670 width_common">
+                <div class="left">
+                    <div class="list_item_rss">
+                        <div class="item_rss">
+                            <div class="item_1 width_common">
+                                <a href="<?php echo $this->configView['url'], '/rss'; ?>" title="Thể thao" class="left txt_14"><strong>Trang chủ Thể thao</strong></a>
+                                <a href="<?php echo $this->configView['url'], '/rss'; ?>" title="Thể thao" class="right icon_responsive ico_respone_rss">&nbsp;</a>
+                            </div>
+                        </div>
+                        <div class="item_rss">
+                            <?php
+                            foreach ($this->arrData['left'] as $category)
+                            {
+                            ?>
+                            <div class="item_1 width_common">
+                                <a href="<?php echo $this->configView['url'] . '/rss/' . $category['catecode'] . '.rss'; ?>" title="<?php echo $category['catename']; ?>" class="left txt_14"><strong><?php echo $category['catename']; ?></strong></a>
+                                <a href="<?php echo $this->configView['url'] . '/rss/' . $category['catecode'] . '.rss'; ?>" title="<?php echo $category['catename']; ?>" class="right icon_responsive ico_respone_rss">&nbsp;</a>
+                            </div>
+                            <ul class="list_sub_rss width_common">
+                                <?php
+                                foreach ($category['child'] as $arrCate)
+                                {
+                                    ?>
+                                    <li>
+                                        <a href="<?php echo $this->configView['url'] . '/rss/' . $arrCate['catecode'] . '.rss'; ?>" title="<?php echo $arrCate['catename']; ?>" class="left icon_dot_3x3"><?php echo $arrCate['catename']; ?></a>
+                                        <a href="<?php echo $this->configView['url'] . '/rss/' . $arrCate['catecode'] . '.rss'; ?>" title="<?php echo $arrCate['catename']; ?>" class="right icon_responsive ico_respone_rss">&nbsp;</a>
+                                    </li>
+                                <?php
+                                }
+                                ?>
+                            </ul>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="list_item_rss">
+                        <?php
+                        foreach ($this->arrData['right'] as $category)
+                        {
+                        ?>
+                        <div class="item_rss">
+                            <div class="item_1 width_common">
+                                <a href="<?php echo $this->configView['url'] . '/rss/' . $category['catecode'] . '.rss'; ?>" title="<?php echo $category['catename']; ?>" class="left txt_14"><strong><?php echo $category['catename']; ?></strong></a>
+                                <a href="<?php echo $this->configView['url'] . '/rss/' . $category['catecode'] . '.rss'; ?>" title="<?php echo $category['catename']; ?>" class="right icon_responsive ico_respone_rss">&nbsp;</a>
+
+                            </div>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right block_txt_right_rss">
+        <div class="title_block width_common">Khái niệm RSS</div>
+        <div class="content_block width_common txt_block_rss">
+            <p>RSS (viết tắt từ Really Simple Syndication) là một tiêu chuẩn định dạng tài liệu dựa trên XML nhằm giúp người sử dụng dễ dàng cập nhật và tra cứu thông tin một cách nhanh chóng và thuận tiện nhất bằng cách tóm lược thông tin vào trong một đoạn dữ liệu ngắn gọn, hợp chuẩn.
+            </p>
+            <p>
+                Dữ liệu này được các chương trình đọc tin chuyên biệt (gọi là News reader) phân tích và hiển thị trên máy tính của người sử dụng. Trên trình đọc tin này, người sử dụng có thể thấy những tin chính mới nhất, tiêu đề, tóm tắt và cả đường link để xem toàn bộ tin.
+            </p>
+        </div>
+
+        <div class="title_block width_common">Điều khoản sử dụng</div>
+        <div class="content_block width_common txt_block_rss">
+            <p>Các nguồn kênh tin được cung cấp miễn phí cho các cá nhân và các tổ chức phi lợi nhuận. Chúng tôi yêu cầu bạn cung cấp rõ các thông tin cần thiết khi bạn sử dụng các nguồn kênh tin này từ VnExpress.
+            </p>
+            <p>VnExpress có quyền yêu cầu bạn ngừng cung cấp và phân tán thông tin dưới dạng này ở bất kỳ thời điểm nào và với bất kỳ lý do nào.
+            </p>
+        </div>
+    </div>
+</div>

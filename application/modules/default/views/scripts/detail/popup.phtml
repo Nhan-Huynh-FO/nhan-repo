@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml">
+    <head>
+        <link type="image/x-icon" href="<?php echo $this->config['images']; ?>/favicon.ico" rel="shortcut icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><?php echo html_entity_decode($this->arrData['title'], ENT_COMPAT, 'UTF-8') . ' - VnExpress Thể thao'; ?></title>
+        <meta name="description" content="<?php echo trim(strip_tags(html_entity_decode($this->arrData['lead'], ENT_COMPAT, 'UTF-8'))) . ' - VnExpress Thể thao'; ?>" />
+        <meta name="keywords" content="<?php echo $this->arrData['title_format'] . ' - VnExpress Thể thao'; ?>" />
+        <style type="text/css">
+         	*, body, p{
+          		margin: 0;
+          		padding: 0;
+         	}
+        </style>
+	</head>
+    <body>
+     	<div class="popupagme">
+   			<?php echo $this->arrData['content']; ?>
+  		</div>
+    </body>
+</html>

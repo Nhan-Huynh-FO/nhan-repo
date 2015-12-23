@@ -1,0 +1,406 @@
+<?php
+$matchDetail = $this->matchDetail;
+$team1 = $this->team1;
+$team2 = $this->team2;
+$this->flag_dd = isset($this->matchDetail['matchTime']) && $this->matchDetail['matchTime'] <= 80 ?1:0;
+?>
+<div class="line_gray line_page width_common" id="container_live">
+    <div id="col_left">
+        <?php
+        if (DEVICE_ENV != 1)
+        {
+            ?>
+            <div class="block_slder_top space_box" id="top_fixture_worldcup">
+                <div style="text-align: center;"><p style="padding: 25px 0;">Đang tải dữ liệu...</p></div>
+            </div>
+            <?php
+        }
+        ?>
+        <div class="page_trandau width_common">
+            <div class="block_clear_men"><a target="_blank" onclick="thethao.trackingImpression()" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=10045207&PluID=0&ord=<?php echo time();?>" title="Clear Men"><img src="<?php echo $this->configView['images']; ?>/graphics/img_clearmen.png" /></a></div>
+            <?php
+            if (DEVICE_ENV != 1)
+            {
+                echo $this->render('match/box/header.phtml');
+            }
+            else
+            {
+                echo $this->render('match/box/mheader.phtml');
+            }
+            ?>
+            <div class="vongloai_vongbang tab_content">
+                <ul class="tabs">
+                    <li><a href="<?php echo $this->configView['url'] . "/thong-ke/{$this->seoTitle}-{$this->matchDetail['id']}" ?>" title="Thống kê trận đấu <?php echo $this->matchDetail['name_format']; ?>" class="tab">Thống kê</a></li>
+                    <li><a href="<?php echo $this->configView['url'] . "/tuong-thuat/{$this->seoTitle}-{$this->matchDetail['id']}" ?>" title="Tường thuật trận đấu <?php echo $this->matchDetail['name_format']; ?>" class="tab active">Diễn biến</a></li>
+                    <?php
+                    if ($this->matchDetail['isReport']) {
+                    ?>
+                    <li><a href="<?php echo $this->configView['url'] . "/report/{$this->seoTitle}-{$this->matchDetail['id']}" ?>" title="Tổng thuật trận đấu <?php echo $this->matchDetail['name_format']; ?>" class="tab">Tổng thuật</a></li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+                <div id="tab_tuongthuat" class="content active">
+                    <?php
+                    if ($this->tuongThuat['relate_id'] > 0)
+                    {
+                        ?>
+                        <div class="box_width_common" id="box_details_news" data-liveblog-active="<?php echo ((($this->tuongThuat['privacy'] & 8) == 8) ? 'true' : 'false'); ?>">
+                            <div class="main_content_detail width_common">
+                                <?php
+                                if ($this->tuongThuat['article_type'] == 5)
+                                {
+                                ?>
+                                <div class="block_filter_live">
+                                    <div class="filter_left">
+                                        <div class="block_check_noibat"><input type="checkbox" id="checkNew"><label for="checkNew">Nổi bật</label></div>
+                                    </div>
+                                    <div class="filter_right">
+                                        <a class="none_link">Sắp xếp</a>
+                                        <a href="javascript:;" class="sort-live latest">Mới nhất</a>
+                                        <a href="javascript:;" class="sort-live oldest">Cũ nhất</a>
+                                    </div>
+                                </div>
+                                <div class="live_post_status" id="live_post_status" style="display: none">
+                                    <a href="javascript:;" class="short_live">Có <span id="live-updates-counter"></span> tin mới được cập nhật</a>
+                                </div>
+                                <div id="container_tab_live" class="width_common" data-soccer-uri="<?php echo $this->configView['url'] . "/soccer/{$this->seoTitle}-{$this->matchDetail['id']}" .'.html'; ?>" data-update-uri="<?php echo $this->configView['url_vne'] . '/detail/block?id=', $this->tuongThuat['article_id']; ?>" data-article-id="<?php echo $this->tuongThuat['article_id']; ?>">
+                                    <ul id="list_live">
+                                        <li id="live-updates-wrapper" class="no_space"></li>
+                                        <?php
+                                        if (!empty($this->arrBlockDataId))
+                                        {
+                                            foreach ($this->arrBlockDataId as $blockId)
+                                            {
+                                                $blockDetail = $this->objLive->getBlockDetail($blockId);
+                                                if(empty($blockDetail))
+                                                {
+                                                    continue;
+                                                }
+                                                $share_url = $this->configView['url_vne'] . '/detail/share-block?id='.$this->tuongThuat['article_id'].'&blockid='.$blockId;
+
+                                                $count = count($blockDetail['article_reference_id']);
+
+                                                //class High light
+                                                $classHighLight = $blockDetail['highlight'] ? ' high-light' : '';
+                                                ?>
+                                                <li id="block-<?php echo $blockDetail['published_time']; ?>" data-block-id="<?php echo $blockId; ?>" class="block<?php echo $classHighLight; ?>">
+                                                    <div class="minutes">
+														<?php
+                                                        $time = trim($blockDetail['display_time']);
+														if ((!empty($time)) && (strpos($time, '#') === false))
+														{
+														?>
+                                                        <span class="text_minutes <?php echo ($blockDetail['highlight'] ? 'special_time' : ''); ?>" datetime="<?php echo $blockDetail['published_time']; ?>">
+                                                            <?php echo $time; ?>
+                                                        </span>
+														<?php
+														}
+														?>
+                                                        <img src="<?php echo $this->configView['images'], '/graphics/img_blank.gif'; ?>" alt="icon" class="icon_live <?php echo empty($blockDetail['icon']) ? 'icon_dot_live' : $blockDetail['icon']; ?>">
+                                                    </div>
+                                                    <div class="text_live">
+                                                        <?php
+                                                        echo $blockDetail['block_content'];
+                                                        if (!empty($blockDetail['article_reference_id']))
+                                                        {
+                                                            $this->objArticle->setIdBasic($blockDetail['article_reference_id']);
+
+                                                            if ($count == 1)
+                                                            {
+                                                                $article = $this->objArticle->getArticleBasic($blockDetail['article_reference_id'][0]);
+                                                                ?>
+                                                                <div class="block_image_news width_common">
+                                                                    <?php
+                                                                    if (!empty($article['thumbnail_url']))
+                                                                    {
+                                                                        ?>
+                                                                        <div class="thumb">
+                                                                            <a href="<?php echo $article['share_url']; ?>">
+                                                                                <img src="<?php echo $this->ImageurlArticle($article, 'size6'); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                                                            </a>
+                                                                        <?php echo $this->ArticleTypeIcon($article); ?>
+                                                                        </div>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                    <div class="title_news">
+                                                                        <a href="<?php echo $article['share_url']; ?>" class="txt_link">
+                                                                                <?php echo $article['title'] ?>
+                                                                            <span class="no_wrap">
+                                                                                <?php echo $this->ArticleViewIcon($article['article_icon']); ?>
+                                                                            </span>
+                                                                        </a>
+
+                                                                    </div>
+                                                                    <div class="news_lead" data-mobile-href="<?php echo $article['share_url']; ?>">
+                                                                        <?php echo $article['lead']; ?>
+                                                                    </div>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            else
+                                                            {
+                                                                ?>
+                                                                <div class="list_dot_3x3">
+                                                                    <?php
+                                                                    foreach ($blockDetail['article_reference_id'] as $id)
+                                                                    {
+                                                                        $article = $this->objArticle->getArticleBasic($id);
+                                                                        if (empty($article))
+                                                                        {
+                                                                            continue;
+                                                                        }
+                                                                        ?>
+                                                                        <div class="dot_item">
+                                                                            <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                                        <?php echo $article['title']; ?>
+                                                                            </a>
+                                                                        </div>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                        }
+                                                        if (DEVICE_ENV == 4)
+                                                        {
+                                                            ?>
+                                                            <div class="social_share right">
+                                                                <div class="content_inner">
+                                                                    <div class="item_social hidden_320">
+                                                                        <a title="Chia sẻ bài viết lên facebook" class="left" target="_blank" href="http://www.facebook.com/sharer.php?u=<?php echo urlencode($share_url); ?>">
+                                                                            <img alt="Chia sẻ bài viết lên facebook" src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/icon_fb.gif">
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="item_social hidden_320">
+                                                                        <a title="Chia sẻ bài viết lên twitter" class="left" target="_blank" href="http://twitter.com/share?url=<?php echo urlencode($share_url); ?>&text=<?php echo $this->tuongThuat['title']; ?>">
+                                                                            <img alt="Chia sẻ bài viết lên twitter" src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/icon_tw.gif">
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="item_social hidden_320">
+                                                                        <a class="left" target="_blank" href="https://plus.google.com/share?url=<?php echo urlencode($share_url); ?>">
+                                                                            <img alt="Share Google+" src="<?php echo $this->configView['vnecdn']['images']; ?>/graphics/icon_google.gif">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </li>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </ul>
+                                    <?php
+                                    if (!empty ($this->tuongThuat['content']))
+                                    {
+                                    ?>
+                                    <div class="width_common info_befo">
+                                        <div class="minutes"><img src="<?php echo $this->configView['images']; ?>/icons/before_match.png" alt="Thông tin trước trận" title="Thông tin trước trận"/></div>
+                                        <div class="text_live">
+                                            <div class="width_common fck_detail">
+                                                <?php echo $this->tuongThuat['content'];?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        if (typeof(common.resizeImageDetail) != 'undefined') {
+                                            common.resizeImageDetail();
+                                            $(window).resize(function() {
+                                                common.delayFireOnce(1000).done(function() {
+                                                    common.resizeImageDetail();
+                                                });
+                                            });
+                                        }
+                                    </script>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <?php
+                                }
+                                else
+                                {
+                                ?>
+                                <div class="width_common">
+                                    <?php
+                                    echo $this->tuongThuat['content'];
+                                    ?>
+                                </div>
+                                <?php
+                                }
+                                ?>
+                                <div class="space_box width_common">
+                                    <?php echo $this->render('/common/box_share_bottom.phtml'); ?>
+                                </div>
+                                <?php
+                                if (!empty($this->tuongThuat['list_tag'])) : ?>
+                                    <div class="block_tag width_common space_bottom_20">
+                                        <div class="txt_tag">Tags</div>
+                                        <?php foreach ($this->tuongThuat['list_tag'] as $list_tag) : ?>
+                                            <a href="<?php echo $this->configView['url_vne'].$list_tag['tag_url']; ?>" title="<?php echo $list_tag['tag_name_format']; ?>" class="tag_item"><?php echo $list_tag['tag_name']; ?></a>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            (function() {
+                                var req = require.config({
+                                    context: 'body-content',
+                                    baseUrl: '<?php echo $this->configView['vnecdn']['js'], '/live'; ?>'
+                                });
+                                req(['livenews']);
+                                var isAutorefreshOn = <?php echo ((($this->tuongThuat['privacy'] & 8) == 8) ? 'true' : 'false'); ?>;
+                                function refreshFootballScores() {
+                                    if (isAutorefreshOn) {
+                                        var thisURL = $('#container_tab_live').data('soccer-uri');
+                                        var timeId      = $('#time-socre');
+                                        var matchTime = $('#match_time_' + <?php echo $matchDetail['id']; ?>);
+                                        var score       = $('#score-data');
+                                        var cardMain    = $('#main-score-card');
+                                        $.ajax({
+                                            url: thisURL,
+                                            dataType: 'json',
+                                            success: function(data, b, request) {
+                                                if (data.match) {
+                                                    var match = data.match;
+                                                    timeId.text(match.time);
+                                                    score.html(match.score);
+                                                    cardMain.html(match.card);
+                                                    if(matchTime.size()) {
+                                                        matchTime.text(match.time);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                                setInterval(refreshFootballScores, 60000);
+                            })();
+                            if (typeof (Parser) != "undefined") {
+                                Parser.SITE_URL = "<?php echo $this->configView['url_vne']; ?>";
+                                Parser.URL = "<?php echo $this->configView['vnecdn']['js']; ?>";
+                                Parser.FLASH_URL = "<?php echo $this->configView['flash']; ?>";
+                                Parser.SITE_ID = <?php echo SITE_ID; ?>;
+                                Parser.AUTO_PLAY = 1;
+                                Parser.parseAll();
+                            }
+                        </script>
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <div class="txt_666" style="width:100%;float:left;padding:10px 0;">Không có thông tin tường thuật trận đấu.<br/></div>
+                        <?php
+                    }
+                    ?>
+                    <div class="box_category width_common space_box box_dudoan" style="border-bottom:none;">
+                        <div class="title_box_detailpage width_common">
+                          <div class="txt_main_category"><a>Dự đoán</a></div>
+                        </div>
+                        <div class="content_box_category width_common">
+                            <div class="block_dudoan category_guess_score">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <td class="minutes" colspan="3"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="current">
+                                            <td class="main_team">
+                                                <?php
+                                                if (!empty($team1['thumbnail']))
+                                                {
+                                                ?>
+                                                <img width="40" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>">
+                                                <?php
+                                                }
+                                                ?>
+                                                <p><a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>"><?php echo $team1['name']; ?></a></p>
+                                            </td>
+                                            <td class="score">
+                                                <div class="width_common">
+                                                    <?php
+                                                    if($matchDetail['status'] != '1')
+                                                    {
+                                                        ?>
+                                                        <div class="width_common">
+                                                            <span class="box no-border"><?php echo $this->matchDetail['goal1']; ?></span>
+                                                            <span class="box no-border">-</span>
+                                                            <span class="box no-border"><?php echo $this->matchDetail['goal2']; ?></span>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    if($matchDetail['status'] =='1' || $this->flag_dd)
+                                                    {
+                                                    ?>
+                                                        <div class="width_common">
+                                                            <span class="box"><input id="goalteam1" name="goalteam1" type="text" data-rel="<?php echo $matchDetail['id']; ?>-team1"></span>
+                                                            <span class="box no-border">-</span>
+                                                            <span class="box"><input id="goalteam2" name="goalteam2" type="text" data-rel="<?php echo $matchDetail['id']; ?>-team2"></span>
+                                                        </div>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </td>
+                                            <td class="sub_team">
+                                                <?php
+                                                if (!empty($team2['thumbnail']))
+                                                {
+                                                ?>
+                                                <img width="40" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size1'); ?>" alt="<?php echo $team2['name_format']; ?>">
+                                                <?php
+                                                }
+                                                ?>
+                                                <p><a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>"><?php echo $team2['name']; ?></a></p></td>
+                                        </tr>
+                                        <?php
+                                        if ($this->matchDetail['status'] =='1' || $this->flag_dd)
+                                        {
+                                        ?>
+                                        <tr class="submit">
+                                            <td class="main_team"></td>
+                                            <td class="score">
+                                                <button style="cursor: pointer;" class="predict-match" data-rel="<?php echo $matchDetail['id']; ?>" data-predict-type="6" data-time="<?php echo $matchDetail['matchTime']; ?>" data-predict-text="<?php echo $team1['name']; ?> vs <?php echo $team2['name']; ?>" onclick="_gaq.push(['_trackEvent', 'Trang Tường thuật trận đấu World Cup', 'Click button Gửi trong box', 'Box Dự đoán']);">Gửi</button>
+                                                <input id="matchid" name="matchid" type="hidden" value="<?php echo $matchDetail['id']; ?>" />
+                                            </td>
+                                            <td class="sub_team"></td>
+                                        </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="width_common total_source_guess" style="display:none;">
+                        <div class="title text_center predict-statistic-total"></div>
+                        <table class="width_common predict-statistic" data-rel="<?php echo $this->matchDetail['id']; ?>" data-text="<?php echo $this->team1['name']; ?>">
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- end page_trangdau -->
+    </div>
+    <div id="col_right">
+        <?php
+        //Comment
+        echo DEVICE_ENV != 4 ? $this->render('/block/comment_match.phtml') : $this->render('/block/comment_match_live.phtml');
+        //block left
+        echo $this->GetBlock('left');
+        ?>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="line_gray line_page width_common">
+    <div id="col_left">
+        <?php
+        if(DEVICE_ENV != 1)
+        {
+        ?>
+        <div class="block_slder_top space_box" id="top_fixture_worldcup">
+            <div style="text-align: center;"><p style="padding: 25px 0;">Đang tải dữ liệu...</p></div>
+        </div>
+        <?php
+        }
+        ?>
+        <div class="list_32_team width_common">
+            <div class="title">
+                32 Đội bóng theo bảng đấu
+                <div class="block_clear_men"><a target="_blank" onclick="thethao.trackingImpression()" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=10045207&PluID=0&ord=<?php echo time();?>" title="Clear Men"><img src="<?php echo $this->configView['images']; ?>/graphics/img_clearmen.png" /></a></div>
+            </div>
+            <?php
+            $tableRanking = $this->tableRanking;
+            if (!empty($tableRanking))
+            {
+                $objTeam = $this->objObject->getTeam();
+                $arrGroupName = array(
+                    'group-a' => 'A',
+                    'group-b' => 'B',
+                    'group-c' => 'C',
+                    'group-d' => 'D',
+                    'group-e' => 'E',
+                    'group-f' => 'F',
+                    'group-g' => 'G',
+                    'group-h' => 'H'
+                );
+                $j = 1;
+                foreach ($arrGroupName as $key => $value)
+                {
+                    ?>
+                    <ul class="list_team <?php echo $j == 8 ? 'last' : ''; ?>">
+                        <li class="first"><span><?php echo $value; ?></span></li>
+                        <?php
+                        $i = 1;
+                        foreach ($tableRanking as $value)
+                        {
+                            if ($value['Table'] == $key)
+                            {
+                                $objTeam->setId($value['TeamID']);
+                                $team = $objTeam->getDetailObjectBasic($value['TeamID']);
+                                ?>
+                                <li <?php echo $i == 4 ? 'class="last"' : ''; ?>>
+                                    <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" title="<?php echo $team['name_format']; ?>"><img src="<?php echo $this->configView['images']; ?>/teams/<?php echo $team['id']; ?>.jpg" alt="<?php echo $team['name_format']; ?>"></a>
+                                    <div class="label"><a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" title="<?php echo $team['name_format']; ?>"><?php echo $team['name']; ?></a></div>
+                                </li>
+                                <?php
+                                $i++;
+                            }
+                        }
+                        ?>
+                    </ul>
+                    <?php
+                    $j++;
+                }
+            }
+            ?>
+        </div>
+        <!-- End list_32_team -->
+    </div>
+    <div id="col_right">
+        <?php echo $this->GetBlock('left'); ?>
+    </div>
+</div>

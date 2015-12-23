@@ -1,0 +1,42 @@
+<?php
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+$arrParam   = $this->data['data'];
+
+//check block type: 1-video nhac
+if ( $arrParam['block_type'] == 1 )
+{
+?>
+<div id="iframekkdm" class="box_category width_common space_box">
+	<iframe frameborder="0" allowtransparency="true" hspace="0" marginheight="0" marginwidth="0" scrolling="no" src="http://worldcup.vnexpress.net/khoanhkhacdamme/widget/" vspace="0" style="width:300px; height:250px;"></iframe>
+</div>
+<script type="text/javascript">
+var iframekkdm	= {
+	delayTimer:0,
+	delayFireOnce:function(timeout){
+		var d = $.Deferred();
+		clearTimeout(iframekkdm.delayTimer);
+		iframekkdm.delayTimer = setTimeout(function() {
+			d.resolve();
+		}, timeout);
+		return d.promise();
+	},
+	resize:function(){
+		var wiframe	= $("#iframekkdm").width();
+		var hiframe	= Math.round(wiframe*250/300);
+		$("#iframekkdm").find('iframe').width(wiframe+'px').height(hiframe+'px');
+	}
+};
+iframekkdm.resize();
+$(window).resize(function() {
+	iframekkdm.delayFireOnce(500).done(function() {
+		iframekkdm.resize();
+	});
+});
+</script>
+<?php
+}//end if
+?>

@@ -1,0 +1,200 @@
+<div class="block_top_video line_gray line_page width_common">
+    <?php
+    $arrData = $this->arrData;
+    $data = $this->data;
+    $arrDataRV = $this->arrDataRV;
+    $notEmptyDataRV = !empty($arrDataRV);
+    $thumbNail = '';
+    if (!empty($data))
+    {
+        //Define cate world cup 2014
+        //$arrCate = array(1003597, 1003598, 1003599, 1003600, 1003601, 1003602, 1003603);
+        if ($arrDataRV['video_id'] > 0)
+        {
+            //Check show quang cao eclick
+            $isShowAds = ($data['privacy'] != 0) ? true : false;
+        }
+        else
+        {
+            //Check show quang cao eclick
+            $isShowAds = (($data['privacy'] & 32) != 32) ? true : false;
+        }
+        if ($arrDataRV['have_license'] == 1)// && in_array($data['category_id'], $arrCate))
+        {
+            $isLicense = true;
+        }
+        else
+        {
+            $isLicense = false;
+        }
+        if ($isShowAds && $isLicense)//Show qc 3D world cup
+        {
+            $zoneId = $this->configView['eclick']['adslicense3d']['zone'];
+        }
+        /* else if($isShowAds)//Show qc binh thuong
+          {
+          $zoneId = "";//$this->configView['eclick']['ads']['zone'];//(tren world cup khong duoc phep show quang cao)
+          } */
+        else
+        {
+            $zoneId = "";
+        }
+        $dataExclude = array_unique(array_merge(array($data['article_id']), (array) $this->arrEx));
+        $urlInfo = $this->config['url'] . '/video/vne-info/id/' . $data['article_id'] . '/type/1/gf/1/exclude/' . implode(',', $dataExclude);
+        $share_url = $data['share_url'];
+        ?>
+        <div class="block_top_left_video">
+            <div class="box_category width_common" id="video">
+                <div class="width_common">
+                    <div class="block_flash_video" style="position: relative;">
+                        <?php
+                        if ($notEmptyDataRV)
+                        {
+                            //Check thumbnail
+                            if (!empty($data['thumbnail_url']))
+                            {
+                                $thumbNail = $this->ImageurlArticle($data, 'size4');
+                            }//end if
+                            //Suggest video, loai tru video dang xem, video lien quan
+                            $moreUrl = $this->configView['url'] . '/video/vne-more/id/' . $data['article_id'] . '/type/1/exclude/' . implode(',', $dataExclude);
+                            $flashVars = 'xmlPath=&mAuto=true&autoHide=true&tracktype=video&typeview=1&playerid=videoplayer&trackurl=' . $arrDataRV['url'] . '&objectid=' . $arrDataRV['object_id'] . '&id=' . $data['article_id'] . '&type=201&thumburl=' . $thumbNail . '&tracklink=' . $share_url . '&suggestionurl=' . $moreUrl . '&videoid=' . $arrDataRV['object_id'] . '&videotype=201&adszoneid=' . $zoneId . '&tracktitle=' . $data['title_format'];
+                        }
+                        else
+                        {
+                            $urlInfo = $this->configView['url'] . '/video/vne-info/id/' . $data['article_id'] . '/type/1/gf/1/exclude/' . implode(',', $dataExclude);
+                            $flashVars = 'asseturl=' . $this->configView['flash'] . '/asset.swf&xmlPath=' . $urlInfo . '&local=embed&mAuto=true&autoHide=true&trackurl=&tracktype=&stream=';
+                        }//end if
+                        ?>
+                        <div class="embed-container">
+                            <object width="100%" height="100%" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" id="videoplayer" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0">
+                                <param name="movie" value="<?php echo $this->configView['flash'] ?>/fptplayer.swf">
+                                <param name="allowScriptAccess" value="always" />
+                                <param name="quality" value="high">
+                                <param name="bgcolor" value="#000000">
+                                <param name="wmode" value="transparent">
+                                <param name="flashvars" value="<?php echo $flashVars; ?>">
+                                <param name="allowfullscreen" value="true">
+                                <embed bgcolor="#000000" width="100%" height="100%" name="videoplayer" flashvars="<?php echo $flashVars; ?>" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" wmode="transparent" pluginspage="http://www.macromedia.com/go/getflashplayer" src="<?php echo $this->configView['flash'] ?>/fptplayer.swf">
+                            </object>
+                            <div id="block_video_html5" data-html5="1" data-video-zid="1355"  class="block_flash_video" style="display:none;width:100%;"></div>
+                        </div>
+                    </div>
+                    <div class="block_share width_common">
+                    <?php
+                    echo $this->render('video/box/box_share_bottom.phtml');
+                    ?>
+                    </div>
+                    <div class="videoname">
+                        <div class="title_news"><a href="javascript:;" class="txt_link" title="<?php echo $data['title_format']; ?>"><?php echo $data['title']; ?></a></div>
+                        <div class="news_lead"><?php echo $data['lead']; ?></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+    $arrVideo = $this->arrVideoResult;
+    if (!empty($arrVideo))
+    {
+        ?>
+        <div class="block_top_right_video">
+            <div class="box_category width_common news_box_300 space_box">
+                <div class="width_common only_title">
+                    <ul class="list_tin_300">
+                        <?php
+                        foreach ($arrVideo as $videoId)
+                        {
+                            $video = $this->objArticle->getArticleBasic($videoId);
+                            ?>
+                            <li>
+                                <div class="block_image_news width_common">
+                                    <div class="block_thumb_lead">
+                                        <?php
+                                        if ($video['thumbnail_url'] != '')
+                                        {
+                                            ?>
+                                            <div class="thumb">
+                                                <a href="<?php echo $this->ShareurlWorldcup($video['share_url']); ?>" title="<?php echo $video['title_format']; ?>"><img src="<?php echo $this->ImageurlArticle($video, 'size1'); ?>" alt="<?php echo $video['title_format']; ?>"  /></a>
+                                                <a class="icon_thumb_videophoto icon_video" href="<?php echo $this->ShareurlWorldcup($video['share_url']); ?>" title="<?php echo $video['title_format']; ?>">&nbsp;</a>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                        <div class="title_news"><a href="<?php echo $this->ShareurlWorldcup($video['share_url']); ?>" title="<?php echo $video['title_format']; ?>" class="txt_link"><?php echo $video['title']; ?></a></div>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <?php
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+    ?>
+</div>
+<div class="cross_line">&nbsp;</div>
+<div class="line_gray line_page width_common">
+    <div id="col_left">
+        <div id="list_video" class="content_page_anh width_common">
+            <?php echo $this->render('video/box/list_video.phtml'); ?>
+        </div>
+    </div>
+    <div id="col_right">
+        <?php echo $this->GetBlock('left'); ?>
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function() {
+        video.init({
+            currCateId: <?php echo $this->cateId; ?>,
+            totalVideo: <?php echo $arrData['total']; ?>,
+            totalPage: <?php echo $this->totalPage; ?>,
+            totalNew: <?php echo $this->totalNew; ?>,
+            strEx: '<?php echo implode(',', $this->arrEx); ?>',
+            currPage: <?php echo $this->currPage; ?>,
+            baseUrl: '<?php echo $this->configView['url']; ?>',
+            listVideoEleId: 'list_video',
+            loadingEleId: 'loading_data'
+        });
+    })
+<?php
+if (!empty($data))
+{
+    ?>
+        $(document).ready(function() {
+            try {
+                if (FlashDetect.installed == false) {
+                    $.getJSON(
+                            '<?php echo $this->configView['url']; ?>/video/vne-info/?callback=?',
+                            {
+                                id:<?php echo $data['article_id']; ?>,
+                                typeHTML: 'html5'
+                            },
+                    function(response) {
+                        if (response.error == 0) {
+                            $("#videoplayer").hide();
+                            var w = $(".embed-container").width();
+                            var h = (w * 56.25) / 100;
+                            var object = '<video width="' + w + '" height="' + h + '" controls autoplay preload="none">'
+                                    + '<source src="' + response.media_url + '" type="video/mp4" />'
+                                    + '</video>';
+                            $("#block_video_html5").html(object).show();
+                            //$.getScript('http://e.eclick.vn/delivery/video/wrapper.js');
+                        }
+                    }
+                    );
+                }
+            } catch (e) {
+            }
+        });
+        $(window).resize(function() {
+            var w = $(".embed-container").width();
+            var h = (w * 56.25) / 100;
+            $('video').attr('width', w).attr('height', h);
+        });
+<?php } ?>
+</script>

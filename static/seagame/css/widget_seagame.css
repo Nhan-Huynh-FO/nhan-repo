@@ -1,0 +1,89 @@
+* { margin: 0; padding: 0; }
+.box_300_seagame{background: #f0f0f0; font: 400 12px arial; overflow: hidden; }
+.box_300_seagame .content_box_category{background: #fcfcfc;} 
+.news_box_300.space_box{margin: 0 0 30px 0;}
+.news_box_300 .title_box_category{height: 30px; background: #ea5541 url(images/graphics/tit_cate_sg.png) no-repeat 0 0; overflow: visible; position: relative; margin-bottom: 0; margin-top: 18px;}
+.news_box_300 .txt_main_category{color: #fff; margin: 0 0 0 45px;}
+.news_box_300 .sg_label{position: absolute; right: 0; top: -20px; height: 20px; line-height:20px; background: #e71860 url(images/graphics/corner_sg.jpg) no-repeat 0 0; font: 400 11px arial; color: #f0f0f0; padding: 0 10px 0 20px;}
+.news_box_300 .sg_label p{margin: 5px 0 0 0;}
+.news_box_300 .txt_main_category span, .txt_main_category a{color: #fff; background: none; font: 700 14px/30px arial; height: 28px; display: block;float: left; text-decoration: none;}
+.news_box_300 .title_box_category .icon_lv{width: 39px; height: 48px; background: url(images/graphics/sg_lv_widget.jpg) no-repeat 0 0; position: absolute; top: -18px; left: 0;}
+    table .bg_efefef{background: #fcfcfc;}
+    /**BANG TONG SAP HUY CHUONG**/
+    .category_list_hc table{
+	text-align: right;
+	margin-top: 0;
+	border-collapse: collapse;
+    background: #f0f0f0;
+    padding-bottom: 10px;
+    width: 100%;
+        }
+        .category_list_hc table th{
+        	padding: 8px 5px;
+        	border-bottom: 1px solid #fff;
+            text-align: center;
+        }
+        .category_list_hc table td{
+        	padding: 5px 0 5px 0;
+            text-align: center;
+            border-top: 1px solid #fff;
+        }
+        .category_list_hc table .team{
+        	text-align: left;
+            padding: 8px 0;
+        }
+        .category_list_hc table .gb, .category_list_hc table .ll, .category_list_hc table .hs{padding: 5px 5px;}
+        .category_list_hc table .team img{
+        	margin-right: 7px;
+        	vertical-align: middle;
+        }
+        .category_list_hc .view_more{
+        	border-top: 1px dotted #ccc;
+        	padding: 5px 0;
+        	margin-top: 5px;
+        }
+        .category_list_hc table .num{font-weight: 700; color: #000; text-align: center; padding-right: 5px;}
+        
+        /**HUY CHUONG VIETNAM**/
+        .category_list_hc_vn .scroll-pane{height: 150px; overflow: auto; background: #fcfcfc;}
+        .category_list_hc_vn .scroll-pane .content_scoller{width: 100%;} 
+    .category_list_hc_vn table{
+	text-align: right;
+	margin-top: 0;
+	border-collapse: collapse;
+    background: #f0f0f0;
+    width: 100%;
+        }
+        .category_list_hc_vn table th{
+        	padding: 8px 5px;
+        	border-bottom: 1px solid #fff;
+            text-align: left;
+        }
+        .category_list_hc_vn table th.hc{text-align: center;}
+        .category_list_hc_vn table td{
+        	padding: 5px 0 5px 5px;
+            text-align: left;
+            border-top: 1px solid #fff;
+        }
+        .category_list_hc_vn table .hc{
+        	text-align: center;
+            padding: 5px 0;
+        }
+        .category_list_hc_vn table .hc img{
+        	vertical-align: middle;
+        }
+        .category_list_hc_vn .view_more{
+        	padding: 5px 0;
+        	margin-top: 0;
+        }
+        .category_list_hc_vn .txt_view_more{color: #e50047; padding: 0; background: none;}
+        .category_list_hc_vn .txt_view_more a{color: #e50047;}
+        
+        .category_list_lich .scroll-pane{height: 250px; overflow: auto; background: #fcfcfc;}
+        .category_list_lich table th{text-align: center; padding: 8px 5px;border-bottom: 1px solid #fff;}
+        .category_list_lich table th.date, .category_list_lich table th.mon{text-align: left;} 
+        .category_list_lich table td{text-align: center; padding: 5px; border-top: 1px solid #fff;}
+        .category_list_lich table td.mon{text-align: left; padding: 5px 0 5px 5px;}
+        .category_list_lich table th.date{padding: 8px 5px 0 5px;}
+
+        .category_list_lich table{width: 98%; text-align: right; margin-top: 0; border-collapse: collapse; background: #fff;}

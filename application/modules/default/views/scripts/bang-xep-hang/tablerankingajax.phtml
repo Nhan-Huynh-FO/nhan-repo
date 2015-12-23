@@ -1,0 +1,53 @@
+<div id="box_bxh_bongda" class="box_col_300 box_width_common left">
+    <div class="txt_title_box">Bảng xếp hạng bóng đá <?php echo $this->title; ?></div>
+    <div class="title_tab">
+        <ul>
+            <?php
+            $numLeague = count($this->arrLeague);
+            $i = 1;
+            foreach ($this->arrLeague as $league){
+            ?>
+            <li <?php if ($i == 1) echo 'class="start active"'?>><a href="javascript:;" rel="tab<?php echo $i ?>"><?php echo $league['Name'] ?></a></li>
+            <?php
+            $i++;
+            } ?>
+        </ul>
+    </div>
+    <div class="content_news">
+        <?php
+        $i = 1;
+        foreach ($this->arrData as $table){
+        ?>
+        <div class="content_tab tab<?php echo $i; ?>" <?php echo $i == 1 ? 'style="display:block;"' : 'style="display:none;"' ?>>
+            <table class="tb_bxh">
+                <tr class="top">
+                    <td class="w150">Team</td>
+                    <td class="w20">W</td>
+                    <td class="w20">D</td>
+                    <td class="w20">L</td>
+                    <td class="w60">Pts</td>
+                </tr>
+                <?php
+                $stt = 1;
+                foreach ($table['tableRanking'] as $rank){
+                    if ($stt > 10)
+                        break;
+                    ?>
+                    <tr class="<?php if ($stt <= 3) echo 'top2'; elseif ($stt == 4 || $stt == 5) echo 'top3'; else echo 'top4' ?>">
+                        <td class="w150"><a class="txt_black_hover_blue" href="<?php echo '/doi-bong/', Fpt_Filter::setSeoLink($rank['Name']),'-', $rank['TeamID'], '.html' ?>"><?php echo $rank['Name']; ?></a></td>
+                        <td class="w20"><?php echo $rank['Won']; ?></td>
+                        <td class="w20"><?php echo $rank['Drawn']; ?></td>
+                        <td class="w20"><?php echo $rank['Lost']; ?></td>
+                        <td class="w60"><?php echo $rank['Point']; ?></td>
+                    </tr>
+                <?php
+                    $stt++;
+                } ?>
+            </table>
+            <div class="txt_view_more">Chi tiết <a href="<?php echo '/bang-xep-hang/', Fpt_Filter::setSeoLink($table['leagueName']), '-', Fpt_Filter::setSeoLink($table['seasonName']), '-', $table['leagueID'], '-', $table['seasonID'], '.html' ?>" class="txt_gray"><?php echo $table['leagueName'], ' ', $table['seasonName'] ?></a> <span class="icon_portal_thethao icon_view_more">&nbsp;</span></div>
+        </div>
+        <?php
+        $i++;
+        } ?>
+    </div>
+</div>

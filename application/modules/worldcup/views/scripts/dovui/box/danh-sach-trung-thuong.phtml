@@ -1,0 +1,57 @@
+<?php
+    $arrAward = $this->arrAward; 
+    $date=$this->dateAward;    
+    $strDate = strtotime($date->format('Y-m-d'));
+if(!empty($arrAward))
+    {
+?>
+
+<div id="danhsach_dovui" class="box_category width_common news_box_300">
+  <div class="title_box_category width_common">
+    <div class="txt_main_category"><a href="javascript:;">Danh sách trúng thưởng</a></div>
+  </div>
+  <div class="content_box_category width_common">
+  	<div class="filter_danhsach">
+    	<div class="left_filterds">
+            
+        	<p class="right_caledar_dv"><?php echo $this->DateTimeFormat($strDate,'long_predict');?></p>
+            
+        </div>
+        <a class="xemdapan" href="<?php echo $this->configView['url']. '/dovui/?day='.$strDate; ?>">Đáp án</a>
+    </div>
+    <ul class="ul_trungthuong">
+        <?php
+        
+            $i = 1;
+            foreach($arrAward as $item)
+            {
+                if($i < 6)
+                {
+                ?>
+                <li>
+                	<div class="left_trungthuong">
+                    	<?php echo $i.'. '.$item['full_name']; ?>
+                    </div>
+                    <div class="right_trungthuong">
+                    	<?php echo substr($item['mobile'],0,strlen($item['mobile'])-3); ?>xxx
+                    </div>
+                </li>
+                <?php
+                    
+                }
+				$i++;
+            }
+        
+        ?>    	
+    </ul>
+  </div>
+</div>
+<?php
+	}
+?>
+<div class="box_category width_common news_box_300">
+    <iframe allowtransparency="true" frameborder="0" height="250px" hspace="0" marginheight="0" marginwidth="0" scrolling="no" src="http://worldcup.vnexpress.net/khoanhkhacdamme/widget/" vspace="0" width="300px"></iframe>
+</div>
+<div class="banner_300x250 banner_common space_box">
+	<div class="box_category width_common hidden320"> <div class="banner_300x250"> <script type="text/javascript"> Poly_Large(3); </script> </div> </div>
+</div>

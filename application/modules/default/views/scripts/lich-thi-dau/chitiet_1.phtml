@@ -1,0 +1,351 @@
+<div class="block_chose_day width_common">
+    <div class="txt_left txt_11">Lịch thi đấu tính theo giờ Việt Nam (GMT + 7)</div>
+    <div class="right txt_chonngaytieptheo">
+        <div class="txt_ngay left">
+            <strong class="txt_11">
+                <?php
+                $day = date('N', $this->currUnixTime) + 1;
+                $date = date('d/m/Y', $this->currUnixTime);
+                if ($day == 8)
+                    echo "Chủ nhật - $date";
+                else
+                    echo "Thứ $day - $date";
+                ?>
+            </strong>
+        </div>
+        <div class="left control_pagination">
+            <a class="icon_responsive ico_respone_04" href="javascript:;" onclick="fixture.changeDate('<?php echo date('Y-m-d', $this->prevUnixTime); ?>')"> </a>
+            <a class="icon_responsive ico_respone_05" href="javascript:;" onclick="fixture.changeDate('<?php echo date('Y-m-d', $this->nextUnixTime); ?>')"> </a>
+        </div>
+    </div>
+</div>
+<?php
+switch ($this->group)
+{
+    case NULL:
+        $groupQT = isset($this->fixture[GROUP_FOOTBAL_QT]) ? $this->fixture[GROUP_FOOTBAL_QT] : NULL;
+        $groupTN = isset($this->fixture[GROUP_FOOTBAL_VN]) ? $this->fixture[GROUP_FOOTBAL_VN] : NULL;
+        break;
+    case 'trong-nuoc':
+        $groupQT = NULL;
+        $groupTN = isset($this->fixture[GROUP_FOOTBAL_VN]) ? $this->fixture[GROUP_FOOTBAL_VN] : NULL;
+        break;
+    case 'quoc-te':
+        $groupQT = isset($this->fixture[GROUP_FOOTBAL_QT]) ? $this->fixture[GROUP_FOOTBAL_QT] : NULL;
+        $groupTN = NULL;
+        break;
+    default:
+        break;
+}
+$objTeam = $this->objObject->getTeam();
+?>
+<?php
+if ($this->group == NULL || $this->group == 'quoc-te')
+{
+?>
+<div id="cate_club">
+    <div class="block_item_lichthidau width_common">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category">
+                <a href="javascript:;">Bóng đá quốc tế</a>
+            </h2>
+            <div class="perpos txt_input right">
+                <select id="quoc-te" onchange="fixture.changeLeague(this.value, this.id);">
+                    <option value="0" <?php if ($this->leagueId == 0) echo 'selected="selected"'; ?>>Tất cả giải đấu</option>
+                    <?php
+                    if (is_array($this->arrListLeagueQT) && count($this->arrListLeagueQT))
+                    {
+                        foreach ($this->arrListLeagueQT as $leagueId => $leagueName)
+                        {
+                            ?>
+                            <option value="<?php echo $leagueId; ?>" <?php if ($this->leagueId == $leagueId) echo 'selected="selected"'; ?>><?php echo $leagueName; ?></option>
+                            <?php
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+        <?php
+        if (is_array($groupQT) && count($groupQT))
+        {
+        ?>
+        <div class="lichthidau_item width_common">
+        <?php
+            foreach ($groupQT as $group)
+            {
+                ?>
+                <div class="txt_trandau width_common">
+                    <p class="left"><a href="javascript:;" onclick="fixture.changeLeague(<?php echo $group['league_id'] ?>, 'quoc-te');"><?php echo $group['name']; ?></a></p>
+                    <div class="txt_view_more">
+                        <a class="txt_666" href="<?php echo '/bang-xep-hang/', Fpt_Filter::setSeoLink($group['name']), '-', Fpt_Filter::setSeoLink($group['season_name']), '-', $group['league_id'], '-', $group['season_id'], '.html' ?>">Bảng xếp hạng</a>
+                    </div>
+                </div>
+                <ul class="list_capdau width_common">
+                    <?php
+                    $numMatches = count($group['arrMatches']);
+                    $team1 = $team2 = array();
+                    for ($i = 0; $i < $numMatches; $i++)
+                    {
+                        $match = $group['arrMatches'][$i];
+                        $objTeam->setId(array($match['team1'], $match['team2']));
+                        $team1 = $objTeam->getDetailObjectBasic($match['team1']);
+                        $team2 = $objTeam->getDetailObjectBasic($match['team2']);
+                        $team1SeoName = Fpt_Filter::setSeoLink($team1['name']);
+                        $team2SeoName = Fpt_Filter::setSeoLink($team2['name']);
+                        $match['datetime_happen'] = $this->gmt * 3600 + $match['datetime_happen'];
+                        $currTime = $this->gmt * 3600 + $this->currTime;
+                        if ($currTime > 10800 + $match['datetime_happen'] || $match['status'] == 2)
+                        {
+                            $goal1 = $match['goal1'];
+                            $goal2 = $match['goal2'];
+                            if ($match['penalty1'])
+                            {
+                                $goal1 = $goal1 . ' (' . $match['penalty1'] . ')';
+                                $goal2 = $goal2 . ' (' . $match['penalty2'] . ')';
+                            }
+                        }
+                        else
+                        {
+                            if ($currTime > $match['datetime_happen'] && $currTime <= 10800 + $match['datetime_happen'])
+                            {
+                                $goal1 = $match['goal1'];
+                                $goal2 = $match['goal2'];
+                                if ($match['penalty1'] || $match['penalty2'])
+                                {
+                                    $goal1 = $goal1 . ' (' . $match['penalty1'] . ')';
+                                    $goal2 = $goal2 . ' (' . $match['penalty2'] . ')';
+                                }
+                            }
+                            else
+                            {
+                                $goal1 = '-';
+                                $goal2 = '-';
+                            }
+                        }
+                        ?>
+                        <li>
+                            <div class="cap_thidau">
+                                <div class="timer_trandau left">
+                                    <?php
+                                    if ($currTime > 10800 + $match['datetime_happen'] || $match['status'] == 2)
+                                    {
+                                        echo 'FT';
+                                    }
+                                    else {
+                                        echo date('H:i', $match['datetime_happen']);
+                                    }
+                                    ?>
+                                </div>
+                                <div class="block_center_doidau">
+                                    <div class="capdau width_common">
+                                        <div class="wdoibong left">
+                                            <a title="<?php echo $team1['name_format']; ?>" href="<?php echo "/doi-bong/$team1SeoName-{$match['team1']}.html" ?>">
+                                                <img src="<?php echo $this->Imageurl($team1['thumbnail'], 'size10'); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>" class="image_doibong" />
+                                            </a>
+                                            <span class="left name_doibong">
+                                                <a class="txt_doibong" title="<?php echo $team1['name_format']; ?>" href="<?php echo "/doi-bong/$team1SeoName-{$match['team1']}.html" ?>"> <?php echo $team1['name']; ?></a>
+                                            </span>
+                                        </div>
+                                        <div class="num_tiso"><?php echo $goal1; ?></div>
+                                    </div>
+                                    <div class="capdau width_common">
+                                        <div class="wdoibong left">
+                                            <a title="<?php echo $team2['name_format']; ?>" href="<?php echo "/doi-bong/$team2SeoName-{$match['team2']}.html" ?>">
+                                                <img src="<?php echo $this->Imageurl($team2['thumbnail'], 'size10'); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>" class="image_doibong" />
+                                            </a>
+                                            <span class="left name_doibong">
+                                                <a class="txt_doibong" title="<?php echo $team2['name_format']; ?>" href="<?php echo "/doi-bong/$team2SeoName-{$match['team2']}.html" ?>"> <?php echo $team2['name']; ?></a>
+                                            </span>
+                                        </div>
+                                        <div class="num_tiso"><?php echo $goal2; ?></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="width_common txt_link_thongtin_capdau txt_666">
+                                <p>
+                                    <a title="Điểm tin" href="<?php echo $this->matchDetailUrl('diem-tin', $team1['name'], $team2['name'], $match['id']); ?>" class="txt_666">Điểm tin</a>&nbsp;|&nbsp;<a title="Trực tiếp" href="<?php echo $this->matchDetailUrl('tuong-thuat', $team1['name'], $team2['name'], $match['id']); ?>" class="txt_666">Trực tiếp</a> &nbsp;|&nbsp; <a title="Video" href="<?php echo $this->matchDetailUrl('anh-video', $team1['name'], $team2['name'], $match['id']); ?>" class="txt_666">Video</a>
+                                </p>
+                            </div>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+                <?php
+            }
+            ?>
+        </div>
+        <?php
+        }
+        else
+        {
+            ?>
+            <div class="width_common box_category block_item_lichthidau">
+                Không có trận đấu trong ngày.
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+<?php
+}
+?>
+<?php
+if ($this->group == NULL || $this->group == 'trong-nuoc')
+{
+?>
+<div id="cate_club">
+    <div class="block_item_lichthidau width_common">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category">
+                <a href="javascript:;">Bóng đá trong nước</a>
+            </h2>
+            <div class="perpos txt_input right">
+                <select id="trong-nuoc" onchange="fixture.changeLeague(this.value, this.id);">
+                    <option value="0" <?php if ($this->leagueId == 0) echo 'selected="selected"'; ?>>Tất cả giải đấu</option>
+                    <?php
+                    if (is_array($this->arrListLeagueTN) && count($this->arrListLeagueTN))
+                    {
+                        foreach ($this->arrListLeagueTN as $leagueId => $leagueName)
+                        {
+                            ?>
+                            <option value="<?php echo $leagueId; ?>" <?php if ($this->leagueId == $leagueId) echo 'selected="selected"'; ?>><?php echo $leagueName; ?></option>
+                            <?php
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+        <?php
+        if (is_array($groupTN) && count($groupTN))
+        {
+        ?>
+        <div class="lichthidau_item width_common">
+        <?php
+            foreach ($groupTN as $group)
+            {
+                ?>
+                <div class="txt_trandau width_common">
+                    <p class="left"><a href="javascript:;" onclick="fixture.changeLeague(<?php echo $group['league_id'] ?>, 'trong-nuoc');"><?php echo $group['name']; ?></a></p>
+                    <div class="txt_view_more">
+                        <a class="txt_666" href="<?php echo '/bang-xep-hang/', Fpt_Filter::setSeoLink($group['name']), '-', Fpt_Filter::setSeoLink($group['season_name']), '-', $group['league_id'], '-', $group['season_id'], '.html' ?>">Bảng xếp hạng</a>
+                    </div>
+                </div>
+                <ul class="list_capdau width_common">
+                    <?php
+                    $numMatches = count($group['arrMatches']);
+                    $team1 = $team2 = array();
+                    for ($i = 0; $i < $numMatches; $i++)
+                    {
+                        $match = $group['arrMatches'][$i];
+                        $objTeam->setId(array($match['team1'], $match['team2']));
+                        $team1 = $objTeam->getDetailObjectBasic($match['team1']);
+                        $team2 = $objTeam->getDetailObjectBasic($match['team2']);
+                        $team1SeoName = Fpt_Filter::setSeoLink($team1['name']);
+                        $team2SeoName = Fpt_Filter::setSeoLink($team2['name']);
+                        $match['datetime_happen'] = $this->gmt * 3600 + $match['datetime_happen'];
+                        $currTime = $this->gmt * 3600 + $this->currTime;
+                        ?>
+                        <li>
+                            <div class="cap_thidau">
+                                <div class="timer_trandau left">
+                                    <?php
+                                    if ($currTime > 10800 + $match['datetime_happen'] || $match['status'] == 2)
+                                    {
+                                        echo 'FT';
+                                    }
+                                    else {
+                                        echo date('H:i', $match['datetime_happen']);
+                                    }
+                                    ?>
+                                </div>
+                                <div class="block_center_doidau">
+                                    <div class="capdau width_common">
+                                        <div class="wdoibong left">
+                                            <a title="<?php echo $team1['name_format']; ?>" href="<?php echo "/doi-bong/$team1SeoName-{$match['team1']}.html" ?>">
+                                                <img src="<?php echo $this->Imageurl($team1['thumbnail'], 'size10'); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>" class="image_doibong" />
+                                            </a>
+                                            <span class="left name_doibong">
+                                                <a class="txt_doibong" title="<?php echo $team1['name_format']; ?>" href="<?php echo "/doi-bong/$team1SeoName-{$match['team1']}.html" ?>"> <?php echo $team1['name']; ?></a>
+                                            </span>
+                                        </div>
+                                        <?php
+                                        if ($currTime > 10800 + $match['datetime_happen'] || $match['status'] == 2)
+                                        {
+                                            $goal1 = $match['goal1'];
+                                            $goal2 = $match['goal2'];
+                                            if ($match['penalty1'])
+                                            {
+                                                $goal1 = $goal1 . ' (' . $match['penalty1'] . ')';
+                                                $goal2 = $goal2 . ' (' . $match['penalty2'] . ')';
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if ($currTime > $match['datetime_happen'] && $currTime <= 10800 + $match['datetime_happen'])
+                                            {
+                                                $goal1 = $match['goal1'];
+                                                $goal2 = $match['goal2'];
+                                                if ($match['penalty1'] || $match['penalty2'])
+                                                {
+                                                    $goal1 = $goal1 . ' (' . $match['penalty1'] . ')';
+                                                    $goal2 = $goal2 . ' (' . $match['penalty2'] . ')';
+                                                }
+                                            }
+                                            else
+                                            {
+                                                $goal1 = '';
+                                                $goal2 = '';
+                                            }
+                                        }
+                                        ?>
+                                        <div class="num_tiso"><?php echo $goal1; ?></div>
+                                    </div>
+                                    <div class="capdau width_common">
+                                        <div class="wdoibong left">
+                                            <a title="<?php echo $team2['name_format']; ?>" href="<?php echo "/doi-bong/$team2SeoName-{$match['team2']}.html" ?>">
+                                                <img src="<?php echo $this->Imageurl($team2['thumbnail'], 'size10'); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>" class="image_doibong" />
+                                            </a>
+                                            <span class="left name_doibong">
+                                                <a class="txt_doibong" title="<?php echo $team2['name_format']; ?>" href="<?php echo "/doi-bong/$team2SeoName-{$match['team2']}.html" ?>"> <?php echo $team2['name']; ?></a>
+                                            </span>
+                                        </div>
+                                        <div class="num_tiso"><?php echo $goal2; ?></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="width_common txt_link_thongtin_capdau txt_666">
+                                <p>
+                                    <a title="Điểm tin" href="<?php echo $this->matchDetailUrl('diem-tin', $team1['name'], $team2['name'], $match['id']); ?>" class="txt_666">Điểm tin</a>&nbsp;|&nbsp;<a title="Trực tiếp" href="<?php echo $this->matchDetailUrl('tuong-thuat', $team1['name'], $team2['name'], $match['id']); ?>" class="txt_666">Trực tiếp</a> &nbsp;|&nbsp; <a title="Video" href="<?php echo $this->matchDetailUrl('anh-video', $team1['name'], $team2['name'], $match['id']); ?>" class="txt_666">Video</a>
+                                </p>
+                            </div>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+                <?php
+            }
+            ?>
+        </div>
+        <?php
+        }
+        else
+        {
+            ?>
+            <div class="width_common box_category block_item_lichthidau">
+                Không có trận đấu trong ngày.
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+<?php
+}
+?>

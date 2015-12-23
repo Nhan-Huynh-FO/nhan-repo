@@ -1,0 +1,62 @@
+<?php
+if (!empty($this->data['data']))
+{
+    ?>
+    <div id="chandung" class="box_category width_common">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category">
+                <a href="<?php echo $this->configView['url'], $this->data['info']['share_url']; ?>" title="<?php echo $this->data['info']['name']; ?>"><?php echo $this->data['info']['name']; ?></a>
+            </h2>
+            <a class="block_arrow_title" href="<?php echo $this->configView['url'], $this->data['info']['share_url']; ?>" title="<?php echo $this->data['info']['name']; ?>">&nbsp;</a>
+        </div>
+        <div class="content_box_category width_common">
+            <ul class="list_new_140 list_col">
+                <?php
+                $i = 1;
+                $j = 1;
+                foreach ($this->data['data'] as $id)
+                {
+                    $article = $this->objArticle->getArticleBasic($id);
+                    if (empty($article))
+                        continue;
+                    ?>
+                    <li <?php echo 2==$i?'class="end"':''; ?>>
+                        <?php if(DEVICE_ENV != 1) { ?>
+                            <div class="thumb_140 width_common">
+                                <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                    <img src="<?php echo $this->ImageurlArticle($article, 'size1'); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>"/>
+                                </a>
+                                <?php echo $this->ArticleTypeIcon($article); ?>
+                            </div>
+                        <?php } else { ?>
+                            <div class="thumb_140 width_common" data-scale="5/3">
+                                <a class="cover_image image_108" style="background-image: url('<?php echo $this->ImageurlArticle($article, 'size1'); ?>')" href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">&nbsp;</a>
+                                <?php echo $this->ArticleTypeIcon($article); ?>
+                            </div>
+                        <?php } ?>
+                        <h2>
+                            <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                <?php echo $article['title']; ?>
+                            </a>
+                            <span class="no_wrap">
+                                <?php echo $this->ArticleViewIcon($article); ?>
+                                <?php echo $this->ArticleComment($article); ?>
+                            </span>
+                        </h2>
+                    </li>
+                    <?php
+                    $i++;
+                    if (3==$i && 4 > $j)
+                    {
+                        echo '</ul><ul class="list_new_140 list_col">';
+                        $i = 1;
+                    }
+                    $j++;
+                }
+                ?>
+            </ul>
+        </div>
+    </div>
+    <?php
+}
+?>

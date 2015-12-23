@@ -1,0 +1,147 @@
+<?php
+if (!empty($this->arrOrtherArticle))
+{
+?>
+    <div class="title_box_detailpage width_common">
+        <div class="txt_main_category"><a>Tin khác</a></div>
+        <div class="right control_pagination" id="content_other_news">
+            <?php
+            if ($this->intPage > 1)
+            {
+                ?>
+                <a data-page="<?php echo $this->intPage; ?>" data-flagexc="<?php echo $this->flagExc ? 1 : 0; ?>" data-cateid="<?php echo $this->cateId; ?>" data-offset="<?php echo $this->offsetPrev; ?>" href="javascript:;" class="icon_responsive ico_respone_04">&nbsp;</a>
+                <?php
+            }
+            ?>
+            <?php
+            if ($this->intPage >= 1 && $this->intPage < $this->totalPageOtherNews)
+            {
+                ?>
+                <a data-page="<?php echo $this->intPage; ?>" data-flagexc="<?php echo $this->flagExc ? 1 : 0; ?>" data-cateid="<?php echo $this->cateId; ?>" data-offset="<?php echo $this->offsetNext; ?>" href="javascript:;" class="icon_responsive ico_respone_05">&nbsp;</a>
+                <?php
+            }
+            ?>
+        </div>
+    </div>
+    <div class="content_box_category width_common">
+        <ul class="list_news">
+            <?php
+            $i = 0;
+			$j = 0;
+            foreach ($this->arrOrtherArticle as $k => $id)
+            {
+                if (4==$i)
+                {
+                    break;
+                }
+                $article = $this->objArticle->getArticleBasic($id);
+                unset($this->arrOrtherArticle[$k]);
+                if (empty($article))
+                {
+                    continue;
+                }
+            ?>
+            <li <?php echo 3==$i?'class="end"':''; ?>>
+            <?php
+            if (!empty($article['thumbnail_url']))
+            {
+                ?>
+                <div class="thumb_160 width_common">
+                    <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                        <img src="<?php echo $this->ImageurlArticle($article, 'size1'); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>">
+                    </a>
+                    <?php echo $this->ArticleTypeIcon($article); ?>
+                </div>
+                <strong>
+                    <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                        <?php echo $article['title']; ?>
+                    </a>
+                    <span class="no_wrap">
+                        <img class="icon_content icon_title_<?php echo intval($article['article_icon']); ?>" src="<?php echo $this->configView['images']; ?>/graphics/img_blank.gif" alt="Icon" />
+                        <?php echo $this->ArticleComment($article); ?>
+                    </span>
+                </strong>
+                <?php
+            }
+            else {
+                ?>
+                <strong>
+                    <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                        <?php echo $article['title']; ?>
+                    </a>
+                    <span class="no_wrap">
+                        <img class="icon_content icon_title_<?php echo intval($article['article_icon']); ?>" src="<?php echo $this->configView['images']; ?>/graphics/img_blank.gif" alt="Icon" />
+                        <?php echo $this->ArticleComment($article); ?>
+                    </span>
+                </strong>
+                <div class="news_lead"><?php echo $article['lead']; ?></div
+                <?php
+            }
+            ?>
+            </li>
+            <?php
+				$j++;
+				if (2==$j && 3 > $i)
+				{
+					echo '</ul>
+						<ul class="list_news">';
+					$j=0;
+				}
+                $i++;
+            }
+            ?>
+        </ul>
+        <?php
+        if (4 <= $i)
+        {
+        ?>
+        <div class="width_common list_10tinkhac">
+            <div class="left w320">
+                <ul class="list_news_dot_3x3_300">
+                    <?php
+                    $j=0;
+					$i=0;
+                    foreach ($this->arrOrtherArticle as $id)
+                    {
+                        $article = $this->objArticle->getArticleBasic($id);
+                    ?>
+                    <li>
+                        <strong>
+                            <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                <?php echo $article['title']; ?>
+                            </a>
+                            <span class="no_wrap">
+                                <img class="icon_content icon_title_<?php echo intval($article['article_icon']); ?>" src="<?php echo $this->configView['images']; ?>/graphics/img_blank.gif" alt="icon">
+                                <?php echo $this->ArticleComment($article); ?>
+                            </span>
+                        </strong>
+                    </li>
+                    <?php
+                        $j++;
+                        if (5==$j && 6 > $i)
+                        {
+                            echo '</ul></div>',
+                            '<div class="right w320">
+                            <ul class="list_news_dot_3x3_300">';
+                            $j=0;
+                        }
+						$i++;
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+    </div>
+    <div class="xemtiep"><a href="<?php echo $this->configView['url'] . '/mobile/othernews/category_id/' . $this->arrArticleDetail['category_id'] . '/article_id/' . $this->arrArticleDetail['article_id']; ?>" data-container="#box_tinkhac_detail .content_box_category.width_common" data-params="<?php echo $this->escape(Zend_Json::encode(array('limit' => LIMIT_OTHER_NEWS, 'offset' => LIMIT_OTHER_NEWS, 'total' => $this->totalOtherNews, 'exclude' => $this->flagExc))); ?>">Xem tiếp</a></div>
+
+    <script type="text/javascript">
+    $(function(){
+        othernews.init();
+    });
+    </script>
+    <?php
+}
+?>

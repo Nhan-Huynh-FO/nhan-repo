@@ -1,0 +1,45 @@
+<div class="title_box_detailpage width_common width_common">
+    <div class="txt_main_category"><a>Tin khác</a></div>
+</div>
+<div class="content_box_category width_common">
+    <?php
+    $arrOtherNews = array_chunk($this->arrOrtherArticle, 2);
+    foreach ($arrOtherNews as $otherNews)
+    {
+        ?>
+        <ul class="list_news">
+            <?php
+            foreach ($otherNews as $id)
+            {
+                $article = $this->objArticle->getArticleBasic($id);
+                if (empty($article))
+                {
+                    continue;
+                }
+                ?>
+                <li>
+                    <div class="thumb_160 width_common">
+                        <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                            <img src="<?php echo $this->ImageurlArticle($article, 'size11'); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>">
+                        </a>
+                        <?php echo $this->ArticleTypeIcon($article); ?>
+                    </div>
+                    <strong>
+                        <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                            <?php echo $article['title']; ?>
+                        </a>
+                        <span class="no_wrap">
+                            <img class="icon_content icon_title_<?php echo intval($article['article_icon']); ?>" src="<?php echo $this->configView['images']; ?>/graphics/img_blank.gif" alt="Icon" />
+                            <?php echo $this->ArticleComment($article); ?>
+                        </span>
+                    </strong>
+                </li>
+                <?php
+            }
+            ?>
+        </ul>
+        <?php
+    }
+    ?>
+</div>
+<div class="xemtiep hiddenweb"><a href="<?php echo $this->configView['url'] . '/mobile/othernews/category_id/' . $this->intOtherCate . '/article_id/' . $this->arrArticleDetail['article_id']; ?>" data-container="#box_tinkhac_detail .content_box_category.width_common" data-params="<?php echo $this->escape(Zend_Json::encode(array('limit' => LIMIT_OTHER_NEWS, 'offset' => LIMIT_OTHER_NEWS, 'total' => $this->totalOtherNews, 'exclude' => $this->flagExc))); ?>">Xem tiếp</a></div>

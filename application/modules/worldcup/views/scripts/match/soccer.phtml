@@ -1,0 +1,102 @@
+<?php
+$arrDetailMatchExtendScorecard = $this->matchDetail['scoreCard'];
+$arrGoal = array();
+$arrCard = array();
+$arrSubs = array();
+if (!empty($arrDetailMatchExtendScorecard))
+{
+    foreach ($arrDetailMatchExtendScorecard as $key => $value)
+    {
+        if (isset($value['score']))
+        {
+            foreach ($value['score'] as $score)
+            {
+                if(isset($arrGoal[$score['!scoreType']][$score['!teamId']][$score['!playerId']]))
+                {
+                    $arrGoal[$score['!scoreType']][$score['!teamId']][$score['!playerId']] .= ', '. $key;
+                }
+                else
+                {
+                    $arrGoal[$score['!scoreType']][$score['!teamId']][$score['!playerId']] = $score['Name'] . ' ' . $key;
+                }
+            }
+        }
+        if (isset($value['card']))
+        {
+            foreach ($value['card'] as $card)
+            {
+                $arrCard[$card['!cardType']][$card['!teamId']][] = $card['Name'] . ' ' . $key;
+            }
+        }
+        if ($value['substitution'])
+        {
+            foreach ($value['substitution'] as $substitution)
+            {
+                foreach ($substitution['substitution'] as $player)
+                {
+                    if(!empty($player['Player'][0]['Name']))
+                    {
+                        $arrSubs[$substitution['!teamId']][] = $player['Player'][0]['Name'] . ' - ' . '<span class="text_999">' . $player['Player'][1]['Name'] . '</span>' . ' ' . $key;
+                    }
+                }
+            }
+        }
+    }
+}
+if (isset($arrGoal) && !empty($arrGoal))
+{
+    foreach ($arrGoal as $goalType => $goal)
+    {
+        ?>
+        <tr class="goal">
+            <td class="text_right"><?php echo (implode(', ', $goal[$this->matchDetail['team1']])); ?></td>
+            <td class="text_center">
+                <img src="<?php echo $this->configView['images']; ?>/icons/<?php echo $goalType; ?>.png" alt="Ghi bàn">
+            </td>
+            <td><?php echo (implode(', ', $goal[$this->matchDetail['team2']])); ?></td>
+        </tr>
+        <?php
+    }
+}
+if (isset($arrCard) && !empty($arrCard))
+{
+    foreach ($arrCard as $cardType => $card)
+    {
+        ?>
+        <tr class="ticket">
+            <td class="text_right"><?php echo implode(', ', $card[$this->matchDetail['team1']]); ?></td>
+            <td class="text_center">
+                <img src="<?php echo $this->configView['images']; ?>/icons/<?php echo $cardType; ?>.png" alt="Thẻ phạt">
+            </td>
+            <td><?php echo implode(', ', $card[$this->matchDetail['team2']]); ?></td>
+        </tr>
+        <?php
+    }
+}
+if (isset($arrSubs) && !empty($arrSubs))
+{
+    ?>
+    <tr class="ticket">
+        <td class="text_right">
+            <?php
+            if(isset($arrSubs[$this->matchDetail['team1']]))
+            {
+                echo implode(', ', $arrSubs[$this->matchDetail['team1']]);
+            }
+            ?>
+        </td>
+        <td class="text_center">
+            <img src="<?php echo $this->configView['images']; ?>/icons/in_out.png" alt="Thay người">
+        </td>
+        <td>
+            <?php
+            if(isset($arrSubs[$this->matchDetail['team2']]))
+            {
+                echo implode(', ', $arrSubs[$this->matchDetail['team2']]);
+            }
+            ?>
+        </td>
+    </tr>
+    <?php
+}
+?>

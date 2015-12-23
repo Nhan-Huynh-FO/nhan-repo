@@ -1,0 +1,50 @@
+<?php
+//Check empty first new
+if ( is_numeric($this->firstNews) && $this->firstNews>0 )
+{
+    //Get tin dau tien
+    $firstNews  = $this->objArticle->getArticleBasic($this->firstNews);
+?>
+<!-- Box tin News Top-->
+<div id="box_news_top" class="width_common">
+    <div class="line_col width_common">
+        <div class="line_col_midnews_top">
+            <div class="box_hot_news">
+                <?php
+                if ( !empty($firstNews['thumbnail_url']) )
+                {
+                ?>
+                <div class="block_news_big">
+                    <a href="<?php echo $this->ShareurlM240($firstNews['share_url']); ?>" class="txt_link" title="<?php echo $firstNews['title_format']; ?>">
+                        <img src="<?php echo $this->ImageurlArticle($firstNews, 'size1'); ?>" alt="<?php echo $firstNews['title_format']; ?>" class="width_image_common">
+                    </a>
+					<?php echo $this->ArticleTypeIcon($firstNews); ?>
+                </div>
+                <?php
+                }//end if
+                ?>
+                <h2 class="title_news">
+                    <a href="<?php echo $this->ShareurlM240($firstNews['share_url']); ?>" class="txt_link" title="<?php echo $firstNews['title_format']; ?>">
+                        <?php echo $firstNews['title_format']; ?>
+                    </a>
+                    <span class="no_wrap">
+                        <img class="icon_content icon_title_<?php echo intval($firstNews['article_icon']); ?>" alt="" src="<?php echo $this->configView['images'];?>/graphics/img_blank.gif">
+                    </span>
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+}//end if
+?>
+
+<!--List paging-->
+<div class="width_common line_col">
+    <div id="col_1">
+        <?php echo $this->render('m240/box/list_paging.phtml'); ?>
+		<div id="paging">
+			<?php echo $this->PaginationM240($this->arrParamPaging); ?>
+		</div>
+    </div>
+</div>

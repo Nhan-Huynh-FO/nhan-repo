@@ -1,0 +1,273 @@
+<?php
+$arrDetailMatch = $this->arrDetailMatch;
+$arrDate = $this->arrDate;
+$objTeam = $this->objObject->getTeam();
+$arrTeamEx = array(1120,1121);
+?>
+<div class="width_common box sub_guess space_box">
+    <div class="title">Tranh giải 3</div>
+    <a href="#board" class="ico"></a>
+    <?php
+    if (count($arrDetailMatch['tranh_giai_ba']) == 1)
+    {
+        $j = 0;
+        $i = 63;
+        foreach ($arrDate['tranh_giai_ba'] as $arrTranhGiaiBa)
+        {
+            $arrData = array_slice($arrDetailMatch['tranh_giai_ba'], $j, $arrTranhGiaiBa);
+            ?>
+            <table class="width_common">
+                <caption id="<?php echo date("dmY", $arrData[0]['datetime_happen']); ?>"><?php echo $this->DateTimeFormat($arrData[0]['datetime_happen'], 'long_fixture'); ?></caption>
+                <?php
+                foreach ($arrData as $data)
+                {
+                    $objTeam->setId(array($data['team1'],$data['team2']));
+                    $team1 = $objTeam->getDetailObjectBasic($data['team1']);
+                    $team2 = $objTeam->getDetailObjectBasic($data['team2']);
+                    $title = Fpt_Filter::setSeoLink('tran-' . $team1['name'] . ' vs ' . $team2['name']);
+                    if ($data['status'] == 2 || $this->currTime > $data['datetime_happen'])
+                    {
+                        ?>
+                        <tr class="now">
+                            <td class="time"><?php echo date('H:i', $data['datetime_happen']); ?></td>
+                            <td class="group"><?php echo $i; ?></td>
+                            <td class="main_team">
+                                <span><?php echo $team1['name']; ?></span>
+                                <img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size10'); ?>" alt="<?php echo $team1['name_format']; ?>">
+                            </td>
+                            <td class="score">
+                                <strong><?php echo $data['goal1'] . ' - ' . $data['goal2']; ?></strong>
+                                <?php
+                                if($data['penalty1'] > 0 || $data['penalty2'] > 0)
+                                {
+                                ?>
+                                    <p class="txt_11">penalty</p>
+                                    <p class="txt_11" style="color:red">(<?php echo $data['penalty1'],' - ', $data['penalty2'] ;?>)</p>
+                                <?php
+                                }
+                                else if((int)$data['matchTime'] > 119) {
+                                    echo '<p class="txt_11">(Sau 120\')</p>';
+                                }
+                                ?>
+                            </td>
+                            <td class="sub_team">
+                                <img width="18" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size10'); ?>" alt="<?php echo $team2['name_format']; ?>">
+                                <span><?php echo $team2['name']; ?></span>
+                                <div class="txt_view_more"><a class="txt_666" href="<?php echo $this->configView['url'] . "/thong-ke/{$title}-{$data['id']}" ?>" title="Thống kê trận đấu <?php echo $data['name_format']; ?>">Chi tiết</a></div>
+                                <div class="daiphatsong" data-schedule-match="<?php echo $data['id']; ?>"></div>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    elseif ($data['status'] == 1 && $this->currTime < $data['datetime_happen'])
+                    {
+                        ?>
+                        <tr class="now">
+                            <td class="time"><?php echo date('H:i', $data['datetime_happen']); ?></td>
+                            <td class="group"><?php echo $i; ?></td>
+                            <td class="main_team">
+                                <span><?php echo $team1['name']; ?></span>
+                                <?php
+                                if (!empty($team1['thumbnail']))
+                                {
+                                ?>
+                                <img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size10'); ?>" alt="<?php echo $team1['name_format']; ?>">
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <?php
+                            if (!in_array($team1['id'], $arrTeamEx))
+                            {
+                            ?>
+                            <td class="score"><input type="text" class="input_focus_col btn_collapse_input" data-rel="<?php echo $data['id']; ?>-team1" data-match-id="<?php echo $data['id']; ?>"> - <input type="text" class="input_focus_col btn_collapse_input" data-rel="<?php echo $data['id']; ?>-team2" data-match-id="<?php echo $data['id']; ?>"></td>
+                            <?php
+                            }
+                            else {
+                                echo '<td class="score"> - </td>';
+                            }
+                            ?>
+                            <td class="sub_team">
+                                <?php
+                                if (!empty($team2['thumbnail']))
+                                {
+                                ?>
+                                <img width="18" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size10'); ?>" alt="<?php echo $team2['name_format']; ?>">
+                                <?php
+                                }
+                                ?>
+                                <span><?php echo $team2['name']; ?></span>
+                                <div class="txt_view_more"><a class="txt_666" href="<?php echo $this->configView['url'] . "/thong-ke/{$title}-{$data['id']}" ?>" title="Thống kê trận đấu <?php echo $data['name_format']; ?>">Chi tiết</a></div>
+                                <div class="daiphatsong" data-schedule-match="<?php echo $data['id']; ?>"></div>
+                            </td>
+                        </tr>
+                        <tr class="no_border collapse collapse_2 class_match_<?php echo $data['id']; ?>">
+                            <td colspan="5" class="text_center"><a href="javascript:;" class="txt_icon_arrow_up btn_guess_2 btn_collapse" title="Dự đoán của bạn" data-match-id="<?php echo $data['id']; ?>">Dự đoán của bạn<i class="ico"></i></a></td>
+                        </tr>
+                        <tr class="collapse collapse_2 class_match_<?php echo $data['id']; ?>">
+                            <td colspan="5" class="text_center">
+                                <a href="javascript:;" class="btn green predict-match" data-rel="<?php echo $data['id']; ?>" data-predict-type="6" data-time="<?php echo $data['matchTime'];?>" data-predict-text="<?php echo $team1['name']; ?> vs <?php echo $team2['name']; ?>" onclick="_gaq.push(['_trackEvent', 'Trang Lịch thi đấu World Cup', 'Click button Gửi trong box', 'Box Dự đoán']);">Gửi</a>
+                                <a href="<?php echo $this->configView['url'] . "/thong-ke/{$title}-{$data['id']}" ?>" title="Thống kê trận đấu <?php echo $data['name_format']; ?>" class="btn gray">Gợi ý <i class="ico"></i></a>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <tbody class="small">
+                            <tr class="now">
+                                <td class="time"><?php echo $this->currTime - $data['datetime_happen']; ?>'</td>
+                                <td class="group"><?php echo $i; ?></td>
+                                <td class="main_team">
+                                    <span><?php echo $team1['name']; ?></span>
+                                    <img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size10'); ?>" alt="<?php echo $team1['name_format']; ?>">
+                                </td>
+                                <td class="score"><?php echo $data['goal1'] . ' - ' . $data['goal2']; ?></td>
+                                <td class="sub_team">
+                                    <img width="18" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size10'); ?>" alt="<?php echo $team2['name_format']; ?>">
+                                    <span><?php echo $team2['name']; ?></span>
+                                    <div class="txt_view_more"><a class="txt_666" href="<?php echo $this->configView['url'] . "/tuong-thuat/{$title}-{$data['id']}" ?>" title="Thống kê trận đấu <?php echo $data['name_format']; ?>">Trực tiếp</a></div>
+                                    <div class="daiphatsong" data-schedule-match="<?php echo $data['id']; ?>"></div>
+                                </td>
+                            </tr>
+                            <?php
+                            $arrDetailMatchExtendScorecard = $data['scoreCard'];
+                            $arrGoal = array();
+                            $arrCard = array();
+                            $arrSubs = array();
+                            if (!empty($arrDetailMatchExtendScorecard))
+                            {
+                                foreach ($arrDetailMatchExtendScorecard as $key => $value)
+                                {
+                                    if (isset($value['score']))
+                                    {
+                                        foreach ($value['score'] as $score)
+                                        {
+                                            $arrGoal[$score['!scoreType']][$score['!teamId']][] = $score['Name'] . ' '. $key;
+                                        }
+                                    }
+                                    if (isset($value['card']))
+                                    {
+                                        foreach ($value['card'] as $card)
+                                        {
+                                            $arrCard[$card['!cardType']][$card['!teamId']][] = $card['Name'] . ' '. $key;
+                                        }
+                                    }
+                                    if ($value['substitution'])
+                                    {
+                                        foreach ($value['substitution'] as $substitution)
+                                        {
+                                            foreach ($substitution['substitution'] as $player)
+                                            {
+                                                if(!empty($player['Player'][0]['Name']))
+                                                {
+                                                    $arrSubs[$substitution['!teamId']][] = $player['Player'][0]['Name'] . ' - ' . '<span class="text_999">'.$player['Player'][1]['Name'].'</span>' . ' ' .$key;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if (isset($arrGoal) && !empty($arrGoal))
+                            {
+                                foreach ($arrGoal as $goalType => $goal)
+                                {
+                                    ?>
+                                    <tr class="goal">
+                                        <td colspan="3" class="text_right"><?php echo implode(', ', $goal[$data['team1']]); ?></td>
+                                        <td class="text_center">
+                                            <img src="<?php echo $this->configView['images']; ?>/icons/<?php echo $goalType; ?>.png" alt="">
+                                        </td>
+                                        <td><?php echo implode(', ', $goal[$data['team2']]); ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            if (isset($arrCard) && !empty($arrCard))
+                            {
+                                foreach ($arrCard as $cardType => $card)
+                                {
+                                    ?>
+                                    <tr class="ticket">
+                                        <td colspan="3" class="text_right"><?php echo implode(', ', $card[$data['team1']]); ?></td>
+                                        <td class="text_center">
+                                            <img src="<?php echo $this->configView['images']; ?>/icons/<?php echo $cardType; ?>.png" alt="">
+                                        </td>
+                                        <td><?php echo implode(', ', $card[$data['team2']]); ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            if (isset($arrSubs) && !empty($arrSubs))
+                            {
+                                ?>
+                                <tr class="ticket">
+                                    <td colspan="3" class="text_right">
+                                        <?php
+                                        if (isset($arrSubs[$data['team1']])) {
+                                            echo implode(', ', $arrSubs[$data['team1']]);
+                                        }
+                                        ?>
+                                    </td>
+                                    <td class="text_center">
+                                        <img src="<?php echo $this->configView['images']; ?>/icons/in_out.png" alt="">
+                                    </td>
+                                    <td>
+                                        <?php
+                                        if (isset($arrSubs[$data['team2']])) {
+                                            echo implode(', ', $arrSubs[$data['team2']]);
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <?php
+
+                            }
+                            ?>
+                            <tr>
+                                <td colspan="5" class="text_center"><a href="javascript:;" class="txt_icon_arrow_up btn_guess_2 btn_collapse" title="Dự đoán của bạn" data-match-id="8801">Dự đoán của bạn<i class="ico"></i></a></td>
+                            </tr>
+                            <tr class="score collapse class_match_<?php echo $data['id']; ?>"><td colspan="5"><input type="text" class="input_focus_col btn_collapse_input" data-rel="<?php echo $data['id']; ?>-team1" data-match-id="<?php echo $data['id']; ?>"> - <input type="text" class="input_focus_col btn_collapse_input" data-rel="<?php echo $data['id']; ?>-team2" data-match-id="<?php echo $data['id']; ?>"></td></tr>
+                            <tr class="collapse collapse_2 class_match_<?php echo $data['id']; ?>">
+                                <td colspan="5" class="text_center">
+                                    <a href="javascript:;" class="btn green predict-match" data-rel="<?php echo $data['id']; ?>" data-predict-type="6" data-time="<?php echo $data['matchTime'];?>" data-predict-text="<?php echo $team1['name']; ?> vs <?php echo $team2['name']; ?>" onclick="_gaq.push(['_trackEvent', 'Trang Lịch thi đấu World Cup', 'Click button Gửi trong box', 'Box Dự đoán']);">Gửi</a>
+                                    <a href="<?php echo $this->configView['url'] . "/thong-ke/{$title}-{$data['id']}" ?>" title="Thống kê trận đấu <?php echo $data['name_format']; ?>" class="btn gray">Gợi ý <i class="ico"></i></a>
+                                </td>
+                            </tr>
+                            </body>
+                            <?php
+                        }
+                        ?>
+                        <?php
+                        $i++;
+                        $j++;
+                    }
+                    ?>
+            </table>
+            <?php
+        }
+    }
+    else
+    {
+        ?>
+        <table class="width_common">
+            <caption id="<?php echo '13072014'; ?>">Chủ nhật, 13/07/2014</caption>
+            <tr class="now">
+                <td class="time">03:00</td>
+                <td class="group">63</td>
+                <td class="main_team">
+                    <strong>Thua trận 61&nbsp;</strong>
+                </td>
+                <td class="score"><strong> - </strong></td>
+                <td class="sub_team">
+                    <strong>&nbsp;Thua trận 62</strong>
+                    <!--<div class="txt_view_more"><a class="txt_666" href="#">Chi tiết</a></div>-->
+                    <div class="daiphatsong" data-schedule-match="15"></div>
+                </td>
+            </tr>
+        </table>
+        <?php
+    }
+    ?>
+</div>

@@ -1,0 +1,61 @@
+<?php
+$arrOtherNews = array_chunk($this->arrOtherNews, 2);
+$k = 1;
+foreach ($arrOtherNews as $otherNews)
+{
+    ?>
+    <ul class="list_news">
+        <?php
+        foreach($otherNews as $id)
+        {
+            $articleDetail = $this->objArticle->getArticleBasic($id);
+            if (empty($articleDetail))
+                continue;
+            ?>
+            <li>
+                <?php
+                if (!empty($articleDetail['thumbnail_url']))
+                {
+                    ?>
+                    <div class="thumb_160 width_common" data-scale="1">
+                        <a class="cover_image image_68" style="background-image: url('<?php echo $this->ImageurlArticle($articleDetail, 'size11'); ?>')" onclick="_gaq.push(['c._trackEvent', 'Thể thao', 'VT-<?php echo $k; ?>', 'Detail-BoxTinKhac']);" href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>">&nbsp;</a>
+                        <?php echo $this->ArticleTypeIcon($articleDetail); ?>
+                    </div>
+                    <strong>
+                        <a onclick="_gaq.push(['c._trackEvent', 'Thể thao', 'VT-<?php echo $k; ?>', 'Detail-BoxTinKhac']);" href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title']; ?></a>
+                        <span class="no_wrap">
+                            <?php echo $this->ArticleViewIcon($articleDetail); ?>
+                            <?php echo $this->ArticleComment($articleDetail); ?>
+                        </span>
+                    </strong>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <strong>
+                        <a onclick="_gaq.push(['c._trackEvent', 'Thể thao', 'VT-<?php echo $k; ?>', 'Detail-BoxTinKhac']);" href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title']; ?></a>
+                        <span class="no_wrap">
+                            <?php echo $this->ArticleViewIcon($articleDetail); ?>
+                            <?php echo $this->ArticleComment($articleDetail); ?>
+                        </span>
+                    </strong>
+                    <div class="news_lead" data-mobile-href="<?php echo $articleDetail['share_url']; ?>"><?php echo $articleDetail['lead']; ?></div
+                    <?php
+                }
+                ?>
+            </li>
+            <?php
+            $k++;
+        }
+        ?>
+    </ul>
+    <?php
+}
+?>
+<script type="text/javascript">
+    //slideshow photo
+    if (typeof(common.initLinkSlideshow) != 'undefined') {
+        common.initLinkSlideshow();
+    }
+</script>

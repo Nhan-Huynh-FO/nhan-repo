@@ -1,0 +1,172 @@
+<?php
+//get team
+$objTeam = $this->objObject->getTeam();
+$arrTeam = array();
+if(!empty($this->arrMatch))
+{
+    foreach ($this->arrMatch as $key => $team)
+    {
+        //get detail player
+        $teamDetail = $objTeam->getDetailObjectBasic($team['TeamID']);
+        $arrTeam[$teamDetail['id']] =  $teamDetail['name'];
+    }
+    //sort alpha
+    asort($arrTeam);
+}
+?>
+<div class="line_gray line_page width_common">
+    <div id="col_left">
+        <?php
+        if (DEVICE_ENV != 1)
+        {
+            ?>
+            <div class="block_slder_top space_box" id="top_fixture_worldcup">
+                <div style="text-align: center;"><p style="padding: 25px 0;">Đang tải dữ liệu...</p></div>
+            </div>
+            <?php
+        }
+        ?>
+        <div class="page_guess width_common">
+            <div class="block_fck_thele width_common">
+                <div class="title">
+                    Thể lệ chương trình Dự đoán World Cup 2014
+                    <div class="block_clear_men"><a target="_blank" onclick="thethao.trackingImpression()" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=10045207&PluID=0&ord=<?php echo time();?>" title="Clear Men"><img src="<?php echo $this->configView['images']; ?>/graphics/img_clearmen.png" /></a></div>
+                </div>
+                <p>Chương trình Dự đoán World Cup 2014 do báo điện tử VnExpress (<a href="http://vnexpress.net" target="_blank">http://vnexpress.net</a>) phối hợp với nhãn hàng “CLEAR MEN - Đàn ông đỉnh cao phong độ” tổ chức nhân vòng chung kết bóng đá thế giới diễn ra tại Brazil.<br>
+                    Chương trình bắt đầu từ 12h ngày 2/6/2014 đến 4h sáng 14/7/2014.
+                </p>
+                <p><strong>Điều 1: Người tham gia</strong></p>
+                <p> - Các công dân Việt Nam và người nước ngoài đang sinh sống trên lãnh thổ Việt Nam đều có thể tham gia.</br>
+                    - Cán bộ, nhân viên của báo điện tử VnExpress và Nhà tài trợ không được tham gia chương trình này.</p>
+                <p><strong>Điều 2: Các hình thức dự đoán</strong></p>
+                <p>
+                    - Dự đoán tỷ số: Là dự đoán đúng tỷ số các trận đấu trong thời gian thi đấu chính thức (quy định là 90 phút, không tính kết quả sau hai hiệp phụ hay đá 11 mét). Ở mỗi trận đấu, người dự đoán chính xác tỷ số, đoán gần nhất tổng số người dự đoán và gửi tin nhắn sớm nhất là người chiến thắng.<br>
+                    - Dự đoán đội vô địch: Là dự đoán đúng đội sẽ chiến thắng trong trận chung kết và giành Cup thế giới. Người dự đoán chính xác đội đoạt giải, đoán gần nhất tổng số người dự đoán và gửi tin nhắn sớm nhất là người chiến thắng.<br>
+                    - Dự đoán Vua phá lưới: Là dự đoán đúng cầu thủ ghi được nhiều bàn thắng nhất giải đấu và được FIFA trao giải Vua phá lưới. Người dự đoán chính xác cầu thủ đoạt giải, đoán gần nhất tổng số người dự đoán và gửi tin nhắn sớm nhất là người chiến thắng.</p>
+                <p><strong>Điều 3: Cách thức tham gia</strong></p>
+                <p>Người chơi vào trang Dự đoán (<a  href="http://worldcup.vnexpress.net/du-doan" target="_blank">http://worldcup.vnexpress.net/du-doan</a>).<br>
+                    <strong>- Bước 1:</strong> Người chơi điền tỷ số (nếu tham gia Dự đoán tỷ số), chọn đội (nếu tham gia dự đoán Đội vô địch), chọn cầu thủ (nếu tham gia dự đoán Vua phá lưới).<br>
+                    <strong>- Bước 2:</strong> Hệ thống trả ra bảng thông báo. Người chơi nhập tổng số lượng người dự đoán trên bảng này và bấm Gửi. Hệ thống trả ra mã xác nhận tương ứng và hướng dẫn cách nhắn tin xác nhận.<br>
+                    <strong>- Bước 3:</strong> Người chơi nhắn tin với cú pháp và mã xác nhận được cung cấp.<br>
+                    <strong>- Bước 4:</strong> Sau khi hết thời gian quy định cho mỗi vòng dự đoán, hệ thống sẽ kiểm tra danh sách người chơi dự đoán đúng, so sánh số dự đoán của mỗi người với tổng số người dự đoán đúng và sắp xếp theo thời gian gửi tin nhắn xác nhận để tìm ra người thắng cuộc.<br>
+                    <strong>- Bước 5:</strong> Ban tổ chức kiểm tra tính hợp lệ của số điện thoại thắng cuộc và thông báo danh sách đoạt giải lên trang <a href="http://worldcup.vnexpress.net." target="_blank">http://worldcup.vnexpress.net.</a><br></p>
+                <p>Cú pháp nhắn tin dự đoán chung:
+                    <strong>WC_[ma xac nhan] gửi 8500</strong></p>
+                <p>
+                    -	Trường hợp người chơi nhắn tin nhưng do lỗi hệ thống, lỗi đường truyền mà không nhận được tin nhắn trả về xác nhận thì tin nhắn đó được coi là “không thành công”.<br>
+                    -	Trường hợp người chơi vi phạm quy định spam của nhà mạng (xem cụ thể <a href="javascript:;" title="quy định spam của nhà mạng" id="spam_nha_mang">tại đây</a>) thì sẽ không được công nhận kết quả.<br>
+                    -	Trường hợp người chơi lợi dụng quy định của các nhà mạng nhằm nhắn tin trục lợi, nếu Ban tổ chức phát hiện thì kết quả những tin nhắn đó sẽ bị huỷ bỏ.
+                </p>
+                <p><strong>Điều 4: Giải thưởng</strong></p>
+                <p>
+                    - Dự đoán tỷ số: 64 giải dành cho 64 trận (mỗi trận đấu trao một giải). Mỗi giải là một thẻ điện thoại trị giá 500.000 đồng nạp trực tiếp vào tài khoản số điện thoại trúng giải.<br>
+                    - Dự đoán Vua phá lưới: Người thắng cuộc nhận quà tặng là 01 chiếc iPhone 5S 32G (19.480.000đ).<br>
+                    - Dự đoán Đội vô địch: Người thắng cuộc nhận quà tặng là 01 chiếc Macbook Air 13.3” - MD760ZP/B (2014) (23.990.000đ).<br>
+                    <i>Các quà tặng bằng sản phẩm sẽ không được quy đổi thành tiền mặt.</i>
+                </p>
+                <p><strong>Điều 5: Bản quyền</strong></p>
+                <p>
+                    - VnExpress có quyền xuất bản, quảng bá thương mại với hình ảnh của những người thắng giải mà không cần phải báo trước và không cần thêm bất kỳ chi phí nào.<br>
+                    - Các nhà tài trợ chỉ có quyền sử dụng hình ảnh của người tham gia nếu có sự đồng thuận của báo VnExpress.
+                </p>
+                <p><strong>Điều 6: Hạn chế trách nhiệm</strong></p>
+                <p>- VnExpress không chịu trách nhiệm về những thông tin khai báo không đúng thông tin thực tế của người tham gia.</p>
+                <p><strong>Điều 7: Điều kiện pháp lý</strong></p>
+                <p>
+                    - Chương trình diễn ra tuân thủ các yêu cầu pháp luật của Việt Nam.<br>
+                    - VnExpress giữ quyền quyết định cao nhất về giải thưởng của chương trình.<br>
+                    - VnExpress giữ quyền kiểm tra tư cách của người tham gia có hợp thức theo đúng Điều 1 hay không, kể cả sau khi đã trao giải. Chỉ VnExpress mới có quyền trao giải thưởng và tước giải thưởng.<br>
+                    - Người nhận giải thưởng phải có trách nhiệm đóng thuế thu nhập cá nhân theo đúng quy định pháp luật và cung cấp đầy đủ giấy tờ mà Ban tổ chức yêu cầu khi đến nhận giải.<br>
+                    - Giải thưởng chỉ được trao cho chủ nhân hợp pháp của số điện thoại có tin nhắn được công nhận là thắng cuộc. Người chơi có trách nhiệm chứng minh số điện thoại thuộc sở hữu của mình. VnExpress không chịu trách nhiệm về những tranh chấp quyền sở hữu số điện thoại giữa người chơi và những người khác. Những người được ủy quyền đến nhận giải cần có giấy ủy quyền và bản sao CMND hoặc hộ chiếu của người sở hữu hợp pháp số điện thoại đoạt giải.
+                </p>
+                <p><strong>Điều 8: Công bố giải</strong></p>
+                <p>
+                    - Giải thưởng dự đoán mỗi trận đấu sẽ được công bố ngay sau trận.<br>
+                    - Giải thưởng dự đoán Đội vô địch và Vua phá lưới sẽ được công bố trong vòng một ngày sau khi diễn ra trận chung kết World Cup 2014 (14/7). Lễ trao giải thưởng sẽ được tổ chức tại tòa soạn VnExpress tại Hà Nội hoặc TP HCM trong vòng một tuần sau khi kết thúc giải đấu.<br>
+                    - Toàn bộ giải thưởng của chương trình sẽ được công bố trên chuyên mục World Cup địa chỉ <a href="http://worldcup.vnexpress.net" title="http://worldcup.vnexpress.net">http://worldcup.vnexpress.net</a>.
+                </p>
+                <p><strong>Điều 9: Dừng, hủy chương trình</strong></p>
+                <p>- VnExpress không chịu trách nhiệm trong trường hợp chương trình bị hủy bỏ hoặc hoãn vì những lý do bất khả kháng, khách quan như bị đánh sập mạng, thiên tai, chiến tranh…</p>
+                <div class="title" id="du_doan_spam">Quy định spam của các nhà mạng</div>
+                <p><strong>1. Đối với khách hàng của Vinaphone</strong></p>
+                <p>Khách hàng không được gửi quá 01 tin nhắn trong vòng 6 giây.<br>
+                    - Khách hàng không được gửi quá 03 tin nhắn có cùng nội dung với một số điện thoại trong thời gian 5 phút.<br>
+                    - Khách hàng không được gửi quá 05 tin nhắn có cùng nội dung với một số điện thoại trong thời gian 10 phút.<br>
+                    - Khách hàng không được gửi quá 30 tin nhắn có cùng nội dung với một số điện thoại trong thời gian 01 giờ.<br>
+                    - Khách hàng không được gửi quá 100 tin nhắn trong vòng 24 giờ.
+                </p>
+                <p><strong>2. Đối với khách hàng của Mobiphone</strong></p>
+                <p>- Khách hàng không được gửi quá 1 tin nhắn có cùng số điện thoại trong vòng 6 giây.<br>
+                    - Khách hàng không được sử dụng các dịch vụ nội dung của một nhà cung cấp quá 300.000 đồng (đã bao gồm cả thuế VAT) trong ngày (từ 0h00:00 đến 23h59:59).
+                </p>
+                <p><strong>3. Đối với khách hàng của Viettel</strong></p>
+                <p>- Khách hàng không được sử dụng các dịch vụ nội dung của một nhà cung cấp quá 150.000 đồng (đã bao gồm cả thuế VAT) trong ngày (từ 0h00:00 đến 23h59:59).
+                    - Khoảng cách thời gian kết thúc tin nhắn trước và thời gian bắt đầu tin nhắn sau không được dưới 05 giây
+                </p>
+                <p><strong>4. Đối với khách hàng  của VietNamMobile</strong></p>
+                <p> Đối với bản tin SMS có mức cước từ 10.000 đồng trở xuống
+                    - Khách hàng không được gửi quá 3 tin nhắn có cùng nội dung từ một số điện thoại trong thời gian 5 phút.
+                    - Khách hàng không được gửi quá 10 tin nhắn có cùng nội dung từ một số điện thoại trong thời gian 1 giờ.
+                    - Khách hàng không được gửi quá 100 tin nhắn trong vòng 24 giờ.
+                    Đối với các bản tin SMS có mức cước lớn hơn 10.000 đồng.
+                    - 	Khách hàng không được gửi quá 3 tin nhắn có cùng nội dung từ một số điện thoại trong thời gian 30 phút.
+                    - 	Khách hàng không được gửi quá 10 tin nhắn có cùng nội dung từ một số điện thoại trong thời gian 24 giờ.
+                </p>
+            </div>
+            <div class="block_xemthem_thele">
+                <a href="javascript:;">Xem thêm</a>
+            </div>
+            <div class="box_guess math width_common">
+                <div class="title_box">Trận đấu</div>
+                <div class="content width_common">
+                    <p>- Người chơi có thể dự đoán tỷ số trận đấu mình thích ở trang Lịch thi đấu, hoặc dự đoán các trận sắp đá ở trang chủ VnExpress hoặc trang World Cup. </p>
+                    <p style="text-align: center;">
+                        <img style="width: 80%;" src="<?php echo $this->configView['images']; ?>/graphics/dudoan1.png" alt="" />
+                        <img style="width: 80%;" src="<?php echo $this->configView['images']; ?>/graphics/dudoan2.png" alt="" />
+                    </p>
+                    <p>Người chơi dự đoán theo quy trình ở Điều 3.<br>
+                        - Thời gian dự đoán: Từ khi mở chương trình (12h ngày 2/6/2014) tới hết thời gian giải lao của trận đấu. Các trận sau vòng bảng chỉ bắt đầu dự đoán được khi xác định xong danh sách đội.<br>
+                        - Người chơi có thể dự đoán nhiều tỷ số khác nhau cho một trận đấu. <br>
+                        - Có giải thưởng dành riêng cho từng trận đấu. Người chiến thắng là người dự đoán chính xác tỷ số, đoán gần nhất tổng số người dự đoán và gửi tin nhắn sớm nhất. Thời điểm dự đoán được xác định là khi hệ thống nhận được tin nhắn xác nhận của người chơi.</p>
+                </div>
+                <div class="action width_common">
+                    <a href="<?php echo $this->configView['url'] . '/lich-thi-dau'; ?>" class="btn">Dự đoán</a>
+                </div>
+            </div>
+            <div class="box_guess team width_common">
+                <div class="title_box">Đội vô địch</div>
+                <div class="content width_common">
+                    <p>Người chơi có thể dự đoán đội vô địch trên trang Dự đoán hoặc khu vực Dự đoán trên trang World Cup. </p>
+                    <p style="text-align: center;">
+                        <img style="width: 80%;" src="<?php echo $this->configView['images']; ?>/graphics/doivodich1.png" alt="" />
+                        <img style="width: 80%;" src="<?php echo $this->configView['images']; ?>/graphics/doivodich2.png" alt="" />
+                    </p>
+                    <p>- Người chơi chọn đội mình dự đoán sẽ vô địch rồi nhấn “Gửi”. Các bước tiếp theo làm theo quy trình ở Điều 3.<br>
+                        - Thời gian dự đoán: Từ khi mở chương trình (12h ngày 2/6/2014) đến phút 80 của trận chung kết vào ngày 14/7/2014.<br>
+                        - Người chơi có thể dự đoán nhiều lần cho một đội hoặc nhiều đội khác nhau.<br>
+                        Người chiến thắng là người dự đoán chính xác đội đoạt giải, đoán gần nhất tổng số người dự đoán và gửi tin nhắn sớm nhất. Thời điểm dự đoán được xác định là khi hệ thống nhận được tin nhắn xác nhận của người chơi.
+                    </p>
+                </div>
+            </div>
+            <div class="box_guess player width_common">
+                <div class="title_box">Vua phá lưới</div>
+                <div class="content width_common">
+                    <p>Người chơi có thể dự đoán Vua phá lưới trên trang Dự đoán hoặc khu vực Dự đoán trên trang World Cup. </p>
+                    <p style="text-align: center;">
+                        <img style="width: 80%;" src="<?php echo $this->configView['images']; ?>/graphics/vuaphaluoi1.png" alt="" />
+                        <img style="width: 80%;" src="<?php echo $this->configView['images']; ?>/graphics/vuaphaluoi2.png" alt="" />
+                    </p>
+                    <p>
+                        - Người chơi tìm tên đội, chọn cầu thủ mình dự đoán sẽ được FIFA trao giải Vua phá lưới rồi nhấn “Gửi”. Các bước tiếp theo làm theo quy trình ở Điều 3.<br>
+                        - Thời gian dự đoán: Từ khi mở chương trình (12h ngày 6/06/2014) đến phút 80 của trận chung kết vào ngày 14/7/2014.<br>
+                        Người chơi có thể dự đoán nhiều lần cho một cầu thủ hoặc nhiều cầu thủ khác nhau.
+                        - Người chiến thắng là người dự đoán chính xác cầu thủ được FIFA trao giải Vua phá lưới, đoán gần nhất tổng số người dự đoán và gửi tin nhắn sớm nhất. Thời điểm dự đoán được xác định là khi hệ thống nhận được tin nhắn xác nhận của người chơi.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="col_right">
+        <?php echo $this->GetBlock('left'); ?>
+    </div>
+</div>

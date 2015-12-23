@@ -1,0 +1,48 @@
+<?php
+if (!empty($this->arrOtherNews))
+{
+    foreach ($this->arrOtherNews as $k => $id)
+    {
+        $article = $this->objArticle->getArticleBasic($id);
+        if (empty($article))
+        {
+            continue;
+        }
+        $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+        ?>
+        <li>
+            <?php
+            if (!empty($article['thumbnail_url']))
+            {
+                ?>
+                <div class="thumb_anh_video">
+                    <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" >
+                        <img src="<?php echo $this->ImageurlArticle($article, 'size2', -1); ?>" alt="<?php echo $video['title_format']; ?>" title="<?php echo $video['title_format']; ?>" />
+                        <?php
+                        if ($article['article_type'] == TYPE_VIDEO)
+                        {
+                            ?>
+                            <span class="play_icon"></span>
+                            <?php
+                        }
+                        ?>
+                    </a>
+                    <?php echo $this->ArticleTypeIcon($article); ?>
+                </div>
+            <?php
+            }
+            ?>
+            <div class="title_news">
+                <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" class="txt_link">
+                    <?php echo $article['title']; ?>
+                    <span class="no_wrap">
+                        <?php echo $this->ArticleViewIcon($article); ?>
+                        <?php echo $this->ArticleComment($article); ?>
+                    </span>
+                </a>
+            </div>
+        </li>
+    <?php
+    }
+}
+?>

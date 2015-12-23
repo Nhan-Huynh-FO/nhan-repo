@@ -1,0 +1,96 @@
+<div class="line_gray line_page width_common">
+    <div id="col_left">
+        <?php
+        if(DEVICE_ENV != 1)
+        {
+        ?>
+        <div class="block_slder_top space_box" id="top_fixture_worldcup">
+            <div style="text-align: center;"><p style="padding: 25px 0;">Đang tải dữ liệu...</p></div>
+        </div>
+        <?php
+        }
+        ?>
+        <div class="list_score width_common">
+            <div class="title">
+                Bảng điểm
+                <div class="block_clear_men"><a target="_blank" onclick="thethao.trackingImpression()" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=10045207&PluID=0&ord=<?php echo time();?>" title="Clear Men"><img src="<?php echo $this->configView['images']; ?>/graphics/img_clearmen.png" /></a></div>
+            </div>
+            <?php
+            $tableRanking = $this->tableRanking;
+            if (!empty($tableRanking))
+            {
+                $objTeam = $this->objObject->getTeam();
+                $arrGroupName = array(
+                    'group-a' => 'Bảng A',
+                    'group-b' => 'Bảng B',
+                    'group-c' => 'Bảng C',
+                    'group-d' => 'Bảng D',
+                    'group-e' => 'Bảng E',
+                    'group-f' => 'Bảng F',
+                    'group-g' => 'Bảng G',
+                    'group-h' => 'Bảng H'
+                );
+                foreach ($arrGroupName as $key => $value)
+                {
+                    ?>
+                    <table class="width_common">
+                        <thead>
+                            <tr>
+                                <th class="team"><?php echo $value; ?></th>
+                                <th class="math"><span>Số trận</span></th>
+                                <th class="result">
+                                    <span class="first">Thắng</span>
+                                    <span>Hòa</span>
+                                    <span class="last">Thua</span>
+                                </th>
+                                <th class="count">
+                                    <span class="first">BT</span>
+                                    <span>BB</span>
+                                    <span class="last">Hiệu số</span>
+                                </th>
+                                <th class="score"><span>Điểm</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i = 1;
+                            foreach ($tableRanking as $value)
+                            {
+                                if ($value['Table'] == $key)
+                                {
+                                    $objTeam->setId($value['TeamID']);
+                                    $team = $objTeam->getDetailObjectBasic($value['TeamID']);
+                                    ?>
+                                    <tr <?php echo $i == 1 ? 'class="first"' : ''; ?>>
+                                        <td class="team"><a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" title="<?php echo $team['name_format']; ?>"><img width="18" src="<?php echo $this->Imageurl($team['thumbnail'], 'size1'); ?>" alt="<?php echo $team['name_format']; ?>"><?php echo $team['name']; ?></a></td>
+                                        <td class="math"><span><?php echo $value['NumMatch']; ?></span></td>
+                                        <td class="result">
+                                            <span><?php echo $value['Won']; ?></span>
+                                            <span><?php echo $value['Drawn']; ?></span>
+                                            <span><?php echo $value['Lost']; ?></span>
+                                        </td>
+                                        <td class="count">
+                                            <span><?php echo $value['GoalScore']; ?></span>
+                                            <span><?php echo $value['GoalAgainst']; ?></span>
+                                            <span><?php echo $value['GoalDiffenrence']; ?></span>
+                                        </td>
+                                        <td class="score"><span><?php echo $value['Point']; ?></span></td>
+                                    </tr>
+                                    <?php
+                                    $i++;
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+        <!-- End list_score -->
+    </div>
+    <div id="col_right">
+        <?php echo $this->GetBlock('left'); ?>
+    </div>
+</div>

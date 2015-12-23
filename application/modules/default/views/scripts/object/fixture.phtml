@@ -1,0 +1,31 @@
+<div id="fixture" class="tab_content_doibong content_tab">
+    <?php
+    if (DEVICE_ENV != 1)
+    {
+    ?>
+    <div class="title_content_cate">
+        <div class="left">Chọn giải đấu &nbsp;
+            <select class="chose_leaguae w150" onchange="Team.changeLeague(this.value);">
+                <option value="0">Tất cả các giải</option>
+                <?php foreach ($this->arrLeagueDetails as $league){?>
+                <option value="<?php echo $league['LeagueID'] ?>"><?php echo $league['Name']; ?></option>
+                <?php } ?>
+            </select>
+        </div>
+        <div class="right" style="display: none;">
+            <select class="chose_leaguae w100" onchange="Team.changeSeason(this.value);" id="season_select">
+            </select>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+    <div class="main_content_tab box_width_common">
+        <div class="block_item_lichthidau box_width_common">
+            <div class="lichthidau_item width_common">
+                <ul class="list_capdau width_common" id="list_capdau">
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

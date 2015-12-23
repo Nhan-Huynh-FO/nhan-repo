@@ -1,0 +1,74 @@
+<?php
+$arrInterview = $this->data;
+if (!empty($arrInterview['data']))
+{
+    $arrInterviewTime = $arrInterview['info']['interview']['time'];
+    $cateInfo = $arrInterview['info']['cate'];
+    //set current time
+    $currentTime = time();
+    $class_status = '';
+    $class_time_status = '';
+    if ($arrInterviewTime['start_time'] > $currentTime)
+    {
+        $class_status = '';
+        $class_time_status = 'live_streaming';
+    }
+    else if ($arrInterviewTime['end_time'] < $currentTime)
+    {
+        $class_status = ' daphongvan';
+        $class_time_status = 'live_finish';
+    }
+    //get article basic with id
+    $articleDetail = $this->objArticle->getArticleBasic($arrInterview['data'][0]);
+?>
+    <div id="phongvantructuyen" class="box_category width_common">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category"><a href="<?php echo $cateInfo['link']; ?>/" title="<?php echo $cateInfo['name']; ?>"><?php echo $cateInfo['name']; ?></a></h2>
+            <a class="block_arrow_title" href="<?php echo $cateInfo['link']; ?>/" title="<?php echo $cateInfo['name']; ?>">&nbsp;</a>
+        </div>
+        <div class="content_box_category width_common">
+            <?php
+            if (!empty($articleDetail['thumbnail_url']))
+            {
+                ?>
+                <div class="image_pvtt width_common">
+                    <a href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>">
+                        <img src="<?php echo $this->ImageurlArticle($articleDetail, 'size6'); ?>" alt="<?php echo $articleDetail['title_format']; ?>"  class="left"/>
+                    </a>
+                </div>
+                <?php
+            }
+            ?>
+            <div class="status_live width_common<?php echo $class_status; ?>">
+                <?php
+                // Dang phong van
+                if ($arrInterviewTime['end_time'] > $currentTime && $arrInterviewTime['start_time'] < $currentTime)
+                {
+                    echo $this->layout['name'];
+                }
+                else
+                {
+                    ?>
+                    <div class="<?php echo $class_time_status; ?> txt_11"><?php echo $this->DateTimeFormat($arrInterviewTime['start_time'], 'liveinterview', $arrInterviewTime['end_time']); ?></div>
+                    <?php
+                }
+                ?>
+            </div>
+            <div class="content_vptt ">
+                <p><a href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title_format']; ?></a></p>
+                <?php
+                //Dang phong van
+                if ($arrInterviewTime['end_time'] > $currentTime && $arrInterviewTime['start_time'] < $currentTime)
+                {
+                    ?>
+                    <p class="timer_pvtt"><?php echo $this->DateTimeFormat($arrInterviewTime['start_time'], 'liveinterview', $arrInterviewTime['end_time']); ?></p>
+                    <div class="clear">&nbsp;</div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+<?php
+}
+?>

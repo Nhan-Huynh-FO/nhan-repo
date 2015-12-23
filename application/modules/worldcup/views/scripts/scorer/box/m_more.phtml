@@ -1,0 +1,29 @@
+<?php
+$arrTopPlayer = $this->arrTopPlayer;
+if (!empty($arrTopPlayer))
+{
+    $objPlayer = $this->objObject->getPlayer();
+    $objTeam = $this->objObject->getTeam();
+    
+    $i = $this->stt;
+    foreach ($this->arrTopPlayer as $data)
+    {
+        $player = $objPlayer->getDetailObjectBasic($data['PlayerID']);
+        $team = $objTeam->getDetailObjectBasic($data['TeamID']);
+        ?>
+        <tr>
+            <td class="text_center stt"><?php echo $i; ?></td>
+            <td class="name"><a href="<?php echo $this->ShareurlWorldcup($player['share_url']); ?>" title="<?php echo $this->escape($player['name_format']); ?>"><?php echo $player['name']; ?></a></td>
+            <td class="text_right team">
+                <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" title="<?php echo $team['name_format']; ?>" alt="<?php echo $team['name_format']; ?>">
+                    <img width="18" src="<?php echo $this->Imageurl($team['thumbnail'], 'size1'); ?>" alt="<?php echo $team['name_format']; ?>">
+                    <?php echo substr($team['name'], 0, 3); ?>
+                </a>
+            </td>
+            <td class="text_center goal"><b><?php echo $data['Goals']; ?></b></td>
+        </tr>
+        <?php
+        $i++;
+    }
+}
+?>

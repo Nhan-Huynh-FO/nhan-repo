@@ -1,0 +1,47 @@
+<?php
+$arrTopPlayer = $this->arrTopPlayer;
+if (!empty($arrTopPlayer))
+{
+    $objPlayer = $this->objObject->getPlayer();
+    $objTeam = $this->objObject->getTeam();
+    ?>
+    <div class="box_category news_box_300 width_common space_box category_goal_king">
+        <div class="content_box_category width_common">
+            <table class="width_common">
+                <tbody id="list_more">
+                    <tr>
+                        <th width="25" class="text_center stt">#</th>
+                        <th class="name">Cầu thủ</th>
+                        <th width="50" class="team">Đội bóng</th>
+                        <th width="70" class="text_center goal">Bàn thắng</th>
+                    </tr>
+                    <?php
+                    $i = 1;
+                    foreach ($this->arrTopPlayer as $data)
+                    {
+                        $player = $objPlayer->getDetailObjectBasic($data['PlayerID']);
+                        $team = $objTeam->getDetailObjectBasic($data['TeamID']);
+                        ?>
+                        <tr>
+                            <td class="text_center stt"><?php echo $i; ?></td>
+                            <td class="name"><a href="<?php echo $this->ShareurlWorldcup($player['share_url']); ?>" title="<?php echo $this->escape($player['name_format']); ?>"><?php echo $player['name']; ?></a></td>
+                            <td class="text_right team">
+                                <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" title="<?php echo $team['name_format']; ?>" alt="<?php echo $team['name_format']; ?>">
+                                    <img width="18" src="<?php echo $this->Imageurl($team['thumbnail'], 'size1'); ?>" alt="<?php echo $team['name_format']; ?>">
+                                    <?php echo substr($team['name'], 0, 3); ?>
+                                </a>
+                            </td>
+                            <td class="text_center goal"><b><?php echo $data['Goals']; ?></b></td>
+                        </tr>
+                        <?php
+                        $i++;
+                    }
+                    ?>
+                </tbody>
+            </table>
+			<div class="xemtiep hiddenweb"><a href="<?php echo $this->configView['url'] . '/scorer/more/'; ?>" data-container="#list_more" data-params="<?php echo $this->escape(Zend_Json::encode(array('limit' => LIMIT_TOP_SCORER, 'offset' => LIMIT_TOP_SCORER, 'total' => $this->countTotal))); ?>">Xem tiếp</a></div>
+        </div>
+    </div>
+    <?php
+}
+?>

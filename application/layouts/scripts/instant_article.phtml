@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <?php
+        echo $this->headMeta();
+        $tt_category_id = isset($this->intCategoryId) ? $this->intCategoryId : SITE_ID;
+        $tt_article_id  = isset($this->intArticleId) ? $this->intArticleId : $tt_category_id;
+        if ($tt_category_id == 1003240)
+        {
+            echo '<meta name="robots" content="noindex" />';
+        }
+        ?>
+        <meta name="tt_category_id" content="<?php echo $tt_category_id; ?>" />
+        <meta name="tt_article_id" content="<?php echo $tt_article_id; ?>" />
+        <meta name="tt_site_id" content="<?php echo SITE_ID; ?>" />
+        <!--Title-->
+        <?php echo $this->headTitle(); ?>
+        <!-- JS -->
+        <script type="text/javascript">
+            //GA
+            var _gaq = _gaq || [];
+            _gaq.push(["_setAccount", "UA-249346-5"]);
+            _gaq.push(["_trackPageview"]);
+            _gaq.push(["c._setAccount", "UA-249346-37"]);
+            _gaq.push(["c._trackPageview"]);
+            _gaq.push(["d._setAccount", "UA-249346-18"]);
+            _gaq.push(["d._trackPageview"]);
+            _gaq.push(["e._setAccount", "UA-50285069-12"]);
+            _gaq.push(["e._trackPageview"]);
+            (function() {
+                var a = document.createElement("script");
+                a.type = "text/javascript";
+                a.async = !0;
+                a.src = ("https:" == document.location.protocol ? "https://" : "http://") + "stats.g.doubleclick.net/dc.js";
+                var b = document.getElementsByTagName("script")[0];
+                b.parentNode.insertBefore(a, b)
+            })();
+            //E-click
+            var _siteId = "11";
+            (function() {
+                var a = document.createElement("script");
+                a.type = "text/javascript";
+                a.async = !0;
+                a.src = "http://st.l.a.eclick.vn/ea.js";
+                var b = document.getElementsByTagName("script")[0];
+                b.parentNode.insertBefore(a, b)
+            })();
+            //Begin comScore Tag
+            var _comscore = _comscore || [];
+            _comscore.push({ c1: "2", c2: "19747654" });
+            (function() {
+                var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+                s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+                el.parentNode.insertBefore(s, el);
+            })();
+            (function() {
+                var csid = "F09828";
+                var bpid = "fpt_vn";
+                var e = document.createElement("script");
+                var s = document.getElementsByTagName("script")[0];
+                e.src = "//js.revsci.net/gateway/gw.js?auto=t&csid=" + csid + "&bpid=" + bpid;
+                e.async = true;
+                s.parentNode.insertBefore(e, s);
+            })();
+        </script>
+        <noscript>
+            <img src="http://b.scorecardresearch.com/p?c1=2&c2=19747654&cv=2.0&cj=1" />
+        </noscript>
+        <!-- End comScore Tag -->
+    </head>
+    <body>
+    </body>
+</html>

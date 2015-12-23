@@ -1,0 +1,27 @@
+<div class="width_common" id="search_404">
+    <div class="block_404">
+        <div class="title_404">
+            <p class="txt_404"><img src="<?php echo $this->configView['images']; ?>/graphics/bg_title_404.gif" alt="">&nbsp; <strong> Không tìm thấy</strong> đường dẫn này
+            </p>
+            <p class="txt_center">Bạn có thể truy cập vào <a href="<?php echo $this->configView['url']; ?>">trang chủ</a> hoặc sử dụng ô dưới đây để tìm kiếm</p>
+        </div>
+        <div class="content_404">
+            <form target="_blank" id="form-search" action="http://timkiem.vnexpress.net" onsubmit="return thethao.checkSearch();">
+                <div class="bar_main_search">
+                    <div class="bor_search">
+                        <input type="text" name="q" value="Tìm kiếm thông tin" onblur="if(this.value=='') this.value=this.defaultValue" onfocus="if(this.value==this.defaultValue) this.value=''" class="txt_input_search">
+                        <input type="hidden" name="site" value="thethao.vnexpress.net">
+                        <input type="hidden" name="ie" value="utf-8" />
+                    </div>
+                    <input type="submit" class="btn_main_search" value="tìm kiếm">
+                </div>
+                <div class="chose_search_404">
+                    <input type="radio" checked="checked" name="noname" id="vnexpress">
+                    <label for="vnexpress">VnExpress</label>
+                    <input type="radio" name="noname" id="google">
+                    <label for="google">google</label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title></title>
+        <meta content="no-cache" http-equiv="pragma">
+        
+    </head>
+    <body>
+        <script language="javascript">
+            document.domain         = 'vnexpress.net';
+            var hash = window.location.hash.substr(1); 
+            var params = hash.split("&");
+            var $_get = new Array();
+            for (var i = 0; i < params.length; i++) 
+            { 
+                var pairs = params[i].split("="); 
+                $_get[decodeURIComponent(pairs[0])] = decodeURIComponent(pairs[1]);
+            }
+            var ref = document.referrer.split('/')[2];
+            if(ref == 'beta.interactions.vnexpress.net'  || ref == 'interactions.vnexpress.net' || ref == 'qc.interactions.vnexpress.net'){
+                window.parent.opener[$_get['func']]({'data': $_get['msg']});                
+            }
+        </script>
+    </body>
+</html>

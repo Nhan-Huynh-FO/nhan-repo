@@ -1,0 +1,17 @@
+<div class="block_info_add">
+    <div class="left">
+        <p>
+            <?php
+            $dateTimeHappen = $this->matchDetail['datetime_happen'] + 25200;
+            $d              = date('N', $dateTimeHappen) + 1;
+            $strDate        = '<b>';
+            $strDate .= $d == 8 ? 'Chủ nhật' : "Thứ $d";
+            $strDate .= '</b> <span class="txt_666">- ' . date('d/m/Y', $dateTimeHappen) . '</span>';
+            echo "$strDate";
+            ?>
+    </div>
+    <div class="right">
+        <p><b><?php echo !empty($this->matchDetail['round']) ? 'Vòng ' . $this->matchDetail['round'] : '' ?></b></p>
+    </div>
+    <div class="clear">&nbsp;</div>
+</div>

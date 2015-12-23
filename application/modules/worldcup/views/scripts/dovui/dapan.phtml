@@ -1,0 +1,174 @@
+<link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/page_style.css" media="all" />
+<?php
+$arrData = $this->arrData;
+$arrDate = $this->dateParam;
+$currentDate = $this->currentDate;
+
+$dateNormal = date('Y-m-d', $arrDate);
+$isNext = 1;
+if($dateNormal >= '2014-07-21')
+{
+    $dateNormal = date('2014-07-21', $arrDate);
+    $isNext = 0;
+}
+
+$subCurrentDate = date('Y-m-d', strtotime(date('Y-m-d', $currentDate). ' - 1 days'));
+$subCurrentDate = strtotime($subCurrentDate);
+
+
+$nextDate = date('Y-m-d', strtotime($dateNormal. ' + 1 days'));
+$nextDate = strtotime($nextDate);
+
+$preDate = date('Y-m-d', strtotime($dateNormal. ' - 1 days'));
+$preDate = strtotime($preDate);
+
+?>
+<div id="dovui_page" class="line_gray line_page width_common">
+	<div id="col_left">
+    	<div class="banner_dovui">
+        	<img src="<?php echo $this->configView['images']; ?>/graphics/banner_dovui.jpg">
+        </div>
+        <div id="box_dovui">
+            <script type="text/javascript" src="<?php echo $this->configView['js']; ?>/calendar.js"></script>
+           
+           <div class="naviagtion_dovui">
+                <?php
+            	if($arrDate > DOVUI_SDATE)
+                {
+                ?>
+                <a class="desktop_version" href="/dovui/?day=<?php	echo $preDate; ?>">
+                	<img src="<?php echo $this->configView['images']; ?>/graphics/prev_dovui.gif">
+                </a>
+                <a href="/dovui/?day=<?php	echo $preDate; ?>" class="mobile_version prev_dv_m">
+                	<img src="<?php echo $this->configView['images']; ?>/graphics/prev_dv_mobile.gif"/>
+                </a>
+                <?php
+                	}
+                ?>
+                
+                <span class="calendar_dovui"><div id="calendar" class="view_date_time"></div></span>
+                <script>
+                    $( document ).ready(function() {
+                        if(typeof(CalendarParser) != "undefined")
+                        {
+                            CalendarParser.calendar_parser_id = "calendar";
+                            CalendarParser.calendar_parser_parent = <?php echo SITE_ID; ?>;
+                            CalendarParser.calendar_parser_child = 0;
+                            CalendarParser.calendar_parser_child_recursive = 0;
+                            CalendarParser.parse();
+                        }
+                    });
+                </script>
+                <?php
+                	if($arrDate < $currentDate && $arrDate < DOVUI_EDATE && $isNext == 1)
+                    {
+                ?>
+                
+                <a class="desktop_version" href="/dovui/?day=<?php	echo $nextDate; ?>">
+                	<img src="<?php echo $this->configView['images']; ?>/graphics/next_dovui.gif">
+                </a>
+                <a href="/dovui/?day=<?php	echo $nextDate; ?>" class="mobile_version next_dv_m">
+                	<img src="<?php echo $this->configView['images']; ?>/graphics/next_dv_mobiile.gif" />
+                </a>
+                        
+                <?php
+	               }
+                ?>
+            </div>
+            <p class="hetthoigian" style="display: block;">
+            	Đã hết thời gian trả lời câu hỏi
+            </p>
+            <ul class="cauhoi_dovui">
+            <?php
+            if(!empty($arrData))
+            {
+                $tempId = 0;
+                $STT = 0;
+                $tempNewLi = 'true';
+                $countAnswer = 0;
+                $AnswerHTML = '';
+                $countQestion = 0;
+                $classLi = 'odd';
+                for($i = 0; $i < count($arrData); $i++)
+                {
+                    if($STT % 2 == 0)
+                    {
+                        $classLi = 'odd';
+                    }
+                    else
+                    {
+                         $classLi = '';
+                    }
+                    if($tempId != $arrData[$i]['question_id'])
+                    {
+                        $countAnswer = 0;
+                        $countQestion = 0;
+                        $countQestion = $countQestion + 1;
+                        $tempId = $arrData[$i]['question_id'];
+                        if($STT > 0)
+                        {
+                            echo '</div></li>';
+                        }
+                        $STT = $STT + 1;
+                        $tempNewLi = 'true';
+                        $AnswerHTML = '';
+                        if($arrData[$i]['answer_id'] == $arrData[$i]['exactly_answer_id'])
+                        {
+                            $AnswerHTML = '<p class="cautraloi">Đáp án: <b>' .$arrData[$i]['content'] .'</b></p>';
+                        }
+                        else
+                        {
+                            $AnswerHTML = '';
+                        }
+                    }
+                    else
+                    {
+                        $countQestion = $countQestion + 1;
+                        
+                        if($arrData[$i]['answer_id'] == $arrData[$i]['exactly_answer_id'])
+                        {
+                            $AnswerHTML = '<p class="cautraloi">Đáp án: <b>' .$arrData[$i]['content'] .'</b></p>';
+                        }
+                        else
+                        {
+                            $AnswerHTML = '';
+                        }
+                        $tempNewLi = 'false';
+                    }
+            
+                    if($tempNewLi == 'true' || $i == 0)
+                    {
+                        if($STT == 6)
+                        {
+                            echo '<div class="mid_dovui_banner"><div class="banner_468 banner_common"><div class="banner_468x90"><script type="text/javascript">Poly_Article();</script></div></div></div>';
+                        }
+                        echo('<li class="'.$classLi .'"><p class="title_question">Câu hỏi ' .$STT .'</p><p class="detail_question">' .$arrData[$i]['title'] .'</p><div class="list_answer">');
+                    }
+	                echo $AnswerHTML;
+                    if($i == (count($arrData) - 1))
+				    {
+					   echo '</div></li>';
+				    }
+                ?>
+                
+               
+                
+            <?php
+                $countAnswer = $countAnswer + 1;
+                }
+           	}
+            ?>
+            </ul>
+            
+            <!-- End cau hoi -->
+        </div>
+    </div>
+	<div id="col_right">
+    	<div class="banner_300x250 banner_common space_box">
+            <div class="box_category width_common hidden320"> <div class="banner_300x250"> <script type="text/javascript"> Poly_Large(1); </script> </div> </div>
+        </div>
+        <?php echo $this->render('dovui/box/danh-sach-trung-thuong-v2.phtml'); ?>
+        <?php echo $this->render('dovui/box/chung-cuoc.phtml'); ?>   
+    </div>
+    
+</div>

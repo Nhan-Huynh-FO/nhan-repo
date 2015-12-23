@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="image/x-icon" href="<?php echo $this->configView['images']; ?>/favicon.ico" rel="shortcut icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0" />
+        <!--Meta Tag-->
+        <?php echo $this->headMeta();
+        $tt_category_id = isset($this->intCategoryId) ? $this->intCategoryId : SITE_ID;
+        $tt_article_id  = isset($this->intArticleId) ? $this->intArticleId : $tt_category_id;
+        ?>
+        <meta name="tt_category_id" content="<?php echo $tt_category_id; ?>" />
+        <meta name="tt_article_id" content="<?php echo $tt_article_id; ?>" />
+		<!--Title-->
+        <?php echo $this->headTitle(); ?>
+        <!-- CSS -->
+        <link rel="stylesheet" href="<?php echo $this->configView['vnecdn']['css']; ?>/mgeneral_240.css" media="all" />
+        <link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/mthethao.css" media="all" />
+        <?php echo $this->headLink(); ?>
+		<script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-249346-5']);
+            _gaq.push(['_trackPageview']);
+
+            _gaq.push(['b._setAccount', 'UA-249346-22']);
+            _gaq.push(['b._trackPageview']);
+
+            _gaq.push(['c._setAccount', 'UA-249346-37']);
+            _gaq.push(['c._trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+            var _siteId="11";
+            (function(){
+                var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="http://st.l.a.eclick.vn/ea.js";
+                var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)
+            })();
+        </script>
+    </head>
+    <body>
+        <div id="page">
+            <div id="wrapper_header">
+                <div id="header">
+                    <div class="width_common">
+                        <div class="logovne">
+                            <a href="<?php echo $this->configView['url_vne']; ?>"><img src="<?php echo $this->configView['images']; ?>/graphics/logo.png" alt="" class="img_logo" /></a>
+                        </div>
+                        <div class="clear">&nbsp;</div>
+                    </div>
+                    <div class="btn_control_col_left">
+                        <a href="javascript:;" onclick="if(document.getElementById('block-menu-left').style.display=='none'){document.getElementById('block-menu-left').style.display='block';}else{document.getElementById('block-menu-left').style.display='none';}">
+                            <img src="<?php echo $this->configView['images'];?>/graphics/img_left_panel.gif" alt="" />
+                        </a>
+                    </div>
+                    <div id="block-menu-left" class="block_show_menu" style="display:none;">
+                        <ul>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>">Trang chủ</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/thoi-su/">Thời sự</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/goc-nhin/">Góc nhìn</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/the-gioi/">Thế giới</a></li>
+                            <li><a href="<?php echo $this->configView['url_kdo']; ?>/">Kinh doanh</a></li>
+                            <li><a href="<?php echo $this->configView['url_gti']; ?>/">Giải trí</a></li>
+                            <li><a href="<?php echo $this->configView['url']; ?>/">Thể thao</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/phap-luat/">Pháp luật</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/giao-duc/">Giáo dục</a></li>
+                            <li><a href="<?php echo $this->configView['url_dso']; ?>/">Gia đình</a></li>
+                            <li><a href="<?php echo $this->configView['url_dli']; ?>/">Du lịch</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/khoa-hoc/">Khoa học</a></li>
+                            <li><a href="<?php echo $this->configView['url_sho']; ?>/">Số hóa</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/oto-xe-may/">Xe</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/cong-dong/">Cộng đồng</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/tam-su/">Tâm sự</a></li>
+                            <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/cuoi/">Cười</a></li>
+                        </ul>
+                    </div>
+                    <div class="clear">&nbsp;</div>
+                </div>
+            </div>
+
+            <div id="wrapper_container">
+                <div id="container">
+                    <div class="width_common">
+                        <div class="breakumb_timer width_common">
+                            <div class="timer_header">
+                                <ul>
+                                    <?php
+                                    if (!empty($this->arrActiveMenu) && $this->arrActiveMenu[0] == SITE_ID)
+                                    {
+                                        unset($this->arrActiveMenu);
+                                    }
+                                    ?>
+                                    <li class="start<?php echo !empty($this->arrActiveMenu) ? ' have_cap2' : ''; ?>"><a href="/">Thể thao</a><span class="arrow_breakumb">&nbsp;</span></li>
+                                    <?php
+                                    if (!empty($this->menuDetail) && $this->menuDetail['category_id'] != SITE_ID)
+                                    {
+                                        ?>
+                                        <li class="cap2"><a href="<?php echo $this->menuDetail['link']; ?>/"><?php echo $this->menuDetail['catename']; ?></a><span class="arrow_breakumb">&nbsp;</span></li>
+                                        <?php
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+                            <div class="rss right">
+                                <?php
+                                if ($this->intCategoryId == CATE_ID_TAITRO)
+                                {
+                                ?>
+                                <a href="#" class="txt_thongtinnhataitro">Thông tin nhà tài trợ</a>
+                                <?php
+                                }
+                                else {
+                                ?>
+                                <div class="block_timer left txt_666" id="clockMobile"></div>
+                                <?php
+                                }
+                                ?>
+                                <a href="javascript:;" onclick="if(document.getElementById('block-breakcumb').style.display=='none'){document.getElementById('block-breakcumb').style.display='block';document.getElementById('img-arrow-timer').setAttribute('class', 'img_arrow_timer active');}else{document.getElementById('block-breakcumb').style.display='none';document.getElementById('img-arrow-timer').setAttribute('class', 'img_arrow_timer');}" class="img_arrow_timer" id="img-arrow-timer">&nbsp;</a>
+                            </div>
+                            <div id="block-breakcumb" class="block_show_breakumb" style="display: none;">
+                                <ul>
+                                    <?php
+                                    foreach ($this->arrMenu as $menu)
+                                    {
+                                        if ($menu['cate_type'] != 1 || !$menu['show_folder']
+                                                || $menu['catecode'] == 'lich-thi-dau')
+                                        {
+                                            continue;
+                                        }
+                                        if ($menu['category_id'] == CATE_ID_VIDEO)
+                                        {
+                                            $menu['link'] = $this->configView['url_vne'] . '/video/the-thao';
+                                        }
+                                        ?>
+                                        <li><a href="<?php echo $menu['link']; ?>/"><?php echo $menu['catename']; ?></a></li>
+                                        <?php
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
+                        <?php echo $this->layout()->content;?>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div id="wrapper_footer">
+                <div class="block_vedautrang">
+                    <a href="#">Về đầu trang</a>
+                </div>
+                <div id="footer">
+                    <ul class="list_menu_small">
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/">Trang chủ</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/thoi-su/">Thời sự</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/goc-nhin/">Góc nhìn</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/the-gioi/">Thế giới</a></li>
+                        <li><a href="<?php echo $this->configView['url_kdo']; ?>/">Kinh doanh</a></li>
+                        <li><a href="<?php echo $this->configView['url_gti']; ?>/">Giải trí</a></li>
+                        <li><a href="/">Thể thao</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/phap-luat/">Pháp luật</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/giao-duc/">Giáo dục</a></li>
+                        <li><a href="<?php echo $this->configView['url_dso']; ?>/">Gia đình</a></li>
+                        <li><a href="<?php echo $this->configView['url_dli']; ?>/">Du lịch</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/khoa-hoc/">Khoa học</a></li>
+                        <li><a href="<?php echo $this->configView['url_sho']; ?>/">Số hóa</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/oto-xe-may/">Xe</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/cong-dong/">Cộng đồng</a></li>
+                        <li><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/tam-su/">Tâm sự</a></li>
+                        <li class="end"><a href="<?php echo $this->configView['url_vne']; ?>/tin-tuc/cuoi/">Cười</a></li>
+                    </ul>
+                    <div class="ft-bot">
+                        <div class="coppy_right_small">
+                            <div class="tttoasoan">
+                                <div class="txt_up width_common">
+                                    <div class="width_50">
+                                        <a href="<?php echo $this->configView['url_vne']; ?>/contact.htm" target="_blank">
+                                            <img src="<?php echo $this->configView['images']; ?>/icons/icon_thongtintoasoan.gif" alt="" />Thông tin Toà soạn
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="txt_down width_common">
+                                    <div class="width_50"><b><img alt="" src="<?php echo $this->configView['images']; ?>/graphics/icon_dienthoai.gif" /><a href="tel:01238880123">0123.888.0123</a></b> (HN) </div>
+                                    <div class="width_50"><b><img alt="" src="<?php echo $this->configView['images']; ?>/graphics/icon_dienthoai.gif" /><a href="tel:01292333555">0129.233.3555</a></b> (TP HCM)</div>
+                                </div>
+                            </div>
+                            <div class="coppy_right">
+                                <p>&copy; <span>Copyright 1997 VnExpress.net,</span>  All rights reserved</p>
+                                <p>&reg; VnExpress giữ bản quyền nội dung trên website này.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block_close_menu">&nbsp;</div>
+        </div>
+    </body>
+</html>

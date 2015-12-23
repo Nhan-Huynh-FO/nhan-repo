@@ -1,0 +1,58 @@
+<?php
+if (!empty ($this->arrData))
+{
+?>
+<div class="block_mid_new">
+    <ul class="list_news" id="news_home">
+        <?php
+        $count = count($this->arrData);
+        $j = 1;
+        foreach ($this->arrData as $id)
+        {
+            $articleDetail = $this->objArticle->getArticleBasic($id);
+        ?>
+        <li <?php echo $j==$count ? 'class="end"':''; ?>>
+            <div class="block_image_news width_common">
+                <?php
+                if (!empty($articleDetail['thumbnail_url']))
+                {
+                    ?>
+                    <div class="thumb thumb_list_news" data-scale="1">
+                        <a class="cover_image image_68" style="background-image: url('<?php echo $this->ImageurlArticle($articleDetail, 'size11'); ?>')" href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>" alt="<?php echo $articleDetail['title_format']; ?>">&nbsp;</a>
+                        <?php echo $this->ArticleTypeIcon($articleDetail); ?>
+                    </div>
+                    <?php
+                }
+                ?>
+                <h2 class="title_news">
+                    <a href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>" alt="<?php echo $articleDetail['title_format']; ?>" class="txt_link">
+                        <?php echo $articleDetail['title']; ?>
+                    </a>
+                    <span class="no_wrap">
+                        <?php echo $this->ArticleViewIcon($articleDetail); ?>
+                        <?php echo $this->ArticleComment($articleDetail); ?>
+                    </span>
+                </h2>
+                <?php
+                //icon tai tro
+                echo $this->IconCommercial($articleDetail, $this->intCategoryId);
+                ?>
+            </div>
+        </li>
+        <?php
+            $j++;
+        }
+        ?>
+    </ul>
+    <div class="xemtiep"><a href="<?php echo $this->configView['url'] . '/mobile/listcategory/category_id/' . $this->intCategoryId; ?>" data-container="#news_home" data-params="<?php echo $this->escape(Zend_Json::encode(array('limit' => LIMIT_LIST_MORE, 'offset' => LIMIT_LIST, 'total' => $this->arrParamPaging['total'], 'exclude' => implode(',', array_slice($this->arrData, -5, 5))))); ?>">Xem tiếp</a></div>
+</div>
+<?php
+}
+?>
+<div class="box_category width_common">
+    <div>
+        <script type="text/javascript">
+            try{Poly_Large(1);}catch(e){}
+        </script>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="block_infomation_capdau">
+    <?php
+    $goal1 = $this->matchDetail['goal1'];
+    $goal2 = $this->matchDetail['goal2'];
+    if ($this->matchDetail['status'] == 2 || $this->currTime > $this->matchDetail['datetime_happen'] + 10800)
+    {
+        if ($this->matchDetail['penalty1'] || $this->matchDetail['penalty2'])
+        {
+            $goal1 = $goal1 . '(' . $this->matchDetail['penalty1'] . ')';
+            $goal2 = $goal2 . '(' . $this->matchDetail['penalty2'] . ')';
+        }
+    }
+    else
+    {
+        //Trước trận đấu
+        if ($this->currTime < $this->matchDetail['datetime_happen'])
+        {
+            $goal1 = '';
+            $goal2 = '';
+        }
+        else
+        {
+            //Đang diễn ra
+            if ($this->matchDetail['penalty1'] || $this->matchDetail['penalty2'])
+            {
+                $goal1 = $goal1 . '(' . $this->matchDetail['penalty1'] . ')';
+                $goal2 = $goal2 . '(' . $this->matchDetail['penalty2'] . ')';
+            }
+        }
+    }
+    ?>
+    <div class="capdau width_common">
+        <div class="wdoibong left">
+            <a title="<?php echo $this->team1['name_format']; ?>" href="<?php echo $this->team1['share_url']; ?>">
+                <img width="20px" class="left image_doibong" src="<?php echo $this->Imageurl($this->team1['thumbnail'], 'size10'); ?>" title="<?php echo $this->team1['name_format']; ?>" alt="<?php echo $this->team1['name_format']; ?>" />
+            </a>
+            <span class="left name_doibong">
+                <a title="<?php echo $this->team1['name_format']; ?>" class="txt_doibong" href="<?php echo $this->team1['share_url']; ?>"><?php echo $this->team1['name']; ?></a>
+            </span>
+        </div>
+        <div class="num_tiso"><?php echo $goal1; ?></div>
+    </div>
+    <div class="capdau width_common">
+        <div class="wdoibong left">
+            <a title="<?php echo $this->team2['name_format']; ?>" href="<?php echo $this->team2['share_url']; ?>">
+                <img width="20px" class="left image_doibong" src="<?php echo $this->Imageurl($this->team2['thumbnail'], 'size10'); ?>" title="<?php echo $this->team2['name_format']; ?>" alt="<?php echo $this->team2['name_format']; ?>" />
+            </a>
+            <span class="left name_doibong">
+                <a title="<?php echo $this->team2['name_format']; ?>" class="txt_doibong" href="<?php echo $this->team2['share_url']; ?>"><?php echo $this->team2['name']; ?></a>
+            </span>
+        </div>
+        <div class="num_tiso"><?php echo $goal2; ?></div>
+    </div>
+</div>

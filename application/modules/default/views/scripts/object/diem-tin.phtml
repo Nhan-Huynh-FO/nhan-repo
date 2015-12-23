@@ -1,0 +1,329 @@
+<div class="width_common" id="warpper_trandau">
+    <?php
+    echo $this->render('/object/common/header_trandau.phtml');
+    ?>
+    <div class="width_common line_mid_980_300">
+        <div id="col_660" class="left">
+            <div class="tab_trandau width_common">
+                <?php
+                if (DEVICE_ENV == 1)
+                {
+                ?>
+                <div class="tab_mobile">
+                    <a href="javascript:;" title="Điểm tin" class="tab_main_mobile">Điểm tin</a>
+                    <div class="list_tab_mobile">
+                        <ul>
+                            <li>
+                                <a title="Ảnh - Video" href="<?php echo "/anh-video/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Ảnh - Video</a>
+                            </li>
+                            <li>
+                                <a title="Điểm tin" href="javascript:;">Điểm tin</a>
+                            </li>
+                            <li>
+                                <a title="Thống kê" href="<?php echo "/thong-ke/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Thống kê</a>
+                            </li>
+                            <li>
+                                <a title="Tường thuật" href="<?php echo "/tuong-thuat/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Tường thuật</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <?php
+                }
+                else {
+                    ?>
+                    <div class="title_tab width_common">
+                        <ul>
+                            <li class="start">
+                                <a title="Ảnh - Video" href="<?php echo "/anh-video/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Ảnh - Video</a>
+                            </li>
+                            <li class="active">
+                                <a title="Điểm tin" href="javascript:;">Điểm tin</a>
+                            </li>
+                            <li>
+                                <a title="Thống kê" href="<?php echo "/thong-ke/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Thống kê</a>
+                            </li>
+                            <li>
+                                <a title="Tường thuật" href="<?php echo "/tuong-thuat/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Tường thuật</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php
+                }
+                ?>
+           	</div>
+            <div class="content_tab_trandau width_common">
+                <?php
+                //************************* Tin tức *************************//
+                if ($this->articleDiemTin)
+                {
+                    ?>
+                    <div id="box_details_news" class="width_common">
+                        <div class="w670 left">
+                            <div class="main_content_detail width_common">
+                                <div class="title_news">
+                                    <h1><?php echo $this->articleDiemTin['title']; ?></h1>
+                                </div>
+                                <div class="short_intro txt_666"><?php echo $this->articleDiemTin['lead']; ?></div>
+                                <div class="relative_new">
+                                    <?php
+                                    if (sizeof($this->articleDiemTin['reference_detail']) > 0) {
+                                        $i = 1;
+                                        $arrRef = '';
+                                        foreach($this->articleDiemTin['reference_detail'] as $reference)
+                                        {
+                                            if($i > 2) {
+                                                break;
+                                            }
+                                            $arrRef = '<a href="' . $reference['share_url'] . '" title="' . $reference['title_format'] . '" alt="' . $reference['title_format'] . '">' . $reference['title'] . '</a>';
+                                            $i++;
+                                        }
+                                        ?>
+                                        <ul class="list_news_dot_3x3_300">
+                                            <li>
+                                                <?php echo $arrRef; ?>
+                                            </li>
+                                        </ul>
+                                        <?php
+                                        unset($arrRef);
+                                    }
+                                    ?>
+                                </div>
+                                <div class="width_common">
+                                    <div class="fck_detail width_common">
+                                        <?php echo $this->articleDiemTin['content']; ?>
+                                    </div>
+                                    <div class="clear">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+                <?php
+                //************************* Tin tức mới nhất *************************//
+                if ($this->hasRelatedNews)
+                {
+                    $numArticle = count($this->arrArticleDetails);
+                    ?>
+                    <div class="item_thongtin width_common  box_category">
+                        <div class="title_box_category width_common">
+                            <h2 class="txt_main_category"><a href="javascript:;" title="Tin tức liên quan">Tin tức liên quan</a></h2>
+                        </div>
+                        <div class="content_thongtin width_common">
+                            <div class="news_left_300">
+                                <?php
+                                $articleDetail_1 = $this->objArticle->getArticleBasic($this->arrArticleDetails[0]);
+                                ?>
+                                <a title="<?php echo $articleDetail_1['title_format']; ?>" href="<?php echo $articleDetail_1['share_url']; ?>">
+                                    <img alt="<?php echo $articleDetail_1['title_format']; ?>" src="<?php echo $this->Imageurl($articleDetail_1['thumbnail_url'], 'size6'); ?>" />
+                                </a>
+                                <h1 class="title_news">
+                                    <a class="txt_black_hover_blue" href="<?php echo $articleDetail_1['share_url']; ?>" title="<?php echo $articleDetail_1['title_format']; ?>">
+                                        <?php echo $articleDetail_1['title']; ?>
+                                    </a>
+                                </h1>
+                                <div class="width_common txt_666 txt_11">
+                                    <?php echo $this->DateTimeFormat($articleDetail_1['publish_time'], 'short_article'); ?>
+                                    <?php echo $this->ArticleComment($articleDetail_1, true); ?>
+                                </div>
+                            </div>
+                            <div class="news_right_360">
+                                <ul class="list_dot_3x3">
+                                    <?php
+                                    for ($i = 1; $i < $numArticle; $i++)
+                                    {
+                                        $articleDetail = $this->objArticle->getArticleBasic($this->arrArticleDetails[$i]);
+                                        ?>
+                                        <li>
+                                            <h2 class="title_news">
+                                                <a href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title']; ?></a>
+                                            </h2>
+                                            <div class="news_lead" data-mobile-href="<?php echo $articleDetail['share_url']; ?>"><?php echo $articleDetail['lead']; ?></div>
+                                        </li>
+                                        <?php
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+                <?php
+                //************************* Link Sopcast *************************//
+                if ($this->hasData && $this->sopCastLink != NULL)
+                {
+                    ?>
+                    <div class="item_trandau  width_common  box_category">
+                        <div class="title_box_category width_common">
+                            <h2 class="txt_main_category"><a href="javscript:;" title="Link Sopcast">Link Sopcast</a></h2>
+                            <div class="block_arrow_title">&nbsp;</div>
+                        </div>
+                        <div class="content_thongtin width_common">
+                            <ul class="list_news_dot_3x3_300">
+                                <?php
+                                foreach ($this->sopCastLink as $href => $desc)
+                                {
+                                    ?>
+                                    <li>
+                                        <a href="<?php echo $href; ?>" target="_blank"><?php echo $desc; ?></a>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+                <?php
+                //************************* Dự đoán của bạn *************************//
+                if (!$this->theEnd)
+                {
+                    ?>
+                    <div class="item_trandau  width_common  box_category">
+                        <div class="title_box_category width_common">
+                            <h2 class="txt_main_category"><a>Dự đoán của bạn</a></h2>
+                            <div class="block_arrow_title">&nbsp;</div>
+                        </div>
+                        <div class="content_thongtin width_common">
+                            <div id="dudoanketqua_trandau">
+                                <div class="block_infomation_capdau">
+                                    <div class="block_image left">
+                                        <?php
+                                        if(DEVICE_ENV != 1)
+                                        {
+                                        ?>
+                                        <img alt="<?php echo $this->team1['name'] ?>" src="<?php echo $this->Imageurl($this->team1['thumbnail'], 'size10'); ?>" class="right">
+                                        <?php
+                                        }
+                                        ?>
+                                        <div class="txt_clb right"><?php echo $this->team1['name']; ?></div>
+                                    </div>
+                                    <div class="block_info_name_tiso txt_center">
+                                        <div class=" txt_11 txt_666">Kết quả</div>
+                                        <div class="width_common">
+                                            <select id="goalteam1" name="goalteam1">
+                                                <option value="-1">?</option>
+                                                <?php for ($i = 0; $i <= 10; $i++): ?>
+                                                    <?php echo '<option value=' . $i . '>' . $i . '</option>' ?>
+                                                <?php endfor; ?>
+                                            </select>
+                                            <select id="goalteam2" name="goalteam2">
+                                                <option value="-1">?</option>
+                                                <?php for ($i = 0; $i <= 10; $i++): ?>
+                                                    <?php echo '<option value=' . $i . '>' . $i . '</option>' ?>
+                                                <?php endfor; ?>
+                                            </select>
+                                            <input type="submit" name="sb_dudoan" value="Dự đoán" class="btn_sudoan"/>
+                                            <input id="matchid" name="matchid" type="hidden" value="<?php echo $this->matchDetail['id']; ?>" />
+                                        </div>
+                                    </div>
+                                    <div class="block_image right">
+                                        <?php
+                                        if(DEVICE_ENV != 1)
+                                        {
+                                        ?>
+                                        <img alt="<?php echo $this->team2['name'] ?>" src="<?php echo $this->Imageurl($this->team2['thumbnail'], 'size10'); ?>" class="left">
+                                        <?php
+                                        }
+                                        ?>
+                                        <div class="txt_clb left"><?php echo $this->team2['name'] ?></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script language="javascript" type="text/javascript" src="<?php echo $this->configView['js']; ?>/predict.match.js"></script>
+                    <link href="<?php echo $this->configView['css']; ?>/lightbox/lightbox.css" media="screen" rel="stylesheet" type="text/css" />
+                    <script language="javascript" type="text/javascript" src="<?php echo $this->configView['js']; ?>/lightbox.js"></script>
+                    <?php
+                }
+                if ($this->hasPredict)
+                {
+                ?>
+                <div class="width_common">
+                    <div class="dudoan_cuabandoc">
+                        <div class="title_cate">
+                            <p class="left">Dự đoán của bạn đọc</p>
+                        </div>
+                        <?php
+                        if ($this->intTotalPredict > 0)
+                        {
+                            ?>
+                            <div class="left" id="hinhtron_tk"></div>
+                            <div class="left" id="explained_">
+                                <ul>
+                                    <li id="color_1"><span>&nbsp;</span><?php echo $this->team1['name']; ?></li>
+                                    <li id="color_2"><span>&nbsp;</span><?php echo $this->team2['name']; ?></li>
+                                    <li id="color_3"><span>&nbsp;</span>Hòa</li>
+                                </ul>
+                            </div>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                            <div class="txt_666" style="margin-top:30px">Rất tiếc, chúng tôi chưa cập nhật thông tin dư đoán.</div>
+                            <?php
+                        }
+                        ?>
+
+                    </div>
+                    <div class="top3_dudoan">
+                        <div class="title_cate">
+                            <p class="left">Top 3 dự đoán của bạn đọc</p>
+                        </div>
+                        <?php
+                        if ($this->intTotalPredict > 0)
+                        {
+                            foreach ($this->arrTopPredict as $key => $arrTopPredict)
+                            {
+                                if (!empty($arrTopPredict))
+                                {
+                                    $percentTop = ($arrTopPredict / $this->intTotalPredict) * 100;
+                                }
+                                ?>
+                                <div class="pecent_dudoan">
+                                    <div class="pecent_club">
+                                        <b><?php echo $this->team1['name']; ?>  <?php echo $key; ?>  <?php echo $this->team2['name']; ?></b>
+                                        <div class="bg_pecent left">
+                                            <div class="bg_pecent_1 bg_color_pecent" style="width: <?php echo round($percentTop, 1) . '%;' ?>"><p><?php echo round($percentTop, 2) ?>%</p></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+                <?php
+                }
+                ?>
+                <?php
+                //Comment
+                echo $this->render('/block/comment_match.phtml');
+                ?>
+            </div>
+        </div>
+        <div id="col_300" class="right">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+</div>
+<script language="javascript" type="text/javascript" >
+    var team1Name    = '<?php echo $this->team1['name']; ?>';
+    var team2Name    = '<?php echo $this->team2['name']; ?>';
+    var percentTeam1 = <?php echo ($this->percentTeam1) ? $this->percentTeam1 : 0 ?>;
+    var percentTeam2 = <?php echo ($this->percentTeam2) ? $this->percentTeam2 : 0 ?>;
+    var percentDrawn = <?php echo ($this->percentDrawn) ? $this->percentDrawn : 0 ?>;
+    var urlPredict   = '<?php echo '/predict/', $this->seoTitle, '-', $this->matchDetail['id']; ?>';
+</script>
+<div class="banner_980x60"><?php echo $this->GetBlock('footer'); ?></div>

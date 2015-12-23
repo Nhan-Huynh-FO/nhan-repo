@@ -1,0 +1,158 @@
+<?php
+$firstDate 	= 0;
+$lastDate	= 0;
+$prev = true;
+$next = true;
+$arrListMatch = array();
+if (isset($this->arrData) && !empty($this->arrData))
+{
+	foreach ($this->arrData as $match)
+	{
+		$date = strtotime(date("d-m-Y",($match['DatetimeHappen'] + 7*60*60)));
+		// echo $date; die;
+		$arrListMatch[$date][] = $match['MatchID'];
+	}
+
+	if (count($arrListMatch) > 2) {
+		$arrListMatch = array_slice($arrListMatch, 0, 2, true);
+	}
+	else {
+		$this->type=='prev' ? $prev = false : $next = false;
+	}
+	asort($arrListMatch);
+}
+if (!empty($arrListMatch))
+{
+	$j =0;
+	$i = 0;
+	$objTeam    = $this->objObject->getTeam();
+	$objMatch   = $this->objObject->getMatch();
+	foreach ($arrListMatch as $date => $arrId)
+	{
+		$j++;
+		if ($j>2)
+		{
+			continue;
+		}
+
+		$firstDate = $date;
+		$j == 1 ? ($lastDate = $date) : ($firstDate = $date) ;
+		?>
+		<div class="date"><?php echo $this->DateTimeFormat($date,'long_predict'); ?></div>
+		<?php
+		$objMatch->setId($arrId);
+		foreach($arrId as $id)
+		{
+			//get detail match
+			$matchDetail = $objMatch->getDetailObjectBasic($id);
+			$matchDetail['datetime_happen'] = $matchDetail['datetime_happen'] + 7*60*60;
+			if (empty($matchDetail))
+			{
+				continue;
+			}
+			$i++;
+			$objTeam->setId(array($matchDetail['team1'],$matchDetail['team2']));
+			$team1 = $objTeam->getDetailObjectBasic($matchDetail['team1']);
+			$team2 = $objTeam->getDetailObjectBasic($matchDetail['team2']);
+			?>
+			<table>
+				<thead>
+					<tr>
+						<td class="minutes" colspan="3">
+							<?php if($matchDetail['status'] != 1 && $matchDetail['status'] != 2) //dang dien ra
+                            {
+                                echo isset($matchDetail['matchTime']) && !empty($matchDetail['matchTime'])?$matchDetail['matchTime']."'":'FT';
+                            }
+                            else if($matchDetail['status'] == 1)
+                            {
+                                echo '<div class="chuadau" style="color:#999999;">'.date('H:i',$matchDetail['datetime_happen']).'</div>';
+                            }else if ($matchDetail['status'] == 2)
+                            {
+                                echo 'FT';
+                            }
+                            ?>
+						</td>
+					</tr>
+                    <?php
+					if(!empty($matchDetail['round'])){
+					?>
+					<tr>
+						<td class="minutes" colspan="3">
+							<?php
+							echo '<div class="chuadau" style="color:#999999;">'.$matchDetail['round'].'</div>';
+                            ?>
+						</td>
+					</tr>
+					<?php
+					}
+					?>
+				</thead>
+				<tbody>
+					<tr class="current">
+						<td class="main_team">
+                            <?php
+                            if (!empty($team1['thumbnail']))
+                            {
+                            ?>
+							<img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>">
+                            <?php
+                            }
+                            ?>
+							<p><a href="<?php echo ($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>">
+								<?php echo $team1['abbreviation']; ?>
+								</a></p>
+						</td>
+						<td class="score">
+							<span class="box no-border">
+							<?php
+							if($matchDetail['datetime_happen'] < time()) {
+								echo $matchDetail['goal1'];
+							}
+							?>
+							</span>
+							<span class="box no-border">-</span>
+							<span class="box no-border">
+							<?php
+							if($matchDetail['datetime_happen'] < time()) {
+								echo $matchDetail['goal2'];
+							}
+							?>
+							</span>
+						</td>
+						<td class="sub_team">
+                            <?php
+                            if (!empty($team2['thumbnail']))
+                            {
+                            ?>
+							<img width="18" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size1'); ?>" alt="<?php echo $team2['name_format']; ?>">
+                            <?php
+                            }
+                            ?>
+							<p><a href="<?php echo ($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>">
+								<?php echo $team2['abbreviation']; ?>
+								</a></p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<?php
+		}
+	}
+?>
+<div class="right control_pagination">
+	<?php
+	if ($prev) {
+	?>
+	<a class="icon_responsive ico_respone_04" href="javascript:;" onclick="affFixture.previous(<?php echo $lastDate; ?>)" data-type="next">&nbsp;</a>
+	<?php
+	}
+	if ($next) {
+	?>
+	<a class="icon_responsive ico_respone_05" href="javascript:;" onclick="affFixture.next(<?php echo $firstDate; ?>)" data-type="prev">&nbsp;</a>
+	<?php
+	}
+	?>
+</div>
+<?php
+}
+?>

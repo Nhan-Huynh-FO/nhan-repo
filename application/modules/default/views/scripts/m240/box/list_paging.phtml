@@ -1,0 +1,35 @@
+<?php
+if ( !empty($this->arrListPagingNews) )
+{
+?>
+<div class="block_mid_new">
+    <ul class="list_news" id="news_home">
+        <?php
+        $count = count($this->arrListPagingNews);
+        $index = 0;
+        foreach ( $this->arrListPagingNews as $id )
+        {
+            $articleDetail = $this->objArticle->getArticleBasic($id);
+            //Check detail
+            if ( empty($articleDetail) )
+            {
+                $count--;
+                continue;
+            }//end if
+        ?>
+            <li <?php echo ++$index == $count ? 'class="end"' : ''; ?>>
+                <h2 class="title_news">
+                    <a href="<?php echo $this->ShareurlM240($articleDetail['share_url']); ?>" title="<?php echo $articleDetail['title_format']; ?>" class="txt_link"><?php echo $articleDetail['title_format']; ?></a>
+                    <span class="no_wrap">
+                        <img class="icon_content icon_title_<?php echo intval($articleDetail['article_icon']); ?>" alt="" src="<?php echo $this->configView['images'];?>/graphics/img_blank.gif">
+                    </span>
+                </h2>
+            </li>
+        <?php
+        }//end foreach
+        ?>
+    </ul>
+</div>
+<?php
+}//end if
+?>

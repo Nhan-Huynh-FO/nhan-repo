@@ -1,0 +1,138 @@
+<?php
+if (!empty($this->arrHotNews))
+{
+?>
+<div id="box_news_top" class="width_common">
+    <div class="line_col width_common">
+        <div class="line_col_midnews_top">
+            <?php
+            $idFirstNews = array_shift($this->arrHotNews);
+            $firstNews = $this->objArticle->getArticleBasic($idFirstNews);
+            ?>
+            <div class="box_hot_news">
+                <div class="block_news_big">
+                    <a href="<?php echo $firstNews['share_url']; ?>" title="<?php echo $firstNews['title_format']; ?>" alt="<?php echo $firstNews['title_format']; ?>" class="txt_link">
+                        <img src="<?php echo $this->ImageurlArticle($firstNews, 'size2'); ?>" alt="<?php echo $firstNews['title_format']; ?>" title="<?php echo $firstNews['title_format']; ?>" class="width_image_common" />
+                    </a>
+                    <?php echo $this->ArticleTypeIcon($firstNews); ?>
+                </div>
+                <h2 class="title_news">
+                    <a href="<?php echo $firstNews['share_url']; ?>" class="txt_link" title="<?php echo $firstNews['title_format']; ?>"><?php echo $firstNews['title']; ?></a>
+                    <span class="no_wrap">
+                        <?php echo $this->ArticleViewIcon($firstNews); ?>
+                        <?php echo $this->ArticleComment($firstNews); ?>
+                    </span>
+                </h2>
+                <div class="news_lead">
+                    <?php
+                    echo $this->CropWord($firstNews['lead'], 30, $firstNews['share_url']);
+                    ?>
+                </div>
+                <?php
+                if (sizeof($firstNews['reference_detail']) > 0) {
+                    $i = 1;
+                    $arrRef = '';
+                    foreach($firstNews['reference_detail'] as $reference)
+                    {
+                        if($i > 1) {
+                            break;
+                        }
+                        $arrRef = '<a href="' . $reference['share_url'] . '" title="' . $reference['title_format'] . '" alt="' . $reference['title_format'] . '" >' . $reference['title'] . '</a>';
+                        $i++;
+                    }
+                    ?>
+                    <ul class="list_news_dot_3x3_300">
+                        <li>
+                            <p>
+                                <?php echo $arrRef; ?>
+                            </p>
+                        </li>
+                    </ul>
+                    <?php
+                    unset($arrRef);
+                }
+                //icon tai tro
+                echo $this->IconCommercial($firstNews, $this->intCategoryId);
+                ?>
+            </div>
+            <?php
+            if (!empty($this->arrHotNews))
+            {
+            ?>
+            <div class="box_sub_hot_news">
+                <div class="scroll-pane">
+                    <div class="content_scoller width_common">
+                        <ul>
+                            <?php
+                            foreach ($this->arrHotNews as $key => $id)
+                            {
+                                $articleDetail = $this->objArticle->getArticleBasic($id);
+                                if (empty($articleDetail))
+                                {
+                                    continue;
+                                }
+                            ?>
+                            <li <?php echo 2==$key ? 'class="end"' : ''; ?>>
+                                <h2 class="title_news">
+                                    <a href="<?php echo $articleDetail['share_url']; ?>" class="txt_link" title="<?php echo $articleDetail['title_format']; ?>" alt="<?php echo $articleDetail['title_format']; ?>">
+                                        <?php
+                                        echo $articleDetail['title'];
+                                        ?>
+                                    </a>
+                                    <span class="no_wrap">
+                                        <?php echo $this->ArticleViewIcon($articleDetail); ?>
+                                        <?php echo $this->ArticleComment($articleDetail); ?>
+                                    </span>
+                                </h2>
+                                <div class="news_lead">
+                                    <?php
+                                    echo $this->CropWord($articleDetail['lead'], 30, $articleDetail['share_url']);
+                                    ?>
+                                </div>
+                                <?php
+                                //icon tai tro
+                                echo $this->IconCommercial($articleDetail, $this->intCategoryId);
+                                ?>
+                            </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <?php
+            }
+            ?>
+            <div class="box_ads_hot_news">
+                <?php echo $this->GetBlock('top_news_right'); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+}
+?>
+<div class="width_common line_col">
+    <div id="col_1"><?php echo $this->render('category/list_paging.phtml'); ?></div>
+    <div id="col_2">
+        <?php
+        if ( !empty($this->arrArticleExclude) )
+        {
+        ?>
+        <script type="text/javascript">
+            var list_article_left = <?php echo Zend_Json::encode($this->arrArticleExclude);?>;
+        </script>
+        <?php
+        }//end if
+
+        if (1 != $this->arrParamPaging['page'])
+        {
+            echo $this->GetBlock('top_news_right');
+        }
+        echo $this->GetBlock('left');
+        ?>
+    </div>
+    <div id="col_3"><?php echo $this->GetBlock('right'); ?></div>
+</div>
+<div class="banner_980x60"><?php echo $this->GetBlock('footer'); ?></div>

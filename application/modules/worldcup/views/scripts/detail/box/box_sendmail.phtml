@@ -1,0 +1,300 @@
+<script type="text/javascript">
+    var html_login_5 = '<div id="login-vne5" class="login-form">\
+                            <form action="" name="send_mai" method="post">\
+                                <input type="hidden" id="url" name="url" value="<?php echo $this->ShareurlWorldcup($this->arrArticleDetail['share_url']); ?>">\
+                                <div class="ttOline">\
+                                    Chia sẻ bài viết qua Email\
+                                </div>\
+                                <div class="share_email_des">\
+                                    <div class="share_email_left">\
+                                        <a href="#" title="">Bài viết</a>\
+                                    </div>\
+                                    <div class="share_email_right">\
+                                        <div><?php echo addslashes($this->arrArticleDetail['title']); ?></div>\
+                                        <ul>\
+                                            <li class="active"><a href="<?php echo $this->configView['url']; ?>/" title="Thể thao">Thể thao</a></li>\
+                                            <?php if (!empty($this->menuDetail))
+                                            {
+                                                ?>\
+                                                <li><a href="<?php echo $this->menuDetail['link']; ?>/" title="<?php echo $this->menuDetail['catename']; ?>"><?php echo ' > ' . $this->menuDetail['catename']; ?></a></li>\
+                                                <?php
+                                            }
+                                            ?>\
+                                        </ul>\
+                                    </div>\
+                                </div>\
+                                <div class="complete-form">\
+                                    <p class="login-txt"><input type="text" class="txt-login" onblur="if(this.value==\'\') this.value=this.defaultValue" onfocus="if(this.value==this.defaultValue) this.value=\'\'"  value="Email" name="sender_email" id="sender_email" /></p>\
+                                    <p class="login-desc" id="errorEmail"></p>\
+                                    <p class="login-txt"><input type="text" class="txt-login" onblur="if(this.value==\'\') this.value=this.defaultValue" onfocus="if(this.value==this.defaultValue) this.value=\'\'"  value="Họ tên người gửi"  name="sender_name" id="sender_name" /></p>\
+                                    <p class="login-desc" id="errorName"></p>\
+                                    <p class="login-txt"><input type="text" class="txt-login" onblur="if(this.value==\'\') this.value=this.defaultValue" onfocus="if(this.value==this.defaultValue) this.value=\'\'"  value="Email người nhận" name="receiver_mail" id="receiver_mail" /></p>\
+                                    <p class="login-desc" id="errorReceiver"></p>\
+                                    <p class="login-txt"><textarea name="message_mail" id="message_mail" class="txt-login" name="thongdiep" onblur="if(this.value==\'\') this.value=this.defaultValue" onfocus="if(this.value==this.defaultValue) this.value=\'\'"  value="Thông điệp gửi kèm">Thông điệp gửi kèm</textarea></p>\
+                                    <div class="sercurity">\
+                                        <p class="share_email_label">Mã xác nhận</p>\
+                                            <p class="login-txt">\
+                                            <input name="txtCode" id="txtCode" type="text" class="txt-capcha" />\
+                                            <span class="txt_huongdan" id="showCaptcha"></span>\
+                                            <a onclick="loadCaptcha();" href="javascript:;" title="Tạo mã khác"><img src="<?php echo $this->configView['images'] ?>/graphics/refesh.gif" /></a>\
+                                            <input type="button" onclick="submitForm();" class="btt-complete" value="Hoàn tất" />\
+                                        </p>\
+                                        <p class="login-desc" id="errorCode"></p>\
+                                    </div>\
+                                </div>\
+                                <div class="close-lb"></div>\
+                            </form>\
+                        </div>';
+    $('.login_5').click(function() {
+        Sexy.notice(html_login_5);
+        loadCaptcha();
+    });
+</script>
+<script type="text/javascript">
+    function loadCaptcha() {
+        $.ajax({
+            type: 'GET',
+            url: base_url + '/captcha/show/height/28',
+            dataType: 'json',
+            beforeSend: function() {
+            },
+            success: function(response) {
+                if (response != false) {
+                    $('#showCaptcha').html(response.html);
+                }
+            }
+        });
+    }
+    function submitForm() {
+        //Lấy thông tin người dự thi
+        var email = $('#sender_email');
+        var name = $('#sender_name');
+        var receivermail = $('#receiver_mail');
+        var messagemail = $('#message_mail');
+        var txtcode = $('#txtCode');
+        //On blur
+        email.blur(validateEmail);
+        name.blur(validateName);
+        receivermail.blur(validateReceiver);
+        txtcode.blur(validateCode);
+        //On key press
+        email.keyup(validateEmail);
+        name.keyup(validateName);
+        receivermail.keyup(validateReceiver);
+        txtcode.keyup(validateCode);
+        //On Submitting
+
+        if (validateName() & validateEmail() & validateReceiver() & validateCode()) {
+            $.ajax({
+                type: "POST",
+                url: base_url + "/detail/ajaxsendmail",
+                data: {
+                    sender_name: name.val(),
+                    email_user: email.val(),
+                    receiver_mail: receivermail.val(),
+                    message_mail: messagemail.val(),
+                    url: $("#url").val(),
+                    txtCode: txtcode.val(),
+                    captchaID: $('#captchaID').val()
+                },
+                dataType: "json",
+                beforeSend: function() {
+                },
+                success: function(response) {
+                    if (response.error == 0) {
+                        Sexy.display(0);
+                    }
+                    else if (response.error == 1) {
+                        $('#errorReceiver').text(response.message);
+                        return false;
+                    }
+                    if (response.error == 2) {
+                        $('#errorCode').text(response.message);
+                        loadCaptcha();
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+
+    //validation functions
+    function validateEmail() {
+        //var filter = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9]+[a-zA-Z0-9.-]+[a-zA-Z0-9]+.[a-z]{2,4}$/;
+        //if it's valid email
+
+        if ($('#sender_email').val() == '' || $('#sender_email').val() == 'Email') {
+            $("#errorEmail").text("Xin hãy nhập địa chỉ email");
+            return false;
+        }
+        //if it's NOT valid
+        else if (($('#sender_email').val() == CheckEmailAddress($('#sender_email').val())) == '')
+        {
+            $("#errorEmail").text("Địa chỉ email không hợp lệ");
+            return false;
+        }
+        else
+        {
+            $("#errorEmail").text('');
+            return true;
+        }
+    }
+    //validation functions
+    function validateName() {
+        //check name null
+        if ($('#sender_name').val() == '' || $('#sender_name').val() == 'Họ tên người gửi') {
+            $("#errorName").text("Xin hãy nhập tên người gửi");
+            return false;
+        }
+        else if ($('#sender_name').length > 100)
+        {
+            $("#errorName").text("Họ tên người gửi không quá 100 kí tự");
+            return false;
+        }
+        else
+        {
+            $("#errorName").text('');
+            return true;
+        }
+    }
+    function validateReceiver() {
+        //check name null
+        if ($('#receiver_mail').val() == '' || $('#receiver_mail').val() == 'Email người nhận') {
+            $('#errorReceiver').text("Xin hãy nhập địa chỉ email người nhận");
+            return false;
+        }
+        //if it's NOT valid
+        else if (($('#receiver_mail').val() == CheckEmailAddress($('#receiver_mail').val())) == '')
+        {
+            $('#errorReceiver').text("Địa chỉ email người nhận không hợp lệ");
+            return false;
+        }
+        else
+        {
+            $('#errorReceiver').text('');
+            return true;
+        }
+    }
+    //validation functions
+    function validateCode() {
+        //check name null
+        if ($('#txtCode').val() == '') {
+            $('#errorCode').text("Xin hãy nhập mã xác nhận");
+            return false;
+        }
+        else
+        {
+            $('#errorCode').text('');
+            return true;
+        }
+    }
+    function CheckEmailAddress(Email) {
+        Email = Email;
+        while (Email != '') {
+            c = Email.charAt(0);
+            if (c == ' ' || c == '<' || c == 39 || c == ':' || c == '.') {
+                Email = Email.substr(1);
+            }
+            else {
+                break;
+            }
+        }
+        i = Email.indexOf('>');
+        if (i == -1) {
+            while (Email != '') {
+                c = Email.charAt(Email.length - 1);
+                if (c == ' ' || c == 39 || c == '.') {
+                    Email = Email.substr(0, Email.length - 1);
+                }
+                else {
+                    break;
+                }
+            }
+        } else {
+            Email = Email.substr(0, i);
+        }
+        if (Email.length > 96)
+            return '';
+        i = Email.lastIndexOf('@');
+        j = Email.lastIndexOf('.');
+        if (i < j)
+            i = j;
+
+        switch (Email.length - i - 1) {
+            case 2:
+                break;
+            case 3:
+                switch (Email.substr(i).toLowerCase()) {
+                    case '.com':
+                    case '.net':
+                    case '.org':
+                    case '.edu':
+                    case '.mil':
+                    case '.gov':
+                    case '.biz':
+                    case '.pro':
+                    case '.int':
+                        break;
+                    default:
+                        return '';
+                }
+                break;
+            default:
+                switch (Email.substr(i).toLowerCase()) {
+                    case '.name':
+                    case '.info':
+                        break;
+                    default:
+                        return '';
+                }
+                break;
+        }
+
+        Email = Email.toLowerCase();
+
+        if (Email == '')
+            return '';
+
+        if (Email.indexOf(' ') != -1)
+            return '';
+
+        if (Email.indexOf('..') != -1)
+            return '';
+
+        if (Email.indexOf('.@') != -1)
+            return '';
+
+        if (Email.indexOf('@.') != -1)
+            return '';
+
+        if (Email.indexOf(':') != -1)
+            return '';
+
+        for (i = 0; i < Email.length; i++) {
+            c = Email.charAt(i);
+
+            if (c >= '0' && c <= '9')
+                continue;
+
+            if (c >= 'a' && c <= 'z')
+                continue;
+
+            if ('`~!#$%^&*-_+=?/\\|@.'.indexOf(c) != -1)
+                continue;
+
+            return '';
+        }
+
+        if ((i = Email.indexOf('@')) == -1)
+            return '';
+
+        if (Email.substr(i + 1).indexOf('@') != -1)
+            return '';
+
+        if (Email.charAt(0) == '.' || Email.charAt(Email.length - 1) == '.')
+            return '';
+
+        return Email;
+    }
+</script>

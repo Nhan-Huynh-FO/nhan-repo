@@ -1,0 +1,133 @@
+<?php
+$arrMatchId = $this->data['arrMatchIDs'];
+$objTeam    = $this->objObject->getTeam();
+$objMatch   = $this->objObject->getMatch();
+$team1 = $team2 = array();
+if(!empty($arrMatchId))
+{
+    ?>
+    <link rel="stylesheet" href="<?php echo $this->configView['vnecdn']['css']; ?>/lightbox.css" media="all" />
+    <div class="box_category news_box_300 width_common space_box category_guess_score">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category"><a href="<?php echo 'http://worldcup.vnexpress.net/du-doan'; ?>">Dự đoán</a></h2>
+        </div>
+        <div class="content_box_category width_common">
+            <?php
+            foreach ($arrMatchId as $matchId => $score)
+            {
+
+                $date = date("d-m-Y",$score);
+               // echo $date; die;
+                $arrListMatch[$date][] = $matchId;
+            }
+            $j =0;
+            $i = 0;
+            foreach ($arrListMatch as $date=>$arrId)
+            {
+                $j++;
+                foreach($arrId as $id)
+                {
+                    //get detail match
+                    $matchDetail = $objMatch->getDetailObjectBasic($id);
+                    if (empty($matchDetail))
+                    {
+                        continue;
+                    }
+                    $i++;
+                    $objTeam->setId(array($matchDetail['team1'],$matchDetail['team2']));
+                    $team1 = $objTeam->getDetailObjectBasic($matchDetail['team1']);
+                    $team2 = $objTeam->getDetailObjectBasic($matchDetail['team2']);
+                    ?>
+                    <div class="date"><?php echo $i==1 || $j == 2?$this->DateTimeFormat($matchDetail['datetime_happen'],'long_predict'):''; ?></div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td class="minutes" colspan="3">
+                                    <?php if($matchDetail['status'] != 1 && $matchDetail['status'] != 2) //dang dien ra
+                                    {
+                                        echo isset($matchDetail['matchTime']) && !empty($matchDetail['matchTime'])?$matchDetail['matchTime']."'":'FT';
+                                    }
+                                    else if($matchDetail['status'] == 1)
+                                    {
+                                        echo '<div class="chuadau" style="color:#999999;">'.date('H:i',$matchDetail['datetime_happen']).'</div>';
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+						    <?php
+							if($matchDetail['status'] == 1)//chua dien ra
+							{
+							?>
+                            <tr class="guess line">
+								<td class="main_team" style="border-top:none;">
+                                    <span><a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>">
+                                        <?php echo $team1['abbreviation']; ?>
+                                        </a></span>
+                                    <img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>">
+                                </td>
+								<td class="score" style="border-top:none;">
+									<span class="box"><input type="text" value="" data-rel="<?php echo $id;?>-team1"></span>
+									<span class="box no-border">-</span>
+									<span class="box"><input type="text" value="" data-rel="<?php echo $id;?>-team2"></span>
+								</td>
+								<td class="sub_team" style="border-top:none;">
+                                    <img width="18" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size1'); ?>" alt="<?php echo $team2['name_format']; ?>">
+                                    <span><a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>">
+                                        <?php echo $team2['abbreviation']; ?>
+                                        </a></span>
+                                </td>
+							</tr>
+							<?php
+							}
+							else
+							{
+							?>
+							<tr class="current">
+                                <td class="main_team">
+                                    <span><a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>">
+                                        <?php echo $team1['abbreviation']; ?>
+                                        </a></span>
+                                    <img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>">
+                                </td>
+                                <td class="score">
+                                    <span class="box no-border"><?php echo $matchDetail['goal1']; ?></span>
+                                    <span class="box no-border">-</span>
+                                    <span class="box no-border"><?php echo $matchDetail['goal2']; ?></span>
+                                </td>
+                                <td class="sub_team">
+                                    <img width="18" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size1'); ?>" alt="<?php echo $team2['name_format']; ?>">
+                                    <span><a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>">
+                                        <?php echo $team2['abbreviation']; ?>
+                                        </a></span>
+                                </td>
+                            </tr>
+                            <tr class="guess">
+                                <td class="main_team"><span class="txt_666">Dự đoán</span></td>
+                                <td class="score">
+                                    <span class="box"><input type="text" value="<?php echo $matchDetail['goal1'];?>" data-rel="<?php echo $id;?>-team1"></span>
+                                    <span class="box no-border">-</span>
+                                    <span class="box"><input type="text" value="<?php echo $matchDetail['goal1'];?>" data-rel="<?php echo $id;?>-team2"></span>
+                                </td>
+                                <td class="sub_team"></td>
+                            </tr>
+							<?php
+							}
+							?>
+                            <tr class="submit">
+                                <td class="main_team"></td>
+                                <td class="score"><button type="submit" data-rel="<?php echo $id; ?>" class="predict-match" data-predict-type="6" data-time="<?php echo $matchDetail['matchTime'];?>" data-predict-text="<?php echo $team1['name'];?> vs <?php echo $team2['name'];?>">Gửi</button></td>
+                                <td class="sub_team"><div class="txt_view_more"><a class="txt_666" href="<?php echo 'http://worldcup.vnexpress.net/thong-ke/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchDetail['id'])  ?>" alt="<?php echo $matchDetail['name_format']; ?>" title="<?php echo $matchDetail['name_format']; ?>">Gợi ý</a></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <?php
+                }
+            }
+            ?>       
+        </div>
+    </div>
+    <?php
+}
+?>

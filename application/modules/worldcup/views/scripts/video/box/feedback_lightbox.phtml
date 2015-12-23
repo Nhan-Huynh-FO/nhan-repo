@@ -1,0 +1,67 @@
+<?php
+$data    = $this->data;
+?>
+<div class="relative box_gopy" id="feedback_popup" style="display: none;">
+    <div id="content_lightbox_vne_core" class="box_width_common">
+        <div class="content_light_box" id="content_lightbox_gopy_vne_cor">
+            <div class="box_width_common">
+                <p style="font-size: 12px;margin:0px;">Vui lòng cho biết vấn đề bạn đang gặp phải với video trên trang này:</p>
+                <div class="list_gopy bg_xam">
+                    <ul>
+                        <li><span><input type="checkbox" value="1" name="chkFeedBack"></span> <b>Tốc độ tải chậm</b></li>
+                        <li><span><input type="checkbox" value="2" name="chkFeedBack"></span> <b>Âm thanh kém</b></li>
+                        <li><span><input type="checkbox" value="4" name="chkFeedBack"></span> <b>Chất lượng hình ảnh xấu</b></li>
+                        <li><span><input type="checkbox" id="chon_gopykhac" value="8" name="chkFeedBack"></span> <b>Khác</b></li>
+                    </ul>
+                    <div class="clear"></div>
+                    <div class="content_gopykhac">
+                        <textarea id="content" rows="" cols="" name="content" maxlength="1000"></textarea>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="box_width_common">
+            <div class="txt_feedback_captcha">
+                <div class="txt_lable_captcha txt_note left"><b>Nhập mã xác nhận :</b></div>
+                <input type="text" name="txtCode" id="txtCode" class="txt_input txt_note left" maxlength="4"/>
+                <div class="img_captcha left" id="showCaptcha"></div>
+            </div>
+            <div class="btn_bottom_core_vne txt_center">
+                <input type="button" id="bt_feedback_popup" value="Xác nhận" class="btn_rating_core btn_vne motnut" onclick="vneVideoFeedback.feedback(<?php echo $data['article_id'];?>);">
+                <input type="button" id="bt_close_feedback_popup" value="Đóng cửa sổ" class="txt_xoatrang txt_666 txt_11" style="text-decoration: underline;cursor:pointer;" onclick="Feedback_Lightbox.hide();">
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div id="feedback_msg_finish" style="display:none;">
+    <div class="block_feedback">
+        <div class="txt_msg">
+            Cảm ơn bạn đã Góp ý để chúng tôi hoàn thiện hơn.
+        </div>
+        <div class="txt_feedback_msg_bottom txt_note txt_center">
+            <input id="bt_close_feedback_popup" type="button" value="Đóng cửa sổ" class="btn_feedback btn_xam" onclick="javascript:Feedback_Lightbox.hide();return false;">
+        </div>
+    </div>
+</div>
+<div id="feedback_error_popup" style="display:none;">
+    <div class="block_feedback">
+        <div class="txt_msg">
+            Góp ý thất bại. Xin vui lòng thử lại sau.
+        </div>
+        <div class="txt_feedback_msg_bottom txt_note txt_center">
+            <input id="bt_close_feedback_popup" type="button" value="Đóng cửa sổ" class="btn_feedback btn_xam" onclick="javascript:Feedback_Lightbox.hide();return false;">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#chon_gopykhac').live("click", function() {
+        $('#feedback_box #feedback_lightbox').find('.content_gopykhac').toggle('fast', function() {
+            // Animation complete.
+        });
+    });
+</script>
+<link href="<?php echo $this->config['css']; ?>/lightbox/video_feedback.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="<?php echo $this->config['css']; ?>/lightbox/lightbox.css" media="screen" rel="stylesheet" type="text/css" />

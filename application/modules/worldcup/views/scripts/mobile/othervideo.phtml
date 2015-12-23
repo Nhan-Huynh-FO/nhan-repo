@@ -1,0 +1,22 @@
+<?php
+foreach ($this->arrData as $id)
+{
+    $article = $this->objArticle->getArticleBasic($id);
+    ?>
+    <li>
+        <?php
+        if (!empty($article['thumbnail_url']))
+        {
+            ?>
+            <div class="thumb_140"> 
+                <a title="video name" href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>"><img src="<?php echo $this->ImageurlArticle($article, 'size6'); ?>" width="208" height="125" alt="<?php echo $article['title_format']; ?>"></a> 
+                <a class="icon_thumb_videophoto icon_video" href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>">&nbsp;</a>
+            </div>
+            <?php
+        }
+        ?>
+        <div class="title_news"><a class="txt_link" href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>"><?php echo $article['title'] ?></a></div>
+    </li>
+    <?php
+}
+?>

@@ -1,0 +1,36 @@
+<?php if($this->arrLeagues[0]['LeagueID']!=6){ ?>
+<div id="box_lichthidau_bongda" class="box_col_300 box_width_common left">
+    <div class="txt_title_box">
+        <div class="left txt_left">Lịch thi đấu</div>
+        <div class="right txt_right">
+            Giờ
+            <select class="w120 select_category txt_11" onchange="getFixtureByGMT(this.value);" id="select-gmt">
+                <option value="0">GMT</option>
+                <option value="7">Hà Nội</option>
+            </select>
+            <input type="hidden" id="url_get_fixture" value="<?php echo '/lich-thi-dau/get-fixture/sid/', $this->strSeasonID, '/lid/', $this->strLeagueID, '/gmt/' ?>" />
+        </div>
+        <div class="clear">&nbsp;</div>
+    </div>
+    <div class="content_news">
+        <div class="content_tab" id="list_fixtures">
+            <?php echo $this->render('lich-thi-dau/list_fixtures.phtml'); ?>
+        </div>
+    </div>
+</div>
+<?php } else{ ?>
+<div id="box_lichthidau_bongda" class="box_col_300 box_width_common left">
+    <div class="txt_title_box">
+        <div class="left txt_left">Lịch thi đấu</div>
+        <div class="right txt_right">
+            <input type="hidden" id="url_get_fixture" value="<?php echo '/lich-thi-dau/get-fixture/sid/', $this->strSeasonID, '/lid/', $this->strLeagueID, '/gmt/' ?>" />
+        </div>
+        <div class="clear">&nbsp;</div>
+    </div>
+    <div class="content_news">
+        <div class="content_tab" id="list_fixtures">
+            <?php echo $this->render('lich-thi-dau/list_fixtures.phtml'); ?>
+        </div>
+    </div>
+</div>
+<?php } ?>

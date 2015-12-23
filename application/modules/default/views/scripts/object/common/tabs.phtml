@@ -1,0 +1,44 @@
+<div class="title_tab width_common">
+    <ul>
+        <?php if ($this->actionName == 'anh-video'){ ?>
+        <li class="start active">
+            <a href="javascript:;">Ảnh - Video</a>
+        </li>
+        <?php }else{ ?>
+        <li class="start">
+            <a href="<?php echo  "/anh-video/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Ảnh - Video</a>
+        </li>
+        <?php } ?>
+
+        <?php if ($this->actionName == 'diem-tin'){ ?>
+        <li class="active">
+            <a href="javascript:;">Điểm tin</a>
+        </li>
+        <?php }else{ ?>
+        <li>
+            <a href="<?php echo  "/diem-tin/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Điểm tin</a>
+        </li>
+        <?php } ?>
+
+        <?php if ($this->actionName == 'thong-ke'){ ?>
+        <li class="active">
+            <a href="javascript:;"> Thống kê </a>
+        </li>
+        <?php }else{ ?>
+        <li>
+            <a href="<?php echo  "/thong-ke/{$this->seoTitle}-{$this->matchDetail['id']}" ?>"> Thống kê </a>
+        </li>
+        <?php } ?>
+
+        <?php if ($this->actionName == 'tuong-thuat'){ ?>
+        <li class="active">
+            <a href="javascript:;">Tường thuật </a>
+        </li>
+        <?php }else{ ?>
+        <li>
+            <a href="<?php echo  "/tuong-thuat/{$this->seoTitle}-{$this->matchDetail['id']}" ?>"> Tường thuật </a>
+        </li>
+        <?php } ?>
+
+    </ul>
+</div>

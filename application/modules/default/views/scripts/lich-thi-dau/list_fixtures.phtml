@@ -1,0 +1,39 @@
+<?php
+$today = strtotime(date('Y/m/d'));
+$_3dayAfter = $today + 345600;
+$numLeagues = count($this->arrLeagues);
+for($l = 0; $l < $numLeagues; $l++){ ?>
+<table class="tb_lichthidau">
+    <tr class="top">
+        <td colspan="2"> <?php echo $this->arrLeagues[$l]['Name'] ?></td>
+    </tr>
+    <?php
+    $i = 1;
+    $numMatch = 0;
+    foreach ($this->arrData[$l] as $fixture){
+        $date = $fixture['DatetimeHappen'] + $this->gmt * 3600;
+        if ($date > $today && $date < $_3dayAfter){
+            $numMatch++;
+    ?>
+    <tr <?php echo $i % 2 == 0 ? 'class="chan"' : ''; ?>>
+        <td class="w80"><?php echo date('d/m H:i', $date);?></td>
+        <td class="w180"><a class="txt_black_hover_blue" href="<?php echo '/thong-tin-truoc-tran/','tran-',Fpt_Filter::setSeoLink($fixture['TeamName1']),'-vs-',Fpt_Filter::setSeoLink($fixture['TeamName2']),'-',$fixture['MatchID']; ?>"><?php echo $fixture['TeamName1'];?></a> - <a class="txt_black_hover_blue" href="<?php echo '/thong-tin-truoc-tran/','tran-',Fpt_Filter::setSeoLink($fixture['TeamName1']),'-vs-',Fpt_Filter::setSeoLink($fixture['TeamName2']),'-',$fixture['MatchID'];?>"> <?php echo $fixture['TeamName2'];?> </a></td>
+    </tr>
+    <?php
+        }
+    $i++;
+    }
+    if (!$numMatch){
+
+        //thê code mới cho trường hợp tắt box lịch thi đấu  V-League tạm thời
+        if($this->arrLeagues[$l]['Name']=='V-League'){
+            echo '<tr><td colspan="2" align="center"><b>Khởi tranh từ ngày 2/3/2013</b></td></tr>';
+        }//kết thúc thêm code mới
+        else echo '<tr><td colspan="2" align="center"><b>Không có trận đấu trong ngày</b></td></tr>';
+    }
+    ?>
+</table>
+<?php } ?>
+<?php if($this->arrLeagues[0]['LeagueID']!=6){ ?>
+<div class="txt_view_more"><a href="/lich-thi-dau" class="txt_gray">Xem thêm</a> <span class="icon_portal_thethao icon_view_more">&nbsp;</span></div>
+<?php } ?>

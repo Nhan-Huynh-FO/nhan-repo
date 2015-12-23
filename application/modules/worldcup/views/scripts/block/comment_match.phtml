@@ -1,0 +1,74 @@
+<!-- START COMMENT -->
+<script type="text/javascript" src="<?php echo $this->configView['vnecdn']['js']; ?>/interactions/comment.js"></script>
+<div class="width_common space_bottom_20" id="box_comment">
+    <div class="block_show_commen width_common">
+        <div class="title_show txt_666">
+            <div class="ykien_vne" style="display:none;"><div class="left"><strong>Ý kiến bạn đọc</strong> (<label id="total_comment">0</label>) </div>
+				<div class="filter_coment"><a href="#" rel="time">Mới nhất</a> | <a href="#" class="active" rel="like">Quan tâm nhất</a></div>
+				<div class="filter_coment_mobile"><select><option value="time">Mới nhất</option><option value="like" selected>Quan tâm nhất</option></select></div>
+			</div>
+        </div>
+        <div class="main_show_comment width_common">
+            <div class="loading"></div>
+            <div class="view_all_reply_loading"></div>
+            <div class="main_show_comment box_width_common" id="list_comment"></div>
+            <div class="view_more_coment left" style="display: none;"><a href="#" class="txt_666">Xem thêm</a></div>
+            <div class="block_input_comment width_common">
+                <div class="input_comment">
+                    <form id="comment_post_form">
+                        <textarea id="txtComment" value="Ý kiến của bạn" onfocus="if (this.value == this.defaultValue) this.value = ''" onblur="if (this.value == '') this.value = this.defaultValue" class="h100 left">Ý kiến của bạn</textarea>
+                        <div class="width_common block_relative">
+                            <div class="right block_btn_send">
+                                <input type="button" value="Gửi" class="btn_send_comment" id="comment_post_button" />
+                            </div>
+                            <div class="left counter_world" style="display: none;"><strong>20</strong>/1000</div>
+                            <div class="like_google" style="display: none;">
+                                <div class="google_name">
+                                    <img id="open_id_status" src="<?php echo $this->configView['images']; ?>/graphics/img_blank.gif" width="24px" height="30px" alt="" class="google_active" />
+                                    <span id="open_id_name"></span>
+                                </div>
+                                <div class="block_action_google">
+                                    <ul>
+                                        <li><a id="open_id_share"href="#">Tắt chia sẻ</a></li>
+                                        <li><a id="open_id_sigout" href="#">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear">&nbsp;</div>
+                    </form>
+                    <div id="comment_reply_wrapper" class="block_input_comment width_common" style="display: none;">
+                        <div class="input_comment">
+                            <form id="comment_reply_form">
+                                <textarea id="txtComment" value="Ý kiến của bạn" onfocus="if (this.value == this.defaultValue) this.value = ''" onblur="if (this.value == '') this.value = this.defaultValue" class="h100 left">Ý kiến của bạn</textarea>
+                                <div class="width_common block_relative">
+                                <div class="right">
+                                    <input type="button" value="Gửi" class="btn_send_comment" id="comment_reply_button" />
+                                </div>
+                                <div class="left counter_world" style="display: none;"><strong>20</strong>/1000</div>
+                                <div class="clear">&nbsp;</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        if ('undefined' != typeof(VNE) && 'undefined' != typeof(VNE.Comment)) {
+            VNE.Comment.setOptions({
+                objectid: <?php echo $this->matchDetail['id']; ?>, //article id
+                objecttype: 50,
+                siteid: <?php echo SITE_ID; ?>, //site id
+                categoryid: 1002571,
+                sign: '<?php echo md5(COMMENT_SIGN_ID . $this->matchDetail['id'] . 50 . SITE_ID . 1002571);?>',
+                limit: 24
+            });
+            VNE.Comment.getComments();
+        }
+    });
+</script>
+<!-- END COMMENT -->

@@ -1,0 +1,9 @@
+<a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($this->arrArticleDetail['share_url']); ?>"><img src="<?php echo $this->configView['images']; ?>/graphics/icon_fb.gif" alt="Share on Facebook"></a>
+<a href="https://twitter.com/share?url=<?php echo urlencode($this->arrArticleDetail['share_url']), "&text=", $this->arrArticleDetail['title'] ; ?>" target="_blank"><img src="<?php echo $this->configView['images']; ?>/graphics/icon_tw.gif" alt="Share on Twitter"></a>
+<a href="https://plus.google.com/share?url=<?php echo $this->arrArticleDetail['share_url']; ?>" onclick="javascript:window.open(this.href,
+  '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+    <img  src="<?php echo $this->configView['images']; ?>/graphics/icon_google.gif" alt="Share on Google+"/>
+</a>
+<span class="drash_share">|</span>
+<a href="#" id="print_content"><img src="<?php echo $this->configView['images']; ?>/graphics/icon_print.gif" alt=""></a>
+<a href="#" class="icon_letter"><img src="<?php echo $this->configView['images']; ?>/graphics/icon_letter.gif" alt=""></a>

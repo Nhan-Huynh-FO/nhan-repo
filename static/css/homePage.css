@@ -1,0 +1,24 @@
+body{ overflow:hidden; background:none!important; }
+.shp-set-hpage{height:475px; overflow:hidden;width:800px; border-top:2px solid #9f224e; background:#fff;}
+.shp-bar-hpage{width:800px; height:37px; background:#f4f5f6; float:left; overflow:hidden;}
+.shp-logo-hpage{width:127px; height:27px; margin:5px 9px 0px 20px; float:left; display:inline; padding:0px 13px 0px 0px; border-right:1px solid #e2e2e2;}
+.shp-logo-hpage a img{border:none;}
+.shp-text-hpage{font:bold 14px arial; color:#000; float:left; margin:10px 0px 0px;}
+.shp-ct-hpage{height:409px; margin:10px 0px 0px; padding:0px 20px; float:left;width:760px; float:left; overflow:hidden;}
+.shp-tab-hpage{width:100%; height:24px; float:left; overflow:hidden; background:url(images/setHomePage/1_1_gray.gif) repeat-x left bottom;}
+.shp-aTab-hpage{font:bold 12px arial; color:#000; border-top:2px solid #9f224e ;border-right:1px solid #d2d2d2;border-left:1px solid #d2d2d2;height:19px; float:left; text-decoration:none; margin:0px 0px 0px 11px; display:inline;}
+.shp-chrome{background:#fff url(images/setHomePage/chrome.gif) no-repeat 7px 3px;  padding:3px 7px 0px 28px;}
+.shp-firefox{background:#fff url(images/setHomePage/firefox.gif) no-repeat 7px 3px;  padding:3px 7px 0px 28px;}
+.shp-opera{background:#fff url(images/setHomePage/opera.gif) no-repeat 13px 3px;  padding:3px 13px 0px 30px;}
+.shp-safari{background:#fff url(images/setHomePage/safari.gif) no-repeat 7px 3px;  padding:3px 7px 0px 27px;}
+.shp-detail-hpage{width:758px; height:384px; border:1px solid #d2d2d2; border-top:none; float:left; overflow:hidden;}
+.shp-in-hpage{width:735px; padding:15px 0px 0px 17px; float:left; height:360px; overflow:hidden;}
+.shp-left-hpage{width:331px; height:334px; margin:26px 7px 0px 0px; float:left; overflow:hidden;}
+.shp-each-step{width:331px; float:left;}
+.shp-left-eachS{width:31px; height:24px; text-align:center; margin:0px 5px 0px 0px; float:left; overflow:hidden; background:url(images/setHomePage/label.gif) no-repeat 0px 0px; font:bold 14px arial; color:#fff; padding:7px 0px 0px;}
+.shp-right-eachS{width:290px; float:left; overflow:hidden; font:12px arial; color:#000;}
+.shp-right-hPage{width:397px; height:360px; float:left; overflow:hidden;}
+/* v2 */
+.setHomePage-browser{width:0px; height:0px; top:0px; left:0px; margin:0px; padding:0px; background:red; clear:both; position:absolute; z-index:999999;}
+.shp-listOpera{ background:url(images/setHomePage/3_3.gif) no-repeat 0px 6px; padding:0px 0px 0px 10px; margin:0px 0px 5px;}
+*:focus {outline:none;}

@@ -1,0 +1,36 @@
+.light_box{
+border:1px solid #dedede;
+font-size: 14px;
+}
+.light_box .body{
+	line-height: 24px;
+	background: #f4f4f4;
+	padding:20px;
+}
+.light_box .title{
+	font: 700 16px/16px Arial;
+	padding:10px 10px 10px 20px;
+	background: #fff;
+}
+.light_box .title span{
+	float: left;
+}
+.light_box .text_red{
+	color: #9f224e;
+}
+.light_box .text_green{
+	color: #328005;
+}
+.ico{
+	background: url(images/icons/icon_sprite.png) no-repeat;
+	display: inline-block;
+}
+.light_box .ico.close{
+	background-position: -150px 0;
+	width: 10px;
+	height: 10px;
+	margin-top: 5px;
+}
+
+.light_box.trandau .body{
+}

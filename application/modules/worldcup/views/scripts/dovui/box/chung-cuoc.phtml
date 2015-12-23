@@ -1,0 +1,62 @@
+<?php
+    $arrAward = $this->arrAward; 
+    $date=$this->dateAward;    
+    $strDate = $date->format('d/m/Y');
+    $objNews = Thethao_Model_News::getInstance();
+if(!empty($arrAward))
+    {
+?>
+
+<div class="box_category width_common news_box_300" id="danhsach_dovui_top10">
+    <div class="title_box_category width_common">
+	   <div class="txt_main_category"><a href="javascript:;"><span>Top 10 chung cuộc </span><span>&nbsp;</span> <span class="light_txt"> - <?php echo $strDate; ?> </span></a></div>
+    </div>
+  <div class="content_box_category width_common">
+  	 <table id="table4">
+        <tbody>
+            <tr>
+				<th class="d">#</th>
+				<th class="n_p">Họ tên - SĐT</th>
+				<th class="tl">TLĐ</th>
+				<th class="t">TG</th>
+			</tr>
+            <?php
+	           $i = 1;
+               foreach($arrAward as $item)
+                {
+                    if($i <= 10)
+                    {
+                    ?>
+                    <tr>
+        				<td class="d">	<?php echo $i; echo '.' ?></td>
+        				<td class="n_p"><strong><?php echo $item['full_name']; ?><span><?php echo substr($item['mobile'],0,strlen($item['mobile'])-3); ?>xxx</span></strong></td>
+        				<td class="tl"><?php echo $item['amount']; ?></td>
+        				<td class="t"><?php echo $objNews->formatMilliseconds1($item['vote_date']);?></td>
+        			</tr>
+                    
+                    <?php
+                        
+                    }
+    				$i++;
+                }
+            ?>
+        </tbody>
+     </table>
+     <div class="dv_ft">
+		<div class="note">
+			<strong>TLĐ - <span>Trả lởi đúng</span></strong>
+			<strong>TG - <span>Thời gian trả lời</span></strong>
+		</div>
+		
+	</div>     
+	
+    </div>
+</div>
+<?php
+	}
+?><div class="box_category width_common news_box_300">
+    <iframe allowtransparency="true" frameborder="0" height="250px" hspace="0" marginheight="0" marginwidth="0" scrolling="no" src="http://worldcup.vnexpress.net/khoanhkhacdamme/widget/" vspace="0" width="300px"></iframe>
+</div>
+<div class="banner_300x250 banner_common space_box">
+	<div class="box_category width_common hidden320"> <div class="banner_300x250"> <script type="text/javascript"> Poly_Large(3); </script> </div> </div>
+</div>

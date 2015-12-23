@@ -1,0 +1,377 @@
+/*lighbox*/
+.rating_bigbox {
+    position: fixed;
+    z-index: 2000000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display:none;
+}
+
+*html .rating_bigbox {
+    \position: absolute;
+    p\osition: absolute;
+}
+
+.windowmask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3000px!important;
+    background: black;
+    opacity: 0.6;
+    filter: alpha(Opacity=60);
+}
+
+iframe.windowmask {
+    position: relative;
+    opacity: 0;
+    filter: alpha(Opacity=0);
+}
+*html .windowmask {
+    \width: 100%;
+    w\idth: 100%;
+    height:3000px!important;
+}
+
+/**html .windowmask {
+        \width: 100%;
+        w\idth: 100%;
+        \height: expression(document.body.offsetHeight*3 + 'px');
+        h\eight: expression(document.body.offsetHeight*3 + 'px');
+}
+*/
+.rating_lightbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    font-family: Tahoma;
+    font-size: 8.25pt;
+}
+/*****/
+.contentbox{min-width:300px; width:300px; margin:0; padding:0; overflow:hidden;}
+.contentbox #lbheader {color:#FFFFFF; font-weight:bold; background:#317b0f; border:1px solid #3e8f19; padding:4px 12px}
+.contentbox .lbcont .highlight{text-align:center; padding:10px 0 0 0}
+.contentbox .lbcont .highlight span{text-align:center; padding:0 5px}
+
+
+/**LightBox**/
+
+.lightbox-border .tl, .lightbox-border .tr, .lightbox-border .bl, .lightbox-border .br {
+    width:9px;
+    height:8px;
+    overflow: hidden;
+    padding: 0;
+}
+.rating-lightbox-boxhead {
+    border-bottom:1px dotted #c2c6c9;
+    margin: 0;
+    padding: 0;
+    background:#fff;
+    border-top:2px solid #9A1F44;
+    width: 100%;
+}
+.rating-lightbox-boxhead .tlc {
+    margin: 0;
+    padding-left:10px;
+}
+.rating-lightbox-boxhead .trc {
+    margin: 0;
+    padding-right:10px;
+    background:#fff;
+}
+.rating-lightbox-boxhead .boxhead-content {
+    padding:4px 0px;
+    font-size:12px;
+    font-weight:bold;
+    color:#000;
+}
+.lightbox-boxbody {
+    margin: 0;
+    border:none;
+    background-color:#fff;
+    padding:10px;
+}
+.txt_rating_captcha{
+    padding:0px 0 0 0;
+    height: 60px;
+}
+.txt_rating_captcha .txt_lable_captcha
+{
+    font: 500 12px arial;
+    margin: 12px 10px 5px 100px;
+    _margin: 12px 10px 5px 50px;
+    padding-right: 10px;
+}
+.txt_rating_captcha #txtCode
+{
+    width: 100px;
+    height: 25px;
+    margin-top: 7px;
+}
+.txt_rating_captcha #showCaptcha
+{
+    padding-left: 10px;
+    margin: 0px;
+    width: 60px;
+    height: 40px;
+}
+.txt_rating_captcha #showCaptcha img
+{
+    margin: 0px;
+    width: 60px;
+    height: 40px;
+}
+.txt_rating_bottom{
+    padding:10px 0 0 0;
+}
+.txt_rating_msg_bottom{
+    padding:30px 0 0 0;
+}
+.txt_center{
+    text-align:center;
+}
+/*the slider background*/
+.rating_slide {
+    width:230px;
+    height:7px;
+    background:url("images/bg_range_normal.gif") repeat-x scroll left top transparent;
+    position:relative;
+    margin:5px 10px 0px 10px;
+    padding:0 10px;
+    /*border:1px solid #9d9d9d;*/
+    cursor: pointer;
+    float: left;
+    text-align: center;
+}
+
+/*Style for the slider button*/
+.ui-slider-handle {
+    width:16px;
+    height:16px;
+    position:absolute;
+    top:-5px;
+    margin-left:-12px;
+    z-index:200;
+    background:url(images/graphics/slider-button.png) no-repeat;
+
+
+}
+.block_rating{ position: relative;}
+.giaitri_number_mid_core{
+    width:224px;
+    height:20px;
+    position:absolute;
+    z-index:10;
+    top:13px;
+    left:33px;
+}
+.giaitri_number_mid_core li{
+    width:28px;
+    float:left;
+    text-align:right;
+    position:relative;
+    z-index:10;
+}
+.giaitri_number_mid_core li a{
+    width:4px;
+    height:7px;
+    position:absolute;
+    z-index:10;
+    bottom:-7px;
+    right:2px;
+    font-size:0;
+    line-height:0;
+}
+.giaitri_number_mid_core li .show_number_core{
+    width:100%;
+    float:left;
+    height:20px;
+    padding:6px 0 0 0;
+    color:#666666;
+}
+.giaitri_number_mid_core li .show_number_core span{
+    display:none;
+    font-size: 12px;
+    color:#9F9F9F;
+}
+#box_ratting_giaitri .chart_rating .giaitri_info_rating {
+    display: none;
+    left: -78px;
+    position: absolute;
+    text-align: center;
+    top: -25px;
+    width: auto;
+    z-index: 10;
+}
+#box_ratting_giaitri .col_rating .list_rating li{
+    cursor: pointer;
+    font-size: 0;
+    line-height: 0;
+    position: relative;
+    /*z-index: 1;*/
+}
+#box_ratting_giaitri .chart_rating .giaitri_info_rating .giaitri_info_rating_left{
+    padding:0 0 0 2px;
+    background:url(images/bg_info_rating_core.gif) no-repeat left bottom;
+    height:21px;
+    width: auto;
+    font:400 11px/21px arial;
+    color:#fff;
+}
+
+#box_ratting_giaitri .chart_rating .giaitri_info_rating .giaitri_info_rating_left .giaitri_info_rating_right{
+    float:left;
+    padding:0 10px 0 8px;
+    background:url(images/bg_info_rating_core.gif) no-repeat right top;
+    height:21px;
+    width: 165px;
+    font:400 11px/21px arial;
+    color:#fff;
+}
+#box_ratting_giaitri .chart_rating .arrow_ratting_giaitri{
+    position:absolute;
+    width:5px;
+    height:3px;
+    background:url(images/bg_arrow_vne_core.gif) no-repeat left top;
+    left:85px;
+    top:21px;
+}
+#box_ratting_giaitri .giaitri_block_counter_rating{
+    width:310px;
+    margin:10px auto 20px auto;
+    font:400 11px arial;
+}
+#box_ratting_giaitri .giaitri_block_counter_rating span{
+    color:#9b1c42;
+    font-weight:700;
+}
+/*Result div where the slider value is displayed*/
+#rating-result {
+    background:url(images/bg_slider_count_rate.gif) no-repeat left top;
+    width:16px;
+    height:22px;
+    font:700 11px/22px arial;
+    color: #fff;
+    display: inline-block;
+    margin: 20px 0 0 0px
+}
+
+/*This is the fill bar colour*/
+.ui-widget-header {
+    background:url("images/bg_range.gif") repeat-x scroll left top transparent;
+    height:5px;
+    left:1px;
+    top:1px;
+    position:absolute;
+}
+
+a {
+    outline:none;
+    -moz-outline-style:none;
+}
+.block_rating{
+    padding:10px 0 0 0;
+}
+.btn_rating{
+    color: #fff;
+    width:90px;
+    height:20px;
+    font:700 11px arial;
+    cursor: pointer;
+    border:none;
+    margin:0 5px 10px 0;
+}
+.btn_do{
+    background:#9A1F44;
+}
+.btn_xam{
+    background:#666666;
+}
+.block_rating .txt_number{
+    width:255px;
+    margin:0 auto;
+    font:400 12px arial;
+    color:666666;
+}
+.rating-lightbox-boxhead .txt_title_right_logo{
+    float:left;
+    padding:3px 0 0 10px;
+}
+.rating-lightbox-boxhead .title_left{
+    float:right;
+    padding:8px 10px 0 0;
+    font:700 14px arial;
+}
+#box_ratting_giaitri  .list_rating{
+    width: 100%;
+    float: left;
+    position: relative;
+}
+#box_ratting_giaitri  .list_rating li{
+    float:left
+}
+#box_ratting_giaitri .col_rating  .list_rating li{
+    float:left;
+    width: 19px;
+    background: #cccccc;
+    margin: 0 6px 0 0;
+    display: inline;
+}
+#box_ratting_giaitri .col_rating  .list_rating li.end,
+#box_ratting_giaitri .stt_col li.end{
+    margin:0;
+}
+#box_ratting_giaitri .col_rating{
+    width:244px;
+    margin:0 auto;
+}
+#box_ratting_giaitri .stt_col{
+    padding:3px 0 0 0;
+    border-top: 1px solid #cccccc;
+    margin:2px auto 0 auto;
+    width: 244px;
+}
+#box_ratting_giaitri .stt_col li{
+    width: 19px;
+    text-align: center;
+    margin: 0 6px 0 0;
+    display: inline;
+    color: #666666;
+}
+.block_rating .txt_rating_result_bottom{
+    padding:20px 0 0 0;
+}
+.block_rating .txt_msg
+{
+    width: 100%;
+    text-align: center;
+    color: #666666;
+}
+#rating_box .lightbox-boxbody{
+    background:#fff url(images/bg_content_lightbox_3x63.gif) repeat-x left -1px;
+}
+#rating_box  .block_rating .chosepoint_rating_core {
+    background: none repeat scroll 0 0 #F3F3F3;
+    border: 1px solid #F7F8F8;
+    float: left;
+    margin: 0 0 0 120px;
+    _margin: 0 0 0 60px;
+    padding: 20px 20px 40px;
+    width: 265px;
+    position:relative;
+}
+
+#rating_box .txt_rating_bottom {
+    float: left;
+    width: 100%;
+    _width: 520px;
+}
+#rating_lightbox .rat_news{
+    width: 310px;
+    margin: 0 auto;
+    background: #F3F3F3;
+    padding:10px 0;
+}

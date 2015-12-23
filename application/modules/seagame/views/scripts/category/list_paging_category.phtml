@@ -1,0 +1,84 @@
+<?php
+if (!empty($this->arrData))
+{
+?>
+<div class="block_col_mid_common block_col_mid_folder">
+    <div class="news_mid_two_col">
+        <ul class="list_news">
+            <?php
+            $count = count($this->arrData);
+            $i = 0;
+            foreach($this->arrData as $id)
+            {
+                $article = $this->objArticle->getArticleBasic($id);
+
+                $i++;
+                if (empty($article))
+                {
+                    continue;
+                }
+                $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                ?>
+                <li <?php echo $i == $count ? 'class="last_item"':''; ?>>
+                    <div class="block_image_news width_common">
+                        <?php
+                        if (!empty($article['thumbnail_url']))
+                        {
+                            ?>
+                            <div class="thumb">
+                                <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                    <img src="<?php echo $this->ImageurlArticle($article, 'size6', -1); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>" />
+                                </a>
+                                <?php echo $this->ArticleTypeIcon($article); ?>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                        <div class="title_news">
+                            <a class="txt_link" href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                <?php echo $article['title']; ?>
+                                <span class="no_wrap">
+                                    <?php echo $this->ArticleViewIcon($article); ?>
+                                    <?php echo $this->ArticleComment($article); ?>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="news_lead">
+                            <?php echo $article['lead']; ?>
+                        </div>
+                        <?php
+                        if (sizeof($article['reference_detail']) > 0) {
+                            $i = 1;
+                            $arrRef = array();
+                            foreach($article['reference_detail'] as $reference)
+                            {
+                                if($i > 2) {
+                                    break;
+                                }
+                                $arrRef[] = '<a href="' . $this->ShareurlSeagame($reference['share_url']) . '" title="' . $reference['title_format'] . '" alt="' . $reference['title_format'] . '">' . $reference['title'] . '</a>';
+                                $i++;
+                            }
+                            ?>
+                            <div class="list_dot">
+                                <strong>
+                                    <?php echo implode(' / ', $arrRef); ?>
+                                </strong>
+                            </div>
+                            <?php
+                            unset($arrRef);
+                        }
+                        ?>
+                    </div>
+                </li>
+            <?php
+            }
+            ?>
+        </ul>
+        <?php
+        echo $this->PaginationWorldcup($this->arrParamPaging);
+        ?>
+    </div>
+</div>
+<?php
+}
+?>

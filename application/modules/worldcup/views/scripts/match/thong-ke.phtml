@@ -1,0 +1,45 @@
+<div class="line_gray line_page width_common">
+    <div id="col_left">
+        <?php
+        if (DEVICE_ENV != 1)
+        {
+            ?>
+            <div class="block_slder_top space_box" id="top_fixture_worldcup">
+                <div style="text-align: center;"><p style="padding: 25px 0;">Đang tải dữ liệu...</p></div>
+            </div>
+            <?php
+        }
+        ?>
+        <div class="page_trandau width_common">
+            <div class="block_clear_men"><a target="_blank" onclick="thethao.trackingImpression()" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=10045207&PluID=0&ord=<?php echo time();?>" title="Clear Men"><img src="<?php echo $this->configView['images']; ?>/graphics/img_clearmen.png" /></a></div>
+            <?php
+            if (DEVICE_ENV != 1)
+            {
+                echo $this->render('match/box/thongke.phtml');
+            }
+            else
+            {
+                echo $this->render('match/box/mthongke.phtml');
+            }
+            ?>
+        </div>
+        <!-- end page_trangdau -->
+    </div>
+    <div id="col_right">
+        <?php
+        //Comment
+        echo DEVICE_ENV != 4 ? $this->render('/block/comment_match.phtml') : $this->render('/block/comment_match_live.phtml');
+        //block left
+        echo $this->GetBlock('left');
+        ?>
+    </div>
+</div>
+<script type="text/javascript">
+    (function() {
+        var req = require.config({
+            context: 'body-content',
+            baseUrl: '<?php echo $this->configView['vnecdn']['js'], '/live'; ?>'
+        });
+        req(['livenews']);
+    })();
+</script>

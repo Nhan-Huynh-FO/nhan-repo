@@ -1,0 +1,51 @@
+<?php
+if (!empty($this->data['data']))
+{
+    $share_url = $this->data['info']['share_url'];
+    ?>
+    <div class="box_category width_common box_bl space_box">
+        <div class="title_box_category width_common">
+            <div class="txt_main_category">
+                <a href="<?php echo $this->configView['url'], $share_url; ?>" title="<?php echo $this->data['info']['name']; ?>">
+                    <?php
+                    echo!empty($this->layout['title']) ? $this->layout['title'] : $this->data['info']['name'];
+                    ?>
+                </a>
+            </div>
+        </div>
+        <div class="content_box_category width_common">
+            <ul>
+                <?php
+                $i = 0;
+                foreach ($this->data['data'] as $id)
+                {
+                    $article = $this->objArticle->getArticleBasic($id);
+                    if (empty($article))
+                    {
+                        continue;
+                    }
+                    $i++;
+                    ?>
+                    <li <?php echo $i % 2==0?'class="even"':''; ?>>
+                        <?php
+                        if (!empty($article['thumbnail_url']))
+                        {
+                            ?>
+                            <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>">
+                                <img src="<?php echo $this->ImageurlArticle($article, 'size1'); ?>" alt="<?php echo $article['title_format']; ?>" />
+                            </a>
+                            <?php echo $this->ArticleTypeIcon($article); ?>
+                            <?php
+                        }
+                        ?>
+                        <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" class="bl_title"><?php echo $article['title']; ?></a>                        
+                    </li>
+                    <?php
+                }
+                ?>
+            </ul>
+        </div>
+    </div>    
+    <?php
+}
+?>

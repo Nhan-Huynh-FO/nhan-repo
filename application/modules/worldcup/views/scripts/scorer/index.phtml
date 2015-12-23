@@ -1,0 +1,100 @@
+<?php
+$arrTopPlayer = $this->arrTopPlayer;
+$objPlayer = $this->objObject->getPlayer();
+$objTeam = $this->objObject->getTeam();
+?>
+<div class="line_gray line_page width_common">
+    <div id="col_left">
+        <div class="block_slder_top space_box" id="top_fixture_worldcup">
+            <div style="text-align: center;"><p style="padding: 25px 0;">Đang tải dữ liệu...</p></div>
+        </div>
+        <div class="page_dstrungthuong page_details_vpl width_common">
+            <?php
+            if (!empty($arrTopPlayer))
+            {
+            ?>
+                <div class="title_dt_vpl">Vua phá lưới</div>
+                <table class="width_common">
+                    <thead>
+                        <tr>
+                            <th class="stt"><div>#</div></th>
+                            <th class="player"><div>Cầu thủ</div></th>
+                            <th class="team"><div>Đội bóng</div></th>
+                            <th class="number"><div>Số áo</div></th>
+                            <th class="position"><div>Vị trí</div></th>
+                            <th class="goal"><div>Bàn thắng</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $i = 1;
+                        foreach ($this->arrTopPlayer as $data)
+                        {
+                            $player = $objPlayer->getDetailObjectBasic($data['PlayerID']);
+                            $team = $objTeam->getDetailObjectBasic($data['TeamID']);
+                            ?>
+                            <tr>
+                                <td class="stt"><?php echo $i; ?></td>
+                                <td class="player"><a href="<?php echo $this->ShareurlWorldcup($player['share_url']); ?>" title="<?php echo $this->escape($player['name_format']); ?>"><?php echo $player['name']; ?></a></td>
+                                <td class="team">
+                                    <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" title="<?php echo $team['name_format']; ?>" alt="<?php echo $team['name_format']; ?>">
+                                        <img width="18" src="<?php echo $this->Imageurl($team['thumbnail'], 'size1'); ?>" alt="<?php echo $team['name_format']; ?>">
+                                        <?php echo $team['name']; ?>
+                                    </a>
+                                </td>
+                                <td class="number"><?php echo $player['num_coat']!=0?$player['num_coat']:'';?></td>
+                                <td class="position">
+                                    <?php
+                                    switch ($player['position'])
+                                    {
+                                        case 'D':
+                                            $position = 'Hậu vệ';
+                                            break;
+                                        case 'F':
+                                            $position = 'Tiền đạo';
+                                            break;
+                                        case 'M':
+                                            $position = 'Tiền vệ';
+                                            break;
+                                        case 'G':
+                                            $position = 'Thủ môn';
+                                            break;
+                                        case 'C':
+                                            $position = 'Huấn luyện viên';
+                                            break;
+                                        case 'SUB':
+                                            $position = 'Dự bị';
+                                            break;
+                                        default :
+                                            $position = 'Vị trí khác';
+                                            break;
+                                    }
+                                    echo $position;
+                                    ?>
+                                </td>
+                                <td class="goal"><b><?php echo $data['Goals']; ?></b></td>
+                            </tr>
+                            <?php
+                            $i++;
+                        }
+                        ?>                        
+                    </tbody>
+                </table>
+                <div class="bottom_pagination width_common">
+                <?php
+                    echo $this->PaginationWorldcup($this->arrParamPaging);
+                ?>
+                </div>
+                <?php
+            }
+            else
+            {
+                echo '<p>Hiện chưa có vua phá lưới nào</p>';
+            }
+            ?>
+        </div>
+    </div>
+    <div id="col_right">
+        <?php echo $this->GetBlock('left'); ?>
+    </div>
+</div>

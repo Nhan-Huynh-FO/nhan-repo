@@ -1,0 +1,96 @@
+<?php
+if(!empty($this->data))
+{
+    $arrData = $this->data;
+    $arrListWin = array();
+    foreach($arrData as $key=>$value)
+    {
+        $date = date("d-m-Y",$value['date']);
+        $arrListWin[strtotime($date)][] = array(
+            'date'      => $value['date'],
+            'full_name' => $value['fullName'],
+            'phone'     => $value['phone'],
+            'score'     => $value['score'],
+            'team1'     => $value['team1'],
+            'goal1'     => $value['goal1'],
+            'team2'     => $value['team2'],
+            'goal2'     => $value['goal2']
+        );
+    }
+    krsort($arrListWin); //sort by key hight to low
+    ?>
+    <div class="box_category news_box_300 width_common space_box category_list_prize prize_style_2">
+        <div class="title_box_category width_common">
+            <div class="txt_main_category"><a href="<?php echo $this->configView['url'].'/danh-sach-trung-thuong'; ?>">Danh sách trúng thưởng</a></div>
+        </div>
+        <div class="content_box_category width_common">
+            <?php
+            if(!empty($arrListWin))
+            {
+                $firstData = array_keys(array_slice($arrListWin, 0,1,true));
+            }
+            ?>
+            <div class="date">
+                <?php
+                if(DEVICE_ENV != 1)
+                {
+                ?>
+                <i id="calendar" class="ico"></i>
+                <?php
+                }
+                ?>
+                <input type="hidden" value="" id="calendar_currentdate" />
+                <span class="date_time"><?php echo !empty($firstData[0])?$this->DateTimeFormat($firstData[0], 'long_predict'):''; ?></span>
+                <div class="txt_view_more "><a class="txt_999" href="<?php echo $this->configView['url'].'/danh-sach-trung-thuong'; ?>">Chi tiết</a></div>
+            </div>
+            <?php
+            if(!empty($arrListWin))
+            {
+                $i=0;
+                foreach($arrListWin as $date=>$data)
+                {
+                    $i++;
+                    //echo date('m/d/Y H:i:s',1399395600000);
+            ?>
+                <table id="list_<?php echo date('j-n-Y', $date); ?>" style="<?php echo $i == 1?'':'display:none'; ?>" class="list_win">
+                    <tbody>
+                        <?php
+                        $j=0;
+                        $note = '';
+                        foreach($data as $value)
+                        {
+
+                            $tmp = explode(' ', $value['score']);
+                            if (isset($tmp[3]))
+                            {
+                                $note = ' ' . $tmp[3] . (isset($tmp[4]) ? (' ' . $tmp[4]):'');
+                            }
+                            $j++;
+                            ?>
+                            <tr>
+                                <td class="stt"><?php echo $j; ?>.</td>
+                                <td class="match_score">
+                                    <div>
+                                        <span class="team"><?php echo $value['team1']; ?></span>&nbsp;
+                                        <span class="score"><?php echo $value['goal1'], '&nbsp;-&nbsp;', $value['goal2']; ?></span>&nbsp;
+                                        <span class="team"><?php echo $value['team2'], $note; ?></span>
+                                    </div>
+                                    <div class="name"><?php echo $value['full_name']; ?></div>
+                                </td>
+                                <td class="phone"><?php echo $value['phone']>0 ? substr_replace($value['phone'],'xxx',-3):''; ?></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <?php
+                }
+            }
+            ?>
+            <p class="no_data" style="display:none;">Chưa có dữ liệu cho ngày này.</p>
+        </div>
+    </div>
+    <?php
+}
+?>

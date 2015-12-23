@@ -1,0 +1,11 @@
+<div class="box_width_common txt_stadium">
+    <p class="txt_gray">
+        <?php
+        $stadium = rtrim($this->matchDetail['stadium_name'], ')');
+        $arrTemp = explode('(', $stadium);
+        echo "SVĐ: <b>{$arrTemp[0]}</b>. ";
+        if (isset($arrTemp[1]))
+            echo "Sức chứa: <b>{$arrTemp[1]}</b>";
+        ?>
+    </p>
+</div>

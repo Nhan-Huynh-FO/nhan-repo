@@ -1,0 +1,61 @@
+<div class="title_box_category width_common">
+    <h2 class="txt_main_category"><a href="javascript:;">Tin khác</a></h2>
+</div>
+<div class="content_box_category width_common">
+    <ul class="list_news">
+        <?php
+        $k = 1;
+        foreach ($this->arrOrtherArticle as $id)
+        {
+            $articleDetail = $this->objArticle->getArticleBasic($id);
+            //check emty or bai hen gio
+            if (empty($articleDetail) || $articleDetail['publish_time'] > time())
+            {
+                continue;
+            }
+            if ($k == 2)
+            {
+                echo '<li style="overflow:hidden;"><ins class="adsbyeclick" data-zone="2936" data-ad-width="375" data-ad-height="90"></ins><script>(adsbyeclick = window.adsbyeclick || []).push({})</script></li>';
+            }
+            ?>
+            <li>
+                <?php
+                if (!empty($articleDetail['thumbnail_url']))
+                {
+                    ?>
+                    <div class="thumb_160 width_common" data-scale="1">
+                        <a class="cover_image image_68" style="background-image: url('<?php echo $this->ImageurlArticle($articleDetail, 'size11'); ?>')" onclick="_gaq.push(['c._trackEvent', 'Thể thao', 'VT-<?php echo $k; ?>', 'Detail-BoxTinKhac']);" href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>" alt="<?php echo $articleDetail['title_format']; ?>"></a>
+                        <?php echo $this->ArticleTypeIcon($articleDetail); ?>
+                    </div>
+                    <h2>
+                        <a onclick="_gaq.push(['c._trackEvent', 'Thể thao', 'VT-<?php echo $k; ?>', 'Detail-BoxTinKhac']);" href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>" alt="<?php echo $articleDetail['title_format']; ?>">
+                            <?php echo $articleDetail['title']; ?>
+                        </a>
+                        <span class="no_wrap">
+                            <?php echo $this->ArticleViewIcon($articleDetail); ?>
+                            <?php echo $this->ArticleComment($articleDetail); ?>
+                        </span>
+                    </h2>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <h2>
+                        <a onclick="_gaq.push(['c._trackEvent', 'Thể thao', 'VT-<?php echo $k; ?>', 'Detail-BoxTinKhac']);" href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title']; ?></a>
+                        <span class="no_wrap">
+                            <?php echo $this->ArticleViewIcon($articleDetail); ?>
+                            <?php echo $this->ArticleComment($articleDetail); ?>
+                        </span>
+                    </h2>
+                    <div class="news_lead" data-mobile-href="<?php echo $articleDetail['share_url']; ?>"><?php echo $articleDetail['lead']; ?></div
+                    <?php
+                }
+                ?>
+            </li>
+            <?php
+            $k++;
+        }
+        ?>
+    </ul>
+</div>

@@ -1,0 +1,47 @@
+<?php
+if (!empty ($this->data))
+{
+?>
+<div id="thanhtich_doanvietnam" class="box_category width_common titlelong">
+    <div class="title_box_category width_common">
+        <h2 class="txt_main_category"><a><?php echo $this->layout['title']; ?></a></h2>
+    </div>
+    <div class="content_box_category width_common">
+        <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <th class="hc">HC</th>
+                <th class="tt_ten">Vận động viên</th>
+                <th class="monthi">Môn</th>
+                <th class="ngay">Ngày</th>
+            </tr>
+        </table>
+        <div class="scroll-pane">
+            <div class="content_scoller width_common">
+                <table cellpadding="0" cellspacing="0" border="0" class="thanhtich">
+                <?php
+                $arrData = $this->data[0];
+                krsort($arrData);
+                foreach ($arrData as $value)
+                {
+                    if (empty($value['vandongvien']))
+                        continue;
+                    ?>
+                    <tr>
+                        <td class="hc">
+                            <img src="<?php echo $this->configView['images'], '/icons/icon_',  strtolower($value['huychuong']),'.png'; ?>">
+                        </td>
+                        <td class="ten"><?php echo $value['vandongvien']; ?></td>
+                        <td class="monthi"><?php echo $value['mon']; ?></td>
+                        <td class="ngay"><?php echo $this->DateTimeFormat($value['ngay'], 'short'); ?></td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+}
+?>

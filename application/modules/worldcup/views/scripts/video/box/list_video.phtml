@@ -1,0 +1,65 @@
+<?php
+$arrData = $this->arrData;
+$currPage = $this->currPage;
+if ($arrData['total'] > 0)
+{
+    if (!empty($arrData['data']))
+    {
+        ?>
+        <ul class="list_photo_dulich">
+            <?php
+            foreach ($arrData['data'] as $id)
+            {
+                $article = $this->objArticle->getArticleBasic($id);
+                if (DEVICE_ENV != 1)
+                {
+                    $shareUrl = $this->ShareurlWorldcup($article['share_url']) . '?p=' . $currPage;
+                }
+                else
+                {
+                    $shareUrl = $this->ShareurlWorldcup($article['share_url']);
+                }
+                ?>
+                <li>
+                    <?php
+                    if (!empty($article['thumbnail_url']))
+                    {
+                        ?>
+                        <div class="thumb_140"> 
+                            <a title="video name" href="<?php echo $shareUrl; ?>" title="<?php echo $article['title_format']; ?>"><img src="<?php echo $this->ImageurlArticle($article, 'size6'); ?>" alt="<?php echo $article['title_format']; ?>"></a> 
+                            <a class="icon_thumb_videophoto icon_video" href="<?php echo $shareUrl; ?>" title="<?php echo $article['title_format']; ?>">&nbsp;</a>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <div class="title_news"><a class="txt_link" href="<?php echo $shareUrl; ?>" title="<?php echo $article['title_format']; ?>"><?php echo $article['title'] ?></a></div>
+                </li>
+                <?php
+            }
+            ?>
+        </ul>
+        <?php
+        //Xem them
+        if (DEVICE_ENV != 1)
+        {
+            ?>
+            <div class="bottom_pagination width_common">
+                <?php
+                echo $this->PaginationAjax($this->arrParamPaging, 'video');
+                ?>
+            </div>
+            <?php
+        }
+        else
+        {
+            ?>
+            <div class="xemtiep hiddenweb">
+                <a href="<?php echo $this->configView['url'] . '/mobile/othervideo'; ?>" data-container="#list_video .list_photo_dulich" data-params="<?php echo $this->escape(Zend_Json::encode(array('limit' => LIMIT_LIST_VIDEO_MORE, 'offset' => $this->intOffset, 'total' => $this->intTotalVideo, 'exclude' => array()))); ?>">Xem tiếp</a>
+            </div>
+            <?php
+        }
+        ?>
+        <?php
+    }
+}
+?>

@@ -1,0 +1,178 @@
+<?php
+$limit = DEVICE_ENV != 1?7:2;
+$flag = false;
+if(DEVICE_ENV != 1)
+{
+    ?>
+    <div class="line_gray line_page width_common">
+        <div id="col_left">
+            <div class="block_slder_top space_box" id="top_fixture_worldcup">
+                <div style="text-align: center;"><p style="padding: 25px 0;">Đang tải dữ liệu...</p></div>
+            </div>
+            <div class="page_dstrungthuong width_common">
+            <?php
+            if(!empty($this->arrListWinner))
+            {
+                ?>
+                <div class="title_dstt">Danh sách trúng thưởng</div>
+                <?php
+                $arrData = $this->arrListWinner;
+                $arrListWin = array();
+                foreach($arrData as $key=>$value)
+                {
+                    $date = date("d-m-Y",$value['date']);
+                    $arrListWin[strtotime($date)][] = array(
+                        'date'      => $value['date'],
+                        'full_name' => $value['fullName'],
+                        'phone'     => $value['phone'],
+                        'score'     => $value['score'],
+                        'team1'     => $value['team1'],
+                        'goal1'     => $value['goal1'],
+                        'team2'     => $value['team2'],
+                        'goal2'     => $value['goal2']
+                    );
+                }
+                krsort($arrListWin); //sort by key hight to low
+                $i=1;
+                $count = count($arrListWin);
+                foreach($arrListWin as $date=>$data)
+                {
+                    ?>
+                    <div id="item_danhsach" class="item_danhsach" <?php echo $i>$limit?'style="display:none;"':'';?>>
+                        <div class="date"><?php echo !empty($date)?$this->DateTimeFormat($date, 'long_predict'):''; ?></div>
+                        <table>
+                            <tbody>
+                            <?php
+                            $j=0;
+                            $note='';
+                            foreach($data as $value)
+                            {
+                                $tmp = explode(' ', $value['score']);
+                                if (isset($tmp[3]))
+                                {
+                                    $note = ' ' . $tmp[3] . (isset($tmp[4]) ? (' ' . $tmp[4]):'');
+                                }
+                                $j++;
+                                ?>
+                                <tr>
+                                    <td class="match"><?php echo $j; ?>.&nbsp;<?php echo $value['team1'], '&nbsp;', $value['goal1'],'&nbsp;-&nbsp;',$value['goal2'],'&nbsp;',$value['team2'],$note; ?></td>
+                                    <td class="name"><?php echo $value['full_name']; ?></td>
+                                    <td class="phone"><?php echo $value['phone']>0 ? substr_replace($value['phone'],'xxx',-3):''; ?></td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <?php
+                    if($i > $limit && !$flag)
+                    {
+                       $flag = true;
+                    ?>
+                    <div class="view_more">
+                        <a title="view-more" href="javascript:;" onclick="Team.nextListWinner();">Xem thêm</a>
+                    </div>
+                    <?php
+                    }
+                    $i++;
+                }
+            } //end if
+            ?>
+            </div>
+        </div>
+        <div id="col_right">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+    <?php
+}
+else
+{
+    ?>
+    <div class="box_category news_box_300 width_common space_box category_list_prize">
+        <div class="content_box_category width_common">
+            <?php
+            if(!empty($this->arrListWinner))
+            {
+                $arrData = $this->arrListWinner;
+                $arrListWin = array();
+                foreach($arrData as $key=>$value)
+                {
+                    $date = date("d-m-Y",$value['date']);
+                    $arrListWin[strtotime($date)][] = array(
+                        'date'      => $value['date'],
+                        'full_name' => $value['fullName'],
+                        'phone'     => $value['phone'],
+                        'score'     => $value['score'],
+                        'team1'     => $value['team1'],
+                        'goal1'     => $value['goal1'],
+                        'team2'     => $value['team2'],
+                        'goal2'     => $value['goal2']
+                    );
+                }
+                krsort($arrListWin); //sort by key hight to low
+                $arrListWin = array_chunk($arrListWin,$limit,true);
+
+                $i=1;
+                $count = count($arrListWin);
+                foreach($arrListWin as $listWin)
+                {
+                    ?>
+                    <div id="item_danhsach_<?php echo $i; ?>" <?php echo $i>1?'style="display:none;"':'';?>>
+                        <?php
+                        foreach($listWin as $date=>$data)
+                        {
+                            ?>
+                            <div class="item_danhsach">
+                                <div class="date"><?php echo !empty($date)?$this->DateTimeFormat($date, 'long_predict'):''; ?></div>
+                                <table>
+                                    <tbody>
+                                        <?php
+                                        $j=0;
+                                        foreach($data as $value)
+                                        {
+                                            $j++;
+                                            ?>
+                                            <tr>
+                                                <td class="stt"><?php echo $j; ?>.</td>
+                                                <td class="name"><?php echo $value['full_name']; ?> <span class="center_block"><?php echo $value['phone']>0 ? substr_replace($value['phone'],'xxx',-3):''; ?></span></td>
+                                                <td class="score text_right">
+                                                    <div class="fname"><?php echo DEVICE_ENV!=1? $value['team1']:substr($value['team1'],0,3); ?>&nbsp;</div>
+                                                    <span><?php echo $value['goal1'].'&nbsp;-&nbsp;'.$value['goal2']; ?></span>
+                                                    <div class="fname">&nbsp;<?php echo DEVICE_ENV!=1? $value['team2']:substr($value['team2'],0,3); ?></div>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php
+                        }
+
+                        ?>
+                        <div class="xemtiep hiddenweb" id="list_winner_<?php echo $i; ?>" <?php echo $i==$count?'style="display:none;"':'';?>><a href="javascript:;" data-params="[]" onclick="Team.nextListWinner(<?php echo $i+1; ?>);">Xem tiếp</a></div>
+                    </div>
+                    <script type="text/javascript">
+                        $(function(){
+                            setTimeout(function(){
+                                //$("#abcd").html('Xem tiếp');
+                            }, 10000);
+                        });
+                    </script>
+                    <?php
+                    $i++;
+                }
+            }
+            else
+            {
+                echo "<p style='font:14px arial; margin-top:5px;'>Chưa có danh sách trúng thưởng.</p>";
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+}
+?>

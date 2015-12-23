@@ -1,0 +1,1664 @@
+/* Cái này nếu thấy cần thiết anh Nguyển bỏ vào gerneral nhé (vì em thấy hay sử dụng)*/
+.text_999{
+	color:#999 !important;
+}
+.text_right{
+	text-align: right !important;
+}
+.text_left{
+	text-align: left !important;
+}
+.text_center{
+	text-align: center !important;
+}
+/*Load file icon_sprite (em thấy đỡ phải gõ lại dòng này nhiều lần)*/
+.ico{
+	background: url(images/icons/icon_sprite.png) no-repeat;
+}
+/* List-32Doi */
+.list_32_team .title,.list_score .title{
+	font: 400 20px Arial;
+	padding-left: 10px;
+}
+
+.list_32_team .list_team{
+	border-bottom: 1px dotted #ccc;
+	width: 100%;
+	float: left;
+	margin-top: 5px;
+	padding: 10px 0;
+}
+
+.list_32_team .list_team.last{
+border-bottom: none;
+}
+
+.list_32_team .list_team li{
+	float:left;
+	margin-right: 3.636%;
+	width:20.303%;
+}
+
+.list_32_team .list_team li img{
+	float: left;
+	width: 100%;
+}
+
+.list_32_team .list_team li .label{
+	font:400 14px Arial;
+	margin-top: 10px;
+	float: left;
+	width: 100%;
+}
+
+.list_32_team .list_team li.first{
+	text-align: center;
+	width:7.5757%;
+	color:#999;
+	font:400 24px Arial;
+	margin-right: 0;
+}
+
+.list_32_team .list_team li.first span{
+	margin: 30px 0 0 0;
+	float: left;
+	width: 100%;
+}
+
+.list_32_team .list_team li.last{
+	margin-right: 0;
+}
+
+/* Box dự đoán kết quả đá banh */
+.category_guess_score .content_box_category{
+	margin-top:1px;
+}
+
+.category_guess_score .tab_items{
+	border-bottom: 1px solid #ccc;
+	width: 100%;
+	float: left;
+}
+.category_guess_score .tab_items li{
+	float: left;
+}
+.category_guess_score .tab_items a{
+	color:#999;
+	padding: 5px 15px;
+	float: left;
+}
+
+.category_guess_score .tab_items a.active{
+	background: #ccc;
+	color: #333;
+	font-weight: bold;
+}
+.category_guess_score .date{
+	padding: 10px 0;
+	width: 100%;
+	float: left;
+	color: #333;
+	font-weight: bold;
+	border-bottom: 1px dotted #ccc;
+}
+.category_guess_score table{
+	width: 100%;
+	float: left;
+}
+.category_guess_score table td{
+	padding: 3px 0;
+}
+.category_guess_score table thead{
+	text-align: center;
+	color: #9f224e;
+}
+.category_guess_score table .main_team,.category_guess_score table .sub_team{
+	width: 39%;
+}
+.category_guess_score table .score{
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+	width: 22%;
+	max-width: 66px;
+}
+.category_guess_score table .score button{
+	background: #328005;
+	color: #fff;
+	border:none;
+	width: 66px;
+	padding: 5px 0;
+}
+.category_guess_score table .score span.box{
+border:1px solid #ccc;
+width: 20px;
+float: left;
+text-align: center;
+overflow: hidden;
+}
+.category_guess_score table .score span.box input{
+	font-size: 14px;
+	margin-left: 2px;
+}
+.category_guess_score table .score span.no-border{
+	border:1px solid #fff;
+}
+.category_guess_score table .main_team{
+	text-align: right;
+	padding-right: 5px;
+}
+.category_guess_score table .main_team img{
+	margin-left: 5px;
+}
+.category_guess_score table .sub_team{
+	text-align: left;
+	padding-left: 5px;
+}
+.category_guess_score table .sub_team img{
+	margin-right: 5px;
+}
+.category_guess_score table .line td{
+	border-top: 1px dotted #ccc;
+}
+/*Tab vua phá lưới*/
+.category_guess_score .king_goal{
+	padding: 30px 0 55px 0;
+	background: #f4f4f4;
+	text-align: center;
+}
+.category_guess_score .king_goal .text_center{
+	font-size: 14px;
+}
+.category_guess_score .king_goal select{
+	display: block;
+	width: 93.3333%;
+	margin: 5px 3.3333%;
+	padding: 3px 5px 2px 5px;
+	border:1px solid #ddd;
+	color: #999;
+	font-size: 14px;
+	float: left;
+}
+.category_guess_score .king_goal .btn_submit_k_g{
+	margin-top: 5px;
+	width: 95px;
+	height: 25px;
+	color: #fff;
+	background: #328005;
+	font-size: 14px;
+	cursor: pointer;
+}
+/* Box danh sách trúng thưởng */
+.category_list_prize .content_box_category{
+	margin-top: 0;
+}
+.category_list_prize .date{
+	padding: 10px 10px 5px 0px;
+	border-bottom: 1px dotted #ccc;
+	margin-bottom: 5px;
+	background-position: 10px 8px;
+	font-weight: bold;
+}
+.category_list_prize .date i.ico{
+	width: 16px;
+	height: 16px;
+	float: left;
+	background-position: 0 0;
+	margin: -2px 5px 0px 10px;
+}
+.category_list_prize table{
+	width: 100%;
+	float: left;
+}
+.category_list_prize table td.stt{
+	padding-left:10px;
+}
+.category_list_prize table td .center_block{
+	display: block;
+	color: #999;
+}
+.category_list_prize table td{
+	vertical-align: text-top;
+}
+.category_list_prize table .score{
+	color: #999;
+}
+.category_list_prize table .score span{
+	color:#333;
+}
+
+
+/* Box vua phá lưới */
+.category_goal_king table{
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-bottom: 1px dotted #e2e2e3;
+}
+.category_goal_king table .team img{
+	float: left;
+}
+.category_goal_king table th{
+	padding-bottom: 5px;
+}
+.category_goal_king table td{
+	border-top:1px dotted #e2e2e3;
+	padding: 5px 0;
+}
+.category_goal_king .view_more{
+	margin-top: 5px;
+}
+
+/*==========================================Bang Diem===============================*/
+.list_score .title{
+	margin-bottom: 15px;
+}
+.list_score table{
+	text-align: center;
+	font: 400 14px Arial;
+	margin-bottom: 20px;
+}
+.list_score table{
+	text-align: center;
+	border-spacing:0;
+}
+.list_score table td{
+	vertical-align: middle;
+}
+.list_score table td{
+	border-top: 1px dotted #ccc;
+}
+.list_score table .first td{
+	border:none;
+}
+.list_score table th{
+	background: #f4f4f4;
+	font-weight: 400;
+}
+.list_score table th span{
+	display: block;
+	margin: 10px 0;
+}
+.list_score table span{
+	display: block;
+}
+.list_score table .result span,.list_score table .count span{
+width: 33.333%;
+float: left;
+}
+.list_score table th.math span,.list_score table th.result .last{
+	background: url(images/icons/bg_table_split.png) center right repeat-y;
+}
+.list_score table th.score span{
+	background: url(images/icons/bg_table_split.png) center left repeat-y;
+}
+*+html .list_score table .result span,.list_score table .count span{
+width: 33%;
+margin: 0;
+padding: 10px 0
+}
+.list_score table th.team{
+	background-color: #dedede;
+	border-right: 1px solid #f4f4f4;
+	font-weight: bold;
+	padding-left: 10px;
+}
+.list_score table .team{
+	text-align: left;
+}
+.list_score table td span{
+	padding: 10px 0;
+}
+.list_score table td.team{
+	padding-left: 10px;
+}
+.list_score table .team img{
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+/* ===========================================Trang Dự đoán============================ */
+/* Page_dudoan */
+.page_guess{
+	font-size: 14px;
+}
+.page_guess .title{
+	font:400 18px Arial;
+	margin-bottom: 10px;
+}
+.page_guess p.br{
+	margin-bottom: 20px;
+}
+.page_guess p.green{
+	color: #328005;
+}
+.page_guess .box_guess{
+	margin-bottom: 30px;
+}
+.page_guess .box_guess .title_box{
+	text-transform: capitalize;
+	float: left;
+	padding: 10px 20px 5px 20px;
+	background: #eee;
+	font-weight: bold;
+	text-align: center;
+}
+.page_guess .box_guess .content{
+	padding: 15px 0 10px;
+	border-top: 1px solid #eee;
+}
+.page_guess .box_guess .action{
+	background: #f5f5f5;
+	padding: 10px 0;
+}
+.page_guess .box_guess select{
+	padding: 3px 3px 3px 10px;
+	border:1px solid #eee;
+	float: left;
+	margin-left: 10px;
+	width: 350px;
+}
+.page_guess .box_guess.player select{
+	width: 170px;
+}
+.page_guess .box_guess .btn{
+	width: 95px;
+	height: 25px;
+	line-height: 25px;
+	color: #fff;
+	text-align: center;
+	background: #328005;
+	float: left;
+	margin-left: 10px;
+}
+/* Category bảng điểm */
+.category_list_score .tab{
+	float:left;
+	width: 100%;
+}
+.category_list_score .tab li{
+	float:left;
+	margin: 0 8px 0 0;
+}
+.category_list_score .tab li.last{
+	margin-right: 0;
+}
+.category_list_score .tab a{
+	height: 25px;
+	width: 30px;
+	line-height: 25px;
+	text-align: center;
+	float: left;
+	background: #f3f3f3;
+}
+.category_list_score .tab a.active{
+	background: #dedede;
+}
+
+.category_list_score table{
+	text-align: right;
+	margin-top: 5px;
+	border-collapse: collapse;
+}
+.category_list_score table th{
+	padding: 8px 0;
+	border-bottom: 1px dotted #ccc;
+}
+.category_list_score table .bt,.category_list_score table .bb,.category_list_score table .hs{
+	text-align: center;
+}
+.category_list_score table td{
+	padding: 8px 0 0 5px;
+}
+.category_list_score table .team{
+	text-align: left;
+	width: 50%;
+}
+.category_list_score table .team img{
+	margin-right: 5px;
+	vertical-align: middle;
+}
+.category_list_score .view_more{
+	border-top: 1px solid #ccc;
+	padding: 5px 0;
+	margin-top: 5px;
+}
+.category_list_score .view_more .ps{
+	font-size: 11px;
+	color: #666;
+	float: left;
+}
+.category_list_score .view_more .ps strong{
+	margin-right: 15px;
+}
+.category_list_score .view_more .ps span{
+	font-weight: 100;
+}
+/*======================================Page-schedule====================================*/
+/* Class chung sử dụng sau này */
+.txt_icon_arrow_up{
+	color: #328005;
+	font-size: 12px;
+}
+.txt_icon_arrow_up i{
+	width: 5px;
+	height: 5px;
+	background-position: -25px 0;
+	display: inline-block;
+	margin-left: 5px;
+}
+/* end */
+.page_schedule table{
+	font-size: 14px;
+	border-collapse: collapse;
+}
+.page_schedule table td{
+	padding: 5px 0;
+}
+.page_schedule table .small td{
+	padding: 5px 0 !important;
+	border-bottom: none !important;
+}
+.page_schedule table .small .border-top{
+	border-top: 1px dotted #ccc;
+	margin-top: 10px;
+}
+.page_schedule table .large .border-top{
+	border-top: 1px dotted #ccc;
+	margin-top: 10px;
+}
+.page_schedule table .now td{
+	padding: 10px 0;
+}
+.page_schedule table caption{
+	background: #f4f4f4;
+	font:400 14px Arial;
+	text-align: left;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 10px;
+}
+.page_schedule .sub_guess > .ico{
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	background-position: -175px 0;
+	margin-left: 10px;
+}
+.page_schedule table caption span{
+	font: 400 12px Arial;
+	color: #328005;
+}
+.page_schedule table .time{
+	width: 13.265%;
+	padding-left: 30px !important;
+	color: #9f224e;
+}
+.page_schedule table .group{
+	width: 13.265%;
+	font-weight: bold;
+}
+.page_schedule table .main_team{
+	width: 20.408%;
+	text-align: right;
+	font-weight: bold;
+}
+.page_schedule table .sub_team{
+	font-weight: bold;
+}
+.page_schedule table .main_team img{
+	margin:0 25px 0 10px;
+	vertical-align: middle;
+}
+.page_schedule table .sub_team img{
+	margin:0 10px 0 25px;
+	vertical-align: middle;
+}
+.page_schedule table .score{
+	width: 65px;
+	text-align: center;
+	font-weight: bold;
+}
+.page_schedule table .goal td{
+	border-top: 1px dotted #ccc;
+}
+.page_schedule table .goal,.page_schedule table .ticket{
+	background: #f4f4f4;
+	font-size: 12px;
+}
+.page_schedule table .goal img,.page_schedule table .ticket img{
+	vertical-align: bottom;
+}
+.page_schedule table td.guess {
+	font-weight: bold;
+}
+.page_schedule table td.guess input{
+	width: 20px;
+	height: 20px;
+	border: 1px solid #ccc;
+	font-size: 14px;
+}
+.page_schedule table td .btn{
+	width: 90px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+.page_schedule table td .btn.green{
+	color: #fff;
+	background-color: #328005;
+	display: inline-block;
+}
+.page_schedule table td .btn.gray{
+	background-color: #ccc;
+	font-size: 11px;
+	display: inline-block;
+	color: #333;
+	vertical-align: top;
+}
+.page_schedule table td .btn.gray i{
+	width: 7px;
+	height: 5px;
+	background-position: -50px 0;
+	margin-left: 5px;
+	display: inline-block;
+}
+.page_schedule .sub_guess table .score input{
+width: 20px;
+height: 20px;
+border:1px solid #ccc;
+font-size: 14px;
+}
+.page_schedule .sub_guess table td{
+	color: #333 !important;
+	font:400 14px Arial !important;
+}
+.page_schedule .sub_guess table td{
+	border-bottom: 1px dotted #ccc;
+}
+.page_schedule #board.board .title{
+	font: 700 16px Arial;
+	margin:10px 0;
+}
+.page_schedule #board.board .body{
+	background: #dedede;
+}
+.page_schedule #board.board .vongloai_vongbang{
+	width: 660px;
+	margin: 0 auto;
+}
+/* ======================================Calendar cùi bắp ===================================*/
+.corn_calendar table{
+	border-collapse: collapse;
+}
+.corn_calendar table td{
+	cursor: pointer;
+	padding: 0;
+}
+.corn_calendar table td:hover{
+	background: #328005;
+}
+.corn_calendar table td:hover span{
+	border-right:1px solid #328005;
+	border-left:none;
+	color: #fff;
+}
+.corn_calendar table td:hover span.match{
+	background: none;
+}
+.corn_calendar table span{
+	display: block;
+	text-align: center;
+	border-right: 1px solid #dedede;
+	width: 30.5px;
+}
+.corn_calendar table{
+	border-left: 1px solid #dedede;
+	border-right: 1px solid #dedede;
+}
+.corn_calendar table .last span{
+	border-right: none;
+}
+.corn_calendar table .date{
+	font-size: 10px;
+	color: #328005;
+}
+.corn_calendar table .number{
+	color: #999;
+}
+.corn_calendar table .match{
+	background: #dedede;
+	vertical-align: top;
+	padding-bottom: 5px;
+	margin-top: 4px;
+	height: 20px;
+}
+.corn_calendar table .match.none{
+	background: #fff;
+}
+.corn_calendar table .match.one .ico{
+	width: 4px;
+	height: 4px;
+	background-position: 0px -35px;
+	display: inline-block;
+}
+.corn_calendar table .match.two .ico{
+	width: 12px;
+	height: 4px;
+	background-position: -25px -35px;
+	display: inline-block;
+}
+.corn_calendar table .match.three .ico{
+	width: 19px;
+	height: 4px;
+	background-position: -50px -35px;
+	display: inline-block;
+}
+.corn_calendar table .match.four .ico{
+	width: 12px;
+	height: 11px;
+	background-position: -75px -35px;
+	display: inline-block;
+	margin-top: 7px;
+}
+.corn_calendar table td:hover .one .ico{
+	background-position: -100px -35px;
+}
+.corn_calendar table td:hover .two .ico{
+	background-position: -125px -35px;
+}
+.corn_calendar table td:hover .three .ico{
+	background-position: -150px -35px;
+}
+.corn_calendar table td:hover .four .ico{
+	background-position: -175px -35px;
+}
+
+/* ======================================================Lịch thi đấu sơ đồ================================ */
+.vongloai_vongbang{
+	margin-bottom: 20px;
+}
+.vongloai_vongbang ul{
+	float: left;
+	width: 100%;
+	background: #f4f4f4;
+}
+.vongloai_vongbang ul li{
+	float:left;
+}
+.vongloai_vongbang ul li.last{
+	float: right;
+}
+.vongloai_vongbang ul li a{
+	padding: 8px 15px;
+	display: block;
+	font-size: 14px;
+	color: #999;
+}
+.vongloai_vongbang ul li a.active{
+	background:#95bb26;
+	color: #333;
+}
+.vongloai_vongbang #tab_vongloai{
+	background: #dedede;
+	padding: 20px 10px;
+}
+.vongloai_vongbang #tab_vongloai .width{
+	width: 85px;
+	float: left;
+	margin-right: 7px;
+	text-align: center;
+}
+.vongloai_vongbang #tab_vongloai .round_1_16{
+	width: 86px;
+}
+.vongloai_vongbang #tab_vongloai .round_1_16.right{
+	margin-right: 0;
+}
+.vongloai_vongbang #tab_vongloai .box{
+	margin-bottom: 5px;
+}
+.vongloai_vongbang #tab_vongloai .round{
+	font: 400 14px Arial;
+	position: relative;
+}
+.vongloai_vongbang #tab_vongloai .date{
+	font-size: 12px;
+	color: #999;
+}
+.vongloai_vongbang #tab_vongloai .box *{
+	background: #fff;
+	padding: 5px 0;
+}
+.vongloai_vongbang #tab_vongloai .title{
+	font:700 14px Arial;
+	margin-bottom: 5px;
+}
+.vongloai_vongbang #tab_vongloai .round_4{
+	margin-top: 25px;
+}
+.vongloai_vongbang #tab_vongloai .round_4 .date{
+	background: #dedede;
+	padding: 16px 0;
+	border-right: 5px solid #fff;
+}
+.vongloai_vongbang #tab_vongloai .round_4.right .date{
+	border-left: 5px solid #fff;
+	border-right: none;
+}
+.vongloai_vongbang #tab_vongloai .round_1_16 .group_top{
+	margin-bottom: 40px;
+}
+.vongloai_vongbang #tab_vongloai .round_4 .group_top{
+	margin-bottom: 110px;
+}
+.vongloai_vongbang #tab_vongloai .round_2{
+	margin-top: 60px;
+}
+.vongloai_vongbang #tab_vongloai .round_2 .date{
+	background: #dedede;
+}
+.vongloai_vongbang #tab_vongloai .round_2 .date.a{
+	padding-bottom: 135px;
+}
+.vongloai_vongbang #tab_vongloai .round_2 .date{
+	border-right: 5px solid #fff;
+}
+.vongloai_vongbang #tab_vongloai .round_2.right .date{
+	border-left: 5px solid #fff;
+	border-right: none;
+}
+.vongloai_vongbang #tab_vongloai .round_1{
+	margin-top: 90px;
+}
+.vongloai_vongbang #tab_vongloai .round_1 .date{
+	background: #dedede;
+	padding: 35px 0;
+	border-left:5px solid #fff;
+	border-right:5px solid #fff;
+}
+.vongloai_vongbang #tab_vongloai .round_1 .date.giai_3{
+	padding: 8px 0;
+}
+.vongloai_vongbang #tab_vongloai .round_1 .title.giai_3{
+	margin-top: 40px;
+}
+.vongloai_vongbang #tab_vongloai span.line{
+	position: absolute;
+	width: 10px;
+	height: 5px;
+	background: #fff;
+	left: -10px;
+	padding: 0;
+	top: 10px;
+}
+.vongloai_vongbang #tab_vongloai span.line.right{
+	right: -10px;
+	left: auto;
+}
+/* javascript tab (Về sau cứ tab thì dùng chung cái này) */
+.tab_content .content{
+	display: none;
+}
+.tab_content .content.active{
+	display: block;
+}
+/* btn_collapse */
+.btn_collpase{
+	font-size: 12px !important;
+	color: #666;
+}
+.btn_collapse i{
+width: 12px;
+height: 8px;
+display: inline-block;
+margin-left: 5px;
+background-position: -75px 0;
+}
+
+/* =============================================================Page_trandau======================================= */
+/* Progress_bar (Co the su dung sau nay) */
+.progress_bar_style_1{
+	width: 100%;
+	height: 10px;
+	background: #dedede;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	position: relative;
+}
+.progress_bar_style_1 span{
+	position: absolute;
+	height: 10px;
+	left: 0;
+	top: 0;
+	border-radius: 5px 0 0 5px;
+	-moz-border-radius: 5px 0 0 5px;
+	-webkit-border-radius: 5px 0 0 5px;
+	background: #58a12b;
+}
+/* end */
+
+.page_trandau table{
+	border-collapse: collapse;
+}
+.page_trandau table img{
+	vertical-align: middle;
+}
+.page_trandau .tbl_main .time{
+	text-align: center;
+}
+.page_trandau .tbl_main thead .time{
+	color: #9f224e;
+	font: 400 14px Arial;
+}
+.page_trandau .tbl_main thead .team{
+	font:400 24px Arial;
+}
+.page_trandau .tbl_main thead .score{
+	font: 700 30px Arial;
+}
+.page_trandau .tbl_main .team.a{
+	text-align: right;
+	width: 40.151%;
+}
+.page_trandau .tbl_main .team.b{
+	width: 40.151%;
+}
+.page_trandau .tbl_main thead .team.a img{
+	margin: 0 55px 0 10px;
+}
+.page_trandau .tbl_main thead .team.b img{
+	margin: 0 10px 0 55px;
+}
+.page_trandau .tbl_main thead .last td{
+	padding-bottom: 10px;
+}
+.page_trandau .tbl_main .score{
+	text-align: center;
+}
+.page_trandau .tbl_main tbody td{
+	background: #f5f5f5;
+	padding: 5px 0;
+}
+.page_trandau .tbl_main tbody .first td{
+	padding-top: 10px;
+	border-top: 1px dotted #ccc;
+}
+.page_trandau .tbl_main tbody .last td{
+	padding-bottom: 10px;
+}
+.page_trandau .tbl_main tbody .time span{
+	border-left: 1px dotted #ccc;
+	border-right: 1px dotted #ccc;
+	padding: 0px 10px;
+}
+.page_trandau .tbl_main tfoot td{
+	text-align: center;
+}
+.page_trandau .tbl_main tfoot .btn_guess{
+	width: 95px;
+	text-align: center;
+	height: 25px;
+	background: #328005;
+	color: #fff;
+	margin-top: 10px;
+	font-size: 14px;
+}
+/* =====================Tab============================== */
+.page_trandau .col{
+	width: 50%;
+	float: left;
+}
+.page_trandau .col .team{
+	width: 35%;
+}
+.page_trandau .col .team_name{
+	font: 400 18px Arial;
+	margin: 30px 0 0 0;
+}
+.page_trandau .col.b .team_name{
+	text-align: right;
+}
+.page_trandau .col .result img{
+	margin: 20px 10px 20px 0;
+	float: left;
+}
+.page_trandau .col.b .result img{
+	float: right;
+}
+.page_trandau .col table{
+	border-collapse: collapse;
+}
+.page_trandau .col table td{
+	padding: 5px 0;
+}
+.page_trandau .col table .date{
+	color: #999;
+	text-align: right;
+}
+.page_trandau .col table .team.a{
+	text-align: right;
+}
+.page_trandau .col table .team img{
+	float: right;
+	margin: 0 10px;
+}
+.page_trandau .col table .team.b img{
+	float: left;
+}
+.page_trandau .col table .score{
+	font-weight: bold;
+	text-align: center;
+}
+.page_trandau .info{
+	float: right;
+	margin: 25px 0;
+	padding: 5px 0;
+	border-top: 1px dotted #ccc;
+}
+.page_trandau .info img{
+	vertical-align: middle;
+	margin: 0 5px 0 10px;
+}
+.page_trandau .box .title{
+	font:700 14px Arial;
+	background: #eee;
+	padding: 10px 20px 5px;
+	float: left;
+}
+.page_trandau .box .body{
+	width: 100%;
+	float: left;
+	border-top: 1px solid #eee;
+}
+.page_trandau .box table td{
+	padding: 10px 0;
+	font-size: 14px;
+}
+.page_trandau .box table .result{
+	font-size: 12px;
+	width: 75px;
+}
+.page_trandau .box table .number{
+	font-weight: bold;
+}
+.page_trandau .box table .number.a .progress_bar_style_2{
+	float: right;
+}
+.page_trandau .box table .progress_bar_style_2{
+	max-width: 150px;
+	margin: 0 10px;
+	float: left;
+	margin-top: 5px;
+}
+/* Progress_bar (Co the su dung sau nay) */
+.progress_bar_style_2{
+	width: 100%;
+	height: 7px;
+	background: #f5f5f5;
+	position: relative;
+}
+.progress_bar_style_2 span{
+	position: absolute;
+	height: 7px;
+	left: 0;
+	top: 0;
+	background: #95bb26;
+}
+.progress_bar_style_2 span.reverse{
+	left: auto;
+	right: 0;
+}
+/* end */
+
+.page_trandau .doihinh .team{
+	width: 34.545%;
+	float: left;
+	margin: 30px 0 0 40px;
+}
+.page_trandau .doihinh .team.b{
+	float: right;
+	margin-right: 40px;
+}
+.page_trandau .doihinh .team .name{
+	font:400 18px Arial;
+	text-align: center;
+	margin: 0 0 15px 0;
+}
+.page_trandau .doihinh .team .sub_title{
+	font:700 14px Arial;
+	margin: 20px 0 0 0;
+	text-align: center;
+}
+.page_trandau .doihinh .team .info_player{
+	margin-top: 5px;
+}
+.page_trandau .doihinh .team .info_player ul{
+	padding: 15px;
+	width: auto;
+	border-top: 1px dotted #ccc;
+}
+.page_trandau .doihinh .team .info_player ul li{
+	width: 50%;
+	float: left;
+	padding: 5px 0;
+}
+
+.page_trandau .dudoan{
+	margin-top: 30px;
+}
+.page_trandau .dudoan .team{
+	font-size: 18px;
+	width: 40.151%;
+}
+.page_trandau .dudoan .team.a{
+	text-align: right;
+}
+.page_trandau .dudoan .team.a img{
+	margin: 0 20px 0 5px;
+}
+.page_trandau .dudoan .team.b img{
+	margin: 0 5px 0 20px;
+}
+.page_trandau .dudoan td.guess input{
+	width: 30px;
+	border: 1px solid #ccc;
+	height: 30px;
+	font-size: 18px;
+	text-align: center;
+}
+.page_trandau .dudoan td.guess span{
+	padding: 0 5px;
+}
+.page_trandau .dudoan .btn_send{
+	width: 90px;
+	height: 30px;
+	text-align: center;
+	color: #fff;
+	background: #328005;
+	font-size: 14px;
+}
+
+.page_trandau .total_source_guess{
+	border-top: 1px dotted #ccc;
+	padding-top: 20px;
+	font-size: 14px;
+}
+.page_trandau .total_source_guess .team_score,.page_trandau .total_source_guess .score{
+	width:28.030%;
+}
+.page_trandau .total_source_guess td{
+	padding: 5px 10px;
+}
+
+/* Progress_bar (Co the su dung sau nay) */
+.progress_bar_style_3{
+	width: 100%;
+	height: 20px;
+	background: #f5f5f5;
+	position: relative;
+}
+.progress_bar_style_3 span{
+	position: absolute;
+	height: 20px;
+	left: 0;
+	top: 0;
+	background: #95bb26;
+	color:#666;
+	text-align: center;
+	line-height: 20px;
+}
+/* end */
+/* ===========================================Chi tiet doi bong _ ket qua ===================================== */
+.page_result_detail_team > .title{
+	color: #328005;
+	font-size: 30px;
+}
+.page_result_detail_team .title img{
+	vertical-align: middle;
+	margin: 0 10px 0 0;
+}
+.page_result_detail_team .style_2 .time{
+	color: #333;
+	padding-left: 20px !important;
+}
+.page_result_detail_team .style_2 table td{
+	font-weight: 100;
+}
+.page_result_detail_team .style_2 table .live a{
+	color: #328005;
+}
+.page_result_detail_team .style_2 table .score{
+	font-weight: bold;
+}
+.page_result_detail_team .style_2 table .during td{
+	padding: 5px 0;
+	font-size: 12px;
+	background:#f4f4f4;
+}
+.page_result_detail_team .style_2 table .during.line td{
+	border-top: 1px dotted #ccc;
+}
+.page_result_detail_team .style_2 table .during .main_team img{
+	margin-left: 5px;
+}
+.page_result_detail_team .style_2 table .during .sub_team img{
+	margin-right: 5px;
+}
+
+.page_result_detail_team .box.phongdo{
+	margin-top: 25px;
+}
+.page_result_detail_team .box.phongdo ul li{
+	width: 50%;
+	float: left;
+}
+.page_result_detail_team .box.phongdo .circle{
+	margin: 20px 0 ;
+}
+.page_result_detail_team .box.phongdo .circle img{
+	vertical-align: middle;
+	margin-right: 10px;
+}
+.page_result_detail_team .box.phongdo .circle.right img{
+	margin-left: 10px;
+}
+.page_result_detail_team .box.phongdo ul{
+	background:none;
+}
+.page_result_detail_team .box.phongdo ul li{
+	padding: 5px 0;
+}
+.page_result_detail_team .box.phongdo ul span{
+	float: left;
+}
+.page_result_detail_team .box.phongdo ul img{
+	margin: 0 10px;
+	display: inline-block;
+}
+.page_result_detail_team .box.phongdo ul li .date{
+	color: #999;
+	min-width: 65px;
+}
+.page_result_detail_team .box.phongdo ul li .score{
+	font-weight: bold;
+}
+
+.page_result_detail_team .into_worldcup table{
+	margin-top: 10px;
+}
+.page_result_detail_team .into_worldcup table .result{
+	width: auto !important;
+}
+.page_result_detail_team .into_worldcup table span{
+	padding: 0;
+}
+
+
+/* Detail_player */
+.page_detail_player .detail_player,.page_detail_player .assessment_player{
+	margin-bottom: 20px;
+}
+.detail_player .wrap_player{
+	margin-top: 10px;
+}
+.detail_player .wrap_player img{
+	float: left;
+	margin-right: 10px;
+}
+.detail_player .info_player > .name{
+	font: 700 24px/17px Arial;
+	color: #58a12b;
+	margin-bottom: 15px;
+}
+.detail_player .info_player table td{
+	padding:2px 0;
+	font-size: 12px;
+}
+.detail_player .info_player table td.label{
+	font-weight: bold;
+	min-width: 140px;
+}
+
+/* assessment_player */
+.assessment_player ul{
+	margin-top: 10px;
+}
+.assessment_player ul li{
+	padding: 5px 0;
+	width: 33.333%;
+	float: left;
+	font: 700 14px Arial;
+}
+.assessment_player ul li .label{
+	font-size: 12px;
+	color: #666;
+	font-weight: 100;
+}
+.assessment_player ul li .progress_bar_style_2{
+	max-width: 150px;
+	float: left;
+	margin: 5px 10px 0 0;
+}
+
+/* related_news_t */
+.related_news_t .wrap{
+	margin-top: 10px;
+}
+.related_news_t .wrap .thumb{
+	width: 45.454%;
+	float: left;
+	margin-right: 1.515%;
+}
+.related_news_t .wrap .thumb img{
+	float: left;
+	width: 100%;
+}
+.related_news_t .wrap .thumb .title_thumb{
+	font: 700 16px/20px Arial;
+	margin-top: 10px;
+	float: left;
+	width: 100%;
+}
+.related_news_t .wrap .related{
+	width: 53.030%;
+	float: right;
+}
+.related_news_t .wrap .related li{
+	padding: 10px 0;
+	border-bottom: 1px dotted #ccc;
+}
+.related_news_t .wrap .related li.first{
+	padding-top: 0;
+}
+.related_news_t .wrap .related .title_sub{
+	font: 700 14px/14px Arial;
+	margin-bottom: 5px;
+}
+
+
+/* Chi tiet doi bong */
+.slider_top_team{
+	padding: 0 15px;
+	margin: 0 0 20px;
+	position: relative;
+}
+.slider_top_team .content_slider_top_team{
+	overflow: hidden;
+	width: 100%;
+}
+.slider_top_team .btn_control_top_team .ico{
+	width: 7px;
+	height: 12px;
+	position: absolute;
+	top:50%;
+	margin-top: -6px;
+}
+.slider_top_team .btn_control_top_team.next_slider .ico{
+	background-position: -125px 0;
+	display: inline-block;
+	right: 0;
+}
+.slider_top_team .btn_control_top_team.prev_slider .ico{
+	background-position: -100px 0;
+	display: inline-block;
+	left: 0;
+}
+.slider_top_team .board{
+	width: 31.746%;
+	float: left;
+	padding: 0 .7936%;
+}
+.slider_top_team .board .date,.slider_top_team .board .some_more{
+	height: 29px;
+	width:100%;
+	float: left;
+	background: #f5f5f5;
+	border-bottom: 1px solid #dedede;
+	font:400 11px/1.4 Arial;
+}
+.slider_top_team .board .date .week{
+	float: left;
+	margin: 10px 0 0 10px;
+	font-weight: bold;
+}
+.slider_top_team .board .date .time{
+	float: right;
+	margin: 10px 10px 0 0 ;
+	color: #666;
+}
+.slider_top_team .board table{
+	border-collapse: collapse;
+	width: 100%;
+	float: left;
+}
+.slider_top_team .board table td{
+	background: #f5f5f5;
+	border-top:1px solid #fff;
+	border-bottom:1px solid #dedede;
+	padding: 7px 0;
+	text-align: center;
+	font-weight: bold;
+}
+.slider_top_team .board table td span{
+	display: block;
+}
+.slider_top_team .board table td small{
+	display: block;
+	color: #666;
+	font-weight: 100;
+}
+.slider_top_team .board table td strong{
+	font: 700 24px Arial;
+}
+.slider_top_team .board .some_more{
+	text-align: center;
+	line-height: 29px;
+	border-bottom: none;
+	border-top: 1px solid #fff;
+}
+.slider_top_team .board .some_more a{
+	color: #666;
+}
+
+#tab_info .related_news_t .txt_view_more{
+	margin: 10px 0 0 0;
+}
+#tab_info .related_news_t ul{
+	background: none;
+}
+
+/* Lich su doi bong */
+.detail_player.team_history{
+	margin-top: 20px;
+}
+.detail_player.team_history img{
+	float: right;
+	margin: 0 0 0 10px;
+}
+.detail_player.team_history table .label{
+	padding:0 20px 0 10px;
+}
+.detail_player.team_history .txt_view_more{
+	margin-top: 10px;
+}
+
+/* Tab_history */
+#tab_history{
+	width: 100%;
+	float: left;
+	margin-top: 10px;
+}
+#tab_history p{
+margin-bottom: 20px;
+font-size: 14px;
+}
+#tab_history dd{
+	padding-left: 70px;
+}
+
+
+/*Page Danh sach trung thuong*/
+
+.page_dstrungthuong .title_dstt {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.page_dstrungthuong .item_danhsach {
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.page_dstrungthuong .item_danhsach .date {
+    font: 400 14px/30px Arial;
+    background-color: #f4f4f4;
+    height: 30px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.page_dstrungthuong .item_danhsach table {
+    width: 100%;
+    float: left;
+    font-size: 14px;
+}
+
+.page_dstrungthuong .item_danhsach table td {
+    padding: 7px 0;
+    color: #666;
+    font-weight: 700;
+}
+
+.page_dstrungthuong .item_danhsach table td.match {
+    font-weight: 100;
+    width: 32%;
+}
+
+.page_dstrungthuong .item_danhsach table td.name {
+    width: 26%;
+}
+
+.page_dstrungthuong .view_more {
+    width: 100%;
+    float: left;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    margin-top: 15px;
+}
+
+.page_dstrungthuong .view_more a {
+    position: absolute;
+    width: 100px;
+    top: -8px;
+    left: 50%;
+    margin-left: -50px;
+    font-size: 11px;
+    color: #328005;
+    background: #fff url(images/icons/icon_expan.gif) 80px 6px no-repeat;
+}
+
+/*Widget danh sach trung thuong 2*/
+.category_list_prize .date .txt_view_more a {
+    color: #999 !important;
+}
+
+.category_list_prize.prize_style_2 table .team {
+    font-size: 11px;
+    color: #999;
+}
+
+.category_list_prize.prize_style_2 table .score {
+    font-size: 12px;
+    color: #333;
+}
+
+.category_list_prize.prize_style_2 table .phone {
+    vertical-align: bottom;
+    color: #999;
+    font-weight: 700;
+}
+
+.category_list_prize.prize_style_2 table .name {
+    margin-top: 3px;
+}
+
+/*Page details vua pha luoi website*/
+.page_details_vpl .title_dt_vpl{
+	font-size: 18px;
+	margin-bottom: 15px;
+}
+.page_details_vpl table{
+	border-collapse: collapse;
+	margin-bottom: 10px;
+	font-size: 14px;
+}
+.page_details_vpl table th{
+	background: #f4f4f4;
+	font-weight: 100;
+}
+.page_details_vpl table th.goal div{
+	background: none;
+}
+.page_details_vpl table .goal{
+	text-align: right;
+	font-weight: 700;
+}
+.page_details_vpl table .number,.page_details_vpl table .position{
+	text-align: center;
+}
+.page_details_vpl table th div{
+	margin: 8px 0;
+	padding: 0 10px;
+	background: url("images/icons/bg_table_split.png") right center repeat-y;
+}
+.page_details_vpl table td{
+	padding: 8px 10px;
+	border-bottom: 1px dotted #ccc;
+}
+.page_details_vpl table td.team img{
+	margin-right: 10px;
+}
+
+/*Widget Danh sach trung thuong - Dovui*/
+#danhsach_dovui_t .content_box_category,#danhsach_dovui_top10 .content_box_category{
+	margin-top: 0;
+}
+#danhsach_dovui_t .capital{
+	min-height: 30px;
+	width: 100%;
+	float: left;
+}
+#danhsach_dovui_t .capital .date{
+	width: 70%;
+	background-color: #f3f3f3;
+	float: left;
+	text-align: center;
+	font: 700 12px/30px Arial;
+	position: relative;
+}
+#danhsach_dovui_t .capital .date .btn_control{
+	position: absolute;
+	top: 2px;
+	*top: 9px;
+}
+#danhsach_dovui_t .capital .date .btn_pre{
+	left: 10px;
+}
+#danhsach_dovui_t .capital .date .btn_next{
+	right: 10px;
+}
+#danhsach_dovui_t .capital .date span{
+	color: #999;
+}
+#danhsach_dovui_t .capital .result{
+	width: 30%;
+	float: left;
+	font: 400 14px/30px Arial;
+	text-align: center;
+	text-indent: 20px;
+	background:#ffe200 url(images/graphics/calendar_dovui.png) 10px 7px no-repeat;
+}
+#danhsach_dovui_t table,#danhsach_dovui_top10 table{
+	border-collapse: collapse;
+	width: 100%;
+	float: left;
+}
+#danhsach_dovui_t table th,#danhsach_dovui_t table td,#danhsach_dovui_top10 table th,#danhsach_dovui_top10 table td{
+	padding: 8px 0;
+	vertical-align: top;
+}
+#danhsach_dovui_t table th,#danhsach_dovui_top10 table th{
+	color: #999 !important;
+	font-weight: 100;
+}
+#danhsach_dovui_t table td,#danhsach_dovui_top10 table td{
+	border-top: 1px dotted #ccc;
+}
+#danhsach_dovui_t table .tl,#danhsach_dovui_top10 table .tl{
+	text-align: right;
+	color: #328005;
+}
+#danhsach_dovui_t table .t,#danhsach_dovui_top10 table .t{
+	text-align: right;
+}
+#danhsach_dovui_t table .n_p span,#danhsach_dovui_top10 table .n_p span{
+	display: block;
+	font-weight: 100;
+}
+
+#danhsach_dovui_t .dv_ft,#danhsach_dovui_top10 .dv_ft{
+	width: 100%;
+	float: left;
+	font-size: 11px;
+	color: #666;
+}
+#danhsach_dovui_t .dv_ft .note,#danhsach_dovui_top10 .dv_ft .note{
+	float: left;
+}
+#danhsach_dovui_t .dv_ft .note strong,#danhsach_dovui_top10 .dv_ft .note strong{
+	margin-right: 15px;
+}
+#danhsach_dovui_t .dv_ft .note span,#danhsach_dovui_top10 .dv_ft .note span{
+	font-weight: 100;
+}
+
+/*Page Danh sach trung thuong Dovui*/
+#box_dovui_ds_trungthuong{
+	font-size: 14px;
+	width: 100%;
+	float: left;
+}
+#box_dovui_ds_trungthuong .main_title{
+	font: 400 18px Arial;
+	margin-bottom: 15px;
+}
+#box_dovui_ds_trungthuong .group{
+	margin-bottom: 15px;
+	width: 100%;
+	float: left;
+}
+#box_dovui_ds_trungthuong .group .label{
+	height: 30px;
+	padding: 0 15px;
+	color: #fff;
+	background-color: #00aced;
+	font: 700 14px/30px Arial;
+	float: left;
+}
+#box_dovui_ds_trungthuong .group .label span{
+	font-weight: 100;
+}
+#box_dovui_ds_trungthuong table{
+	width: 100%;
+	float: left;
+	border-collapse: collapse;
+}
+#box_dovui_ds_trungthuong table th{
+	font-weight: 100;
+	background-color: #f4f4f4;
+}
+#box_dovui_ds_trungthuong table th div{
+	background: url(images/icons/bg_table_split.png) right center repeat-y;
+    margin: 8px 0;
+    padding: 0 10px;
+}
+#box_dovui_ds_trungthuong table td{
+	border-bottom: 1px dotted #ccc;
+    padding: 8px 10px
+}
+#box_dovui_ds_trungthuong table .last td{
+	border-bottom: none;
+}
+#box_dovui_ds_trungthuong table .phone,#box_dovui_ds_trungthuong table .tld,#box_dovui_ds_trungthuong table .time{
+	text-align: center;
+}
+
+#box_dovui_ds_trungthuong .group.main .logo_clear{
+	float: right;
+}
+#box_dovui_ds_trungthuong .group.main td{
+	font-weight: 700;
+}
+.txt_main_category a .light_txt{ font-size:12px; font-weight:normal;}

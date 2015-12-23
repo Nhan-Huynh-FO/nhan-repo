@@ -1,0 +1,155 @@
+<?php
+if ($this->arrMatchIDs)
+{
+    $objTeam = $this->objObject->getTeam();
+    $objMatch = $this->objObject->getMatch();
+    $team1 = $team2 = array();
+    $dataEx = Zend_Json::encode(($this->arrMatchIDs));
+    $countMatch = count($this->arrMatchIDs);
+    $timeCurrent = time();
+    if ($this->future)
+    {
+        ?>
+        <a href="javascript:;" class="btn_control_tv_slider next_slider" data-exclude='<?php echo $dataEx; ?>' data-type="next" data-score="<?php echo ($this->futureScore); ?>" data-url="<?php echo $this->configView['url'] . '/box-lich-thi-dau/'; ?>" onclick="Team.nextBoxFixtureTop(this);">&nbsp;</a>
+        <?php
+    }
+    if ($this->past)
+    {
+        ?>
+        <a href="javascript:;" class="btn_control_tv_slider prev_slider" data-exclude='<?php echo $dataEx; ?>' data-type="prev" data-score="<?php echo ($this->pastScore); ?>" data-url="<?php echo $this->configView['url'] . '/box-lich-thi-dau/'; ?>" onclick="Team.nextBoxFixtureTop(this);">&nbsp;</a>
+        <?php
+    }
+    ?>
+    <div class="content_slider">
+        <div class="main_slider">
+            <?php
+            $arrGroup = array(
+                '2' => 'Vòng 1/8',
+                '3' => 'Tứ kết',
+                '4' => 'Bán kết',
+                '5' => 'Giải 3',
+                '6' => 'Chung kết'
+            );
+
+            foreach ($this->arrMatchIDs as $matchId => $score)
+            {
+                //get detail match
+                $matchDetail = $objMatch->getDetailObjectBasic($matchId);
+                //$matchDetail['round'] = 2;
+                if (empty($matchDetail))
+                {
+                    continue;
+                }
+                $objTeam->setId(array($matchDetail['team1'], $matchDetail['team2']));
+                $team1 = $objTeam->getDetailObjectBasic($matchDetail['team1']);
+                $team2 = $objTeam->getDetailObjectBasic($matchDetail['team2']);
+                $title = Fpt_Filter::setSeoLink('tran-' . $team1['name'] . ' vs ' . $team2['name']);
+                if (isset($arrGroup[$matchDetail['round']]))
+                {
+                    $matchDetail['round'] = $arrGroup[$matchDetail['round']];
+                }
+                else
+                {
+                    $matchDetail['round'] = 'Bảng&nbsp;' . $matchDetail['round'];
+                }
+
+                $urlRedirect = $matchDetail['status'] == '1' ? $this->configView['url'] . "/thong-ke/{$title}-{$matchDetail['id']}" : $this->configView['url'] . "/tuong-thuat/{$title}-{$matchDetail['id']}";
+
+                ?>
+                <div class="item_slider" onclick="redirectUrl('<?php echo $urlRedirect ?>');" style="cursor: pointer;">
+                    <div class="top_time">
+
+                        <?php
+                        if ((int)$matchDetail['status'] > 2)
+                        {
+                        ?>
+                        <span class="left" style="color:red" id="match_time_<?php echo $matchDetail['id']; ?>">
+                            <?php
+                            $text = '';
+                            switch ((int)$matchDetail['status'])
+                            {
+                                case 4:
+                                    $text = 'Hết hiệp 1';
+                                    break;
+                                case 6:
+                                    $text = 'Hết hiệp 2';
+                                    break;
+                                case 8:
+                                    $text = 'Hết hiệp phụ 1';
+                                    break;
+                                case 10:
+                                    $text = 'Hết hiệp phụ 2';
+                                    break;
+                                case 11:
+                                    $text = 'Penalty';
+                                    break;
+                                default:
+                                    $text = $matchDetail['matchTime'] . "'";
+                                    break;
+                            }
+                            echo $text;
+                            ?>
+                        </span>
+                        <?php
+                        }
+                        else if ((int)$matchDetail['status'] == 1)
+                        {
+                        ?>
+                        <span class="left">
+                            <?php echo date('d/m - H:i', $matchDetail['datetime_happen']); ?>
+                        </span>
+                        <?php
+                        }
+                        else {
+                            echo '<span class="left">Kết thúc</span>';
+                        }
+                        if (!empty($matchDetail['round']))
+                        {
+                            ?>
+                            <span class="right"><?php echo $matchDetail['round']; ?></span>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="doidau">
+                        <p>
+                            <span class="left">
+                                <?php echo $team1['name']; ?>
+                            </span>
+                            <span class="right">
+                                <?php
+                                echo $matchDetail['datetime_happen'] < $timeCurrent ? $matchDetail['goal1'] : '-';
+                                if($matchDetail['penalty1'] > 0 || $matchDetail['penalty2'] > 0)
+                                {
+                                    echo '<span class="txt_11" style="color:red">(',$matchDetail['penalty1'],')</span>';
+                                }
+                                ?>
+                            </span>
+                        </p>
+                        <p>
+                            <span class="left">
+                                <?php echo $team2['name']; ?>
+                            </span>
+                            <span class="right">
+                                <?php
+                                echo $matchDetail['datetime_happen'] < $timeCurrent ? $matchDetail['goal2'] : '-';
+                                if($matchDetail['penalty1'] > 0 || $matchDetail['penalty2'] > 0)
+                                {
+                                    echo '<span class="txt_11" style="color:red">(',$matchDetail['penalty2'],')</span>';
+                                }
+                                ?>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var owl_topslide=$(".block_slder_top .main_slider"),items=<?php echo $countMatch;?>;owl_topslide.owlCarousel({items:items,itemsDesktop:[1199,items],itemsTablet:[600,items],itemsDesktopSmall:[900,items],itemsMobile:[479,items],pagination:!1});$(".block_slder_top .next_slider").click(function(){owl_topslide.trigger("owl.next")});$(".block_slder_top .prev_slider").click(function(){owl_topslide.trigger("owl.prev")});function redirectUrl(a){window.location.href=a};
+    </script>
+    <?php
+}
+?>

@@ -1,0 +1,168 @@
+<div class="width_common" id="warpper_trandau">
+    <?php
+    echo $this->render('/object/common/header_trandau.phtml');
+    ?>
+    <div class="width_common line_mid_980_300">
+        <div id="col_660" class="left">
+            <div class="tab_trandau width_common">
+                <?php
+                if (DEVICE_ENV == 1)
+                {
+                ?>
+                <div class="tab_mobile">
+                    <a href="javascript:;" title="Ảnh - Video" class="tab_main_mobile">Ảnh - Video</a>
+                    <div class="list_tab_mobile">
+                        <ul>
+                            <li>
+                                <a title="Ảnh - Video" href="javascript:;">Ảnh - Video</a>
+                            </li>
+                            <li>
+                                <a title="Điểm tin" href="<?php echo "/diem-tin/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Điểm tin</a>
+                            </li>
+                            <li>
+                                <a title="Thống kê" href="<?php echo "/thong-ke/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Thống kê</a>
+                            </li>
+                            <li>
+                                <a title="Tường thuật" href="<?php echo "/tuong-thuat/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Tường thuật</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <?php
+                }
+                else {
+                    ?>
+                    <div class="title_tab width_common">
+                        <ul>
+                            <li class="start active">
+                                <a href="javascript:;" title="Ảnh - Video">Ảnh - Video</a>
+                            </li>
+                            <li>
+                                <a title="Điểm tin" href="<?php echo "/diem-tin/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Điểm tin</a>
+                            </li>
+                            <li>
+                                <a title="Thống kê" href="<?php echo "/thong-ke/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Thống kê</a>
+                            </li>
+                            <li>
+                                <a title="Tường thuật" href="<?php echo "/tuong-thuat/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Tường thuật</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php
+                }
+                ?>
+           	</div>
+            <div class="content_tab_trandau width_common">
+                <div id="box_top_video" class="width_common">
+                    <?php
+                    if ($this->hasVideo)
+                    {
+                    ?>
+                    <div class="line_col_470 width_common">
+                        <?php
+                        $countVideo = count($this->arrVideos);
+                        $video_1    = $this->objArticle->getArticleBasic($this->arrVideos[0]);
+                        ?>
+                        <div class="box_flash_video left">
+                            <div class="block_flash width_common">
+                                <a href="<?php echo $video_1['share_url']; ?>" title="<?php echo $video_1['title_format']; ?>">
+                                    <img class="left" alt="<?php echo $video_1['title_format']; ?>" src="<?php echo $this->ImageurlArticle($video_1, 'size2'); ?>">
+                                </a>
+                            </div>
+                            <div class="title_video width_common">
+                                <a href="<?php echo $video_1['share_url']; ?>" class="txt_link" title="<?php echo $video_1['title_format']; ?>"><h1><?php echo $video_1['title']; ?></h1></a>
+                            </div>
+                            <div class="block_view_num width_common txt_11">
+                                <span class="txt_666"><?php echo $arrDate    = date("d/m", $video_1['publish_time']), ' | '; ?></span><span class="view_num"><?php echo $this->Articleview($video_1), ' '; ?>lượt xem</span>
+                            </div>
+                            <div class="block_lead width_common"><?php echo $video_1['lead']; ?></div>
+                        </div>
+                        <div class="list_video_right">
+                            <ul>
+                                <?php
+                                for ($i = 1; $i < $countVideo; $i++)
+                                {
+                                    $video = $this->objArticle->getArticleBasic($this->arrVideos[$i]);
+                                    ?>
+                                    <li <?php echo $i == $countVideo - 1 ? 'class="end"' : ''; ?>>
+                                        <div class="thumb_140">
+                                            <a href="<?php echo $video['share_url']; ?>" title="<?php echo $video['title_format']; ?>">
+                                                <img src="<?php echo $this->Imageurl($video['thumbnail_url'], 'size1'); ?>" alt="<?php echo $video['title_format']; ?>" class="left">
+                                            </a>
+                                        </div>
+                                        <h2 class="title_news"><a href="<?php echo $video['share_url']; ?>" class="txt_link" title="<?php echo $video['title_format']; ?>"><?php echo $video['title']; ?></a></h2>
+                                        <div class="block_view_num txt_11 width_common">
+                                            <span class="txt_666"><?php echo $arrDate = date("d/m", $video['publish_time']), ' | '; ?></span><span class="view_num"><?php echo $this->Articleview($video),' '; ?>lượt xem</span>
+                                        </div>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    else {
+                    ?>
+                    <div class="content_item_trandau width_common">
+                        Hiện không có video cho trận đấu
+                    </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <div class="item_trandau width_common box_category">
+                    <div class="title_box_category width_common">
+                        <h2 class="txt_main_category"><a href="javascript:;">Ảnh</a></h2>
+                    </div>
+                    <div class="content_item_trandau width_common">
+                        <?php
+                        if ($this->hasAlbum)
+                        {
+                        ?>
+                        <ul class="list_photo_trandau">
+                            <?php
+                            $i = 1;
+                            foreach ($this->arrAlbums as $album)
+                            {
+                                $album   = $this->objArticle->getArticleBasic($album);
+                                ?>
+                                <li>
+                                    <div class="thumb_140">
+                                        <a href="<?php echo $album['share_url']; ?>" title="<?php echo $album['title_format'] ?>"><img src="<?php echo $this->Imageurl($album['thumbnail_url'], 'size6'); ?>" alt="<?php echo $album['title_format'] ?>">  </a>
+                                        <a href="<?php echo $album['share_url']; ?>" title="<?php echo $album['title_format']; ?>" class="icon_thumb_videophoto icon_photo">&nbsp;</a>
+                                    </div>
+                                    <h2 class="title_news">
+                                        <a href="<?php echo $album['share_url']; ?>" class="txt_link" title="<?php echo $album['title_format'] ?>">
+                                            <?php echo $album['title']; ?>
+                                        </a>
+                                    </h2>
+                                    <div class="block_view_num txt_11 width_common">
+                                        <span class="txt_666"><?php echo $arrDate = date("d/m", $album['publish_time']); ?> |</span> <span class="view_num"><?php echo $this->Articleview($album), ' '; ?>lượt xem</span>
+                                    </div>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                        </ul>
+                        <?php
+                        }
+                        else {
+                            echo 'Hiện không có thông tin ảnh cho trận đấu.';
+                        }
+                        ?>
+                    </div>
+                </div>
+                <?php
+                //Comment
+                echo $this->render('/block/comment_match.phtml');
+                ?>
+            </div>
+        </div>
+        <div id="col_300" class="right">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+</div>
+<div class="banner_980x60"><?php echo $this->GetBlock('footer'); ?></div>

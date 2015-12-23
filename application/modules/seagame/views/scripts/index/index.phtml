@@ -1,0 +1,498 @@
+<div class="line_gray line_page width_common">
+    <div id="col_left">
+        <div class="block_hot_top width_common">
+            <?php if (!empty ($this->arrHotNews))
+            {
+                $firstNews = array_shift($this->arrHotNews);
+                $firstNews['share_url'] = $this->ShareurlSeagame($firstNews['share_url']);
+                ?>
+                <div class="width_common space_box" id="spotlight">
+                    <div class="block_image">
+                        <a href="<?php echo ($firstNews['share_url']); ?>" title="<?php echo $firstNews['title_format']; ?>">
+                            <img src="<?php echo $this->ImageurlArticle($firstNews, 'size4', -1); ?>" alt="<?php echo $firstNews['title_format']; ?>" />
+                        </a>
+                    </div>
+                    <div class="block_title">
+                        <div class="txt_title">
+                            <a href="<?php echo ($firstNews['share_url']); ?>" title="<?php echo $firstNews['title_format']; ?>" alt="<?php echo $firstNews['title_format']; ?>">
+                                <?php echo $firstNews['title']; ?>
+                            </a>
+                            <span class="no_wrap">
+                                <?php echo $this->ArticleViewIcon($firstNews); ?>
+                                <?php echo $this->ArticleComment($firstNews); ?>
+                            </span>
+                        </div>
+                        <div class="block_lead">
+                            <?php echo $this->CropWord($firstNews['lead'], 33, ($firstNews['share_url'])); ?>
+                        </div>
+                        <?php
+                        if (sizeof($firstNews['reference_detail']) > 0) {
+                            $i = 1;
+                            $arrRef = '';
+                            foreach($firstNews['reference_detail'] as $reference)
+                            {
+                                $reference['share_url'] = $this->ShareurlSeagame($reference['share_url']);
+                                if($i > 1) {
+                                    break;
+                                }
+                                $arrRef = '<a href="' . $reference['share_url'] . '" title="' . $reference['title_format'] . '" alt="' . $reference['title_format'] . '" >' . $reference['title'] . '</a>';
+                                $i++;
+                            }
+                            ?>
+                            <ul class="list_news_dot_3x3_300">
+                                <li>
+                                    <p>
+                                        <?php echo $arrRef; ?>
+                                    </p>
+                                </li>
+                            </ul>
+                            <?php
+                            unset($arrRef);
+                        }
+                        ?>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+            <div class="list_hot_top">
+                <div class="scroll-pane">
+                    <div class="content_scoller width_common">
+                        <?php
+                        if (!empty ($this->arrTopNews))
+                        {
+
+                            ?>
+                            <ul class="list_news">
+                                <?php
+                                $count = count($this->arrTopNews);
+                                $i = 0;
+                                foreach ($this->arrTopNews as $id)
+                                {
+                                    $article = $this->objArticle->getArticleBasic($id);
+                                    $i++;
+                                    if (empty($article))
+                                    {
+                                        continue;
+                                    }
+                                    $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                                    ?>
+                                    <li <?php echo $i===$count ? 'class="last_item"':''?>>
+                                        <div class="block_image_news width_common">
+                                            <?php
+                                            if (!empty($article['thumbnail_url']))
+                                            {
+                                                ?>
+                                                <div class="thumb">
+                                                    <a href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>">
+                                                        <img src="<?php echo $this->ImageurlArticle($article, 'size5', -1); ?>" alt="<?php echo $article['title_format']; ?>" />
+                                                    </a>
+                                                    <?php echo $this->ArticleTypeIcon($article); ?>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                            <div class="title_news">
+                                                <a class="txt_link" href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                                    <?php echo $article['title']; ?>
+                                                    <span class="no_wrap">
+                                                        <?php echo $this->ArticleViewIcon($article); ?>
+                                                        <?php echo $this->ArticleComment($article); ?>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block_2mid_col line_mid_col width_common">
+            <?php
+            if (!empty ($this->arrListVideo))
+            {
+                ?>
+                <div id="block_video" style="display: none" class="block_video_slide width_common">
+                    <div class="title_box_category width_common">
+                        <div class="txt_main_category"><a href="<?php echo $this->configView['url'], '/video';?>">Video</a></div>
+                    </div>
+                    <div class="list_video">
+                        <a href="javascript:;" style="display: none" class="btn_control_tv_slider prev_slider">&nbsp;</a>
+                        <a href="javascript:;" style="display: none" class="btn_control_tv_slider next_slider">&nbsp;</a>
+                        <div id="owl-demo" class="owl-carousel">
+                            <?php
+                            foreach ($this->arrListVideo as $id)
+                            {
+                                $video = $this->objArticle->getArticleBasic($id);
+                                $i++;
+                                if (empty($video))
+                                {
+                                    continue;
+                                }
+                                $video['share_url'] = $this->ShareurlSeagame($video['share_url'])
+                                ?>
+                                <div class="item_slider">
+                                    <?php
+                                    if (!empty($video['thumbnail_url']))
+                                    {
+                                        ?>
+                                        <div class="thumb_image">
+                                            <a href="<?php echo $video['share_url']; ?>" title="<?php echo $video['title_format']; ?>">
+                                                <img src="<?php echo $this->ImageurlArticle($video, 'size6', -1); ?>" alt="<?php echo $video['title_format']; ?>" />
+                                            </a>
+                                            <?php echo $this->ArticleTypeIcon($video); ?>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+                                    <div class="title_video">
+                                        <a class="txt_link txt_14" href="<?php echo $video['share_url']; ?>" title="<?php echo $video['title_format']; ?>">
+                                            <?php echo $video['title']; ?>
+                                            <span class="no_wrap">
+                                                <?php echo $this->ArticleViewIcon($video); ?>
+                                                <?php echo $this->ArticleComment($video); ?>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function(){
+                        thethao.carousel('#block_video');
+                    })
+                </script>
+                <?php
+            }
+            if (!empty ($this->arrListPhoto))
+            {
+                ?>
+                <div id="block_anh_home" class="block_anh_home width_common">
+                    <div class="title_box_category width_common">
+                        <div class="txt_main_category"><a href="<?php echo $this->configView['url'], '/photo'; ?>">Ảnh</a></div>
+                    </div>
+                    <div class="inner_anh_home width_common">
+                        <div class="top_anh_home">
+                            <?php
+                            $firtPhoto = $this->objArticle->getArticleBasic(array_shift($this->arrListPhoto));
+                            if (!empty($firtPhoto))
+                            {
+                                $firtPhoto['share_url'] = $this->ShareurlSeagame($firtPhoto['share_url']);
+                                ?>
+                                <div class="width_common box_num02">
+                                    <?php
+                                    if (!empty($firtPhoto['thumbnail_url']))
+                                    {
+                                        ?>
+                                        <div class="thumb_relative">
+                                            <a href="<?php echo $firtPhoto['share_url']; ?>" title="<?php echo $firtPhoto['title_format']; ?>">
+                                                <img src="<?php echo $this->ImageurlArticle($firtPhoto, 'size4', -1); ?>" alt="<?php echo $firtPhoto['title_format']; ?>" />
+                                            </a>
+                                            <?php echo $this->ArticleTypeIcon($firtPhoto); ?>
+                                        </div>
+                                    <?php } ?>
+                                    <div class="title_news">
+                                        <a href="<?php echo $firtPhoto['share_url']; ?>" title="<?php echo $firtPhoto['title_format']; ?>" class="txt_link">
+                                            <?php echo $firtPhoto['title']; ?>
+                                            <span class="no_wrap">
+                                                <?php echo $this->ArticleViewIcon($firstNews); ?>
+                                                <?php echo $this->ArticleComment($firstNews); ?>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="news_lead">
+                                        <?php echo $this->CropWord($firtPhoto['lead'], 33, $this->ShareurlSeagame($firtPhoto['share_url'])); ?>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                        <div class="list_anh_sub">
+                            <ul class="list_col">
+                                <?php
+                                if (!empty($this->arrListPhoto)) {
+                                    $i = 1;
+                                    foreach ($this->arrListPhoto as $id)
+                                    {
+                                        $article = $this->objArticle->getArticleBasic($id);
+                                        if (empty($article)) {
+                                            continue;
+                                        }
+                                        $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                                        ?>
+                                        <li <?php echo $i ? '':'class="no-right"'; ?>>
+                                            <?php
+                                            if ($article['thumbnail_url']) {
+                                                ?>
+                                                <div class="thumb_200 width_common">
+                                                    <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                        <img src="<?php echo $this->ImageurlArticle($article, 'size6', -1); ?>" alt="<?php echo $article['title_format']; ?>" />
+                                                    </a>
+                                                    <?php echo $this->ArticleTypeIcon($article); ?>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+                                            <strong>
+                                                <a class="txt_link txt_14" href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                    <?php echo $article['title']; ?>"
+                                                    <span class="no_wrap">
+                                                        <?php echo $this->ArticleViewIcon($article); ?>
+                                                        <?php echo $this->ArticleComment($article); ?>
+                                                    </span>
+                                                </a>
+                                            </strong>
+                                        </li>
+                                        <?php
+                                        $i = 1 - $i;
+                                    }
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+            <div id="block_bongda_monkhac" class="block_two_col_mid width_common">
+                <?php
+                if ((isset($this->arrOtherNews[CATE_SEA_GAMES_BONGDA]) && !empty ($this->arrOtherNews[CATE_SEA_GAMES_BONGDA])))
+                {
+                    ?>
+                    <div id="block_bongda" class="block_col_mid_common col_2 col_2_left">
+                        <div class="title_box_category width_common">
+                            <div class="txt_main_category"><a href="<?php echo $this->configView['url'], '/bong-da'; ?>">Bóng đá</a></div>
+                        </div>
+                        <div class="news_mid_two_col">
+                            <ul class="list_news">
+                                <?php
+                                foreach ($this->arrOtherNews[CATE_SEA_GAMES_BONGDA] as $id)
+                                {
+                                    $article = $this->objArticle->getArticleBasic($id);
+                                    if (empty($article)) {
+                                        echo $id;
+                                        continue;
+                                    }
+                                    $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                                    ?>
+                                    <li>
+                                        <div class="block_image_news width_common">
+                                            <?php
+                                            if ($article['thumbnail_url']) {
+                                                ?>
+                                                <div class="thumb">
+                                                    <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                        <img src="<?php echo $this->ImageurlArticle($article, 'size6', -1); ?>" alt="<?php echo $article['title_format']; ?>" />
+                                                    </a>
+                                                    <?php echo $this->ArticleTypeIcon($article); ?>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+                                            <div class="title_news">
+                                                <a class="txt_link" href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                    <?php echo $article['title']; ?>
+                                                    <span class="no_wrap">
+                                                        <?php echo $this->ArticleViewIcon($article); ?>
+                                                        <?php echo $this->ArticleComment($article); ?>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="news_lead">
+                                                <?php echo $this->CropWord($article['lead'], 33, $this->ShareurlSeagame($article['share_url'])); ?>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+                <?php
+                if ((isset($this->arrOtherNews[CATE_SEA_GAMES_CACMONKHAC]) && !empty ($this->arrOtherNews[CATE_SEA_GAMES_CACMONKHAC])))
+                {
+                    ?>
+                    <div id="block_monkhac" class="block_col_mid_common col_2 col_2_right">
+                        <div class="title_box_category width_common">
+                            <div class="txt_main_category"><a href="<?php echo $this->configView['url'], '/cac-mon-khac'; ?>" title="Các môn khác">Các môn khác</a></div>
+                        </div>
+                        <div class="news_mid_two_col">
+                            <ul class="list_news">
+                                <?php
+                                foreach ($this->arrOtherNews[CATE_SEA_GAMES_CACMONKHAC] as $id)
+                                {
+                                    $article = $this->objArticle->getArticleBasic($id);
+                                    if (empty($article)) {
+                                        continue;
+                                    }
+                                    $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+
+                                    ?>
+                                    <li>
+                                        <div class="block_image_news width_common">
+                                            <?php
+                                            if ($article['thumbnail_url']) {
+                                                ?>
+                                                <div class="thumb">
+                                                    <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                        <img src="<?php echo $this->ImageurlArticle($article, 'size1', -1); ?>" alt="<?php echo $article['title_format']; ?>" />
+                                                    </a>
+                                                    <?php echo $this->ArticleTypeIcon($article); ?>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                            <div class="title_news">
+                                                <a class="txt_link" href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                    <?php echo $article['title']; ?>
+                                                    <span class="no_wrap">
+                                                        <?php echo $this->ArticleViewIcon($article); ?>
+                                                        <?php echo $this->ArticleComment($article); ?>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="news_lead">
+                                                <?php echo $this->CropWord($article['lead'], 33, $this->ShareurlSeagame($article['share_url'])); ?>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <div id="block_benle_binhluan" class="block_three_col_mid width_common">
+                <?php
+                $arrList = array(
+                    CATE_SEA_GAMES_BENLE => array('name' => 'Bên lề', 'id' => 'block_benle', 'url' => $this->configView['url'] . '/ben-le', 'class' => 'block_col_mid_common col_3'),
+                    CATE_SEA_GAMES_BINHLUAN => array('name' => 'Bình luận', 'id' => 'block_binhluan', 'url' => $this->configView['url'] . '/binh-luan', 'class' => 'block_col_mid_common col_3'),
+                    ////CATE_SEA_GAMES_THONGTIN => array('name' => 'Thông tin SEA Games', 'id' => 'block_benle', 'url' => $this->configView['url'] . '/thong-tin-sea-games', 'class' => 'block_col_mid_common col_3 col_3_noright')
+                );
+                foreach ($arrList as $cateId => $info)
+                {
+                    if (!isset($this->arrOtherNews[$cateId]))
+                    {
+                        continue;
+                    }
+					if (empty($this->arrOtherNews[$cateId]))
+                    {
+                        continue;
+                    }
+                    $arrListData = $this->arrOtherNews[$cateId];
+                    ?>
+                    <div id="<?php echo $info['id']; ?>" class="<?php echo $info['class']; ?>">
+                        <div class="title_box_category width_common">
+                            <div class="txt_main_category"><a href="<?php echo $info['url']; ?>" title="<?php echo $info['name']; ?>"><?php echo $info['name']; ?></a></div>
+                        </div>
+                        <div class="news_mid_three_col">
+                            <?php
+                            $article = $this->objArticle->getArticleBasic(array_shift($arrListData));
+                            if (!empty($article))
+                            {
+                                $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                                ?>
+                                <div class="content_box_category width_common">
+                                    <ul>
+                                        <li>
+                                            <div class="block_image_news width_common">
+                                                <div class="title_news">
+                                                    <a class="txt_link" href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                        <?php echo $article['title']; ?>
+                                                        <span class="no_wrap">
+                                                            <?php echo $this->ArticleViewIcon($article); ?>
+                                                            <?php echo $this->ArticleComment($article); ?>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="block_thumb_lead">
+                                                    <?php
+                                                    if ($article['thumbnail_url']) {
+                                                        ?>
+                                                        <div class="thumb">
+                                                            <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                                <img src="<?php echo $this->ImageurlArticle($article, 'size1', -1); ?>" alt="<?php echo $article['title_format']; ?>" />
+                                                            </a>
+                                                            <?php echo $this->ArticleTypeIcon($article); ?>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    <div class="news_lead">
+                                                        <?php echo $this->CropWord($article['lead'], 33, $this->ShareurlSeagame($article['share_url'])); ?>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if (!empty($arrListData))
+                            {
+                                ?>
+                                <div class="list_sub_col_3 width_common">
+                                    <ul class="list_news list_news_dot_3x3">
+                                        <?php
+                                        foreach ($arrListData as $id)
+                                        {
+                                            $article = $this->objArticle->getArticleBasic($id);
+                                            if (empty($article))
+                                            {
+                                                continue;
+                                            }
+                                            $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                                            ?>
+                                            <li>
+                                                <a class="txt_link" href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>">
+                                                    <?php echo $article['title']; ?>
+                                                    <span class="no_wrap">
+                                                        <?php echo $this->ArticleViewIcon($article); ?>
+                                                        <?php echo $this->ArticleComment($article); ?>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <?php
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <div id="col_right">
+        <?php echo $this->GetBlockOther('left'); ?>
+    </div>
+</div>

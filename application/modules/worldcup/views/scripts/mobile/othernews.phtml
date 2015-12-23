@@ -1,0 +1,45 @@
+<?php
+$arrOtherNews = array_chunk($this->arrOtherNews, 2);
+foreach ($arrOtherNews as $otherNews)
+{
+    ?>
+    <ul class="list_news">
+        <?php
+        foreach($otherNews as $id)
+        {
+            $articleDetail = $this->objArticle->getArticleBasic($id);
+            if (empty($articleDetail))
+                continue;
+            ?>
+            <li>
+                <div class="thumb_160 width_common">
+                    <a href="<?php echo $this->ShareurlWorldcup($articleDetail['share_url']); ?>" title="<?php echo $articleDetail['title_format']; ?>"><img src="<?php echo $this->ImageurlArticle($articleDetail, 'size11'); ?>" alt="<?php echo $articleDetail['title_format']; ?>" /></a>
+                    <?php echo $this->ArticleTypeIcon($articleDetail); ?>
+                </div>
+                <strong>
+                    <a href="<?php echo $this->ShareurlWorldcup($articleDetail['share_url']); ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title']; ?></a>
+                    <span class="no_wrap">
+                        <img class="icon_content icon_title_<?php echo intval($articleDetail['article_icon']); ?>" src="<?php echo $this->configView['images']; ?>/graphics/img_blank.gif" alt="" />
+                        <?php echo $this->ArticleComment($articleDetail); ?>
+                    </span>
+                </strong>
+            </li>
+            <?php
+        }
+        ?>
+    </ul>
+    <?php
+}
+/*chi chay tren beta*/
+if (APPLICATION_ENV == 'production')
+{
+    ?>
+    <script type="text/javascript">
+        //slideshow photo
+        if (typeof(common.initLinkSlideshow) != 'undefined') {
+            common.initLinkSlideshow();
+        }
+    </script>
+    <?php
+}
+?>

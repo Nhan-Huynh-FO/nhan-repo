@@ -1,0 +1,40 @@
+<div class="block_infomation_capdau">
+    <div class="block_image width_common">
+        <a title="<?php echo $this->team1['name_format']; ?>" href="<?php echo $this->team1['share_url']; ?>">
+            <img class="right" src="<?php echo $this->Imageurl($this->team1['thumbnail'], 'size10'); ?>" title="<?php echo $this->team1['name_format']; ?>" alt="<?php echo $this->team1['name_format']; ?>" />
+        </a>
+        <div class="right name_club"><a title="<?php echo $this->team1['name_format']; ?>" class="" href="<?php echo $this->team1['share_url']; ?>"><?php echo $this->team1['name']; ?></a></div>
+    </div>
+    <div class="block_info_name_tiso">
+        <div class="txt_center txt_tiso">
+            <?php
+            if ($this->matchDetail['status'] == 2 || $this->currTime > $this->matchDetail['datetime_happen'] + 10800)
+            {
+                //Kết quả
+                echo '<span class="txt_11 txt_666">&nbsp; Kết quả</span><br />', $this->matchDetail['goal1'], ' - ', $this->matchDetail['goal2'];
+                if ($this->matchDetail['penalty1'] || $this->matchDetail['penalty2'])
+                    echo '<br /><span class="txt_11 txt_666">(Đá luân lưu <b>', $this->matchDetail['penalty1'], '</b> - <b>', $this->matchDetail['penalty2'], '</b>) </span>';
+            }
+            else
+            {
+                //Trước trận đấu
+                if ($this->currTime < $this->matchDetail['datetime_happen'])
+                    echo '<span class="txt_11 txt_666">&nbsp; Trước trận đấu</span><br />V</span>';
+                else
+                {
+                    //Đang diễn ra
+                    echo '<span class="txt_11 txt_666">&nbsp; Đang diễn ra</span><br />', $this->matchDetail['goal1'], ' - ', $this->matchDetail['goal2'];
+                    if ($this->matchDetail['penalty1'] || $this->matchDetail['penalty2'])
+                        echo '<br /><span class="txt_11 txt_666">(Đá luân lưu <b>', $this->matchDetail['penalty1'], '</b> - <b>', $this->matchDetail['penalty2'], '</b>) </span>';
+                }
+            }
+            ?>
+        </div>
+    </div>
+    <div class="block_image width_common">
+        <a title="<?php echo $this->team2['name_format']; ?>" href="<?php echo $this->team2['share_url']; ?>">
+            <img class="left" src="<?php echo $this->Imageurl($this->team2['thumbnail'], 'size10'); ?>" title="<?php echo $this->team2['name_format']; ?>" alt="<?php echo $this->team2['name_format']; ?>" />
+        </a>
+        <div class="left name_club"><a title="<?php echo $this->team2['name_format']; ?>" class="" href="<?php echo $this->team2['share_url']; ?>"><?php echo $this->team2['name']; ?></a></div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<script>
+    var dateNow = <?php echo $this->dateNow;?>;
+</script>
+<div class="page_schedule page_trandau">
+    <?php
+    if (DEVICE_ENV != 1)
+    {
+        echo $this->render('lich-thi-dau/box/top_calendar.phtml');
+        echo $this->render('lich-thi-dau/box/vong_bang.phtml');
+        echo $this->render('lich-thi-dau/box/vong_16.phtml');
+        echo $this->render('lich-thi-dau/box/tu_ket.phtml');
+        echo $this->render('lich-thi-dau/box/ban_ket.phtml');
+        echo $this->render('lich-thi-dau/box/tranh_giai_ba.phtml');
+        echo $this->render('lich-thi-dau/box/chung_ket.phtml');
+        echo $this->render('lich-thi-dau/box/so_do_thi_dau.phtml');
+    }
+    else
+    {
+        echo $this->render('lich-thi-dau/box/m_vong_bang.phtml');
+        echo $this->render('lich-thi-dau/box/m_vong_16.phtml');
+        echo $this->render('lich-thi-dau/box/m_tu_ket.phtml');
+        echo $this->render('lich-thi-dau/box/m_ban_ket.phtml');
+        echo $this->render('lich-thi-dau/box/m_tranh_giai_ba.phtml');
+        echo $this->render('lich-thi-dau/box/m_chung_ket.phtml');
+        echo '<div class="xemtiep hiddenweb" id="loadmore" data-id="#vong16" data-i="1" style="float:left;cursor: pointer;"><a href="javascript:;">Xem tiếp</a></div>';
+    }
+    ?>
+</div>
+<!-- end page_schedule -->
+<script>
+    $(document).ready(function() {
+        if (device_env == 1)
+        {
+            $('#loadmore').click(function() {
+                var id = $('#loadmore').attr('data-id');
+                var i = $('#loadmore').attr('data-i');
+                $(id).fadeIn(1000);
+                switch (parseInt(i))
+                {
+                    case 1:
+                        $('#loadmore').attr('data-id', '#vong_tu_ket');
+                        $('#loadmore').attr('data-i', '2');
+                        break;
+                    case 2:
+                        $('#loadmore').attr('data-id', '#vong_ban_ket');
+                        $('#loadmore').attr('data-i', '3');
+                        break;
+                    case 3:
+                        $('#loadmore').attr('data-id', '#tranh_giai_ba');
+                        $('#loadmore').attr('data-i', '4');
+                        break;
+                    case 4:
+                        $('#loadmore').attr('data-id', '#vong_chung_ket');
+                        $('#loadmore').attr('data-i', '5');
+                        break;
+                    case 5:
+                        $('#loadmore').hide();
+                        break;
+                }
+            });
+        }
+        var s = $(".corn_calendar");
+        var pos = s.position();
+        $(window).scroll(function() {
+            var windowpos = $(window).scrollTop();
+            //s.html("Distance from top:" + pos.top + "<br />Scroll position: " + windowpos);
+            if (windowpos >= pos.top) {
+                s.addClass("stick");
+            } else {
+                s.removeClass("stick");
+            }
+        });
+        /*Bat dau script btn_collapse*/
+        $('.btn_collapse').click(function(event) {
+            event.preventDefault();
+            var idMatch = $(this).attr('data-match-id');
+            var content_show = 'class_match_' + idMatch;
+
+            $('.collapse').hide();
+            $('.' + content_show).show();
+            if (!$(this).data('flag')) {
+                $('.' + content_show).show();
+                $('[data-match-id=' + $(this).attr('data-match-id') + ']').data('flag', true);
+            } else {
+                $('.' + content_show).hide();
+                $('[data-match-id=' + $(this).attr('data-match-id') + ']').data('flag', false);
+            }
+        });
+        $('.btn_collapse_input').click(function(event) {
+            event.preventDefault();
+            var idMatch = $(this).data('match-id');
+            var content_show = 'class_match_' + idMatch;
+
+            //hide all du doan
+            $('.collapse_2').hide();
+            $('.' + content_show).show();
+            $('[data-match-id=' + $(this).attr('data-match-id') + ']').data('flag', true);
+        });
+    })
+</script>

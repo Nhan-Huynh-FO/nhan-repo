@@ -1,0 +1,19 @@
+<?php
+if (DEVICE_ENV != 1)
+{
+    ?>
+    <div class="social_share width_common" id="social_like">
+        <?php echo $this->Articlelike($this->arrArticleDetail['article_id']); ?>
+    </div>
+    <?php
+}
+?>
+<div class="div-fbook width_common">
+    <?php echo $this->Articlelike($this->arrArticleDetail['article_id']); ?>
+    <div class="block_share_icon right">
+        <a class="btn_facebook" rel="nofollow" href="javascript:;" title="Chia sẻ bài viết lên facebook"><img alt="Chia sẻ bài viết lên facebook" src="<?php echo $this->configView['images']; ?>/icons/social_fb.gif" /></a>
+        <a class="btn_twitter" rel="nofollow" href="javascript:;" id="twitter" data-url="<?php echo $this->ShareurlWorldcup($this->arrArticleDetail['share_url']); ?>" title="Chia sẻ bài viết lên twitter"><img alt="Chia sẻ bài viết lên twitter" src="<?php echo $this->configView['images']; ?>/icons/social_tweet.gif" /></a>
+        <a class="btn_google" rel="nofollow" href="javascript:;" title="Chia sẻ bài viết lên google+"><img alt="Chia sẻ bài viết lên google+" src="<?php echo $this->configView['images']; ?>/icons/social_google.gif" /></a>
+        <a rel="nofollow" href="mailto:?Subject=<?php echo $this->arrArticleDetail['title_format']; ?>&body=<?php echo $this->escape($this->arrArticleDetail['lead'] . '%0D%0ALink bài viết: ' . $this->ShareurlWorldcup($this->arrArticleDetail['share_url'])); ?>" title="Email cho bạn bè"><img alt="Email cho bạn bè" src="<?php echo $this->configView['images']; ?>/icons/social_letter.gif" /></a>
+    </div>
+</div>

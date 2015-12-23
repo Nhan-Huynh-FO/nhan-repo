@@ -1,0 +1,51 @@
+<div class="title_box_category width_common">
+    <div class="txt_main_category"><a>Tin khác</a></div>
+</div>
+<div class="content_box_category width_common">
+    <?php
+    $arrOtherNews = array_chunk($this->arrOrtherArticle, 2);
+    foreach ($arrOtherNews as $otherNews)
+    {
+        ?>
+        <ul class="list_news">
+            <?php
+            foreach ($otherNews as $id)
+            {
+                $article = $this->objArticle->getArticleBasic($id);
+                if (empty($article))
+                {
+                    continue;
+                }
+                $article['share_url'] = $this->ShareurlSeagame($article['share_url']);
+                ?>
+                <li>
+                    <?php
+                    if (!empty($article['thumbnail_url'])) {
+                    ?>
+                    <div class="thumb_160 width_common">
+                        <a href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>">
+                            <img src="<?php echo $this->ImageurlArticle($article, 'size11', -1); ?>" alt="<?php echo $article['title_format']; ?>" />
+                        </a>
+                        <?php echo $this->ArticleTypeIcon($article); ?>
+                    </div>
+                    <?php
+                    }
+                    ?>
+                    <strong>
+                        <a href="<?php echo ($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>">
+                            <?php echo $article['title']; ?>
+                            <span class="no_wrap">
+                                <?php echo $this->ArticleViewIcon($article); ?>
+                                <?php echo $this->ArticleComment($article); ?>
+                            </span>
+                        </a>
+                    </strong>
+                </li>
+                <?php
+            }
+            ?>
+        </ul>
+        <?php
+    }
+    ?>
+</div>

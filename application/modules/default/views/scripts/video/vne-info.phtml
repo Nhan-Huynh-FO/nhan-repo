@@ -1,0 +1,76 @@
+<?php echo '<?xml version = "1.0" encoding = "utf-8" ?>' ?>
+<playlist>
+    <limit><?php echo $this->isCopyright; ?></limit>
+    <?php
+    if (!empty($this->arrMedia))
+    {
+        $id = $this->videoID;
+        $article = $this->arrArticle;
+        $media = $this->arrMedia;
+        $hours = (int) ($media['duration'] / 60 / 60);
+        $minutes = (int) ($media['duration'] / 60) - $hours * 60;
+        $seconds = (int) $media['duration'] - $hours * 60 * 60 - $minutes * 60;
+        $moreUrl = $this->config['url'] . '/video/vne-more/id/' . $id . '/exclude/' . $this->strExclude;
+        $mediaUrl = $media['url'];
+        $descImageUrl = $this->Imageurl($article['thumbnail_url'], 'size4');
+        $isShowAds  = (isset($article['privacy']) && ($article['privacy']&32)!=32)?true:false;
+
+        ?>
+        <exfunction name="updateContent"></exfunction>
+        <typeview>1</typeview>
+        <type>video</type>
+        <track id="<?php echo $this->videoID ?>" link="<?php echo $mediaUrl; ?>" linkDetail="<?php echo $article['share_url']; ?>" target="_blank" time="0" view="0" descriptionImage="<?php echo $descImageUrl; ?>" duration="<?php echo $this->arrMedia['duration']; ?>" moreLink="<?php echo $moreUrl; ?>"></track>
+
+        <id></id>
+        <name><![CDATA[<?php echo $this->escape($article['title']); ?>]]></name>
+        <?php
+        if ($isShowAds)
+        {
+        ?>
+        <adsConfig>
+            <![CDATA[
+                {"ads": {
+                    "schedule" :[{
+                        "zoneId": 726,
+                        "width": 500,
+                        "height": 100,
+                        "startTime": "<?php echo $hours . ':' . $minutes . ':' . $seconds; ?>",
+                        "type": "overlay",
+                        "duration": "00:00:00",
+                        "position": "bottom",
+                        "skippable": "false",
+                        "skipoffset": "00:00:00",
+                        "tag": "http://d.eclick.vn/v"
+                    }]
+                }
+            }]]>
+        </adsConfig>
+        <?php
+        }
+        else
+        {
+            ?>
+        <adsConfig><![CDATA[]]></adsConfig>
+        <?php
+        }
+        ?>
+        <tracks>
+            <track>
+            <id><?php echo $this->videoID; ?></id>
+            <type>video</type>
+            <url><![CDATA[<?php echo $mediaUrl; ?>]]></url>
+            <title link="<?php echo $article['share_url']; ?>"><![CDATA[<?php echo $article['title']; ?>]]></title>
+            <artist link=""><![CDATA[]]></artist>
+            <category><![CDATA[]]></category>
+            <thumburl><![CDATA[<?php echo $descImageUrl; ?>]]></thumburl>
+            <duration><?php echo $media['duration']; ?></duration>
+            <suburl><![CDATA[]]></suburl>
+            <suggesturl><![CDATA[<?php echo $moreUrl; ?>]]></suggesturl>
+            <share>
+                <link><![CDATA[<?php echo $article['share_url']; ?>]]></link>
+                <blog><![CDATA[]]></blog>
+            </share>
+            </track>
+        </tracks>
+    <?php } ?>
+</playlist>

@@ -1,0 +1,26 @@
+<ul class="list_photo_trandau">
+    <?php
+    foreach ($this->arrData as $id)
+    {
+        $photo   = $this->objArticle->getArticleBasic($id);
+        ?>
+        <li>
+            <div class="thumb_140"> 
+                <a title="video name" href="<?php echo $photo['share_url']; ?>" title="<?php echo $photo["title_format"]; ?>"><img alt="<?php echo $photo["title_format"]; ?>" src="<?php echo $this->Imageurl($photo['thumbnail_url'], 'size6'); ?>">  </a> 
+                <a class="icon_thumb_videophoto icon_photo" href="#">&nbsp;</a>
+            </div>
+            <h2 class="title_news"><a class="txt_link" href="<?php echo $photo['share_url']; ?>" title="<?php echo $photo["title_format"]; ?>"><?php echo $photo["title"]; ?></a></h2>
+            <div class="block_view_num txt_11 width_common">
+                <span class="txt_666"><?php echo $arrDate = date("d/m", $photo['publish_time']); ?> |</span> <span class="view_num"><?php echo $this->Articleview($photo); ?> lượt xem</span>
+            </div>
+        </li>
+        <?php
+    }
+    ?>
+</ul>
+
+<div class="bottom_pagination width_common">
+    <?php
+    echo $this->PaginationAjax($this->arrParamPaging);
+    ?>
+</div>

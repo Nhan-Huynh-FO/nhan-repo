@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/page_style.css" media="all" />
+<style>
+    #box_dovui{
+    overflow:visible !important;
+}
+.calendar_dovui{
+    display:inline-block;
+    margin-right:3px;
+}
+</style>
+<?php
+$arrData = $this->arrData;
+$arrDate = $this->dateParam;
+$currentDate = $this->currentDate;
+
+$dateNormal = date('Y-m-d', $arrDate);
+
+$subCurrentDate = date('Y-m-d', strtotime(date('Y-m-d', $currentDate). ' - 1 days'));
+$subCurrentDate = strtotime($subCurrentDate);
+
+
+$nextDate = date('Y-m-d', strtotime($dateNormal. ' + 1 days'));
+$nextDate = strtotime($nextDate);
+
+$preDate = date('Y-m-d', strtotime($dateNormal. ' - 1 days'));
+$preDate = strtotime($preDate);
+
+
+$date = new DateTime();
+$dateNow = strtotime($date->format('Y-m-d H:i:s'));
+$date8Am = strtotime($date->format('Y-m-d 08:00:00'));
+echo $this->render('dovui/dapan.phtml');
+
+?>
+<script>
+    $('.a_xemthem_dv').click(function(){
+        $('.bref_thele_dv').hide();
+        $('.xemthem_dv').hide();
+        
+        $('.full_thele_dv').show();
+        $('.rutgon_dv').show();
+    })
+    $('.a_rugton_dv').click(function(){
+        $('.full_thele_dv').hide();
+        $('.rutgon_dv').hide();
+        
+        $('.bref_thele_dv').show();
+        $('.xemthem_dv').show();
+    })
+</script>

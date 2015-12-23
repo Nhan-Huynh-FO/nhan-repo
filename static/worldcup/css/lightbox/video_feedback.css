@@ -1,0 +1,134 @@
+/*lighbox feedback video*/
+.feedback_bigbox {
+    display: none;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2000000;
+}
+/**LightBox**/
+.lightbox-border .tl, .lightbox-border .tr, .lightbox-border .bl, .lightbox-border .br {
+    width:9px;
+    height:8px;
+    overflow: hidden;
+    padding: 0;
+}
+.feedback-lightbox-boxhead {
+    border-bottom:1px dotted #c2c6c9;
+    margin: 0;
+    padding: 0;
+    background:#fff;
+    border-top:2px solid #9A1F44;
+}
+.feedback-lightbox-boxhead .tlc {
+    margin: 0;
+    padding: 4px 0 4px 10px;
+}
+.feedback-lightbox-boxhead .trc {
+    margin: 0;
+    padding-right:10px;
+    background:#fff;
+}
+.feedback-lightbox-boxhead .boxhead-content {
+    padding:4px 0px;
+    font-size:12px;
+    font-weight:bold;
+    color:#000;
+}
+.lightbox-boxbody {
+    margin: 0;
+    border:none;
+    background-color:#fff;
+    padding:10px;
+}
+.txt_feedback_captcha{
+    padding:0px 0 0 0;
+    height: 60px;
+}
+.txt_feedback_captcha .txt_lable_captcha
+{
+    font: 500 12px arial;
+    margin: 12px 10px 5px 100px;
+    padding-right: 10px;
+}
+.txt_feedback_captcha #txtCode
+{
+    width: 100px;
+    height: 25px;
+    margin-top: 7px;
+	border: 1px solid #C0C0C0;
+}
+.txt_feedback_captcha #showCaptcha
+{
+    padding-left: 10px;
+    margin: 0px;
+    width: 60px;
+    height: 40px;
+}
+.txt_feedback_captcha #showCaptcha img
+{
+    margin: 0px;
+    width: 60px;
+    height: 40px;
+}
+.txt_feedback_bottom{
+    padding:10px 0 0 0;
+}
+.txt_feedback_msg_bottom{
+    padding:30px 0 0 0;
+}
+.txt_center{
+    text-align:center;
+}
+/*the slider background*/
+.feedback_slide {
+    width:230px;
+    height:7px;
+    background:url("images/bg_range_normal.gif") repeat-x scroll left top transparent;
+    position:relative;
+    margin:5px 10px 0px 10px;
+    padding:0 10px;
+    /*border:1px solid #9d9d9d;*/
+    cursor: pointer;
+    float: left;
+    text-align: center;
+}
+.feedback-lightbox-boxhead .txt_title_right_logo{
+    float:left;
+    padding:3px 0 0 10px;
+}
+.feedback-lightbox-boxhead .title_left{
+    float:right;
+    padding:8px 10px 0 0;
+    font:700 14px arial;
+}
+.block_feedback{
+    padding:5px 0 0 0;
+}
+.block_feedback .txt_msg
+{
+    width: 100%;
+    text-align: center;
+    color: #666666;
+}
+.btn_feedback{
+    color: #fff;
+    width:90px;
+    height:20px;
+    font:700 11px arial;
+    cursor: pointer;
+    border:none;
+    margin:0 5px 10px 0;
+    background: none repeat scroll 0 0 #666666;
+}
+#content_lightbox_vne_core .btn_vne{width: 100px;height: 30px;background: #9f224e;cursor: pointer;color: #fff;font: 400 14px arial;margin: 0 10px 0 0;}
+#content_lightbox_gopy_vne_cor{ padding:10px; float:left;}
+#content_lightbox_gopy_vne_cor .list_gopy{ background:#f4f5f6; padding:10px; margin:10px 0 0px 0; float:left;}
+#content_lightbox_gopy_vne_cor .list_gopy ul{list-style-type: none;}
+#content_lightbox_gopy_vne_cor .list_gopy ul li{ width:180px; float:left; margin:5px 0;}
+#content_lightbox_gopy_vne_cor .list_gopy ul li span{ margin-right:4px;}
+
+#content_lightbox_gopy_vne_cor .list_gopy .content_gopykhac{ display:none;}
+#content_lightbox_gopy_vne_cor .list_gopy .content_gopykhac textarea{ height:68px; width:406px; border:1px solid #CCC; overflow-y:hidden; margin-top:10px; overflow-y: auto}
+.clear_fb{clear: both;font-size: 0;line-height: 0;}

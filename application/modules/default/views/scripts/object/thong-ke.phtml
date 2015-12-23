@@ -1,0 +1,246 @@
+<div class="width_common" id="warpper_trandau">
+    <?php
+    echo $this->render('/object/common/header_trandau.phtml');
+    ?>
+    <div class="width_common line_mid_980_300">
+        <div id="col_660" class="left">
+            <div class="tab_trandau width_common">
+                <?php
+                if (DEVICE_ENV == 1)
+                {
+                ?>
+                <div class="tab_mobile">
+                    <a href="javascript:;" title="Thống kê" class="tab_main_mobile">Thống kê</a>
+                    <div class="list_tab_mobile">
+                        <ul>
+                            <li>
+                                <a title="Ảnh - Video" href="<?php echo  "/anh-video/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Ảnh - Video</a>
+                            </li>
+                            <li>
+                                <a title="Điểm tin" href="<?php echo  "/diem-tin/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Điểm tin</a>
+                            </li>
+                            <li>
+                                <a title="Thống kê" href="javascript:;">Thống kê</a>
+                            </li>
+                            <li>
+                                <a title="Tường thuật" href="<?php echo  "/tuong-thuat/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Tường thuật</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <?php
+                }
+                else {
+                    ?>
+                    <div class="title_tab width_common">
+                        <ul>
+                            <li class="start">
+                                <a title="Ảnh - Video" href="<?php echo  "/anh-video/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Ảnh - Video</a>
+                            </li>
+                            <li>
+                                <a title="Điểm tin" href="<?php echo  "/diem-tin/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Điểm tin</a>
+                            </li>
+                            <li class="active">
+                                <a title="Thống kê" href="javascript:;">Thống kê</a>
+                            </li>
+                            <li>
+                                <a title="Tường thuật" href="<?php echo  "/tuong-thuat/{$this->seoTitle}-{$this->matchDetail['id']}" ?>">Tường thuật</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php
+                }
+                ?>
+           	</div>
+            <div class="content_tab_trandau width_common">
+                <div class="title_page_trandau width_common">
+                    <div class="block_txt_title_page left">Thông tin trận đấu</div>
+                </div>
+                <div class="tk_trandau_left tk_trandau w320">
+                    <div class="name_team_trandau">
+						<p><img src="<?php echo $this->Imageurl($this->team1['thumbnail'], 'size1'); ?>" alt="<?php echo $this->team1['name'] ?>"><?php echo $this->team1['name'] ?></p></div>
+                    <div class="tk_trandau_rasan">
+                        <?php
+                        $numPlayersTeam1 = count($this->playersTeam1);
+
+                        if ($numPlayersTeam1)
+                        {
+                            ?>
+                            <div class="bg_top_table">
+                                <div class="w70"><b>Số áo</b></div>
+                                <div class="w190"><b>Tên cầu thủ</b></div>
+                                <div class="w50"><b>Vị trí</b></div>
+                                <div class="clear"></div>
+                            </div>
+                            <?php
+                            foreach ($this->playersTeam1 as $player)
+                            {
+                                if (empty($player) || $player['Type'] == 2)
+                                    continue;
+                                echo $this->playerInfo($player);
+
+                                if (!empty($player['Event']) && $player['Type'] != 2)
+                                {
+                                    preg_match('/(.*):5:(\d+)(.*)/', $player['Event'], $a);
+                                    if (!empty($a) && isset($a[2]) && isset($this->playersTeam1[$a[2]]))
+                                    {
+                                    echo $this->playerInfo($this->playersTeam1[$a[2]], FALSE, TRUE);
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
+                    <?php
+                    if ($numPlayersTeam1)
+                    {
+                        ?>
+                        <div class="doihinh_dubi width_common">
+                            <div class="name_team_trandau"> <p>Đội hình dự bị</p></div>
+                            <div class="tk_cauthu_dubi width_common">
+                                <?php
+                                foreach ($this->playersTeam1 as $player)
+                                {
+                                    if (empty($player))
+                                        continue;
+                                    echo $this->playerInfo($player, TRUE);
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <span class="txt_666">Hiện chưa có thông tin đội hình thi đấu.</span>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <div class="tk_trandau_right tk_trandau w320">
+                    <div class="name_team_trandau"> <p><img src="<?php echo $this->Imageurl($this->team2['thumbnail'], 'size1'); ?>" alt="<?php echo $this->team2['name'] ?>"><?php echo $this->team2['name'] ?></p></div>
+                    <div class="tk_trandau_rasan">
+                        <?php
+                        $numPlayersTeam2 = count($this->playersTeam2);
+                        if ($numPlayersTeam2)
+                        {
+                            ?>
+                            <div class="bg_top_table">
+                                <div class="w70"><b>Số áo</b></div>
+                                <div class="w190"><b>Tên cầu thủ</b></div>
+                                <div class="w50"><b>Vị trí</b></div>
+                                <div class="clear"></div>
+                            </div>
+                            <?php
+                            foreach ($this->playersTeam2 as $player)
+                            {
+                                if (empty($player) || $player['Type'] == 2)
+                                    continue;
+                                echo $this->playerInfo($player);
+
+                                if (!empty($player['Event']) && $player['Type'] != 2)
+                                {
+                                    preg_match('/(.*):5:(\d+)(.*)/', $player['Event'], $a);
+                                    if (!empty($a) && isset($a[2]) && isset($this->playersTeam2[$a[2]]))
+                                    {
+                                    echo $this->playerInfo($this->playersTeam2[$a[2]], FALSE, TRUE);      
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+                    </div>
+                    <?php
+                    if ($numPlayersTeam2)
+                    {
+                        ?>
+                        <div class="doihinh_dubi width_common">
+                            <div class="name_team_trandau"> <p>Đội hình dự bị</p></div>
+                            <div class="tk_cauthu_dubi width_common">
+                                <?php
+                                foreach ($this->playersTeam2 as $player)
+                                {
+                                    if (empty($player))
+                                        continue;
+                                    echo $this->playerInfo($player, TRUE);
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <span class="txt_666">Hiện chưa có thông tin đội hình thi đấu</span>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <div id="note_icon">
+                    <ul>
+                        <li class="w140" id="note_rasan"><span>&nbsp;</span>Ra sân</li>
+                        <li class="w140" id="note_phanluoi"><span>&nbsp;</span>Sút phản lưới nhà</li>
+                        <li class="w140" id="note_thevang"><span>&nbsp;</span>Thẻ vàng</li>
+                        <li class="w140" id="note_vaosan"><span>&nbsp;</span>Vào sân</li>
+                        <li class="w140" id="note_ghiban"><span>&nbsp;</span>Ghi bàn</li>
+                        <li class="w140" id="note_thedo"><span>&nbsp;</span>Thẻ đỏ</li>
+                    </ul>
+                    <ul id="ul_bottom_note"></ul>
+                </div>
+                <div id="tk_detail_trandau" class="box_category">
+					<div class="row_tk_detail bg_top">
+						<div class="w180 detail_center">
+							<b><?php echo $this->team1['name']; ?></b>
+						</div>
+						<div class="w250 detail_center">
+							<span>&nbsp;</span>
+						</div>
+						<div class="w180 detail_center">
+							<b><?php echo $this->team2['name']; ?></b>
+						</div>
+						<div class="clear"></div>
+					</div>
+                    <div class="clear"></div>
+					<?php
+					if (count($this->statistic))
+					{
+						$row = 1;
+						foreach ($this->statistic as $detailStatistic)
+						{
+							?>
+							<div class="row_tk_detail <?php if (!($row % 2)) echo 'row_chan' ?>">
+								<div class="w180 detail_center">
+									<p><?php echo $detailStatistic['Team1Value'] ?></p>
+								</div>
+								<div class="w250 detail_center">
+									<p><?php echo $detailStatistic['Name'] ?></p>
+								</div>
+								<div class="w180 detail_center">
+									<p><?php echo $detailStatistic['Team2Value'] ?></p>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<?php
+							$row++;
+						}
+					}else
+					{
+						echo '<p class="txt_center"><br/>Hiện chưa có dữ liệu thống kê cho trận đấu này.</p><br/>';
+					}
+					?>
+				</div>
+                <?php
+                //Comment
+                echo $this->render('/block/comment_match.phtml');
+                ?>
+            </div>
+        </div>
+        <div id="col_300" class="right">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+</div>
+</div>
+<div class="banner_980x60"><?php echo $this->GetBlock('footer'); ?></div>

@@ -1,0 +1,487 @@
+<div class="width_common">
+    <div class="width_common line_mid_980_300">
+        <div class="left" id="col_660">
+            <div id="cate_club">
+                <div id="infor_detail_cauthu" class="box_category">
+                    <div class="left pic_cauthu">
+                        <img  src="<?php echo $this->Imageurl($this->arrPlayer['info']['thumbnail'], 'size9'); ?>" title="<?php echo $this->arrPlayer['info']['name']; ?>" alt="<?php echo $this->arrPlayer['info']['name']; ?>" />
+                        <span class="bg_tk">Thống kê <?php echo date('Y', time()); ?></span>
+                        <ul>
+                            <li class="first_li"><span class="left achieve">Danh hiệu đơn</span><span class="left num_achieve"><?php echo ($this->arrPlayer['info']['ytd_titles_singles']) ? $this->arrPlayer['info']['ytd_titles_singles'] : 0; ?></span></li>
+                            <li><span class="left achieve">Danh hiệu đôi</span><span class="left num_achieve"><?php echo ($this->arrPlayer['info']['ytd_titles_doubles']) ? $this->arrPlayer['info']['ytd_titles_doubles'] : 0; ?></span></li>
+                            <li><span class="left achieve">Thắng-Thua</span><span class="left num_achieve"><?php echo ($this->arrPlayer['info']['ytd_wins_singles']) ? $this->arrPlayer['info']['ytd_wins_singles'] : 0; ?>-<?php echo ($this->arrPlayer['info']['ytd_losses_singles']) ? $this->arrPlayer['info']['ytd_losses_singles'] : 0; ?></span></li>
+                        </ul>
+                    </div>
+                    <div class="right block_info_cauthu">
+                        <div class="width_common">
+                            <p class="left" id="name_infor_cauthu"><?php echo $this->arrPlayer['info']['name']; ?></p>
+                            <div class="right block_share_mobile">
+                                <div class="social_share width_common">
+                                    <div class="item_social">
+                                        <?php
+                                        echo $this->Articlelike($this->arrPlayer['info']['id'], 14);
+                                        ?>
+                                    </div>
+                                    <div class="item_social hidden_320">
+                                        <div class="fb-like" data-href="<?php echo $this->arrPlayer['info']['share_url']; ?>" data-send="false" data-layout="button_count" data-width="150" data-show-faces="false"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="width_common">
+                            <?php
+                            if ($this->arrPlayer['info']['birthday'] != NULL)
+                            {
+                                ?>
+                                <p id="ngaysinh_infor_cauthu">
+                                    <b>Ngày sinh</b>
+                                    <span class="txt_666">
+                                        <?php
+                                        $birth = date('Y-m-d', $this->arrPlayer['info']['birthday']);
+                                        $birth = explode('-', $birth);
+                                        if (isset($birth[0]))
+                                        {
+                                            $age = intval(date('Y') - $birth[0]);
+                                            $tuoi = $age . ' tuổi';
+                                        }
+                                        else
+                                        {
+                                            $age = 1000;
+                                        }
+                                        if ($age > 10 && $age < 60)
+                                        {
+                                            $month = $birth[1];
+                                            $dateSt = $birth[2] . '/' . $month . '/' . $birth[0] . ' (' . $tuoi . ')';
+                                        }
+                                        echo $dateSt;
+                                        ?>
+                                    </span>
+                                </p>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($this->arrPlayer['info']['residence'] != NULL)
+                            {
+                                ?>
+                                <p><b>Nơi sinh</b><span class="txt_666"><?php echo $this->arrPlayer['info']['residence']; ?></span></p>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($this->arrPlayer['info']['nationality_name'] != NULL)
+                            {
+                                ?>
+                                <p><b>Quốc tịch</b><span class="txt_666"><?php echo $this->arrPlayer['info']['nationality_name']; ?></span></p>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($this->arrPlayer['info']['height'] != 0)
+                            {
+                                ?>
+                                <p><b>Chiều cao</b><span class="txt_666"><?php echo $this->arrPlayer['info']['height'] . '&nbsp;cm'; ?></span></p>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($this->arrPlayer['info']['weight'] != 0)
+                            {
+                            ?>
+                                <p><b>Cân nặng</b><span class="txt_666"><?php echo $this->arrPlayer['info']['weight'] . '&nbsp;Kg'; ?></span></p>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            $hand = $this->arrPlayer['info']['plays'];
+                            if ($hand != NULL)
+                            {
+                            ?>
+                                <p><b>Tay thuận  </b><span class="txt_666"><?php echo $hand; ?></span></p>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if ($this->arrPlayer['info']['turned_pro'] != NULL)
+                            {
+                            ?>
+                                <p><b>Lên chuyên nghiệp </b><span class="txt_666"><?php echo $this->arrPlayer['info']['turned_pro'];?></span></p>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if ($this->arrPlayer['info']['ranking_postition'] != NULL)
+                            {
+                                if ($this->arrPlayer['info']['gender'] != NULL)
+                                {
+                                    if ($this->arrPlayer['info']['gender'] == 1)
+                                    {
+                                        $typeRanking = 'Xếp hạng ATP';
+                                    }
+                                    else
+                                    {
+                                        $typeRanking = 'Xếp hạng WTA';
+                                    }
+                                    ?>
+                                    <p><b>Xếp hạng ATP </b><span class="txt_666"><?php echo '#' . $this->arrPlayer['info']['ranking_postition']; ?></span></p>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+            if (!empty($this->newsPlayer))
+            {
+            ?>
+            <div class="item_thongtin width_common  box_category">
+                <div class="title_box_category width_common">
+                    <h2 class="txt_main_category"><a>Tin liên quan</a></h2>
+                </div>
+                <div class="content_thongtin width_common">
+                    <div class="news_left_300">
+                        <?php
+                        $data = array_shift($this->newsPlayer);
+                        $data = $this->objArticle->getArticleBasic($data);
+                        ?>
+                        <a href="<?php echo $data['share_url']; ?>" title="<?php echo $data['title_format']; ?>" >
+                            <img  src="<?php echo $this->Imageurl($data['thumbnail_url'], 'size6'); ?>" alt="<?php echo $data['title_format']; ?>"/>
+                        </a>
+                        <h1 class="title_news"><a href="<?php echo $data['share_url']; ?>" title="<?php echo $data['title_format']; ?>" class="txt_black_hover_blue"><?php echo $data['title']; ?></a></h1>
+                        <div class="width_common txt_666 txt_11"><?php echo date('H:i | d/m/Y', $data['publish_time']); ?>
+                            <span class="no_wrap">
+                                <?php echo $this->ArticleViewIcon($data); ?>
+                                <?php echo $this->ArticleComment($data); ?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="news_right_360">
+                        <ul class="list_dot_3x3">
+                            <?php
+                            if (!empty($this->newsPlayer))
+                            {
+                                $i = 0;
+                                foreach ($this->newsPlayer as $data)
+                                {
+                                    $data = $this->objArticle->getArticleBasic($data);
+                                    if (empty($data))
+                                    {
+                                        continue;
+                                    }
+                                    ?>
+                                    <li >
+                                       <h2 class="title_news">
+                                            <a href="<?php echo $data['share_url']; ?>"><?php echo $data['title_format']; ?></a>
+                                        </h2>
+                                        <div class="news_lead" data-mobile-href="<?php echo $data['share_url']; ?>"><?php echo $data['lead']; ?></div>
+                                    </li>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <?php
+            }
+            ?>
+            <?php
+            if (!empty($this->arrMatchesSingle) || !empty($this->arrMatchesDouble))
+            {
+            ?>
+            <div class="item_thongtin width_common  box_category">
+                <div class="title_box_category width_common">
+                    <h2 class="txt_main_category"><a>Trận đấu gần đây</a></h2>
+                </div>
+                <div class="content_thongtin width_common">
+                    <div class="tbl_list_detail_tennis">
+                        <div class="space_bottom_10">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                      <th class="w80 block_hidden320">Vòng đấu</th>
+                                        <th class="w250">Đối thủ</th>
+                                        <th class="w70">Kết quả</th>
+                                        <th class="txt_right">Tỷ số</th>
+                                    </tr>
+                                    <tr class="secon_row">
+                                        <td class="txt_center" colspan="4"><b>Đơn</b></td>
+                                    </tr>
+                                    <?php
+                                    $i = 1;
+                                    foreach ($this->arrMatchesSingle as $value)
+                                    {
+                                        if ($this->player_id == $value['player1a'])
+                                        {
+                                            $opponents_id = $value['player2a'];
+                                            $opponents_name = $value['player2a_info']['name'];
+                                            $opponents_seo = Fpt_Filter::setSeoLink($value['player2a_info']['name']);
+                                            $goal_team1 = (int) $value['goal_team1'];
+                                            $goal_team2 = (int) $value['goal_team2'];
+                                            if ($goal_team1 > $goal_team2)
+                                            {
+                                                $result = 'Thắng';
+                                                $color = 'clor_win';
+                                            }
+                                            else
+                                            {
+                                                $result = 'Thua';
+                                                $color = 'clor_lost';
+                                            }
+                                        }
+                                        else
+                                        {
+                                            $opponents_id = $value['player1a'];
+                                            $opponents_name = $value['player1a_info']['name'];
+                                            $opponents_seo = Fpt_Filter::setSeoLink($value['player1a_info']['name']);
+                                            $goal_team1 = (int) $value['goal_team1'];
+                                            $goal_team2 = (int) $value['goal_team2'];
+                                            if ($goal_team1 > $goal_team2)
+                                            {
+                                                $result = 'Thua';
+                                                $color = 'clor_lost';
+                                            }
+                                            else
+                                            {
+                                                $result = 'Thắng';
+                                                $color = 'clor_win';
+                                            }
+                                        }
+                                        ?>
+                                    <tr class="<?php echo ($i % 2 == 0) ? 'bg_le' : ''; ?>">
+                                        <td class="block_hidden320"><?php echo $value['round']; ?></td>
+                                        <td><a href="<?php echo $this->config['url'], '/tennis/tay-vot/' . $opponents_seo . '-' . $opponents_id . '.html'; ?>" title="<?php echo $opponents_name; ?>" class="name_per_tennis"><?php echo $opponents_name; ?></a></td>
+                                        <td class=""><span class="<?php echo $color; ?>"><?php echo $result; ?></span></td>
+                                        <td class="txt_right">
+                                            <?php
+                                            $count_set = (count($value['set']) > 0) ? count($value['set']) : 0;
+                                            if (is_array($value['set']) && $count_set > 0)
+                                            {
+                                                $j = 1;
+                                                foreach ($value['set'] as $sets)
+                                                {
+                                                    ?>
+                                                    <?php
+                                                    echo $sets['point_team1'];
+                                                    if ($sets['tie_break_team1'] > 0)
+                                                    {
+                                                        ?> <sup><?php echo $sets['tie_break_team1']; ?></sup> <?php } ?> -
+                                                    <?php
+                                                    echo $sets['point_team2'];
+                                                    if ($sets['tie_break_team2'] > 0)
+                                                    {
+                                                        ?>
+                                                        <sup><?php echo $sets['tie_break_team2']; ?></sup>
+                                                    <?php
+                                                    }
+                                                    echo($j < $count_set) ? ',' : '';
+                                                    ?>
+                                                    <?php
+                                                    $j++;
+                                                }
+                                            }
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php
+                        if (!empty($this->arrMatchesDouble))
+                        {
+                        ?>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th class="w80 block_hidden320">Vòng đấu</th>
+                                    <th class="w250">Đối thủ</th>
+                                    <th class="w70">Kết quả</th>
+                                    <th class="txt_right">Tỷ số</th>
+                                </tr>
+                                <?php
+                                foreach ($this->arrMatchesDouble as $key => $values)
+                                {
+                                    ?>
+                                    <tr class="secon_row">
+                                        <td class="txt_center" colspan="4"><b>Đôi nam - Đồng đội: <?php echo $key; ?></b></td>
+                                    </tr>
+                                    <?php
+                                    $i = 1;
+                                    foreach ($values as $value)
+                                    {
+                                        if ($this->player_id == $value['player1a'] || $this->player_id == $value['player1b'])
+                                        {
+                                            $opponents_id1 = $value['player2a'];
+                                            $opponents_id2 = $value['player2b'];
+                                            $opponents_name1 = $value['player2a_info']['name'];
+                                            $opponents_name2 = $value['player2b_info']['name'];
+                                            $opponents_seo1 = Fpt_Filter::setSeoLink($value['player2a_info']['name']);
+                                            $opponents_seo2 = Fpt_Filter::setSeoLink($value['player2b_info']['name']);
+                                            $goal_team1 = (int) $value['goal_team1'];
+                                            $goal_team2 = (int) $value['goal_team2'];
+                                            if ($goal_team1 > $goal_team2)
+                                            {
+                                                $result = 'Thắng';
+                                                $color = 'clor_win';
+                                            }
+                                            else
+                                            {
+                                                $result = 'Thua';
+                                                $color = 'clor_lost';
+                                            }
+                                        }
+                                        else
+                                        {
+                                            $opponents_id1 = $value['player1a'];
+                                            $opponents_id2 = $value['player1b'];
+                                            $opponents_name1 = $value['player1a_info']['name'];
+                                            $opponents_name2 = $value['player1b_info']['name'];
+                                            $opponents_seo1 = Fpt_Filter::setSeoLink($value['player1a_info']['name']);
+                                            $opponents_seo2 = Fpt_Filter::setSeoLink($value['player1b_info']['name']);
+                                            $goal_team1 = (int) $value['goal_team1'];
+                                            $goal_team2 = (int) $value['goal_team2'];
+                                            if ($goal_team1 > $goal_team2)
+                                            {
+                                                $result = 'Thua';
+                                                $color = 'clor_lost';
+                                            }
+                                            else
+                                            {
+                                                $result = 'Thắng';
+                                                $color = 'clor_win';
+                                            }
+                                        }
+                                        ?>
+                                        <tr class="<?php echo ($i % 2 == 0) ? 'bg_le' : ''; ?>">
+                                            <td class="block_hidden320"><?php echo $value['round']; ?></td>
+                                            <td>
+                                                <a href="<?php echo $this->config['url'], '/tennis/tay-vot/' . $opponents_seo1 . '-' . $opponents_id1 . '.html'; ?>" title="<?php echo $opponents_name1; ?>" class="name_per_tennis"><?php echo $opponents_name1; ?></a>
+                                                <span class="txt_666">&amp;</span>
+                                                <a href="<?php echo $this->config['url'], '/tennis/tay-vot/' . $opponents_seo2 . '-' . $opponents_id2 . '.html'; ?>" title="<?php echo $opponents_name2; ?>" class="name_per_tennis"><?php echo $opponents_name2; ?></a>
+                                            </td>
+                                            <td class=""><span class="<?php echo $color; ?>"><?php echo $result; ?></span></td>
+                                            <td class="txt_right">
+                                                <?php
+                                                $count_set = (count($value['set']) > 0) ? count($value['set']) : 0;
+                                                if (is_array($value['set']) && $count_set > 0)
+                                                {
+                                                    $j = 1;
+                                                    foreach ($value['set'] as $sets)
+                                                    {
+                                                        ?>
+                                                        <?php
+                                                        echo $sets['point_team1'];
+                                                        if ($sets['tie_break_team1'] > 0)
+                                                        {
+                                                            ?> <sup><?php echo $sets['tie_break_team1']; ?></sup> <?php } ?> -
+                                                        <?php
+                                                        echo $sets['point_team2'];
+                                                        if ($sets['tie_break_team2'] > 0)
+                                                        {
+                                                            ?>
+                                                            <sup><?php echo $sets['tie_break_team2']; ?></sup>
+                                                        <?php
+                                                        }
+                                                        echo($j < $count_set) ? ',' : '';
+                                                        ?>
+                                                        <?php
+                                                        $j++;
+                                                    }
+                                                }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        $i++;
+                                    }
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <?php
+            }
+            ?>
+            <?php
+            if (!empty($this->arrPlayer['statistic']))
+            {
+            ?>
+            <div class="item_thongtin width_common  box_category">
+                <div class="title_box_category width_common">
+                    <h2 class="txt_main_category"><a>Thống kê</a></h2>
+                </div>
+                <div class="content_thongtin width_common">
+                    <div class="tbl_list_detail_tennis tb_thongke">
+                        <table>
+                            <tbody><tr class="firt_row">
+                                    <th class="w80">Năm    </th>
+                                    <th class="w150 block_hidden320"> Tiền thưởng  </th>
+                                    <th class="txt_center w100 block_hidden320"> Số danh hiệu đơn   </th>
+                                    <th class="txt_center block_hidden320">   Số danh hiệu đôi </th>
+                                    <th class="txt_right">  Thắng - Thua</th>
+                                </tr>
+                                <?php
+                                $stt = 1;
+                                $arrPlayerStat = array_reverse($this->arrPlayer['statistic']);
+                                foreach ($arrPlayerStat as $playerStat)
+                                {
+                                    ?>
+                                    <?php
+                                    if ($playerStat['year'] != 0)
+                                    {
+                                        ?>
+                                        <tr class="<?php echo $stt % 2 ? 'bg_le' : '' ?>">
+                                            <td><?php echo $playerStat['year'] ?></td>
+                                            <td class="block_hidden320"><?php echo '$' . number_format($playerStat['prize_money'], 0, '.', ',') ?></td>
+                                            <td class="txt_center block_hidden320"><?php echo $playerStat['single_title'] ?></td>
+                                            <td class="txt_center block_hidden320"><?php echo $playerStat['double_title'] ?></td>
+                                            <td class="txt_center"><?php echo $playerStat['win'] ?>-<?php echo $playerStat['lost'] ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <tr class="end_row">
+                                            <td>SỰ NGHIỆP</td>
+                                            <td class="block_hidden320"><?php echo '$' . number_format($playerStat['prize_money'], 0, '.', ',') ?></td>
+                                            <td class="txt_center block_hidden320"><?php echo $playerStat['single_title'] ?></td>
+                                            <td class="txt_center block_hidden320"><?php echo $playerStat['double_title'] ?></td>
+                                            <td class="txt_center"><?php echo $playerStat['win'] ?>-<?php echo $playerStat['lost'] ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                    <?php
+                                    $stt++;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <?php
+            }
+            ?>
+
+        </div>
+        <div class="right" id="col_300">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+</div>
+<div class="banner_980x60">
+    <?php echo $this->GetBlock('footer'); ?>
+</div>

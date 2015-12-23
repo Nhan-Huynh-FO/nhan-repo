@@ -1,0 +1,81 @@
+<?php
+if (!empty($this->arrFixture))
+{
+    $objTeam = $this->objObject->getTeam();
+    $objMatch = $this->objObject->getMatch();
+    $team1 = $team2 = array();
+    ?>
+    <div class="width_common box m_sub_guess">
+        <?php
+        foreach ($this->arrFixture as $matchId => $score)
+        {
+            //get detail match
+            $matchDetail = $objMatch->getDetailObjectBasic($matchId);
+            $classTable = '';
+            $dateTime = '';
+            if (empty($matchDetail))
+            {
+                continue;
+            }
+            $objTeam->setId(array($matchDetail['team1'], $matchDetail['team2']));
+            $team1 = $objTeam->getDetailObjectBasic($matchDetail['team1']);
+            $team2 = $objTeam->getDetailObjectBasic($matchDetail['team2']);
+            if ($matchDetail['status'] == 2 || $matchDetail['status'] == 1) //chua dien ra or da ket thuc
+            {
+                $dateTime = date('H:i', $matchDetail['datetime_happen']);
+                $classTable = 'm_none';
+            }
+            else
+            {
+                $dateTime = isset($matchDetail['matchTime']) && !empty($matchDetail['matchTime']) ? $matchDetail['matchTime'] . "'" : 'FT';
+                $classTable = '';
+            }
+            $title = Fpt_Filter::setSeoLink('tran-' . $team1['name'] . ' vs ' . $team2['name']);
+            ?>
+            <table class="width_common space_box <?php echo $classTable; ?>">
+                <caption><?php echo $this->DateTimeFormat($matchDetail['datetime_happen'], 'long_fixture'); ?></caption>
+                <tbody>
+                    <tr class="m_time">
+                        <td></td>
+                        <td><?php echo $dateTime; ?></td>
+                        <td></td>
+                    </tr>
+                    <tr class="m_info">
+                        <td class="m_team_a">
+                            <span class="m_board"><?php echo!empty($matchDetail['round']) ? trim(substr($matchDetail['round'], -1)) : ""; ?></span>
+                            <div class="m_team">
+                                <a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>">
+                                    <img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>" title="<?php echo $team1['name_format']; ?>" />
+                                </a>
+                                <p>
+                                    <a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>">
+                                        <?php echo $team1['name']; ?>
+                                    </a>
+                                </p>
+                            </div>
+                        </td>
+                        <td class="m_score"><?php echo ($matchDetail['status'] != 1) ? "{$matchDetail['goal1']} - {$matchDetail['goal2']}" : ' - '; ?></td>
+                        <td class="m_team_b">
+                            <div class="m_team">
+                                <a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>">
+                                    <img width="18" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size1'); ?>" alt="<?php echo $team2['name_format']; ?>" title="<?php echo $team2['name_format']; ?>" />
+                                </a>
+                                <p>
+                                    <a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>">
+                                        <?php echo $team2['name']; ?>
+                                    </a>
+                                </p>
+                            </div>
+                            <a class="m_btn_next ico" href="<?php echo $this->configView['url'] . "/thong-ke/{$title}-{$matchDetail['id']}" ?>" title="Thống kê trận đấu <?php echo $data['name_format']; ?>"></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <?php
+        }
+        ?>
+    </div>
+    <div class="clear"></div>
+    <?php
+}
+?>

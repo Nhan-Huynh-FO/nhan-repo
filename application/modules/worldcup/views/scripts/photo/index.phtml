@@ -1,0 +1,108 @@
+<div id="col_left">
+    <?php    
+    if (!empty($this->arrTop))
+    {
+        $albumTop = $this->objArticle->getArticleBasic($this->arrTop);
+    ?>
+    <div class="width_common space_box" id="spotlight">
+        <?php
+        if(!empty($albumTop['thumbnail_url']))
+        {
+        ?>
+        <div class="block_image">
+            <a href="<?php echo $this->ShareurlWorldcup($albumTop['share_url']); ?>" title="<?php echo $albumTop["title_format"]; ?>" alt="<?php echo $albumTop["title_format"]; ?>">
+                <img src="<?php echo $this->Imageurl($albumTop['thumbnail_url'], 'size4'); ?>" alt="<?php echo $albumTop["title_format"]; ?>">
+            </a>
+        </div>
+        <?php
+        }
+        ?>
+        <div class="block_title">
+            <div class="txt_title">
+                <a href="<?php echo $this->ShareurlWorldcup($albumTop['share_url']); ?>" title="<?php echo $albumTop["title_format"]; ?>" alt="<?php echo $albumTop["title_format"]; ?>">
+                    <?php echo $albumTop["title"]; ?>
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+    <?php
+    if(!empty($this->arrData))
+    {
+        ?>
+        <div class="content_page_anh width_common" id="list_photo">
+            <ul class="list_photo_dulich">
+                <?php
+                foreach ($this->arrData as $id)
+                {
+                    $photo = $this->objArticle->getArticleBasic($id);
+                    if(empty($photo))
+                        continue;
+                    ?>
+                    <li>
+                        <?php
+                        if(!empty($photo['thumbnail_url']))
+                        {
+                        ?>
+                        <div class="thumb_140">
+                            <a title="video name" href="<?php echo $this->ShareurlWorldcup($photo['share_url']); ?>" title="<?php echo $photo["title_format"]; ?>">
+                                <img alt="<?php echo $photo["title_format"]; ?>" src="<?php echo $this->Imageurl($photo['thumbnail_url'], 'size6'); ?>">
+                            </a>
+                            <a class="icon_thumb_videophoto icon_photo" href="<?php echo $this->ShareurlWorldcup($photo['share_url']); ?>">&nbsp;</a>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                        <div class="title_news">
+                            <a class="txt_link" title="video name" href="<?php echo $this->ShareurlWorldcup($photo['share_url']); ?>" title="<?php echo $photo["title_format"]; ?>">
+                                <?php echo $photo["title"]; ?>
+                            </a>
+                        </div>
+                        <?php
+                        if (DEVICE_ENV != 1)
+                        {
+                            ?>
+                            <div class="block_view_num txt_11 width_common">
+                                <span class="txt_666"><?php echo $arrDate = date("d/m", $photo['publish_time']); ?> |</span> <span class="view_num"><?php echo $this->Articleview($photo); ?> lượt xem</span>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </li>
+                    <?php
+                }
+                ?>
+            </ul>
+            <?php
+            //Xem them
+            if (DEVICE_ENV != 1)
+            {
+                ?>
+                <div class="bottom_pagination width_common">
+                    <div class="bottom_pagination width_common">
+                        <?php
+                        echo $this->PaginationAjax($this->arrParamPaging, 'photoPaging');
+                        ?>
+                    </div>
+                </div>
+            <?php
+            }
+            else
+            {
+                ?>
+                <div class="xemtiep hiddenweb">
+                    <a href="<?php echo $this->configView['url'] . '/mobile/otherphoto'; ?>" data-container="#list_photo .list_photo_dulich" data-params="<?php echo $this->escape(Zend_Json::encode(array('limit' => LIMIT_PHOTO_MORE, 'offset' => $this->intOffset, 'total' => $this->intTotalAlbum, 'exclude' => array()))); ?>">Xem tiếp</a>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+        <?php
+    }
+    ?>
+</div>
+<div id="col_right">
+    <?php echo $this->GetBlock('left'); ?>
+</div>

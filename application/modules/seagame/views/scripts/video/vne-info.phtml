@@ -1,0 +1,96 @@
+<?php echo '<?xml version = "1.0" encoding = "utf-8" ?>' ?>
+<playlist>
+    <?php
+    if (!empty($this->arrData))
+    {
+        $id       = $this->intId;
+        $data     = $this->data;
+        $arrData  = $this->arrData;
+        //Suggest video, loai tru Video dang xem, video lien quan
+        $moreUrl  = $this->config['url'] . '/video/vne-more/id/' . $id.'/exclude/'.$this->strExclude;
+        $mediaUrl = $this->arrDataRV['url'];   
+		$hours = (int)($arrData['duration']/60/60);
+        $minutes = (int)($arrData['duration']/60)-$hours*60;
+        $seconds = (int)$arrData['duration']-$hours*60*60-$minutes*60;
+        $imageUrl = $this->ImageurlArticle($data, 'size8', -1);
+        //Define cate world cup 2014
+        //$arrCate = array(1003597,1003598,1003599,1003600,1003601,1003602,1003603);
+        //Check show quang cao
+        if ( $this->typeVideo == 2 )
+        {
+            $isShowAds  = isset($data['privacy']) && $data['privacy']==1;
+        }
+        else
+        {
+            $isShowAds  = (isset($data['privacy']) && ($data['privacy']&32)!=32)?true:false;
+        }//end if
+        if ($arrDataRV['have_license'] == 1)// && in_array($data['category_id'], $arrCate))
+        {
+            $isLicense = true;
+        }
+        else
+        {
+            $isLicense = false;
+        }
+        if($isShowAds && $isLicense)//Show qc 3D world cup
+        {
+            $zoneId = $this->configView['eclick']['adslicense3d']['zone'];
+            $adsLink = $this->getFrom==1?ADS_LINK:ADS_LINK_DETAIL;
+        }
+        /*else if($isShowAds)//Show qc binh thuong (tren world cup khong duoc phep show quang cao)
+        {
+            $zoneId = "";//$this->configView['eclick']['ads']['zone'];
+            $adsLink = "";//$this->getFrom==1?ADS_LINK:ADS_LINK_DETAIL;
+        }*/
+        else
+        {
+            $zoneId = "";
+            $adsLink = '';
+        }
+        ?>
+        <adsLink><![CDATA[<?php echo $adsLink; ?>]]></adsLink>
+        <exfunction name="updateContent"></exfunction>
+        <typeview>1</typeview>
+        <type>video</type>
+        <track id="<?php echo $id; ?>" link="<?php echo $mediaUrl; ?>" linkDetail="<?php echo $data['share_url']; ?>" target="_blank" time="0" view="0" descriptionImage="<?php echo $imageUrl; ?>" duration="<?php echo $arrData['duration']; ?>" moreLink="<?php echo $moreUrl;?>"></track>
+        <id><?php echo $id; ?></id>
+        <name><![CDATA[<?php echo html_entity_decode($data['title']); ?>]]></name>
+        <adsConfig>
+			<![CDATA[
+				{"ads": {
+					"schedule" :[
+						{
+						"zoneId":<?php echo $zoneId;?>,
+						"width":640,
+						"height":360,  
+						"type":"pre-roll",
+						"skippable":"true",
+						"duration":"00:00:06",
+						"skipoffset":"00:00:00",
+						"tag":"http://cpm.d.eclick.vn/zone/1774.preroll.xml"
+            			}]
+            	}
+            }]]>
+		</adsConfig>
+        <tracks>
+            <track>
+            <id><?php echo $id; ?></id>
+            <type>video</type>
+            <url><![CDATA[<?php echo $mediaUrl; ?>]]></url>
+            <title link="<?php echo $data['share_url']; ?>"><![CDATA[<?php echo html_entity_decode($data['title']); ?>]]></title>
+            <artist link=""><![CDATA[]]></artist>
+            <category><![CDATA[]]></category>
+            <thumburl><![CDATA[<?php echo $imageUrl; ?>]]></thumburl>
+            <duration><?php echo $arrData['duration']; ?></duration>
+            <suburl><![CDATA[]]></suburl>
+            <suggesturl><?php echo $moreUrl;?></suggesturl>
+            <share>
+                <link><![CDATA[<?php echo $data['share_url']; ?>]]></link>
+                <blog><![CDATA[]]></blog>
+            </share>
+            </track>
+        </tracks>
+        <?php
+    }
+    ?>
+</playlist>

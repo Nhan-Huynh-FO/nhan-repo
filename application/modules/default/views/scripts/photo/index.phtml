@@ -1,0 +1,98 @@
+<div id="page_anh" class="width_common">
+    <?php
+    if (!empty($this->arrTop))
+    {
+        $arrTop    = $this->arrTop;
+        $arrTop1   = array_shift($arrTop);
+        $albumTop1 = $this->objArticle->getArticleBasic($arrTop1);
+        ?>
+        <div id="box_anh_page" class="width_common">
+            <div class="block_image_left">
+                <a href="<?php echo $albumTop1['share_url']; ?>" title="<?php echo $albumTop1["title_format"]; ?>" class="txt_image">
+                    <img src="<?php echo $this->Imageurl($albumTop1['thumbnail_url'], 'size4'); ?>" alt="<?php echo $albumTop1["title_format"]; ?>">
+                </a>
+                <h2 class="txt_title"><a href="<?php echo $albumTop1['share_url']; ?>" title="<?php echo $albumTop1["title_format"]; ?>"><?php echo $albumTop1["title"]; ?></a></h2>
+            </div>
+            <div class="block_image_right">
+                <?php
+                foreach ($arrTop as $id)
+                {
+                    $album = $this->objArticle->getArticleBasic($id);
+                    if (empty($album))
+                    {
+                        continue;
+                    }
+                    ?>
+                    <div class="image_item width_common">
+                        <a href="<?php echo $album['share_url']; ?>" title="<?php echo $album["title_format"]; ?>"><img src="<?php echo $this->Imageurl($album['thumbnail_url'], 'size6'); ?>" alt="<?php echo $album["title_format"]; ?>" class="left"></a>
+                        <h2 class="txt_title"><a href="<?php echo $album['share_url']; ?>" title="<?php echo $album["title_format"]; ?>"><?php echo $album["title"]; ?></a></h2>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+        <?php
+    }
+    ?>
+    <div class="width_common line_mid_980_300">
+        <div class="left" id="col_660">
+            <div class="item_trandau width_common box_category">
+                <div class="content_item_trandau width_common" id="list_photo">
+                    <ul class="list_photo_trandau">
+                        <?php
+                        foreach ($this->arrData as $id)
+                        {
+                            $photo = $this->objArticle->getArticleBasic($id);
+                            ?>
+                            <li>
+                                <div class="thumb_140">
+                                    <a title="video name" href="<?php echo $photo['share_url']; ?>" title="<?php echo $photo["title_format"]; ?>"><img alt="<?php echo $photo["title_format"]; ?>" src="<?php echo $this->Imageurl($photo['thumbnail_url'], 'size6'); ?>">  </a>
+                                    <a class="icon_thumb_videophoto icon_photo" href="#">&nbsp;</a>
+                                </div>
+                                <h2 class="title_news"><a class="txt_link" href="<?php echo $photo['share_url']; ?>" title="<?php echo $photo["title_format"]; ?>"><?php echo $photo["title"]; ?></a></h2>
+                                <?php
+                                if (DEVICE_ENV != 1)
+                                {
+                                    ?>
+                                    <div class="block_view_num txt_11 width_common">
+                                        <span class="txt_666"><?php echo $arrDate = date("d/m", $photo['publish_time']); ?> |</span> <span class="view_num"><?php echo $this->Articleview($photo); ?> lượt xem</span>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </li>
+                            <?php
+                        }
+                        ?>
+                    </ul>
+                    <?php
+                    //Xem them
+                    if (DEVICE_ENV != 1)
+                    {
+                        ?>
+                        <div class="bottom_pagination width_common">
+                            <?php
+                            echo $this->PaginationAjax($this->arrParamPaging, 'photoPaging');
+                            ?>
+                        </div>
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <div class="xemtiep">
+                            <a href="<?php echo $this->configView['url'] . '/mobile/otherphoto'; ?>" data-container="#list_photo .list_photo_trandau" data-params="<?php echo $this->escape(Zend_Json::encode(array('limit' => LIMIT_PHOTO_MORE, 'offset' => $this->intOffset, 'total' => $this->intTotalAlbum, 'exclude' => array()))); ?>">Xem tiếp</a>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+        <div class="right" id="col_300">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+</div>
+<div class="banner_980x60"><?php echo $this->GetBlock('footer'); ?></div>

@@ -1,0 +1,53 @@
+<?php
+if (!empty($this->arrData))
+{
+?>
+<div class="block_widget">
+    <div class="title_widget width_common_widget">
+        <div class="title_widget_left">
+            <a href="/" title="Thể thao" target="_blank" class="title_txt pt_thethao">Thể thao</a>
+        </div>
+        <div class="title_widget_right">
+            <a href="/" target="_blank" class="txt_name_portal">thethao.vnexpress.net</a>
+        </div>
+    </div>
+    <?php
+    if (!empty($this->arrData))
+    {
+        ?>
+        <div class="content_widget width_common_widget">
+            <ul class="list_news_widget_1">
+                <?php
+                $i = 0;
+                foreach ($this->arrData as $id)
+                {
+                    $article = $this->objArticle->getArticleBasic($id);
+                    if (empty($article))
+                    {
+                        continue;
+                    }
+                    $class = $i == 0 ? 'class="first_line line_thethao"' : '';
+                    ?>
+                    <li <?php echo $class; ?>>
+                        <a target="_blank" href="<?php echo $article['share_url']; ?>" class="wg_image_thumb" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                            <img src="<?php echo $this->ImageurlArticle($article, 'size1'); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>" class="wg_image" />
+                        </a>
+                        <a target="_blank" href="<?php echo $article['share_url']; ?>" class="txt_wg_title" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                            <?php
+                            echo $article['title'];
+                            ?>
+                        </a>
+                    </li>
+                    <?php
+                    $i++;
+                }
+                ?>
+            </ul>
+        </div>
+        <?php
+    }
+    ?>
+    <div class="clear"></div>
+</div>
+<?php
+}

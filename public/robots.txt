@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://thethao.vnexpress.net/sitemap.xml

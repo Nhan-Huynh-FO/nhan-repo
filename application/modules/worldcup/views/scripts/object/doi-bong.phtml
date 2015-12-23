@@ -1,0 +1,161 @@
+<div class="line_gray line_page width_common">
+    <div id="col_left">
+        <?php
+        if(DEVICE_ENV != 1)
+        {
+        ?>
+        <div class="block_slder_top space_box" id="top_fixture_worldcup">
+            <div style="text-align: center;"><p style="padding: 25px 0;">Đang tải dữ liệu...</p></div>
+        </div>
+        <?php
+        }
+        ?>
+        <div class="page_result_detail_team">
+            <div class="title width_common space_box">
+                <?php
+                if(!empty($this->teamDetail['thumbnail']))
+                {
+                ?>
+                <img width="60" alt="<?php echo $this->teamDetail['name']; ?>" src="<?php echo $this->Imageurl($this->teamDetail['thumbnail'], 'size1'); ?>">
+                <?php
+                }
+                ?>
+                <?php echo $this->teamDetail['name']; ?>
+                <div class="block_clear_men"><a target="_blank" onclick="thethao.trackingImpression()" href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=10045207&PluID=0&ord=<?php echo time();?>" title="Clear Men"><img src="<?php echo $this->configView['images']; ?>/graphics/img_clearmen.png" /></a></div>
+            </div>
+            <div class="vongloai_vongbang tab_content">
+                <ul class="tabs space_box">
+                    <li rel="tab_info"><a class="tab active" href="javascript:;" onclick="Team.changeTabContent(this);">Thông tin</a></li>
+                    <li rel="tab_schedule"><a class="tab" href="javascript:;" data-url="<?php echo $this->configView['url'] . '/load-list-fixture/doi-bong-' . $this->teamDetail['id'] . '.html'; ?>" onclick="Team.changeTabContent(this);">Lịch thi đấu</a></li>
+                    <li rel="tab_history"><a id="his" class="tab" href="javascript:;" onclick="Team.changeTabContent(this);">Lịch sử</a></li>
+                </ul>
+                <div class="content active width_common" id="tab_info">
+                    <?php
+                    if (!empty ($this->arrFixture))
+                    {
+                    ?>
+                    <div class="slider_top_team ">
+                        <?php echo $this->render('object/box_fixture.phtml'); ?>
+                    </div>
+                    <?php
+                    }
+                    ?>
+                    <div class="page_trandau">
+                        <?php
+                        if (! empty($this->arrNewsId))
+                        {
+                        ?>
+                        <div class="box width_common related_news_t">
+                            <div class="title">Tin liên quan</div>
+                            <div class="body">
+                                <div class="wrap">
+                                    <?php
+                                    $idFirst = array_shift($this->arrNewsId);
+                                    $article = $this->objArticle->getArticleBasic($idFirst);
+
+                                    if (!empty($article))
+                                    {
+                                    ?>
+                                    <div class="thumb">
+                                        <a title="<?php $article['title_format']; ?>" href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>">
+                                            <img class="big_thumb" alt="<?php echo $article['title_format']; ?>" src="<?php echo $this->ImageurlArticle($article, 'size6'); ?>">
+                                        </a>
+                                        <div class="title_thumb">
+                                            <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php $article['title_format']; ?>">
+                                                <?php echo $article['title_format']; ?>
+                                            </a>
+                                        </div>
+                                        <div class="width_common txt_666 txt_11">
+                                            <?php echo $this->DateTimeFormat($article['publish_time'], 'custom'); ?>
+                                            <span class="no_wrap">
+                                                <?php echo $this->ArticleComment($article); ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    }
+                                    if (!empty($this->arrNewsId))
+                                    {
+                                    ?>
+                                    <ul class="related">
+                                        <?php
+                                        $i = 0;
+                                        foreach ($this->arrNewsId as $id)
+                                        {
+                                            $article = $this->objArticle->getArticleBasic($id);
+                                            if (empty($article))
+                                            {
+                                                continue;
+                                            }
+                                            $i++;
+                                            ?>
+                                            <li class="<?php echo $i==1?'first':''; ?>">
+                                                <div class="title_sub">
+                                                    <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php $article['title_format']; ?>">
+                                                        <?php echo $article['title_format']; ?>
+                                                    </a>
+                                                </div>
+                                                <p><?php echo $article['lead'];?></p>
+                                            </li>
+                                            <?php
+                                        }
+                                        ?>
+                                    </ul>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        }
+                        if (!empty ($this->extend['Lead']) && DEVICE_ENV != 1)
+                        {
+                        ?>
+                        <div class="box width_common space_box detail_player team_history">
+                            <div class="title">Lịch sử đội bóng</div>
+                            <div class="txt_view_more"><a class="txt_666" href="javascript:;" rel="history" onclick="Team.nextTabContent('his', 'tab_history');">Xem thêm</a></div>
+                            <div class="body">
+                                <div class="wrap_player">
+                                     <div class="img_player"><img src="<?php echo $this->Imageurl($this->extend['Avatar'], 'size2', false); ?>" alt="Avatar"></div>
+                                    <div class="info_player">
+                                        <?php echo $this->extend['Lead']; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <!-- end Thong tin lien quan -->
+                </div>
+                <!--TAB LICH THI DAU-->
+                <div class="page_schedule content <?php echo DEVICE_ENV != 1?'page_trandau style_2':''; ?>" id="tab_schedule"></div>
+                <!--END TAB LICH THI DAU-->
+                <div class="content" id="tab_history">
+                    <?php
+                    if ($this->extend['Lead'] || $this->extend['Avatar'] || $this->extend['Content'] || $this->extend['Award'])
+                    {
+                        if (DEVICE_ENV == 1)
+                        {
+                            echo $this->extend['Lead'];
+                        }
+                        else
+                        {
+                            echo $this->extend['Content'];
+                        }
+                    }
+                    else
+                    {
+                        echo '<p>Hiện chưa có thông tin lịch sử đội bóng</p>';
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="col_right">
+        <?php echo $this->GetBlock('left'); ?>
+    </div>
+</div>

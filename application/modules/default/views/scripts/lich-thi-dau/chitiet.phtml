@@ -1,0 +1,526 @@
+<div class="block_chose_day width_common">
+    <div class="txt_left txt_11">Lịch thi đấu tính theo giờ Việt Nam (GMT + 7)</div>
+    <div class="right">
+        <div class="txt_ngay left">
+            <strong class="txt_11">
+                <?php
+                $day = date('N', $this->currUnixTime) + 1;
+                $date = date('d/m/Y', $this->currUnixTime);
+                if ($day == 8)
+                    echo "Chủ nhật - $date";
+                else
+                    echo "Thứ $day - $date";
+                ?>
+            </strong>
+        </div>
+        <div class="left control_pagination">
+            <a class="icon_responsive ico_respone_04" href="javascript:;" onclick="fixture.changeDate('<?php echo date('Y-m-d', $this->prevUnixTime); ?>')"> </a>
+            <a class="icon_responsive ico_respone_05" href="javascript:;" onclick="fixture.changeDate('<?php echo date('Y-m-d', $this->nextUnixTime); ?>')"> </a>
+        </div>
+    </div>
+</div>
+<?php
+switch ($this->group)
+{
+    case NULL:
+        $groupQT = isset($this->fixture[GROUP_FOOTBAL_QT]) ? $this->fixture[GROUP_FOOTBAL_QT] : NULL;
+        $groupTN = isset($this->fixture[GROUP_FOOTBAL_VN]) ? $this->fixture[GROUP_FOOTBAL_VN] : NULL;
+        break;
+    case 'trong-nuoc':
+        $groupQT = NULL;
+        $groupTN = isset($this->fixture[GROUP_FOOTBAL_VN]) ? $this->fixture[GROUP_FOOTBAL_VN] : NULL;
+        break;
+    case 'quoc-te':
+        $groupQT = isset($this->fixture[GROUP_FOOTBAL_QT]) ? $this->fixture[GROUP_FOOTBAL_QT] : NULL;
+        $groupTN = NULL;
+        break;
+    default:
+        break;
+}
+$objTeam = $this->objObject->getTeam();
+?>
+<?php
+if ($this->group == NULL || $this->group == 'quoc-te')
+{
+?>
+<div id="cate_club">
+    <div class="block_item_lichthidau width_common">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category">
+                <a href="javascript:;">Bóng đá quốc tế</a>
+            </h2>
+            <div class="perpos txt_input right">
+                <select id="quoc-te" onchange="fixture.changeLeague(this.value, this.id);">
+                    <option value="0" <?php if ($this->leagueId == 0) echo 'selected="selected"'; ?>>Tất cả giải đấu</option>
+                    <?php
+                    if (is_array($this->arrListLeagueQT) && count($this->arrListLeagueQT))
+                    {
+                        foreach ($this->arrListLeagueQT as $leagueId => $leagueName)
+                        {
+                            ?>
+                            <option value="<?php echo $leagueId; ?>" <?php if ($this->leagueId == $leagueId) echo 'selected="selected"'; ?>><?php echo $leagueName; ?></option>
+                            <?php
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+        <?php
+        if (is_array($groupQT) && count($groupQT))
+        {
+        ?>
+        <div class="lichthidau_item width_common">
+        <?php
+            foreach ($groupQT as $group)
+            {
+                ?>
+                <div class="txt_trandau width_common">
+                    <p class="left"><a href="javascript:;" onclick="fixture.changeLeague(<?php echo $group['league_id'] ?>, 'quoc-te');"><?php echo $group['name']; ?></a></p>
+                    <div class="txt_view_more">
+                        <a class="txt_666" href="<?php echo '/bang-xep-hang/', Fpt_Filter::setSeoLink($group['name']), '-', Fpt_Filter::setSeoLink($group['season_name']), '-', $group['league_id'], '-', $group['season_id'], '.html' ?>">Bảng xếp hạng</a>
+                    </div>
+                </div>
+                <ul class="list_capdau width_common">
+                    <?php
+                    $numMatches = count($group['arrMatches']);
+                    $team1 = $team2 = array();
+                    for ($i = 0; $i < $numMatches; $i++)
+                    {
+                        $match = $group['arrMatches'][$i];
+                        $objTeam->setId(array($match['team1'], $match['team2']));
+                        $team1 = $objTeam->getDetailObjectBasic($match['team1']);
+                        $team2 = $objTeam->getDetailObjectBasic($match['team2']);
+                        $team1SeoName = Fpt_Filter::setSeoLink($team1['name']);
+                        $team2SeoName = Fpt_Filter::setSeoLink($team2['name']);
+                        $match['datetime_happen'] = $this->gmt * 3600 + $match['datetime_happen'];
+                        $currTime = $this->gmt * 3600 + $this->currTime;
+                        ?>
+                        <li>
+                            <div class="timer_trandau left">
+                            <?php
+                            if ($currTime > 10800 + $match['datetime_happen'] || $match['status'] == 2)
+                            {
+                                echo 'FT';
+                            }
+                            else {
+                                echo date('H:i', $match['datetime_happen']);
+                            }
+                            ?>
+                            </div>
+                            <div class="block_center_doidau">
+                                <div class="capdau width_common">
+                                    <div class="wdoibong left">
+                                        <a title="<?php echo $team1['name_format']; ?>" href="<?php echo "/doi-bong/$team1SeoName-{$match['team1']}.html" ?>">
+                                        <img src="<?php echo $this->Imageurl($team1['thumbnail'], 'size10'); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>" class="right" />
+                                        </a>
+                                        <span class="right">
+                                            <a class="txt_doibong" title="<?php echo $team1['name_format']; ?>" href="<?php echo "/doi-bong/$team1SeoName-{$match['team1']}.html" ?>"> <?php echo $team1['name']; ?></a>
+                                        </span>
+                                    </div>
+                                    <div class="wtiso left txt_center txt_666">
+                                        <?php
+                                        if ($currTime > 10800 + $match['datetime_happen'] || $match['status'] == 2)
+                                        {
+                                            echo "{$match['goal1']} - {$match['goal2']}";
+                                            if ($match['penalty1'])
+                                            {
+                                                echo '<br />(', "{$match['penalty1']} - {$match['penalty2']}", ')';
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if ($currTime > $match['datetime_happen'] && $currTime <= 10800 + $match['datetime_happen'])
+                                            {
+                                                echo "{$match['goal1']} - {$match['goal2']}";
+                                                if ($match['penalty1'] || $match['penalty2'])
+                                                    echo '<br />(', "{$match['penalty1']} - {$match['penalty2']}",')';
+                                            }
+                                            else
+                                                echo 'V';
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="wdoibong right">
+                                        <a title="<?php echo $team2['name_format']; ?>" href="<?php echo "/doi-bong/$team2SeoName-{$match['team2']}.html" ?>">
+                                        <img src="<?php echo $this->Imageurl($team2['thumbnail'], 'size10'); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>" class="left" />
+                                        </a>
+                                        <span class="left">
+                                            <a class="txt_doibong" title="<?php echo $team2['name_format']; ?>" href="<?php echo "/doi-bong/$team2SeoName-{$match['team2']}.html" ?>"> <?php echo $team2['name']; ?></a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="width_common txt_link_thongtin_capdau txt_666">
+                                    <p>
+                                        <a class="txt_666" href="<?php echo $this->matchDetailUrl('diem-tin', $team1['name'], $team2['name'], $match['id']); ?>">Điểm tin</a> &nbsp; | &nbsp;
+                                        <a class="txt_666" href="<?php echo $this->matchDetailUrl('tuong-thuat', $team1['name'], $team2['name'], $match['id']); ?>">Trực tiếp</a> &nbsp; | &nbsp;
+                                        <a class="txt_666" href="<?php echo $this->matchDetailUrl('anh-video', $team1['name'], $team2['name'], $match['id']); ?>">Video</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+                <?php
+            }
+            ?>
+        </div>
+        <?php
+        }
+        else
+        {
+            ?>
+            <div class="width_common box_category block_item_lichthidau">
+                Không có trận đấu trong ngày.
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+<?php
+}
+?>
+<?php
+if ($this->group == NULL || $this->group == 'trong-nuoc')
+{
+?>
+<div id="cate_club">
+    <div class="block_item_lichthidau width_common">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category">
+                <a href="javascript:;">Bóng đá trong nước</a>
+            </h2>
+            <div class="perpos txt_input right">
+                <select id="trong-nuoc" onchange="fixture.changeLeague(this.value, this.id);">
+                    <option value="0" <?php if ($this->leagueId == 0) echo 'selected="selected"'; ?>>Tất cả giải đấu</option>
+                    <?php
+                    if (is_array($this->arrListLeagueTN) && count($this->arrListLeagueTN))
+                    {
+                        foreach ($this->arrListLeagueTN as $leagueId => $leagueName)
+                        {
+                            ?>
+                            <option value="<?php echo $leagueId; ?>" <?php if ($this->leagueId == $leagueId) echo 'selected="selected"'; ?>><?php echo $leagueName; ?></option>
+                            <?php
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+        <?php
+        if (is_array($groupTN) && count($groupTN))
+        {
+        ?>
+        <div class="lichthidau_item width_common">
+        <?php
+            foreach ($groupTN as $group)
+            {
+                ?>
+                <div class="txt_trandau width_common">
+                    <p class="left"><a href="javascript:;" onclick="fixture.changeLeague(<?php echo $group['league_id'] ?>, 'trong-nuoc');"><?php echo $group['name']; ?></a></p>
+                    <div class="txt_view_more">
+                        <a class="txt_666" href="<?php echo '/bang-xep-hang/', Fpt_Filter::setSeoLink($group['name']), '-', Fpt_Filter::setSeoLink($group['season_name']), '-', $group['league_id'], '-', $group['season_id'], '.html' ?>">Bảng xếp hạng</a>
+                    </div>
+                </div>
+                <ul class="list_capdau width_common">
+                    <?php
+                    $numMatches = count($group['arrMatches']);
+                    $team1 = $team2 = array();
+                    for ($i = 0; $i < $numMatches; $i++)
+                    {
+                        $match = $group['arrMatches'][$i];
+                        $objTeam->setId(array($match['team1'], $match['team2']));
+                        $team1 = $objTeam->getDetailObjectBasic($match['team1']);
+                        $team2 = $objTeam->getDetailObjectBasic($match['team2']);
+                        $team1SeoName = Fpt_Filter::setSeoLink($team1['name']);
+                        $team2SeoName = Fpt_Filter::setSeoLink($team2['name']);
+                        $match['datetime_happen'] = $this->gmt * 3600 + $match['datetime_happen'];
+                        $currTime = $this->gmt * 3600 + $this->currTime;
+                        ?>
+                        <li>
+                            <div class="timer_trandau left">
+                            <?php
+                            if ($currTime > 10800 + $match['datetime_happen'] || $match['status'] == 2)
+                            {
+                                echo 'FT';
+                            }
+                            else {
+                                echo date('H:i', $match['datetime_happen']);
+                            }
+                            ?>
+                            </div>
+                            <div class="block_center_doidau">
+                                <div class="capdau width_common">
+                                    <div class="wdoibong left">
+                                        <a title="<?php echo $team1['name_format']; ?>" href="<?php echo "/doi-bong/$team1SeoName-{$match['team1']}.html" ?>">
+                                        <img src="<?php echo $this->Imageurl($team1['thumbnail'], 'size10'); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>" class="right" />
+                                        </a>
+                                        <span class="right">
+                                            <a class="txt_doibong" title="<?php echo $team1['name_format']; ?>" href="<?php echo "/doi-bong/$team1SeoName-{$match['team1']}.html" ?>"> <?php echo $team1['name']; ?></a>
+                                        </span>
+                                    </div>
+                                    <div class="wtiso left txt_center txt_666">
+                                        <?php
+                                        if ($currTime > 10800 + $match['datetime_happen'] || $match['status'] == 2)
+                                        {
+                                            echo "{$match['goal1']} - {$match['goal2']}";
+                                            if ($match['penalty1'])
+                                            {
+                                                echo '<br />(', "{$match['penalty1']} - {$match['penalty2']}", ')';
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if ($currTime > $match['datetime_happen'] && $currTime <= 10800 + $match['datetime_happen'])
+                                            {
+                                                echo "{$match['goal1']} - {$match['goal2']}";
+                                                if ($match['penalty1'] || $match['penalty2'])
+                                                    echo '<br />(', "{$match['penalty1']} - {$match['penalty2']}",')';
+                                            }
+                                            else
+                                                echo 'V';
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="wdoibong right">
+                                        <a title="<?php echo $team2['name_format']; ?>" href="<?php echo "/doi-bong/$team2SeoName-{$match['team2']}.html" ?>">
+                                        <img src="<?php echo $this->Imageurl($team2['thumbnail'], 'size10'); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>" class="left" />
+                                        </a>
+                                        <span class="left">
+                                            <a class="txt_doibong" title="<?php echo $team2['name_format']; ?>" href="<?php echo "/doi-bong/$team2SeoName-{$match['team2']}.html" ?>"> <?php echo $team2['name']; ?></a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="width_common txt_link_thongtin_capdau txt_666">
+                                    <p>
+                                        <a class="txt_666" href="<?php echo $this->matchDetailUrl('diem-tin', $team1['name'], $team2['name'], $match['id']); ?>">Điểm tin</a> &nbsp; | &nbsp;
+                                        <a class="txt_666" href="<?php echo $this->matchDetailUrl('tuong-thuat', $team1['name'], $team2['name'], $match['id']); ?>">Trực tiếp</a> &nbsp; | &nbsp;
+                                        <a class="txt_666" href="<?php echo $this->matchDetailUrl('anh-video', $team1['name'], $team2['name'], $match['id']); ?>">Video</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+                <?php
+            }
+            ?>
+        </div>
+        <?php
+        }
+        else
+        {
+            ?>
+            <div class="width_common box_category block_item_lichthidau">
+                Không có trận đấu trong ngày.
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+<?php
+}
+?>
+<div class="width_common box_category block_item_lichthidau">
+    <div class="title_box_category width_common">
+        <h2 class="txt_main_category">
+            <a href="javascript:;">Tennis</a>
+        </h2>
+    </div>
+    <div class="width_common">
+     <?php
+    if (is_array($this->tennisFixture) && count($this->tennisFixture))
+    {
+        foreach ($this->tennisFixture as $key => $value)
+        {
+            ?>
+            <div class="txt_trandau_tenis width_common">
+                <p class="left"><?php echo $key; ?></p>
+            </div>
+            <div class="lichthidau_item width_common">
+                <table class="tb_tenis" cellspacing="0" cellpadding="0" style="width:100%">
+                    <tbody>
+                    <?php
+                    if (is_array($value) && count($value))
+                    {
+                        $countMatch = 0;
+                        $modelTennis = $this->objObject->getTennis();
+                        foreach ($value as $matchTennis)
+                        {
+                            //get detail player tennis
+                            $player1a = $modelTennis->getDetailObjectBasic($matchTennis['player1a']);
+                            $player1b = $modelTennis->getDetailObjectBasic($matchTennis['player1b']);
+                            $player2a = $modelTennis->getDetailObjectBasic($matchTennis['player2a']);
+                            $player2b = $modelTennis->getDetailObjectBasic($matchTennis['player2b']);
+
+                            $countMatch++;
+                            ?>
+                            <tr <?php echo ($countMatch % 2 == 0) ? "class='chan'" : ""; ?> style="width:100%">
+                                <td class="time w50 bor_right">
+                                    <b><?php echo date('H:i', $matchTennis['datetime_happen']); ?></b>
+                                </td>
+                                <?php
+                                if ($matchTennis['goal_team1'] > 0 || $matchTennis['goal_team2'] > 0)
+                                {
+                                    if (is_array($matchTennis['set']) && count($matchTennis['set']) > 1)
+                                    {
+                                        $statusMatch = "Finnal";
+                                    }
+                                    else
+                                    {
+                                        $statusMatch = "Retired";
+                                    }
+                                }
+                                else
+                                {
+                                    $statusMatch = "TBD";
+                                }
+                                ?>
+                                <td class="set txt_blue w70 bor_right"><?php echo $statusMatch; ?></td>
+                                <td>
+                                    <table class="tisoset" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                            <tr class="bor_bottom">
+                                                <td class="dt_tenis w260">
+                                                    <a href="<?php echo $player1a['share_url']; ?>" title="<?php echo $player1a['name_format']; ?>" alt="<?php echo $player1a['name_format']; ?>"> <?php echo $player1a['name']; ?></a>
+                                                    <?php
+                                                    echo " (" . $player1a['nationality_name'] . ")";
+                                                    if (!empty($player1b))
+                                                    {
+                                                        ?>
+                                                        <br />
+                                                        <a href="<?php echo $player1b['share_url']; ?>" title="<?php echo $player1b['name_format']; ?>" alt="<?php echo $player1b['name_format']; ?>"> <?php echo $player1b['name']; ?></a>
+                                                        <?php
+                                                        echo " (" . $player1b['nationality_name'] . ")";
+                                                    }
+                                                    ?>
+
+                                                </td>
+                                                <td class="w30">
+                                                    <b class="txt_blue"><?php echo $matchTennis['goal_team1']; ?></b>
+                                                </td>
+                                                <?php
+                                                if (is_array($matchTennis['set']) && count($matchTennis['set']))
+                                                {
+                                                    $countSet = count($matchTennis['set']);
+                                                    $tdNo = 6 - $countSet;
+                                                    foreach ($matchTennis['set'] as $sets)
+                                                    {
+                                                        ?>
+                                                        <td class="w30">
+                                                            <?php
+                                                            echo $sets['point_team1'];
+                                                            if ($sets['tie_break_team1'] > 0)
+                                                            {
+                                                                ?>
+                                                                <sup><?php echo $sets['tie_break_team1']; ?></sup>
+                                                                <?php
+                                                             } ?>
+                                                        </td>
+                                                        <?php
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    $countSet = 0;
+                                                    $tdNo = 6 - $countSet;
+                                                }
+                                                ?>
+                                                <?php
+                                                if ($tdNo > 0)
+                                                {
+                                                    for ($i = 1; $i < $tdNo; $i++)
+                                                    {
+                                                        ?>
+                                                        <td class="w30">&nbsp;</td>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </tr>
+                                            <tr>
+                                                <td class="dt_tenis w260">
+                                                    <a href="<?php echo $player2a['share_url']; ?>" title="<?php echo $player2a['name_format']; ?>" alt="<?php echo $player2a['name_format']; ?>"> <?php echo $player2a['name']; ?></a>
+                                                    <?php
+                                                    echo " (" . $player2a['nationality_name'] . ")";
+                                                    if (!empty($player2b))
+                                                    {
+                                                        ?>
+                                                        <br />
+                                                        <a href="<?php echo $player2b['share_url']; ?>" title="<?php echo $player2b['name_format']; ?>" alt="<?php echo $player2b['name_format']; ?>"> <?php echo $player2b['name']; ?></a>
+                                                        <?php
+                                                        echo " (" . $player2b['nationality_name'] . ")";
+                                                    }
+                                                    ?>
+
+                                                </td>
+                                                <td class="w30">
+                                                    <b class="txt_blue"><?php echo $matchTennis['goal_team2']; ?></b>
+                                                </td>
+                                                <?php
+                                                if (is_array($matchTennis['set']) && count($matchTennis['set']))
+                                                {
+                                                    $countSet = count($matchTennis['set']);
+                                                    $tdNo = 6 - $countSet;
+                                                    foreach ($matchTennis['set'] as $sets)
+                                                    {
+                                                        ?>
+                                                        <td class="w30">
+                                                            <?php
+                                                            echo $sets['point_team2'];
+                                                            if ($sets['tie_break_team2'] > 0)
+                                                            {
+                                                                ?>
+                                                                <sup><?php echo $sets['tie_break_team2']; ?></sup>
+                                                                <?php
+                                                             } ?>
+                                                        </td>
+                                                        <?php
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    $countSet = 0;
+                                                    $tdNo = 6 - $countSet;
+                                                }
+                                                ?>
+                                                <?php
+                                                if ($tdNo > 0)
+                                                {
+                                                    for ($i = 1; $i < $tdNo; $i++)
+                                                    {
+                                                        ?>
+                                                        <td class="w30">&nbsp;</td>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <?php
+                        }
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php
+        }
+    }
+    else
+    {
+        echo 'Không có trận đấu trong ngày.';
+    }
+    ?>
+    </div>
+</div>

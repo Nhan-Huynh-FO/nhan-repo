@@ -1,0 +1,88 @@
+<?php
+$currTime = time() - 25200;
+$objMatch    = $this->objObject->getMatch();
+$objTeam     = $this->objObject->getTeam();
+$team1 = $team2 = array();
+foreach ($this->arrMatchIDs as $id)
+{
+    //get match detail
+    $matchDetail = $objMatch->getDetailObjectBasic($id);
+
+    if(empty($matchDetail))
+    {
+        continue;
+    }
+    //set id team
+    $objTeam->setId(array($matchDetail['team1'], $matchDetail['team2']));
+    $team1 = $objTeam->getDetailObjectBasic($matchDetail['team1']);
+    $team2 = $objTeam->getDetailObjectBasic($matchDetail['team2']);
+    if ($currTime > 10800 + $matchDetail['datetime_happen'] || $matchDetail['status'] == 2)
+    {
+        $goal1 = $matchDetail['goal1'];
+        $goal2 = $matchDetail['goal2'];
+        if ($matchDetail['penalty1'])
+        {
+            $goal1 = $goal1 . ' (' . $matchDetail['penalty1'] . ')';
+            $goal2 = $goal2 . ' (' . $matchDetail['penalty2'] . ')';
+        }
+    }
+    else
+    {
+        if ($currTime > $matchDetail['datetime_happen'] && $currTime <= 10800 + $matchDetail['datetime_happen'])
+        {
+            $goal1 = $matchDetail['goal1'];
+            $goal2 = $matchDetail['goal2'];
+            if ($matchDetail['penalty1'] || $matchDetail['penalty2'])
+            {
+                $goal1 = $goal1 . ' (' . $matchDetail['penalty1'] . ')';
+                $goal2 = $goal2 . ' (' . $matchDetail['penalty2'] . ')';
+            }
+        }
+        else
+        {
+            $goal1 = '-';
+            $goal2 = '-';
+        }
+    }
+?>
+<li>
+    <div class="txt_trandau width_common">
+        <p><?php echo date('d-m-Y', $matchDetail['datetime_happen']); ?></p>
+    </div>
+    <div class="cap_thidau">
+        <div class="timer_trandau left">
+            <?php echo date('H:i', $matchDetail['datetime_happen']); ?>
+        </div>
+        <div class="block_center_doidau">
+            <div class="capdau width_common">
+                <div class="wdoibong left">
+                    <a title="<?php echo $team1['name_format']; ?>" href="<?php echo "/doi-bong/$team1SeoName-{$match['team1']}.html" ?>">
+                        <img src="<?php echo $this->Imageurl($team1['thumbnail'], 'size10'); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>" class="image_doibong" />
+                    </a>
+                    <span class="left name_doibong">
+                        <a title="<?php echo $team1['name_format']; ?>" class="txt_doibong" href="<?php echo $team1['share_url']; ?>"><?php echo $team1['name']; ?></a>
+                    </span>
+                </div>
+                <div class="num_tiso"><?php echo $goal1; ?></div>
+            </div>
+            <div class="capdau width_common">
+                <div class="wdoibong left">
+                    <a title="<?php echo $team2['name_format']; ?>" href="<?php echo "/doi-bong/$team2SeoName-{$match['team2']}.html" ?>">
+                        <img src="<?php echo $this->Imageurl($team2['thumbnail'], 'size10'); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>" class="image_doibong" />
+                    </a>
+                    <span class="left name_doibong">
+                        <a title="<?php echo $team2['name_format']; ?>" class="txt_doibong" href="<?php echo $team2['share_url']; ?>"><?php echo $team2['name']; ?></a>
+                    </span>
+                </div>
+                <div class="num_tiso"><?php echo $goal2; ?></div>
+            </div>
+        </div>
+    </div>
+    <div class="width_common txt_link_thongtin_capdau txt_666">
+        <p>
+            <a href="<?php echo '/diem-tin/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchDetail['id'])  ?>" class="txt_666" title="<?php echo 'Điểm tin trận ', $team1['name'], ' vs ', $team2['name']; ?>">Điểm tin</a> &nbsp; | &nbsp;
+            <a href="<?php echo '/tuong-thuat/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchDetail['id'])  ?>" title="<?php echo 'Tường thuật trận ', $team1['name'], ' vs ', $team2['name']; ?>" class="txt_666">Trực tiếp</a> &nbsp; | &nbsp;
+            <a href="<?php echo '/anh-video/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchDetail['id'])  ?>" title="<?php echo 'Ảnh video trận ', $team1['name'], ' vs ', $team2['name']; ?>" class="txt_666">Video</a> </p>
+    </div>
+</li>
+<?php } ?>

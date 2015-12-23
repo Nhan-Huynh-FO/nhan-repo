@@ -1,0 +1,346 @@
+/*lighbox*/
+.bigbox {
+    position: fixed;
+    z-index: 2000000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display:none;
+}
+
+*html .bigbox {
+    \position: absolute;
+    p\osition: absolute;
+}
+
+.windowmask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 3000px!important;
+    background: black;
+    opacity: 0.6;
+    filter: alpha(Opacity=60);
+}
+
+iframe.windowmask {
+    position: relative;
+    opacity: 0;
+    filter: alpha(Opacity=0);
+}
+*html .windowmask {
+    \width: 100%;
+    w\idth: 100%;
+    height:3000px!important;
+}
+
+/**html .windowmask {
+        \width: 100%;
+        w\idth: 100%;
+        \height: expression(document.body.offsetHeight*3 + 'px');
+        h\eight: expression(document.body.offsetHeight*3 + 'px');
+}
+*/
+.lightbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    font-family: Tahoma;
+    font-size: 8.25pt;
+}
+
+.lightbox .closebutton {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 18px;
+    height: 18px;
+    background: transparent url(../images/button/close.gif) no-repeat;
+    cursor: pointer;
+}
+
+#loading {
+    position:fixed;
+    z-index:2001;
+    top:0;
+    left:0;
+    width:100%;
+    display:none;
+}
+
+*html #loading {
+    \position: absolute;
+    p\osition: absolute;
+}
+
+#loading img{
+    top: 350px;
+    position: relative;
+}
+
+/*****/
+.contentbox{min-width:300px; width:300px; margin:0; padding:0; overflow:hidden;}
+.contentbox #lbheader {color:#FFFFFF; font-weight:bold; background:#317b0f; border:1px solid #3e8f19; padding:4px 12px}
+.contentbox .lbcont .highlight{text-align:center; padding:10px 0 0 0}
+.contentbox .lbcont .highlight span{text-align:center; padding:0 5px}
+
+
+/**LightBox**/
+
+.lightbox-border .tl, .lightbox-border .tr, .lightbox-border .bl, .lightbox-border .br {
+    width:9px;
+    height:8px;
+    overflow: hidden;
+    padding: 0;
+}
+.lightbox-boxhead {
+    border-bottom:solid 1px #ffffff;
+    margin: 0;
+    padding: 0;
+    background:#eeeeee;
+    border-top:1px solid #1cac3d;
+}
+.lightbox-boxhead .tlc {
+    margin: 0;
+    padding-left:10px;
+}
+.lightbox-boxhead .trc {
+    margin: 0;
+    padding-right:10px;
+    background:#eeeeee;
+}
+.lightbox-boxhead .boxhead-content {
+    padding:4px 0px;
+    font-size:12px;
+    font-weight:bold;
+    color:#000;
+}
+.lightbox-boxhead .boxhead-content .close-btn {
+    width:10px;
+    height:10px;
+    background:url(images/buttons/close-btn.gif) no-repeat;
+    margin-top:3px;
+}
+.lightbox-boxhead .boxhead-content-main {}
+.lightbox-boxbody {
+    margin: 0;
+    border:none;
+    background-color:#fff;
+    padding:10px;
+}
+/*Form*/
+.lightbox-boxbody input.private, .lightbox-boxbody textarea.private {
+    color:#333;
+}
+/*content_login*/
+.chose_way{
+    width:145px;
+    float:left;
+} 
+.main_box_login{
+    border:1px solid #d5d5d5;
+    margin:10px;
+}
+.chose_way .way{
+    width:100px;
+    float:left;
+    padding:10px 20px;
+    background:#f3f3f3;
+    cursor: pointer;
+}
+.chose_way .way a{
+    color:#004f8b;
+    font:700 12px arial;
+}
+.chose_way .tab1{
+    border-right:1px solid #d5d5d5;
+    border-bottom:1px solid #d5d5d5;
+}
+.chose_way .tab2{
+    border-right:1px solid #d5d5d5;
+    border-top:1px solid #d5d5d5;
+}
+.chose_way .way img{
+    margin:0 10px 0 0;
+}
+.chose_way .way.active{
+    border:none;
+    background:#fff;
+}
+.from_fpt_id{
+    float:left;
+    width:280px;
+    padding:10px 10px 0px 20px;
+}
+.txt_note{
+    color:#5c5c5c;
+}
+.from_fpt_id p{
+    padding-bottom:5px;
+}
+.btn_dangnhap{
+    width:143px;
+    height:26px;
+    background:url(../css/images/buttons/btn_dangnhap.jpg) no-repeat left top;
+    cursor:pointer;
+    float:left;
+    border:none;
+    margin:
+}
+.from_fpt_id .box_width_common{
+    margin-bottom:10px;
+    display:inline;
+}
+.from_login{
+    padding:0 0 10px 10px;
+    float:left;
+    width:260px;
+}
+.tb_form_login td{
+    padding:10px 0 0 0;
+
+}
+.tb_form_login .btn_finish,.tb_form_login .lbbutton,.nbutton{
+    float:right;
+    margin:0 15px 0 0;
+    display:inline;
+    border:none;
+    background:#19ad3f;
+    color:#fff;
+    font:700 12px arial;
+    padding:2px 0;
+    width:70px;
+    cursor:pointer;
+}
+.tb_form_login input{
+    font:400 12px arial;
+    background:#f6fafd;
+    border:1px solid #bdc6cd;
+    padding-top:3px;
+    padding-bottom:3px;
+}
+.main_box_suscess{
+    margin:10px;
+    font:400 12px arial;
+
+}
+.main_box_suscess .main_content_suscess{
+    text-align:center;
+    padding:20px 0;
+}
+.main_box_suscess .main_content_suscess p{
+    padding-bottom:5px;
+}
+.main_box_suscess .main_content_suscess a{
+    display:inline-block;
+    padding:3px 20px;
+    color:#fff;
+    background:#1cac3d;
+    font:700 12px arial;
+}
+.txt_bottom{
+    border-top:1px solid #c9c9c9;
+    padding:10px 0 0 0;
+}
+
+.tb_form_login h3{
+    text-align: center;
+}
+
+.tb_form_login .lbbutton,.nbutton{
+    float: none;
+    margin: auto;
+    margin-top:10px;
+}
+.alcenter{
+    text-align: center;
+}
+.main_box_vipham{
+    border:1px solid #d5d5d5;
+    margin:10px;
+}
+.main_box_vipham ul{
+    width:200px;
+    padding:0 0 0 100px;
+    float:left;
+}
+.main_box_vipham  p{
+    padding:5px 0;
+    width:100%;
+    float:left;
+}
+.main_box_vipham li{
+    padding:3px 0;
+    width:200px;
+    float:left;
+}
+*html .main_box_vipham li{
+	height:15px;
+}
+*+html .main_box_vipham li{
+	height:15px;
+}
+.main_box_vipham li input{
+    margin:1px 0 0 0;
+    float:left;
+}
+*html .main_box_vipham li input{
+	margin:-3px -3px 0 0;
+	padding:0;
+}
+*+html .main_box_vipham li input{
+	margin:-3px -3px 0 0;
+	padding:0;
+}
+.main_box_vipham label{
+    font:700 11px arial;
+    color:#666666;
+    padding:0 0 0 5px;
+	height:12px;
+}
+.main_box_vipham .txt_bottom{
+    width:100%;
+    float:left;
+    padding:10px 0;
+    background:#eeeeee;
+}
+.main_box_vipham .btn_finish{
+    margin:0 auto;
+    display:inline;
+    border:none;
+    background:#19ad3f;
+    color:#fff;
+    font:700 12px arial;
+    padding:2px 0;
+    width:70px;
+    cursor:pointer;
+}
+*html .main_box_vipham .btn_finish{
+	padding:1px 0;
+}
+/*light box huong dan*/
+.main_box_huongdan{
+    font:400 12px arial;
+    height:500px;
+    overflow-y:scroll;
+}
+.main_box_huongdan li{
+    padding:0 0 5px 10px;
+    background:url(../css/images/graphics/bg_dot_5x5.gif) no-repeat left 5px;
+}
+.main_box_huongdan .txt_green{
+    color:#0a8827
+}
+.main_box_huongdan .giathuong td{
+    font:700 13px arial;
+    padding-bottom:10px;
+}
+.main_box_huongdan .giathuong td li{
+    padding:0 0 15px 10px;
+}
+.main_box_huongdan .txt_red{
+    color:#ff0000;
+}
+/*End light box huong dan*/

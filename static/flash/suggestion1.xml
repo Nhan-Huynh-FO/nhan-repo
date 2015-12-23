@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<items>
+		<item>
+			<title><![CDATA[Như Quỳnh]]></title>
+			<thumbnail><![CDATA[thumbnails/track.jpg]]></thumbnail>
+			<duration>123</duration>
+			<link><![CDATA[http://abc.com]]></link>
+		</item>
+		<item>
+			<title><![CDATA[]]></title>
+			<thumbnail><![CDATA[thumbnails/track.jpg]]></thumbnail>
+			<duration></duration>
+			<link></link>
+		</item>
+		<item>
+			<title><![CDATA[]]></title>
+			<thumbnail><![CDATA[thumbnails/track.jpg]]></thumbnail>
+			<duration></duration>
+			<link></link>
+		</item>
+		<item>
+			<title><![CDATA[]]></title>
+			<thumbnail><![CDATA[]]></thumbnail>
+			<duration></duration>
+			<link></link>
+		</item>
+	</items>
+</data>

@@ -1,0 +1,57 @@
+<?php
+if (!empty($this->data['arrData']))
+{
+?>
+<div class="box_category width_common" id="cacdoibong">
+    <div class="title_box_category width_common">
+        <h2 class="txt_main_category">
+            <a><?php echo $this->layout['title']; ?></a>
+        </h2>
+    </div>
+    <div class="content_box_category width_common">
+        <select class="select_giai" id="danh_sach_doi_bong">
+            <?php
+            foreach ($this->data['arrLeague'] as $league)
+            {
+                $selected = ($this->layout['priority'] == $league['LeagueID'])? 'selected="selected"' : '';
+                echo '<option value="',$league['LeagueID'],'" ',$selected,'>',$league['Name'],'</option>';
+            }
+            ?>
+        </select>
+        <div class="list_đoibong width_common">
+            <div class="scroll-pane">
+                <div class="content_scoller width_common">
+                    <?php
+                    $modelTeam = $this->objObject->getTeam();
+                    foreach ($this->data['arrData'] as $key =>$team)
+                    {
+                        $display =($this->layout['priority'] == $key )? 'display:block' : 'display:none';
+                        ?>
+                        <ul id ="team<?php echo $key; ?>" style="<?php echo $display; ?>" class="list_doibong">
+                            <?php
+                            foreach ($team as $id)
+                            {
+                                $detail = $modelTeam->getDetailObjectBasic($id);
+                                ?>
+                                <li>
+                                    <h2>
+                                        <a href="<?php echo $detail['share_url']; ?>" title="<?php echo $detail['name_format']; ?>">
+                                            <img width="20px" src="<?php echo $this->Imageurl($detail['thumbnail'], 'size10'); ?>" title="<?php echo $detail['name_format']; ?>" alt="<?php echo $detail['name_format']; ?>">
+                                            <span><?php echo empty($detail['abbreviation']) ? $detail['name'] : $detail['abbreviation']; ?></span>
+                                        </a>
+                                    </h2>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                        </ul>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+}

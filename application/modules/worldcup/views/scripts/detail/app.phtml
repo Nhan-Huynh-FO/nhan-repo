@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link type="image/x-icon" href="<?php echo $this->configView['images']; ?>/favicon.ico" rel="shortcut icon" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Vnexpress.net" />
+
+        <!-- iPad icons -->
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/72x72.png" sizes="72x72" />
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/114x114.png" sizes="144x144" />
+        <!-- iPhone and iPod touch icons -->
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/57x57.png" sizes="57x57" />
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/114x114.png" sizes="114x114" />
+        <!-- Nokia Symbian -->
+        <link rel="nokia-touch-icon" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/57x57.png" />
+        <!-- Android icon precomposed so it takes precedence -->
+        <link rel="apple-touch-icon-precomposed" href="<?php echo $this->configView['vnecdn']['images']; ?>/logos/114x114.png" sizes="1x1" />
+        <!-- InstanceBeginEditable name="doctitle" -->
+        <?php echo $this->headTitle(); ?>
+        <?php echo $this->headMeta(); ?>
+        <meta content="VnExpress" property="og:site_name" />
+        <meta content="<?php echo $this->escape($this->ogType); ?>" property="og:type" />
+        <meta content="<?php echo $this->escape($this->ogTitle); ?>" itemprop="headline" property="og:title" />
+        <meta content="<?php echo $this->ogUrl; ?>" itemprop="url" property="og:url" />
+        <meta content="<?php echo $this->ogImage; ?>" itemprop="thumbnailUrl" property="og:image" />
+        <meta content="<?php echo $this->escape($this->ogDescription); ?>" itemprop="description" property="og:description" />
+        <?php
+        $isDetailArticle = isset($this->articleTrackingId) && is_numeric($this->articleTrackingId) && $this->articleTrackingId > 0;
+        $isCategoryPolyAds = isset($this->intCateIdPolyAds) && is_numeric($this->intCateIdPolyAds) && $this->intCateIdPolyAds > 0;
+        //Proccess category id
+        $tt_category_id = $isCategoryPolyAds ? $this->intCateIdPolyAds : WORLD_CUP;
+        $tt_article_id = $isDetailArticle ? $this->articleTrackingId : $tt_category_id;
+        ?>
+        <meta name="tt_category_id" content="<?php echo $tt_category_id; ?>" />
+        <meta name="tt_article_id" content="<?php echo $tt_article_id; ?>" />
+        <meta name="tt_site_id" content="<?php echo SITE_ID; ?>" />
+        <!-- CSS -->
+        <link rel="stylesheet" href="<?php echo $this->configView['css']; ?>/general.css" media="all" />
+        <?php echo $this->headLink(); ?>
+        <!-- JS -->
+        <script type="text/javascript">
+            var site_id = <?php echo SITE_ID; ?>;
+            var img_url = '<?php echo $this->configView['images']; ?>';
+            var css_url = '<?php echo $this->configView['css']; ?>';
+            var base_url = '<?php echo $this->configView['url']; ?>';
+            var device_env = <?php echo DEVICE_ENV; ?>;
+            var article_id = <?php echo isset($this->intArticleId) ? $this->intArticleId : 0; ?>;
+            var vne_url = '<?php echo $this->configView['url_vne']; ?>';
+            var interactions_url = '<?php echo $this->configView['comment']; ?>';
+            var predict_with_captcha = <?php echo ACTIVE_CAPCHA; ?>;
+            document.domain = '<?php echo DOMAIN_VNE ?>';
+            var application_env = '<?php echo APPLICATION_ENV; ?>';
+        </script>
+        <!-- JS -->
+        <script language="javascript" type="text/javascript" src="<?php echo $this->configView['vnecdn']['libs']; ?>/libs/jquery-1.7.1.min.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->configView['vnecdn']['js']; ?>/utils/mutils.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->configView['vnecdn']['js']; ?>/interactions/parser_v3.js"></script>
+
+        <?php echo $this->headScript(); ?>
+        <script type="text/javascript">
+            /*GA - Tracking pageview*/
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-249346-5']);
+            _gaq.push(['_setDomainName', 'vnexpress.net']);
+            _gaq.push(['_trackPageview']);
+
+            _gaq.push(['a._setAccount', 'UA-249346-22']);
+            _gaq.push(['a._trackPageview']);
+
+            _gaq.push(['b._setAccount', 'UA-249346-37']);
+            _gaq.push(['b._trackPageview']);
+
+            _gaq.push(['c._setAccount', 'UA-29374284-26']);
+            _gaq.push(['c._trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+            var _siteId="11";
+            (function(){
+                var e=document.createElement("script");e.type="text/javascript",e.async=!0,e.src="http://st.l.a.eclick.vn/ea.js";
+                var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)
+            })();
+        </script>
+    </head>
+    <body>
+        <div>
+            <div id="wrapper_page">
+                <div id="wrapper_container">
+                    <div id="container">
+                        <?php
+                        //1 - mobile , 0 - web, tablet
+                        $objMatch = $this->objObject->getMatch();
+                        $objTeam = $this->objObject->getTeam();
+                        $team1 = $team2 = array();
+                        $arrTeam = array();
+                        if (!empty($this->arrAllMatch))
+                        {
+                            foreach ($this->arrAllMatch as $key => $team)
+                            {
+                                //get detail player
+                                $teamDetail = $objTeam->getDetailObjectBasic($team['TeamID']);
+                                $arrTeam[$teamDetail['id']] = $teamDetail['name'];
+                            }
+                            //sort alpha
+                            asort($arrTeam);
+                        }
+                        ?>
+                        <div class="line_gray line_page width_common">
+                            <div id="col_left">
+                                <div id="box_details_news" class="box_width_common">
+                                    <div class="block_col_480">
+                                        <div class="block_timer_share">
+                                            <div class="block_timer left txt_666"><?php echo $this->DateTimeFormat($this->arrArticleDetail['publish_time'], 'long'); ?></div>
+                                        </div>
+
+                                        <div class="title_news">
+                                            <h1><?php echo $this->arrArticleDetail['title']; ?></h1>
+                                        </div>
+                                        <div class="short_intro txt_666"><?php echo $this->arrArticleDetail['lead']; ?></div>
+                                        <?php
+                                        if (!empty($this->arrArticleDetail['reference_detail']))
+                                        {
+                                            $arrRef = array();
+                                            foreach ($this->arrArticleDetail['reference_detail'] as $reference)
+                                            {
+                                                $arrRef[] = '<a alt="' . $reference['title_format'] . '" title="' . $reference['title_format'] . '" href="' . $this->ShareurlWorldcup($reference['share_url']) . '">' . $reference['title'] . '</a>';
+                                            }
+                                            ?>
+                                            <div class="relative_new">
+                                                <ul class="list_news_dot_3x3_300">
+                                                    <li>
+                                                        <?php
+                                                        echo implode(' / ', $arrRef);
+                                                        ?>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                        <div class="fck_detail width_common"><?php echo $this->arrArticleDetail['content']; ?></div>
+                                        <?php
+                                        if (isset($this->arrArticleDetail['list_object_type'][OBJECT_TYPE_MATCH_ARTICLE]) && !empty($this->arrArticleDetail['list_object_type'][OBJECT_TYPE_MATCH_ARTICLE]))
+                                        {
+                                            $arrMatchArticle = $this->arrArticleDetail['list_object_type'][OBJECT_TYPE_MATCH_ARTICLE];
+                                            //set id
+                                            $objMatch->setId($arrMatchArticle);
+                                            foreach ($arrMatchArticle as $matchId)
+                                            {
+                                                //get detail match
+                                                $matchDetail = $objMatch->getDetailObjectBasic($matchId);
+                                                if (empty($matchDetail) || $matchDetail['status'] == 2)
+                                                {
+                                                    continue;
+                                                }
+                                                $objTeam->setId(array($matchDetail['team1'], $matchDetail['team2']));
+                                                $team1 = $objTeam->getDetailObjectBasic($matchDetail['team1']);
+                                                $team2 = $objTeam->getDetailObjectBasic($matchDetail['team2']);
+                                                ?>
+                                                <div class="box_category width_common space_box box_dudoan">
+                                                    <div class="title_box_detailpage width_common">
+                                                        <div class="txt_main_category"><a>Dự đoán của bạn</a></div>
+                                                    </div>
+                                                    <div class="content_box_category width_common">
+                                                        <div class="block_dudoan category_guess_score">
+                                                            <table class="">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td colspan="3" class="minutes <?php echo ($matchDetail['status'] == 1 || $matchDetail['status'] == 2) ? 'chuadau' : ''; ?>">
+                                                                            <?php
+                                                                            if ($matchDetail['status'] == 1 || $matchDetail['status'] == 2) //chua dien ra or da ket thuc
+                                                                            {
+                                                                                echo $matchDetail['datetime_happen_format'];
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                $text = '';
+                                                                                switch ((int) $matchDetail['status'])
+                                                                                {
+                                                                                    case 4:
+                                                                                        $text = 'Hết hiệp 1';
+                                                                                        break;
+                                                                                    case 6:
+                                                                                        $text = 'Hết hiệp 2';
+                                                                                        break;
+                                                                                    case 8:
+                                                                                        $text = 'Hết hiệp phụ thứ nhất';
+                                                                                        break;
+                                                                                    case 10:
+                                                                                        $text = 'Hết hiệp phụ thứ hai';
+                                                                                        break;
+                                                                                    case 11:
+                                                                                        $text = 'Penalty';
+                                                                                        break;
+                                                                                    default:
+                                                                                        $text = $data['matchTime'] . "'";
+                                                                                        break;
+                                                                                }
+                                                                                echo $text;
+                                                                            }
+                                                                            ?>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td colspan="3">
+                                                                            <div class="daiphatsong" data-schedule-match="<?php echo $matchDetail['id']; ?>"></div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="current">
+                                                                        <td class="main_team">
+                                                                            <img width="40" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>">
+                                                                            <p><a href="<?php echo $this->ShareurlWorldcup($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>">
+                                                                                    <?php echo $team1['name']; ?>
+                                                                                </a></p>
+
+                                                                        </td>
+                                                                        <td class="score">
+                                                                            <?php
+                                                                            if ($matchDetail['status'] != 1)//dang dien ra hoạc da ket thuc
+                                                                            {
+                                                                                ?>
+                                                                                <div class="width_common">
+                                                                                    <span class="box no-border"><?php echo $matchDetail['goal1']; ?></span>
+                                                                                    <span class="box no-border">-</span>
+                                                                                    <span class="box no-border"><?php echo $matchDetail['goal2']; ?></span>
+                                                                                    <?php
+                                                                                    if ($matchDetail['penalty1'] > 0 || $matchDetail['penalty2'] > 0)
+                                                                                    {
+                                                                                        ?>
+                                                                                        <p class="txt_11" style="font-weight:normal">penalty</p>
+                                                                                        <p class="txt_11" style="color:red">(<?php echo $matchDetail['penalty1'], ' - ', $matchDetail['penalty2']; ?>)</p>
+                                                                                        <?php
+                                                                                    }
+                                                                                    ?>
+                                                                                </div>
+                                                                                <?php
+                                                                            }
+                                                                            if ($matchDetail['status'] != 2) //chua dien ra hoac dang dien ra
+                                                                            {
+                                                                                ?>
+                                                                                <div class="width_common">
+                                                                                    <span class="box"><input type="text" value="" data-rel="<?php echo $matchDetail['id']; ?>-team1"></span>
+                                                                                    <span class="box no-border">-</span>
+                                                                                    <span class="box"><input type="text" value="" data-rel="<?php echo $matchDetail['id']; ?>-team2"></span>
+                                                                                </div>
+                                                                                <?php
+                                                                            }
+                                                                            ?>
+                                                                        </td>
+                                                                        <td class="sub_team">
+                                                                            <img width="40" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size1'); ?>" alt="<?php echo $team2['name_format']; ?>">
+                                                                            <p><a href="<?php echo $this->ShareurlWorldcup($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>">
+                                                                                    <?php echo $team2['name']; ?>
+                                                                                </a></p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="submit">
+                                                                        <td class="main_team"></td>
+                                                                        <td class="score"><button type="submit" class="predict-match" data-rel="<?php echo $matchDetail['id']; ?>" data-predict-type="6" data-time="<?php echo $matchDetail['matchTime']; ?>" data-predict-text="<?php echo $team1['name']; ?> vs <?php echo $team2['name']; ?>" onclick="_gaq.push(['_trackEvent', 'Trang bài viết World Cup', 'Click button Gửi trong box', 'Box Dự đoán']);">Gửi</button>
+                                                                            <a href="<?php echo $this->configView['url'] . '/thong-ke/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchDetail['id']) ?>" alt="<?php echo $matchDetail['name_format']; ?>" title="<?php echo $matchDetail['name_format']; ?>"><button class="btn_goiy" type="submit2">Gợi ý</button></a>
+                                                                        </td>
+                                                                        <td class="sub_team">&nbsp;</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                        <?php
+                                        if (!empty($this->arrTeamData))
+                                        {
+                                            $countTeam = count($this->arrTeamData);
+                                            ?>
+                                            <div class="box_category width_common space_box box_ttdoibong">
+                                                <div class="title_box_detailpage width_common">
+                                                    <div class="txt_main_category"><a>Thông tin đội bóng</a></div>
+                                                </div>
+                                                <div class="content_box_category width_common">
+                                                    <?php
+                                                    if ($countTeam == 1)
+                                                    {
+                                                        foreach ($this->arrTeamData as $team)
+                                                        {
+                                                            ?>
+                                                            <div class="box_tt_1doi">
+                                                                <div class="block_image_quocgia">
+                                                                    <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" alt="<?php echo $team['name_format']; ?>" title="<?php echo $team['name_format']; ?>" >
+                                                                        <img alt="<?php echo $team['name_format']; ?>" src="<?php echo $this->Imageurl($team['thumbnail'], 'size1'); ?>" />
+                                                                    </a>
+                                                                </div>
+                                                                <div class="info_quocgia">
+                                                                    <div class="info_1">
+                                                                        <p class="txt_tenquocgia">
+                                                                            <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" alt="<?php echo $team['name_format']; ?>" title="<?php echo $team['name_format']; ?>" >
+                                                                                <?php echo $team['name']; ?>
+                                                                            </a>
+                                                                        </p>
+                                                                        <?php
+                                                                        if (isset($team['extend'][$team['id']]) && !empty($team['extend'][$team['id']]['Lead']))
+                                                                        {
+                                                                            echo $team['extend'][$team['id']]['Lead'];
+                                                                        }
+                                                                        ?>
+                                                                    </div>
+                                                                    <?php
+                                                                    if (!empty($this->arrMatchId))
+                                                                    {
+                                                                        ?>
+                                                                        <div class="info_2">
+                                                                            <table border="0" cellspacing="0" cellpadding="0">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="txt_defaul"> <div class="txt_trandau">Trận đấu:</div></td>
+                                                                                        <td class="txt_info_quocgia">&nbsp;</td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                    if (isset($team['match_detail']) && !empty($team['match_detail']))
+                                                                                    {
+                                                                                        foreach ($team['match_detail'] as $matchCommingSoon)
+                                                                                        {
+                                                                                            if (empty($matchCommingSoon))
+                                                                                            {
+                                                                                                continue;
+                                                                                            }
+                                                                                            $objTeam->setId(array($matchDetail['team1'], $matchDetail['team2']));
+                                                                                            $team1 = $objTeam->getDetailObjectBasic($matchCommingSoon['team1']);
+                                                                                            $team2 = $objTeam->getDetailObjectBasic($matchCommingSoon['team2']);
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <td class="txt_defaul">
+                                                                                                    <a href="<?php echo $this->configView['url'] . '/thong-ke/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchCommingSoon['id']) ?>" alt="<?php echo $matchCommingSoon['name_format']; ?>" title="<?php echo $matchCommingSoon['name_format']; ?>">
+                                                                                                        <?php
+                                                                                                        if ($matchCommingSoon['status'] == '1')
+                                                                                                        {
+                                                                                                            echo $team1['abbreviation'] . ' - ' . $team2['abbreviation'];
+                                                                                                        }
+                                                                                                        else
+                                                                                                        {
+                                                                                                            echo $team1['abbreviation'] . '&nbsp;' . $matchCommingSoon['goal1'] . ' - ' . $matchCommingSoon['goal2'] . '&nbsp;' . $team2['abbreviation'];
+                                                                                                        }
+                                                                                                        ?>
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                                <td class="txt_info_quocgia">(<?php echo $matchCommingSoon['datetime_happen_format']; ?>)</td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                            unset($name);
+                                                                                        }
+                                                                                    }
+                                                                                    ?>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <?php
+                                                    if ($countTeam == 2)
+                                                    {
+                                                        ?>
+                                                        <div class="box_tt_2doi">
+                                                            <?php
+                                                            $i = 0;
+                                                            foreach ($this->arrTeamData as $team)
+                                                            {
+                                                                $i++;
+                                                                ?>
+                                                                <div class="doiitem<?php echo $i == 2 ? '_2' : ''; ?>">
+                                                                    <div class="block_image_quocgia">
+                                                                        <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" alt="<?php echo $team['name_format']; ?>" title="<?php echo $team['name_format']; ?>" >
+                                                                            <img alt="<?php echo $team['name_format']; ?>" src="<?php echo $this->Imageurl($team['thumbnail'], 'size1'); ?>" />
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="info_quocgia">
+                                                                        <div class="info_1">
+                                                                            <p class="txt_tenquocgia">
+                                                                                <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" alt="<?php echo $team['name_format']; ?>" title="<?php echo $team['name_format']; ?>" >
+                                                                                    <?php echo $team['name']; ?>
+                                                                                </a>
+                                                                            </p>
+                                                                            <?php
+                                                                            if (!empty($this->arrMatchId))
+                                                                            {
+                                                                                ?>
+                                                                                <table border="0" cellspacing="0" cellpadding="0">
+                                                                                    <tbody>
+                                                                                        <?php
+                                                                                        if (isset($team['match_detail']) && !empty($team['match_detail']))
+                                                                                        {
+                                                                                            foreach ($team['match_detail'] as $matchCommingSoon)
+                                                                                            {
+                                                                                                if (empty($matchCommingSoon))
+                                                                                                {
+                                                                                                    continue;
+                                                                                                }
+                                                                                                //$name = explode('-', $matchCommingSoon['name']);
+                                                                                                $objTeam->setId(array($matchDetail['team1'], $matchDetail['team2']));
+                                                                                                $team1 = $objTeam->getDetailObjectBasic($matchCommingSoon['team1']);
+                                                                                                $team2 = $objTeam->getDetailObjectBasic($matchCommingSoon['team2']);
+                                                                                                ?>
+                                                                                                <tr>
+                                                                                                    <td class="txt_defaul">
+                                                                                                        <a href="<?php echo $this->configView['url'] . '/thong-ke/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchCommingSoon['id']) ?>" alt="<?php echo $matchCommingSoon['name_format']; ?>" title="<?php echo $matchCommingSoon['name_format']; ?>">
+                                                                                                            <?php
+                                                                                                            if ($matchCommingSoon['status'] == '1')
+                                                                                                            {
+                                                                                                                echo $team1['abbreviation'] . ' - ' . $team2['abbreviation'];
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                echo $team1['abbreviation'] . '&nbsp;' . $matchCommingSoon['goal1'] . ' - ' . $matchCommingSoon['goal2'] . '&nbsp;' . $team2['abbreviation'];
+                                                                                                            }
+                                                                                                            ?>
+                                                                                                        </a>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td class="txt_info_quocgia">(<?php echo $matchCommingSoon['datetime_happen_format']; ?>)</td>
+                                                                                                </tr>
+                                                                                                <?php
+                                                                                                //unset($name);
+                                                                                            }
+                                                                                        }
+                                                                                        ?>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                                <?php
+                                                                            }
+                                                                            ?>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    <?php
+                                                    if ($countTeam == 3 || $countTeam == 4)
+                                                    {
+                                                        ?>
+                                                        <div class="<?php echo $countTeam == 3 ? 'box_tt_3doi' : 'box_tt_4doi'; ?>">
+                                                            <?php
+                                                            foreach ($this->arrTeamData as $team)
+                                                            {
+                                                                ?>
+                                                                <div class="doiitem">
+                                                                    <div class="block_image_quocgia">
+                                                                        <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" alt="<?php echo $team['name_format']; ?>" title="<?php echo $team['name_format']; ?>" >
+                                                                            <img alt="<?php echo $team['name_format']; ?>" src="<?php echo $this->Imageurl($team['thumbnail'], 'size1'); ?>" />
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="info_quocgia">
+                                                                        <div class="info_1">
+                                                                            <p class="txt_tenquocgia">
+                                                                                <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" alt="<?php echo $team['name_format']; ?>" title="<?php echo $team['name_format']; ?>" >
+                                                                                    <?php echo $team['name']; ?>
+                                                                                </a>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php
+                                                                    if (!empty($this->arrMatchId))
+                                                                    {
+                                                                        ?>
+                                                                        <table border="0" cellspacing="0" cellpadding="0">
+                                                                            <tbody>
+                                                                                <?php
+                                                                                if (isset($team['match_detail']) && !empty($team['match_detail']))
+                                                                                {
+                                                                                    foreach ($team['match_detail'] as $matchCommingSoon)
+                                                                                    {
+                                                                                        if (empty($matchCommingSoon))
+                                                                                        {
+                                                                                            continue;
+                                                                                        }
+                                                                                        //$name = explode('-', $matchCommingSoon['name']);
+                                                                                        $objTeam->setId(array($matchDetail['team1'], $matchDetail['team2']));
+                                                                                        $team1 = $objTeam->getDetailObjectBasic($matchCommingSoon['team1']);
+                                                                                        $team2 = $objTeam->getDetailObjectBasic($matchCommingSoon['team2']);
+                                                                                        ?>
+                                                                                        <tr>
+                                                                                            <td class="txt_defaul">
+                                                                                                <a href="<?php echo $this->configView['url'] . '/thong-ke/tran-', Fpt_Filter::setSeoLink($team1['name'] . ' vs ' . $team2['name'] . ' ' . $matchCommingSoon['id']) ?>" alt="<?php echo $matchCommingSoon['name_format']; ?>" title="<?php echo $matchCommingSoon['name_format']; ?>">
+                                                                                                    <?php
+                                                                                                    if ($matchCommingSoon['status'] == '1')
+                                                                                                    {
+                                                                                                        echo $team1['abbreviation'] . ' - ' . $team2['abbreviation'];
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        echo $team1['abbreviation'] . '&nbsp;' . $matchCommingSoon['goal1'] . ' - ' . $matchCommingSoon['goal2'] . '&nbsp;' . $team2['abbreviation'];
+                                                                                                    }
+                                                                                                    ?>
+                                                                                                </a>
+                                                                                            </td>
+                                                                                            <?php
+                                                                                            if ($countTeam == 3)
+                                                                                            {
+                                                                                                ?>
+                                                                                                <td class="txt_info_quocgia">(<?php echo $matchCommingSoon['datetime_happen_format']; ?>)</td>
+                                                                                                <?php
+                                                                                            }
+                                                                                            ?>
+                                                                                        </tr>
+                                                                                        <?php
+                                                                                        //unset($name);
+                                                                                    }
+                                                                                }
+                                                                                ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <!--Du doan doi vo dich-->
+                                            <div class="box_category news_box_300 width_common space_box category_guess_score">
+                                                <div class="content_box_category width_common">
+                                                    <div class="width_common king_goal">
+                                                        <div class="text_center">Dự đoán đội vô địch</div>
+                                                        <select class="sl_team vodich predict-match-4">
+                                                            <option value="0">Chọn đội</option>
+                                                            <?php
+                                                            if (!empty($arrTeam))
+                                                            {
+                                                                foreach ($arrTeam as $id => $name)
+                                                                {
+                                                                    ?>
+                                                                    <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        <input type="submit" value="Gửi" class="btn_submit_k_g btn predict-match" data-predict-type="4" onclick="_gaq.push(['_trackEvent', 'Trang bài viết World Cup', 'Click button Gửi trong box', 'Box Dự đoán']);">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end du doan doi vo dich-->
+                                            <?php
+                                        }
+                                        ?>
+                                        <?php
+                                        if (!empty($this->arrPlayerData))
+                                        {
+                                            $countPlayer = count($this->arrPlayerData);
+                                            ?>
+                                            <div class="box_category width_common space_box box_ttcauthu">
+                                                <div class="title_box_detailpage width_common">
+                                                    <div class="txt_main_category"><a>Thông tin cầu thủ</a></div>
+                                                </div>
+                                                <div class="content_box_category width_common">
+                                                    <?php
+                                                    if ($countPlayer == 1)
+                                                    {
+                                                        ?>
+                                                        <div class="box_tt_1cauthu">
+                                                            <?php
+                                                            foreach ($this->arrPlayerData as $playerDetail)
+                                                            {
+                                                                ?>
+                                                                <div class="block_image_cauthu">
+                                                                    <a href="<?php echo $this->ShareurlWorldcup($playerDetail['share_url']); ?>" title="<?php echo $playerDetail['name_format']; ?>" alt="<?php echo $playerDetail['name_format']; ?>">
+                                                                        <img alt="<?php echo ($playerDetail['name_format']); ?>" src="<?php echo $this->Imageurl($playerDetail['thumbnail'], 'size8'); ?>" />
+                                                                    </a>
+                                                                    <p class="txt_cauthuname">
+                                                                        <a href="<?php echo $this->ShareurlWorldcup($playerDetail['share_url']); ?>" title="<?php echo $playerDetail['name_format']; ?>" alt="<?php echo $playerDetail['name_format']; ?>">
+                                                                            <?php echo $playerDetail['name']; ?>
+                                                                        </a>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="info_cauthu">
+                                                                    <div class="info_1">
+                                                                        <table border="0" cellspacing="0" cellpadding="0">
+                                                                            <tbody>
+                                                                                <?php
+                                                                                if (!empty($playerDetail['nationality_name']))
+                                                                                {
+                                                                                    ?>
+                                                                                    <tr>
+                                                                                        <td class="txt_defaul">Quốc tịch:</td>
+                                                                                        <td class="txt_info_quocgia"><?php echo $playerDetail['nationality_name']; ?></td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                                <?php
+                                                                                if (!empty($playerDetail['birthday']))
+                                                                                {
+                                                                                    ?>
+                                                                                    <tr>
+                                                                                        <td class="txt_defaul">Ngày sinh:</td>
+                                                                                        <td class="txt_info_quocgia">&nbsp;<?php echo date('j/n/Y', strtotime($playerDetail['birthday'])); ?></td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                                <?php
+                                                                                if (!empty($playerDetail['place_birth']))
+                                                                                {
+                                                                                    ?>
+                                                                                    <tr>
+                                                                                        <td class="txt_defaul">Nơi sinh:</td>
+                                                                                        <td class="txt_info_quocgia"><?php echo $playerDetail['place_birth']; ?></td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                                <?php
+                                                                                if (isset($playerDetail['team_detail'][$playerDetail['team_id'][0]]['name']) && !empty($playerDetail['team_detail'][$playerDetail['team_id'][0]]['name']))
+                                                                                {
+                                                                                    ?>
+                                                                                    <tr>
+                                                                                        <td class="txt_defaul">CLB:</td>
+                                                                                        <td class="txt_info_quocgia"><?php echo (isset($playerDetail['team_detail'][$playerDetail['team_id'][0]]['name'])) ? $playerDetail['team_detail'][$playerDetail['team_id'][0]]['name'] : ""; ?></td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                                <?php
+                                                                                if (!empty($playerDetail['height']))
+                                                                                {
+                                                                                    ?>
+                                                                                    <tr>
+                                                                                        <td class="txt_defaul">Chiều cao:</td>
+                                                                                        <td class="txt_info_quocgia"><?php echo $playerDetail['height']; ?></td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                                <?php
+                                                                                if (!empty($playerDetail['weight']))
+                                                                                {
+                                                                                    ?>
+                                                                                    <tr>
+                                                                                        <td class="txt_defaul">Cân nặng:</td>
+                                                                                        <td class="txt_info_quocgia"><?php echo $playerDetail['weight'] . ' kg'; ?></td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                                <?php
+                                                                                if (!empty($playerDetail['position']))
+                                                                                {
+                                                                                    ?>
+                                                                                    <tr>
+                                                                                        <td class="txt_defaul">Vị trí:</td>
+                                                                                        <td class="txt_info_quocgia">
+                                                                                            <?php
+                                                                                            switch ($playerDetail['position'])
+                                                                                            {
+                                                                                                case 'D':
+                                                                                                    $position = 'Hậu vệ';
+                                                                                                    break;
+                                                                                                case 'F':
+                                                                                                    $position = 'Tiền đạo';
+                                                                                                    break;
+                                                                                                case 'M':
+                                                                                                    $position = 'Tiền vệ';
+                                                                                                    break;
+                                                                                                case 'G':
+                                                                                                    $position = 'Thủ môn';
+                                                                                                    break;
+                                                                                                case 'C':
+                                                                                                    $position = 'Huấn luyện viên';
+                                                                                                    break;
+                                                                                                case 'SUB':
+                                                                                                    $position = 'Dự bị';
+                                                                                                    break;
+                                                                                                default :
+                                                                                                    $position = $playerDetail['position'];
+                                                                                                    break;
+                                                                                            }
+                                                                                            echo $position;
+                                                                                            ?>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                                <?php
+                                                                                if (!empty($playerDetail['num_coat']))
+                                                                                {
+                                                                                    ?>
+                                                                                    <tr>
+                                                                                        <td class="txt_defaul">Áo số:</td>
+                                                                                        <td class="txt_info_quocgia"><?php echo $playerDetail['num_coat']; ?></td>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                            </tbody></table>
+                                                                    </div>
+                                                                    <?php
+                                                                    if (isset($playerDetail['object_news']) && !empty($playerDetail['object_news']))
+                                                                    {
+                                                                        ?>
+                                                                        <div class="info_2">
+                                                                            <ul class="list_tin_300">
+                                                                                <?php
+                                                                                foreach ($playerDetail['object_news'] as $id)
+                                                                                {
+                                                                                    $article = $this->objArticle->getArticleBasic($id);
+                                                                                    ?>
+                                                                                    <li>
+                                                                                        <div class="block_image_news width_common">
+                                                                                            <div class="title_news">
+                                                                                                <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>" class="txt_link"><?php echo $article['title']; ?></a>
+                                                                                            </div>
+                                                                                            <div class="block_thumb_lead">
+                                                                                                <?php
+                                                                                                if (!empty($article['thumbnail_url']))
+                                                                                                {
+                                                                                                    ?>
+                                                                                                    <div class="thumb">
+                                                                                                        <a href="<?php echo $this->ShareurlWorldcup($article['share_url']); ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                                                                                            <img src="<?php echo $this->ImageurlArticle($article, 'size1'); ?>" alt="<?php echo $article['title_format']; ?>" title="<?php echo $article['title_format']; ?>" />
+                                                                                                        </a>
+                                                                                                        <?php echo $this->ArticleTypeIcon($article); ?>
+                                                                                                    </div>
+                                                                                                    <?php
+                                                                                                }
+                                                                                                ?>
+                                                                                                <div class="news_lead"><?php echo $article['lead']; ?></div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <?php
+                                                                                }
+                                                                                ?>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    <?php
+                                                    if ($countPlayer == 2 || $countPlayer == 3 || $countPlayer == 4)
+                                                    {
+                                                        ?>
+                                                        <div class="<?php echo 'box_tt_' . $countPlayer . 'cauthu'; ?>">
+                                                            <?php
+                                                            foreach ($this->arrPlayerData as $playerDetail)
+                                                            {
+                                                                ?>
+                                                                <div class="cauthu_item">
+                                                                    <div class="block_image_cauthu">
+                                                                        <a href="<?php echo $this->ShareurlWorldcup($playerDetail['share_url']); ?>" title="<?php echo $playerDetail['name_format']; ?>" alt="<?php echo $playerDetail['name_format']; ?>">
+                                                                            <img alt="<?php echo ($playerDetail['name_format']); ?>" src="<?php echo $this->Imageurl($playerDetail['thumbnail'], 'size8'); ?>" />
+                                                                        </a>
+                                                                        <p class="txt_cauthuname">
+                                                                            <a href="<?php echo $this->ShareurlWorldcup($playerDetail['share_url']); ?>" title="<?php echo $playerDetail['name_format']; ?>" alt="<?php echo $playerDetail['name_format']; ?>">
+                                                                                <?php echo $playerDetail['name']; ?>
+                                                                            </a>
+                                                                        </p>
+                                                                    </div>
+                                                                    <?php
+                                                                    if ($countPlayer == 2)
+                                                                    {
+                                                                        ?>
+                                                                        <div class="info_cauthu">
+                                                                            <div class="info_2">
+                                                                                <table border="0" cellspacing="0" cellpadding="0">
+                                                                                    <tbody>
+                                                                                        <?php
+                                                                                        if (!empty($playerDetail['nationality_name']))
+                                                                                        {
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <td class="txt_defaul">Quốc tịch:</td>
+                                                                                                <td class="txt_info_quocgia"><?php echo $playerDetail['nationality_name']; ?></td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                        }
+                                                                                        ?>
+                                                                                        <?php
+                                                                                        if (!empty($playerDetail['birthday']))
+                                                                                        {
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <td class="txt_defaul">Ngày sinh: </td>
+                                                                                                <td class="txt_info_quocgia">&nbsp;<?php echo date('j/n/Y', strtotime($playerDetail['birthday'])); ?></td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                        }
+                                                                                        ?>
+                                                                                        <?php
+                                                                                        if (!empty($playerDetail['place_birth']))
+                                                                                        {
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <td class="txt_defaul">Nơi sinh:</td>
+                                                                                                <td class="txt_info_quocgia"><?php echo $playerDetail['place_birth']; ?></td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                        }
+                                                                                        ?>
+                                                                                        <?php
+                                                                                        if (isset($playerDetail['team_detail'][$playerDetail['team_id'][0]]['name']) && !empty($playerDetail['team_detail'][$playerDetail['team_id'][0]]['name']))
+                                                                                        {
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <td class="txt_defaul">CLB:</td>
+                                                                                                <td class="txt_info_quocgia"><?php echo (isset($playerDetail['team_detail'][$playerDetail['team_id'][0]]['name'])) ? $playerDetail['team_detail'][$playerDetail['team_id'][0]]['name'] : ""; ?></td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                        }
+                                                                                        ?>
+                                                                                        <?php
+                                                                                        if (!empty($playerDetail['height']))
+                                                                                        {
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <td class="txt_defaul">Chiều cao:</td>
+                                                                                                <td class="txt_info_quocgia"><?php echo $playerDetail['height']; ?></td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                        }
+                                                                                        ?>
+                                                                                        <?php
+                                                                                        if (!empty($playerDetail['weight']))
+                                                                                        {
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <td class="txt_defaul">Cân nặng:</td>
+                                                                                                <td class="txt_info_quocgia"><?php echo $playerDetail['weight'] . ' kg'; ?></td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                        }
+                                                                                        ?>
+                                                                                        <?php
+                                                                                        if (!empty($playerDetail['position']))
+                                                                                        {
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <td class="txt_defaul">Vị trí:</td>
+                                                                                                <td class="txt_info_quocgia">
+                                                                                                    <?php
+                                                                                                    switch ($playerDetail['position'])
+                                                                                                    {
+                                                                                                        case 'D':
+                                                                                                            $position = 'Hậu vệ';
+                                                                                                            break;
+                                                                                                        case 'F':
+                                                                                                            $position = 'Tiền đạo';
+                                                                                                            break;
+                                                                                                        case 'M':
+                                                                                                            $position = 'Tiền vệ';
+                                                                                                            break;
+                                                                                                        case 'G':
+                                                                                                            $position = 'Thủ môn';
+                                                                                                            break;
+                                                                                                        case 'C':
+                                                                                                            $position = 'Huấn luyện viên';
+                                                                                                            break;
+                                                                                                        case 'SUB':
+                                                                                                            $position = 'Dự bị';
+                                                                                                            break;
+                                                                                                        default :
+                                                                                                            $position = $playerDetail['position'];
+                                                                                                            break;
+                                                                                                    }
+                                                                                                    echo $position;
+                                                                                                    ?>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                        }
+                                                                                        ?>
+                                                                                        <?php
+                                                                                        if (!empty($playerDetail['num_coat']))
+                                                                                        {
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <td class="txt_defaul">Áo số:</td>
+                                                                                                <td class="txt_info_quocgia"><?php echo $playerDetail['num_coat']; ?></td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                        }
+                                                                                        ?>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <!--Du doan vua pha luoi-->
+                                            <div class="box_category news_box_300 width_common space_box category_guess_score">
+                                                <div class="content_box_category width_common">
+                                                    <div class="width_common king_goal">
+                                                        <div class="text_center">Dự đoán Vua phá lưới</div>
+                                                        <select class="sl_team" onchange="Team.changeTeam(this.value,2);" class="parent-predict-match-5">
+                                                            <option>Chọn đội</option>
+                                                            <?php
+                                                            if (!empty($arrTeam))
+                                                            {
+                                                                foreach ($arrTeam as $id => $name)
+                                                                {
+                                                                    ?>
+                                                                    <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                        <select id="player_select" style="display:none;" class="predict-match-5"></select>
+                                                        <input type="submit" value="Gửi" class="btn_submit_k_g btn predict-match" data-predict-type="5" onclick="_gaq.push(['_trackEvent', 'Trang bài viết World Cup', 'Click button Gửi trong box', 'Box Dự đoán']);">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <?php
+                                        }
+                                        ?>
+                                        <script type="text/javascript">
+                                            if(typeof(Parser) != "undefined"){
+                                                Parser.SITE_URL = "<?php echo $this->configView['url_vne']; ?>";
+                                                Parser.URL = "<?php echo $this->configView['vnecdn']['js']; ?>";
+                                                Parser.FLASH_URL = "<?php echo $this->configView['flash']; ?>";
+                                                Parser.SITE_ID = <?php echo SITE_ID; ?>;
+                                                Parser.AUTO_PLAY = 1;
+                                                Parser.parseAll();
+                                            }
+                                            if (typeof(common.resizeImageDetail) != 'undefined') {
+                                                common.resizeImageDetail();
+                                                $(window).resize(function() {
+                                                    common.delayFireOnce(1000).done(function() {
+                                                        common.resizeImageDetail();
+                                                    });
+                                                });
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="clear">&nbsp;</div>
+            </div>
+            <div class="block_close_menu">&nbsp; </div>
+        </div>
+
+        <div id="slideshow_popup" style="background: #000000; display: none;"></div>
+        <div class="clear"></div>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->configView['js']; ?>/mwordcup.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $this->configView['vnecdn']['js']; ?>/interactions/predict.js"></script>
+        <div id="trackingLandingPage"></div>
+        <script type="text/javascript">
+            var timeTemp = '<?php echo time(); ?>';
+            //document ready
+            $(function() {
+                //Show parser
+                if (typeof (Parser) != "undefined") {
+                    Parser.SITE_URL = "<?php echo $this->configView['url_vne']; ?>";
+                    Parser.URL = "<?php echo $this->configView['vnecdn']['js']; ?>";
+                    Parser.FLASH_URL = "<?php echo $this->configView['flash']; ?>";
+                    Parser.SITE_ID = <?php echo SITE_ID; ?>;
+                    Parser.AUTO_PLAY = 1;
+                    Parser.parseAll();
+                }
+            });
+        </script>
+
+    </body>
+</html>

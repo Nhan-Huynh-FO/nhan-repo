@@ -1,0 +1,41 @@
+<?php
+if (!empty($this->data) && is_array($this->data))
+{
+    ?>
+    <div id="box_bang_xep_hang_huy_chuong" class="box_category width_common titlelong">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category"><a><?php echo $this->layout['title']; ?></a></h2>
+        </div>
+        <div class="content_box_category width_common">
+            <table class="tbl_bxh_bongda" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <th class="first">Quốc gia</th>
+                    <th>Vàng</th>
+                    <th>Bạc</th>
+                    <th>Đồng</th>
+                </tr>
+                <?php
+                foreach ($this->data as $key => $value)
+                {
+                    if ($key == "")
+                    {
+                        continue;
+                    }
+                ?>
+                <tr>
+                    <td class="first">
+                        <img src="<?php echo $this->configView['images']; ?>/graphics/flags/<?php echo strtolower($key); ?>.png" title="<?php echo $key; ?>" alt="<?php echo $key; ?>"><?php echo $key; ?>
+                    </td>
+                    <td><?php echo $value['gold']; ?></td>
+                    <td><?php echo $value['silver']; ?></td>
+                    <td><?php echo $value['bronze']; ?></td>
+                </tr>
+                <?php
+                }
+                ?>
+            </table>
+        </div>
+    </div>
+<?php
+}
+?>

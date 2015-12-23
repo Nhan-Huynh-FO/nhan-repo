@@ -1,0 +1,200 @@
+<div id="warpper_club" class="width_common">
+    <div class="width_common line_mid_980_300">
+        <div class="left" id="col_660">
+            <div class="width_common" id="cate_club">
+                <?php echo $this->render('object/common/box_doibong_header.phtml'); ?>
+                <div id="tab_content" class="content_tab">
+                    <div style="display: none" id="befor_load_ajax"></div>
+                    <!--Info-->
+                    <div id="info" class="main_content_tab width_common tab_content_doibong">
+                        <?php
+                        if (!empty ($this->arrFixture))
+                        {
+                        ?>
+                        <div class="block_lich_thidau_club width_common box_category">
+                            <div class="content_cate">
+                                <div class="title_lichthidau_club box_width_common">
+                                    <span>Lịch thi đấu</span>
+                                </div>
+                                <div class="content_lichthidau_club box_width_common" id="box_fixture_info">
+                                    <?php echo $this->render('object/box_fixture.phtml'); ?>
+                                </div>
+                                <div class="clear">&nbsp;</div>
+                            </div>
+                        </div>
+                        <?php
+                        }
+                        if (! empty($this->arrNewsId))
+                        {
+                        ?>
+                        <div class="item_thongtin width_common  box_category">
+                            <div class="title_box_category width_common">
+                                <h2 class="txt_main_category"><a>Tin liên quan</a></h2>
+                            </div>
+                            <div class="content_thongtin width_common">
+                                <?php
+                                $idFirst = array_shift($this->arrNewsId);
+                                $article = $this->objArticle->getArticleBasic($idFirst);
+
+                                if (!empty($article))
+                                {
+                                ?>
+                                <div class="news_left_300">
+                                    <a title="<?php $article['title_format'] ?>" href="<?php echo $article['share_url'] ?>">
+                                        <img alt="<?php echo $article['title_format']; ?>" src="<?php echo $this->ImageurlArticle($article, 'size6'); ?>">
+                                    </a>
+                                    <h1 class="title_news">
+                                        <a class="txt_black_hover_blue" href="<?php echo $article['share_url'] ?>" title="<?php $article['title_format'] ?>">
+                                            <?php
+                                            echo $article['title_format'];
+                                            ?>
+                                        </a>
+                                    </h1>
+                                    <div class="width_common txt_666 txt_11">
+                                        <?php
+                                        echo $this->DateTimeFormat($article['publish_time'], 'short_article');
+                                        ?>
+                                        <span class="no_wrap">
+                                            <?php echo $this->ArticleComment($article); ?>
+                                        </span>
+                                    </div>
+                                </div>
+                                <?php
+                                }
+                                if (!empty($this->arrNewsId))
+                                {
+                                ?>
+                                <div class="news_right_360">
+                                    <ul class="list_dot_3x3">
+                                        <?php
+                                        foreach ($this->arrNewsId as $id)
+                                        {
+                                            $article = $this->objArticle->getArticleBasic($id);
+                                            if (empty($article))
+                                            {
+                                                continue;
+                                            }
+                                        ?>
+                                        <li>
+                                            <h2 class="title_news">
+                                                <a href="<?php echo $article['share_url'] ?>" title="<?php $article['title_format'] ?>">
+                                                    <?php
+                                                    echo $article['title_format'];
+                                                    ?>
+                                                </a>
+                                            </h2>
+                                            <div class="news_lead" data-mobile-href="<?php echo $article['share_url']; ?>">
+                                                <?php echo $article['lead'];?>
+                                            </div>
+                                        </li>
+                                        <?php
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                        }
+                        if (!empty ($this->extend['Lead']) && DEVICE_ENV != 1)
+                        {
+                        ?>
+                        <div class="item_thongtin width_common  box_category">
+                            <div class="title_box_category width_common">
+                                <h2 class="txt_main_category"><a>Lịch sử đội bóng</a></h2>
+                                <div class="txt_view_more"><a href="javascript:;" rel="history" onclick="Team.nextTabContent('his', 'history');" class="txt_666">Xem thêm</a></div>
+                            </div>
+                            <div class="content_thongtin width_common">
+                                <div class="news_left_450">
+                                    <?php
+                                    echo $this->extend['Lead'];
+                                    ?>
+                                </div>
+                                <div class="news_right_200">
+                                    <img src="<?php echo $this->Imageurl($this->extend['Avatar'], 'size7', false); ?>" alt="Avatar">
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <!--Info-->
+                    <!--Lich su cau lac bo-->
+                    <div id="history" style="display: none;" class="main_content_tab width_common tab_content_doibong">
+
+                        <div class="title_content_ls width_common">
+                            Tóm tắt Lịch sử Câu Lạc Bộ
+                        </div>
+                        <div class="main_content_tab width_common box_category">
+                            <?php
+                            if ($this->extend['Lead'] || $this->extend['Avatar'] || $this->extend['Content'] || $this->extend['Award'])
+                            {
+                                if (DEVICE_ENV == 1)
+                                {
+                                ?>
+                                <div class="news_right_200 box_category">
+                                    <img src="<?php echo $this->Imageurl($this->extend['Avatar'], 'size7', false); ?>" alt="Avatar">
+                                </div>
+                                <div class="news_left_450 box_category">
+                                    <?php
+                                    echo $this->extend['Lead'];
+                                    ?>
+                                </div>
+                                <?php
+                                }
+                                ?>
+                                <div class="box_content_lichsu_club">
+                                    <div class="fck_detail">
+                                        <?php echo $this->extend['Content']; ?>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            else
+                            {
+                                echo 'Hiện chưa có thông tin lịch sử đội bóng';
+                            }
+                            ?>
+                        </div>
+                        <?php
+                        if (!empty ($this->arrFixture))
+                        {
+                            ?>
+                            <div class="block_lich_thidau_club width_common box_category">
+                                <div class="content_cate">
+                                    <div class="title_lichthidau_club box_width_common">
+                                        <span>Lịch thi đấu</span>
+                                    </div>
+                                    <div class="content_lichthidau_club box_width_common" id="box_fixture_history">
+                                        <?php echo $this->render('object/box_fixture.phtml'); ?>
+                                    </div>
+                                    <div class="clear">&nbsp;</div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <!--End lich su cau lac bo-->
+                </div>
+            </div>
+        </div>
+        <div class="right" id="col_300">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        Team.init({
+            teamId: <?php echo $this->teamDetail['id']; ?>,
+            baseUrl: base_url + '/load-box-fixture/' + '<?php echo $this->teamDetail['name_format']; ?>'+'-' + '<?php echo $this->teamDetail['id']; ?>'+'.html',
+            boxFixtureEleID: 'box_fixture',
+            tabContentEleID: 'tab_content',
+            ulCapDauEleID: 'list_capdau',
+            selectSeasonEleID: 'season_select'
+        });
+    });
+</script>

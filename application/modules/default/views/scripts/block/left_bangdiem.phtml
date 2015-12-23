@@ -1,0 +1,102 @@
+<?php
+$tableRanking = $this->data['tableRanking'];
+if(!empty($tableRanking))
+{
+?>
+<div id="bangdiem_wc" class="box_category news_box_300 width_common space_box category_list_score">
+    <div class="title_box_category width_common">
+        <h2 class="txt_main_category"><a href="<?php echo 'http://worldcup.vnexpress.net/bang-diem'; ?>">Bảng điểm</a></h2>
+    </div>
+    <div class="content_box_category width_common">
+        <?php
+        $objTeam = $this->objObject->getTeam();
+        $arrGroupName = array(
+            'group-a' => 'A',
+            'group-b' => 'B',
+            'group-c' => 'C',
+            'group-d' => 'D',
+            'group-e' => 'E',
+            'group-f' => 'F',
+            'group-g' => 'G',
+            'group-h' => 'H'
+        );
+        $count = count($arrGroupName);
+        ?>
+        <ul class="tab_bangdien">
+            <?php
+            $i=0;
+            foreach($arrGroupName as $key=>$value)
+            {
+                $i++;
+            ?>
+            <li <?php echo $i==$count?'class="last"':''; ?>>
+                <a class="<?php echo $i==1?'active':''; ?>" href="javascript:;" title="<?php echo 'tab_'.$value; ?>"><?php echo $value; ?></a>
+            </li>
+            <?php
+            }
+            ?>
+        </ul>
+        <?php
+        $j=0;
+        foreach ($arrGroupName as $key => $value)
+        {
+            $j++;
+        ?>
+        <table class="width_common bang_diem" id="<?php echo 'tab_'.$value; ?>" style="<?php echo $j == 1 ? '':'display:none;'; ?>">
+            <thead>
+                <tr>
+                    <th class="team">Đội bóng</th>
+                    <th class="gb">GB</th>
+                    <th class="ll">LL</th>
+                    <th class="hs">HS</th>
+                    <th class="score">Điểm</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($tableRanking as $value)
+                {
+                    if ($value['Table'] == $key)
+                    {
+                        $team = $objTeam->getDetailObjectBasic($value['TeamID']);
+                        ?>
+                        <tr>
+                            <td class="team">
+                                <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" title="<?php echo $team['name_format']; ?>" alt="<?php echo $team['name_format']; ?>">
+                                <img width="18" src="<?php echo $this->Imageurl($team['thumbnail'], 'size1'); ?>" alt="<?php echo $team['name_format']; ?>">
+                                <?php echo $team['name']; ?>
+                                </a>
+                            </td>
+                            <td class="gb"><?php echo $value['GoalScore']; ?></td>
+                            <td class="ll"><?php echo $value['GoalAgainst']; ?></td>
+                            <td class="hs"><?php echo $value['GoalDiffenrence']; ?></td>
+                            <td class="score"><?php echo $value['Point']; ?></td>
+                        </tr>
+                        <?php
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+        <div class="clear"></div>
+        <?php
+        }
+        ?>
+        <div class="width_common view_more">
+            <div class="txt_view_more "><a class="txt_666" href="<?php echo 'http://worldcup.vnexpress.net/bang-diem'; ?>">Xem tất cả</a></div>
+        </div>
+    </div>
+</div>
+<?php
+}
+?>
+<script type="text/javascript">
+/*Bat dau script tab*/
+    $('.category_list_score ul.tab_bangdien li a').click(function(){
+        $(this).parents('.tab_bangdien').find('.active').removeClass('active');
+        $(this).addClass('active');
+        var content_show = $(this).attr('title');
+        $('.bang_diem').css("display","none");
+        $('#'+ content_show).show();
+    });
+</script>

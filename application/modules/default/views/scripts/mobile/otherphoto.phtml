@@ -1,0 +1,21 @@
+    <?php
+    foreach ($this->arrData as $id)
+    {
+        $photo = $this->objArticle->getArticleBasic($id);
+        ?>
+        <li>
+            <div class="thumb_140">
+                <a title="video name" href="<?php echo $photo['share_url']; ?>" title="<?php echo $photo["title_format"]; ?>"><img alt="<?php echo $photo["title_format"]; ?>" src="<?php echo $this->Imageurl($photo['thumbnail_url'], 'size6'); ?>">  </a>
+                <a class="icon_thumb_videophoto icon_photo" href="<?php echo $photo['share_url']; ?>" title="<?php echo $photo["title_format"]; ?>">&nbsp;</a>
+            </div>
+            <h2 class="title_news"><a class="txt_link" href="<?php echo $photo['share_url']; ?>" title="<?php echo $photo["title_format"]; ?>"><?php echo $photo["title"]; ?></a></h2>
+        </li>
+    <?php
+    }
+    ?>
+<script type="text/javascript">
+    //slideshow photo
+    if (typeof(common.initLinkSlideshow) != 'undefined') {
+        common.initLinkSlideshow();
+    }
+</script>

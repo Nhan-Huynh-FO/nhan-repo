@@ -1,0 +1,197 @@
+<?php
+if (!empty ($this->data['data']))
+{
+	$objTeam    = $this->objObject->getTeam();
+	$arrListTable = array();
+	foreach ($this->data['data'] as $season)
+	{
+		if (isset($season['tableRanking']) && !empty($season['tableRanking']))
+		{
+			foreach ($season['tableRanking'] as $rank)
+			{
+				// echo $date; die;
+                if($rank['Table'] == 'A'){
+                    $arrListTable[0][] = $rank;
+                }
+                else {
+                    $arrListTable[1][] = $rank;
+                }
+				$objTeam->setId(array($rank['TeamID']));
+			}
+		}
+	}
+    ?>
+    <div id="bangdiem_aff" class="box_category news_box_300 width_common space_box category_list_score">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category"><a><?php echo $this->layout['title']; ?></a></h2>
+        </div>
+        <?php
+        if (!empty($arrListTable))
+        {
+            asort($arrListTable);
+        ?>
+        <div class="content_box_category width_common">
+            <div class="title_tab">
+                <ul class="tab_bangdien">
+                    <?php
+                    $priority = $this->layout['priority'];
+                    foreach ($arrListTable as $k => $league)
+                    {
+                    ?>
+                    <li>
+                        <a href="javascript:thethao.viewTab('bangdiem_aff', '<?php echo 'tab',$k; ?>')" class="<?php echo $k == $priority ? 'active':''; ?> tab<?php echo $k; ?>" rel="tab<?php echo $k; ?>">
+                            <?php
+                            echo 'Bảng ', $k==0?'A':'B';
+                            ?>
+                        </a>
+                    </li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+            </div>
+            <div class="content_news">
+                <?php
+                foreach ($arrListTable as $k => $league)
+                {
+                    ?>
+                <div class="content_tab tab<?php echo $k; ?>" style="<?php echo $priority == $k ? 'display:block;' : 'display:none;'; ?>">
+                    <table class="width_common">
+                        <thead>
+                            <tr>
+                                <th class="team">Đội bóng</th>
+                                <th class="st">ST</th>
+                                <th class="hs">HS</th>
+                                <th class="score">Điểm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if (!empty($league))
+                            {
+                                foreach ($league as $ranking)
+                                {
+									//get detail team
+									$team1 = $objTeam->getDetailObjectBasic($ranking['TeamID']);
+
+                                    ?>
+                                    <tr>
+                                        <td class="team">
+											<img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>">
+											<a href="<?php echo ($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>">
+                                                <?php echo $ranking['Name']; ?>
+											</a>
+
+                                        </td>
+                                        <td class="gb"><?php echo $ranking['NumMatch']; ?></td>
+                                        <td class="hs"><?php echo $ranking['GoalDiffenrence']; ?></td>
+                                        <td class="score"><?php echo $ranking['Point']; ?></td>
+                                    </tr>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                    <div class="width_common view_more">
+						<div class="txt_666 ">ST: số trận, HS: hiệu số</div>
+					</div>
+                </div>
+                <?php
+                }
+                ?>
+            </div>
+        </div>
+        <?php
+        }
+        ?>
+    </div>
+<?php
+}
+?>
+<?php
+/*if (!empty($this->data['data']))
+{
+    ?>
+    <div class="box_category width_common" id="bangxephang">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category"><a href="<?php echo $this->layout['share_url']; ?>" title="<?php echo $this->layout['title']; ?>"><?php echo $this->layout['title']; ?></a></h2>
+            <a class="block_arrow_title" href="<?php echo $this->layout['share_url']; ?>" title="<?php echo $this->layout['title']; ?>">&nbsp;</a>
+        </div>
+        <div class="content_box_category width_common">
+            <div class="title_tab">
+                <ul>
+                    <?php
+                    $priority = $this->layout['priority'];
+                    foreach ($this->data['data'] as $k => $league)
+                    {
+                        ?>
+                        <li class="start <?php echo $k == $priority ? 'active' : ''; ?>">
+                            <a href="javascript:thethao.viewTab('bangxephang', '<?php echo 'tab', $k; ?>')" class="tab<?php echo $k; ?>" rel="tab<?php echo $k; ?>">
+                                <?php
+                                echo $league['leagueName'];
+                                ?>
+                            </a>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+            </div>
+            <div class="content_news">
+                <?php
+                foreach ($this->data['data'] as $k => $league)
+                {
+                    ?>
+                    <div class="content_tab tab<?php echo $k; ?>" style="<?php echo $priority == $k ? 'display:block;' : 'display:none;'; ?>">
+                        <div class="wrap-tbl">
+                            <table class="tb_bxh">
+                                <tbody><tr class="top">
+                                        <td class="w56">Team</td>
+                                        <td class="w8">W</td>
+                                        <td class="w8">D</td>
+                                        <td class="w8">L</td>
+                                        <td class="w20">Pts</td>
+                                    </tr>
+                                    <?php
+                                    if (!empty($league['tableRanking']))
+                                    {
+                                        $i = 1;
+                                        foreach ($league['tableRanking'] as $ranking)
+                                        {
+                                            if (11 == $i)
+                                                break;
+                                            ?>
+                                            <tr class="top<?php echo $ranking['Position']; ?>">
+                                                <td class="w56">
+                                                    <a class="txt_black_hover_blue" href="<?php echo '/doi-bong/', ($ranking['NameSeo']), '-', $ranking['TeamID'], '.html' ?>"><?php echo $ranking['Name']; ?></a>
+                                                </td>
+                                                <td class="w8"><?php echo $ranking['Won']; ?></td>
+                                                <td class="w8"><?php echo $ranking['Drawn']; ?></td>
+                                                <td class="w8"><?php echo $ranking['Lost']; ?></td>
+                                                <td class="w20"><?php echo $ranking['Point']; ?></td>
+                                            </tr>
+                                            <?php
+                                            $i++;
+                                        }
+                                    }
+                                    ?>
+                                </tbody></table>
+                        </div>
+                        <div class="txt_view_more">
+                            Chi tiết
+                            <a href="<?php echo '/bang-xep-hang/', ($league['leagueNameSeo']), '-', ($league['seasonNameSeo']), '-', $league['leagueID'], '-', $league['seasonID'], '.html' ?>" class="txt_gray">
+                                <?php echo $league['leagueName'], ' ', $league['seasonName'] ?>
+                            </a>
+                            <span>&nbsp;</span>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
+}*/
+?>

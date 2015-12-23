@@ -1,0 +1,53 @@
+<div class="box_category news_box_300 width_common space_box category_list_hc_vn">
+    <div class="title_box_category width_common">
+        <span class="icon_lv"></span>
+        <div class="txt_main_category"><a href="javascript:;"><?php echo $this->layout['title']; ?></a></div>
+    </div>
+    <div class="content_box_category width_common">
+        <div class="scroll-pane">
+            <div class="content_scoller width_common">
+                <table class="width_common">
+                    <thead>
+                        <tr>
+                            <th>Ngày</th>
+                            <th>Môn</th>
+                            <th>Vận động viên</th>
+                            <th class="hc">HC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (!empty ($this->data[0]))
+                        {
+                            $arrData = $this->data[0];
+                            krsort($arrData);
+                            $j = 1;
+                            foreach ($arrData as $value)
+                            {
+                                if (empty($value['vandongvien']))
+                                    continue;
+                                ?>
+                                <tr <?php echo $j ? 'class="bg_efefef"':''; ?>>
+                                    <td><?php echo $this->DateTimeFormat($value['ngay'], 'short'); ?></td>
+                                    <td><?php echo $value['mon']; ?></td>
+                                    <td><?php echo $value['vandongvien']; ?></td>
+                                    <td class="hc"><img src="<?php echo $this->configView['images'], '/icons/icon_',  strtolower($value['huychuong']),'.png'; ?>" alt="<?php echo $value['huychuong']; ?>" /></td>
+                                </tr>
+                                <?php
+                                $j = 1 - $j;
+                            }
+                        }
+                        else {
+                            ?>
+                            <tr class="bg_efefef">
+                                <td colspan="4" style="text-align: center">Chưa có dữ liệu</td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

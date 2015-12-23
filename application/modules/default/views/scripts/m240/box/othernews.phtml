@@ -1,0 +1,46 @@
+<?php
+// get other news
+if ( !empty($this->arrOtherNews['data']) )
+{
+    $mData  = count($this->arrOtherNews['data']);
+    $nData  = 0;
+    $arrOtherNews = array_chunk($this->arrOtherNews['data'], 2);
+?>
+<div class="title_box_category width_common">
+	<h2 class="txt_main_category"><a href="javascript:;">Tin khác</a></h2>
+</div>
+<div class="content_box_category width_common">
+	<?php
+	foreach ( $arrOtherNews as $otherNews )
+	{
+	?>
+		<ul class="list_news">
+			<?php
+			foreach ( $otherNews as $id )
+			{
+				$articleDetail = $this->objArticle->getArticleBasic($id);
+                //check emty or bai hen gio
+                if (empty($articleDetail) || $articleDetail['publish_time'] > time())
+                {
+                    $mData--;
+                    continue;
+                }//end if
+                $nData++;
+			?>
+				<li <?php echo $nData==$mData?'class="end"':'';?>>
+                    <a href="<?php echo $this->ShareurlM240($articleDetail['share_url']); ?>" title="<?php echo $articleDetail['title_format']; ?>"><?php echo $articleDetail['title_format']; ?></a>
+                    <span class="no_wrap">
+                        <img class="icon_content icon_title_<?php echo intval($articleDetail['article_icon']); ?>" src="<?php echo $this->configView['images']; ?>/graphics/img_blank.gif" alt="" />
+                    </span>
+				</li>
+			<?php
+			}//end foreach
+			?>
+		</ul>
+	<?php
+	}//end foreach
+	?>
+</div>
+<?php
+}//end if
+?>

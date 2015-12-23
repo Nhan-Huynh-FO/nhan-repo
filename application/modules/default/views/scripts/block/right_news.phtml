@@ -1,0 +1,53 @@
+<?php
+if (!empty($this->data['data']))
+{
+    $share_url = ($this->data['info']['id'] == SITE_ID) ? '' : $this->data['info']['share_url'];
+    ?>
+    <div class="box_category width_common" id="doanhnghiepviet">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category">
+                <a href="<?php echo $this->configView['url'], $share_url; ?>" title="<?php echo $this->data['info']['name']; ?>">
+                    <?php
+                    echo!empty($this->layout['title']) ? $this->layout['title'] : $this->data['info']['name'];
+                    ?>
+                </a>
+            </h2>
+        </div>
+        <div class="content_box_category width_common">
+            <div class="block_image_news width_common">
+                <ul class="list_news">
+                    <?php
+                    $c = count($this->data['data']);
+                    $i = 1;
+                    foreach ($this->data['data'] as $id)
+                    {
+                        $article = $this->objArticle->getArticleBasic($id);
+                        if (empty($article))
+                        {
+                            continue;
+                        }
+                        ?>
+                        <li <?php echo $c == $i ? 'class="end"' : ''; ?>>
+                            <h2 class="title_news">
+                                <a class="txt_link" href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                    <?php
+                                    echo $article['title'];
+                                    ?>
+                                </a>
+                                <span class="no_wrap">
+                                    <?php echo $this->ArticleViewIcon($article); ?>
+                                    <?php echo $this->ArticleComment($article); ?>
+                                </span>
+                            </h2>
+                        </li>
+                        <?php
+                        $i++;
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>

@@ -1,0 +1,111 @@
+<?php
+$className = ($this->has_topic) ? '' : ' no_space';
+if ($this->flag_vne && !$this->flag_ione && !$this->flag_ngoisao)
+{
+    ?>
+    <!-- TH1
+        There are only VNE news
+    -->
+    <div class="block_tincheo width_common<?php echo $className; ?>">
+        <ul class="list_news_dot_3x3">
+            <?php
+            foreach ($this->list_reference as $data)
+            {
+                ?>
+                <li>
+                    <a href="<?php echo $data['share_url']; ?>" class="txt_16 txt_link"><?php echo $data['title']; ?> <span class="txt_666 txt_14">(<?php echo $this->DateTimeFormat($data['publish_time'], 'short'); ?>)</span></a>
+                    <span class="no_wrap">
+                        <img class="icon_content icon_title_<?php echo intval($data['article_icon']); ?>" src="<?php echo $this->config['images']; ?>/graphics/img_blank.gif" alt="" />
+                        <?php echo $this->Articlecomment($data); ?>
+                    </span>
+                </li>
+                <?php
+            }
+            ?>
+        </ul>
+    </div>
+    <?php
+}
+elseif (!$this->flag_vne && $this->flag_ione && !$this->flag_ngoisao)
+{
+    ?>
+    <!-- TH2
+        There are only Ione news
+    -->
+    <div class="block_tincheo width_common<?php echo $className; ?>">
+        <p class="logo_lienquan"><img src="<?php echo $this->config['images']; ?>/graphics/logoione60x24.png" align="absmiddle" /></p>
+        <ul class="list_news_dot_3x3">
+            <?php
+            foreach ($this->list_reference as $data)
+            {
+                ?>
+                <li>
+                    <a class="txt_16 txt_link" href="<?php echo $data['share_url']; ?>" target="_blank"><?php echo $data['title']; ?> <span class="txt_666 txt_14">(<?php echo $this->DateTimeFormat($data['publish_time'], 'short'); ?>)</span></a>
+                    <span class="no_wrap">
+                        <img class="icon_content icon_title_<?php echo intval($data['article_icon']); ?>" src="<?php echo $this->config['images']; ?>/graphics/img_blank.gif" alt="" />
+                        <?php echo $this->Articlecomment($data); ?>
+                    </span>
+                </li>
+                <?php
+            }
+            ?>
+        </ul>
+    </div>
+    <?php
+}
+elseif (!$this->flag_vne && !$this->flag_ione && $this->flag_ngoisao)
+{
+    ?>
+    <!-- TH3
+        There are only ngoisao news
+    -->
+    <div class="block_tincheo width_common<?php echo $className; ?>">
+        <p class="logo_lienquan"><img src="<?php echo $this->config['images']; ?>/graphics/logongoisao60x24.png" align="absmiddle" /></p>
+        <ul class="list_news_dot_3x3">
+            <?php
+            foreach ($this->list_reference as $data)
+            {
+                ?>
+                <li><a class="txt_16 txt_link" href="<?php echo $data['share_url']; ?>" target="_blank"><?php echo $data['title']; ?> <span class="txt_666 txt_14">(<?php echo $this->DateTimeFormat($data['publish_time'], 'short'); ?>)</span></a>
+                    <span class="no_wrap">
+                        <img class="icon_content icon_title_<?php echo intval($data['article_icon']); ?>" src="<?php echo $this->config['images']; ?>/graphics/img_blank.gif" alt="" />
+                        <?php echo $this->Articlecomment($data); ?>
+                    </span>
+                </li>
+                <?php
+            }
+            ?>
+        </ul>
+    </div>
+    <?php
+}
+else
+{
+    ?>
+    <!-- TH4
+        There are mixed news
+    -->
+    <div class="block_tincheo width_common<?php echo $className; ?>">
+        <ul>
+            <?php
+            foreach ($this->list_reference as $data)
+            {
+                if (in_array($data['site_id'], $this->arrVNE))
+                {
+                    echo '<li><span class="icon_responsive ico_respone_06">&nbsp;</span><div class="txt_block_relative_news"><a class="txt_16 txt_link" href="' . $data['share_url'] . '">' . $data['title'] . ' <span class="txt_666 txt_14">(' . $this->DateTimeFormat($data['publish_time'], 'short') . ')</span></a></div></li>';
+                }
+                elseif ($data['site_id'] == SITE_IONE)
+                {
+                    echo '<li><span class="icon_responsive ico_respone_07">&nbsp;</span><div class="txt_block_relative_news"><a target="_blank" class="txt_16 txt_link" href="' . $data['share_url'] . '">' . $data['title'] . ' <span class="txt_666 txt_14">(' . $this->DateTimeFormat($data['publish_time'], 'short') . ')</span></a></div></li>';
+                }
+                else
+                {
+                    echo '<li><span class="icon_responsive ico_respone_08">&nbsp;</span><div class="txt_block_relative_news"><a target="_blank" class="txt_16 txt_link" href="' . $data['share_url'] . '">' . $data['title'] . ' <span class="txt_666 txt_14">(' . $this->DateTimeFormat($data['publish_time'], 'short') . ')</span></a></div></li>';
+                }
+            }
+            ?>
+        </ul>
+    </div>
+    <?php
+}
+?>

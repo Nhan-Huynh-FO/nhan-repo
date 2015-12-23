@@ -1,0 +1,69 @@
+<?php
+if (!empty ($this->data['data'][1]) || !empty ($this->data['data'][2]))
+{
+?>
+<div class="box_category width_common" id="tayvotxs">
+    <div class="title_box_category width_common">
+        <h2 class="txt_main_category">
+            <a href="<?php echo '/bang-xep-hang/tennis/gender/1/year/'; ?>" title="Tay vợt xuất sắc">Tay vợt xuất sắc</a>
+        </h2>
+        <a class="block_arrow_title" href="<?php echo '/bang-xep-hang/tennis/gender/1/year/'; ?>" title="Tay vợt xuất sắc">&nbsp;</a>
+    </div>
+    <div class="content_box_category width_common">
+        <div class="title_tab">
+            <ul>
+                <li class="start active"><a href="javascript:thethao.viewTab('tayvotxs', 'tab1');" class="tab1" rel="tab1">ATP</a></li>
+                <li><a href="javascript:thethao.viewTab('tayvotxs', 'tab2');" class="tab2" rel="tab2">WTA</a></li>
+            </ul>
+        </div>
+        <div class="content_news">
+        <?php
+        foreach ($this->data['data'] as $key => $ranking)
+        {
+        ?>
+        <div class="wrap-tbl content_tab tab<?php echo $key; ?>" style="<?php echo 1 == $key ? 'display:block;':'display:none;'; ?>">
+            <table class="tbl_tayvotxs">
+                <tbody>
+                    <tr class="top">
+                        <td class="w70">Tên tay vợt</td>
+                        <td class="w30">Điểm số</td>
+                    </tr>
+                    <?php
+                    $i = 1;
+                    $objTennis = $this->objObject->getTennis();
+                    foreach ($ranking as $id => $tennis)
+                    {
+                        $player = $objTennis->getDetailObjectBasic($id);
+                    ?>
+                    <tr class="<?php echo $i=1?'bg_le':'bg_chan'?>">
+                        <td class="w70">
+                            <div class="left pic_tayvot">
+                                <img width="50" height="50" src="<?php echo $this->Imageurl($player['thumbnail'], 'size10'); ?>" alt="<?php echo $firstNews['title_format']; ?>" alt="Rafael Nadal">
+                            </div>
+                            <a href="<?php echo $player['share_url']; ?>" title="<?php echo $player['name_format']; ?>" alt="<?php echo $player['name_format']; ?>">
+                                <?php echo $player['name']; ?>
+                            </a>
+                            <span class="txt_gray">ATP:</span>
+                            <span class="txt_black"><b><?php echo $player['ranking_postition']; ?></b></span>
+                        </td>
+                        <td class="w30"><?php echo number_format($tennis['RankingPoint'], 0, '.', ',') ?></td>
+                    </tr>
+                    <?php
+                        $i = 1 - $i;
+                    }
+                    ?>
+                </tbody></table>
+        </div>
+        <?php
+        }
+        ?>
+            <div class="txt_view_more">
+                <a href="<?php echo '/bang-xep-hang/tennis/gender/1/year/'; ?>" class="txt_gray"><b>Xem thêm</b></a>
+                <span>&nbsp;</span>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+}
+?>

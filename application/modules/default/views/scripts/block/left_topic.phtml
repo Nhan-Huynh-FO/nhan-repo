@@ -1,0 +1,75 @@
+<?php
+/**
+ * Box topic 300: moi lan chay 1 topic
+ * Topic dang chay: Giải cờ vua quốc tế HDBank 2015
+ */
+if (!empty($this->data['data']))
+{
+    $style_div_private = DEVICE_ENV == 1 ? 'style="margin:0 0 0 7px;"' : '';
+    $style_a_private = DEVICE_ENV == 1 ? 'style="color: #ed1c24; font:700 18px/44px arial;"' : 'style="color: #ed1c24;"';
+    $label = 'Giải cờ vua quốc tế HDBank 2015';
+    ?>
+    <div id="hdbank2015" class="box_category width_common">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category" <?php echo $style_div_private; ?>>
+                <a href="<?php echo $this->data['info']['share_url']; ?>" onClick="_gaq.push(['c._trackEvent', 'Thể thao', 'Tiêu đề box', '<?php echo $label; ?>']);" title="Giải cờ vua quốc tế HDBank 2015" <?php echo $style_a_private; ?>>Giải cờ vua quốc tế</a>
+                <span>&nbsp;</span><a href="https://www.hdbank.com.vn/" onClick="_gaq.push(['c._trackEvent', 'Thể thao', 'Tiêu đề box', 'HDBank']);" title="HDBank" target="_blank" <?php echo $style_a_private; ?>>HDBank</a><span>&nbsp;</span>
+                <a href="<?php echo $this->data['info']['share_url']; ?>" onClick="_gaq.push(['c._trackEvent', 'Thể thao', 'Tiêu đề box', '<?php echo $label; ?>']);" title="Giải cờ vua quốc tế HDBank 2015" <?php echo $style_a_private; ?>>2015</a>
+            </h2>
+        </div>
+        <div class="content_box_category width_common">
+            <?php
+            $idFirstNews = array_shift($this->data['data']);
+            $firstNews = $this->objArticle->getArticleBasic($idFirstNews);
+            ?>
+            <h2 class="title_news">
+                <a href="<?php echo $firstNews['share_url']; ?>" onClick="_gaq.push(['c._trackEvent', 'Thể thao', 'Tin trong box', '<?php echo $label; ?>']);" title="<?php echo $firstNews['title_format']; ?>" class="txt_link"><?php echo $firstNews['title'];?></a>
+                <span class="no_wrap">
+                    <?php echo $this->ArticleViewIcon($firstNews); ?>
+                    <?php echo $this->ArticleComment($firstNews); ?>
+                </span>
+            </h2>
+            <div class="block_image_news width_common">
+                <?php if (DEVICE_ENV != 1) { ?>
+                    <div class="thumb">
+                        <a href="<?php echo $firstNews['share_url']; ?>" onClick="_gaq.push(['c._trackEvent', 'Thể thao', 'Tin trong box', '<?php echo $label; ?>']);" title="<?php echo $firstNews['title_format']; ?>">
+                            <img src="<?php echo $this->ImageurlArticle($firstNews, 'size1'); ?>" alt="<?php echo $firstNews['title_format']; ?>" />
+                        </a>
+                        <?php echo $this->ArticleTypeIcon($firstNews); ?>
+                    </div>
+                <?php } else { ?>
+                    <div class="thumb" data-scale>
+                        <a class="cover_image image_92" style="background-image: url('<?php echo $this->ImageurlArticle($firstNews, 'size1'); ?>')" href="<?php echo $firstNews['share_url']; ?>" onClick="_gaq.push(['c._trackEvent', 'Thể thao', 'Tin trong box', '<?php echo $label; ?>']);" title="<?php echo $firstNews['title_format']; ?>">&nbsp;</a>
+                        <?php echo $this->ArticleTypeIcon($firstNews); ?>
+                    </div>
+                <?php } ?>
+                <div class="news_lead" data-mobile-href="<?php echo $firstNews['share_url']; ?>">
+                    <?php echo $firstNews['lead'];?>
+                </div>
+                <?php if (!empty($this->data['data'])) {?>
+                    <ul class="list_news_dot_3x3_300">
+                        <?php
+                        foreach ($this->data['data'] as $id)
+                        {
+                            $article = $this->objArticle->getArticleBasic($id);
+                            if (empty($article)) continue;
+                            ?>
+                            <li>
+                                <h2>
+                                    <a href="<?php echo $article['share_url']; ?>" onClick="_gaq.push(['c._trackEvent', 'Thể thao', 'Tin trong box', '<?php echo $label; ?>']);" title="<?php echo $article['title_format']; ?>">
+                                        <?php echo $article['title']; ?>
+                                    </a>
+                                    <span class="no_wrap">
+                                        <?php echo $this->ArticleViewIcon($article); ?>
+                                        <?php echo $this->ArticleComment($article); ?>
+                                    </span>
+                                </h2>
+                                </h2>
+                            </li>
+                        <?php }//end foreach?>
+                    </ul>
+                <?php }//end if?>
+            </div>
+        </div>
+    </div>
+<?php }//end if?>

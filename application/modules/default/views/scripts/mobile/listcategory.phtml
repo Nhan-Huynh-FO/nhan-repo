@@ -1,0 +1,43 @@
+<?php
+if(!empty($this->arrData))
+{
+    $count = count($this->arrData);
+    $index = 0;
+    foreach ($this->arrData as $id)
+    {
+        $articleDetail = $this->objArticle->getArticleBasic($id);
+        if (empty($articleDetail))
+            continue;
+        ?>
+        <li<?php echo ++$index == $count ? ' class="end"' : ''; ?>>
+            <div class="block_image_news width_common">
+                <?php
+                if (!empty($articleDetail['thumbnail_url']))
+                {
+                    ?>
+                    <div class="thumb thumb_list_news" data-scale="1">
+                        <a href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>" class="cover_image image_68" style="background-image: url('<?php echo $this->ImageurlArticle($articleDetail, 'size11'); ?>')">&nbsp;</a>
+                        <?php echo $this->ArticleTypeIcon($articleDetail); ?>
+                    </div>
+                    <?php
+                }
+                ?>
+                <h2 class="title_news">
+                    <a href="<?php echo $articleDetail['share_url']; ?>" title="<?php echo $articleDetail['title_format']; ?>" class="txt_link"><?php echo $articleDetail['title']; ?></a>
+                    <span class="no_wrap">
+                        <?php
+                        echo $this->ArticleViewIcon($articleDetail);
+                        echo $this->ArticleComment($articleDetail);
+                        ?>
+                    </span>
+                </h2>
+                <?php
+                //icon tai tro
+                echo $this->IconCommercial($articleDetail, $this->intCategoryId);
+                ?>
+            </div>
+        </li>
+        <?php
+    }
+}
+?>

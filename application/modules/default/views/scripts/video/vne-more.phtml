@@ -1,0 +1,22 @@
+<?php echo '<?xml version = "1.0" encoding = "utf-8" ?>' ?>
+<data>
+    <items>
+        <?php
+        $arrData = $this->arrData;
+        if(is_array($arrData) && count($arrData)>0)
+        {
+            foreach($arrData as $data)
+            {
+            ?>
+            <item>
+                <title><![CDATA[<?php echo $data['title'];?>]]></title>
+                <thumbnail><![CDATA[<?php echo $this->Imageurl($data['thumbnail_url'], 'size1');?>]]></thumbnail>
+                <duration><?php echo $data['duration'];?></duration>
+                <link><![CDATA[<?php echo $data['share_url'];?>]]></link>
+            </item>
+            <?php
+            }
+        }
+        ?>
+    </items>
+</data>

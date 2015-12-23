@@ -1,0 +1,127 @@
+<?php
+$arrData = $this->arrArticleDetail;
+$timeUpdate = (isset($this->timeUpdate) && !empty($this->timeUpdate)) ? $this->timeUpdate : time();
+$liveBlog = ((($arrData['privacy'] & 8) == 8) ? 'true' : 'false');
+?>
+<div id="detail_page_live" class="width_common line_col">
+    <div id="col_660" class="left width_common">
+        <div class="box_width_common" id="box_details_news" data-liveblog-active="<?php echo $liveBlog; ?>">
+            <div class="w670 left width_common">
+                <div class="main_content_detail width_common">
+                    <?php
+                    if (DEVICE_ENV != 1)
+                    {
+                    ?>
+                    <div class="block_timer_share">
+                        <div class="block_timer left txt_666" id="timer_update">
+                            <?php
+                            echo '<b>Cập nhật:</b> ', $this->DateTimeFormat($timeUpdate, 'long');
+                            ?>
+                        </div>
+                        <div class="block_share right">
+                            <?php echo $this->render('detail/box/box_share_photo.phtml'); ?>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    else {
+                    ?>
+                    <div class="div-fbook width_common title_div_fbook">
+                        <div class="block_timer left txt_666" id="timer_update">
+                            <?php
+                            echo '<b>Cập nhật:</b> ', $this->DateTimeFormat($timeUpdate, 'long');
+                            ?>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    ?>
+                    <div class="title_news">
+                        <h1><?php echo $arrData['title_format']; ?></h1>
+                    </div>
+                    <div class="short_intro txt_666"><?php echo $arrData['lead']; ?></div>
+                    <?php
+                    if (!empty($arrData['reference_detail']))
+                    {
+                        $arrRef = array();
+                        foreach ($arrData['reference_detail'] as $reference)
+                        {
+                            $reference['share_url'] = $this->ShareurlSeagame($reference['share_url']);
+                            $arrRef[] = '<a alt="' . $reference['title_format'] . '" title="' . $reference['title_format'] . '" href="' . $reference['share_url'] . '">' . $reference['title'] . '</a>';
+                        }
+                        ?>
+                        <div class="relative_new">
+                            <ul class="list_news_dot_3x3_300">
+                                <li>
+                                    <?php
+                                    echo DEVICE_ENV==1?implode('&nbsp;&nbsp;/&nbsp;&nbsp;', $arrRef):implode('&nbsp;/&nbsp;', $arrRef);
+                                    ?>
+                                </li>
+                            </ul>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <div class="vongloai_vongbang tab_content">
+                        <ul class="tabs">
+                            <li><a class="tab" title="Diễn biến" href="<?php echo $this->strLinkTuongThuat; ?>">Diễn biến</a></li>
+                            <li><a class="tab active" title="Tổng thuật">Lịch thi đấu & kết quả</a></li>
+                        </ul>
+                    </div>
+                    <div class="fck_detail width_common">
+                        <?php echo $arrData['content_review'];?>
+                    </div>
+                    <div id="container_tab_live" class="width_common">
+                        <div class="live_post_dienbien">
+                            <a class="short_live" href="<?php echo $this->strLinkTuongThuat; ?>" title="Xem diễn biến chính">Xem diễn biến chính của trận đấu</a>
+                        </div>
+                    </div>
+                    <script language="javascript" type="text/javascript" src="<?php echo $this->configView['vnecdn']['js']; ?>/require.min.js"></script>
+                    <script type="text/javascript">
+                        if (typeof(common.resizeImageDetail) != 'undefined') {
+                            common.resizeImageDetail();
+                            $(window).resize(function() {
+                                common.delayFireOnce(1000).done(function() {
+                                    common.resizeImageDetail();
+                                });
+                            });
+                        }
+                        (function() {
+                            var req = require.config({
+                                context: 'main_content_detail',
+                                baseUrl: '<?php echo $this->configView['vnecdn']['js'],'/live'; ?>'
+
+                            });
+                            req(['livenews']);
+                        })();
+                    </script>
+                    <?php
+                    echo $this->render('/common/box_share_bottom.phtml');
+                    if (!empty($arrData['list_tag'])) : ?>
+                        <div class="block_tag width_common space_bottom_20">
+                            <div class="txt_tag">Tags</div>
+                            <?php foreach ($arrData['list_tag'] as $list_tag) : ?>
+                                <a href="<?php echo $list_tag['tag_url']; ?>" title="<?php echo $list_tag['tag_name_format']; ?>" class="tag_item"><?php echo $list_tag['tag_name']; ?></a>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <input type="hidden" name="article_id" id="article_id" value="<?php echo $arrData['article_id']; ?>"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="col_300" class="right width_common">
+        <?php
+        //Check permission comment
+        if ($arrData['iscomment'])
+        {
+            echo DEVICE_ENV != 4 ? $this->render('/block/comment.phtml') : $this->render('/block/comment_live.phtml');
+        }//end if
+        ?>
+    </div>
+</div>
+
+<div class="banner_980x60">
+    <?php //echo $this->GetBlock('footer'); ?>
+</div>
+<div class="clear">&nbsp;</div>

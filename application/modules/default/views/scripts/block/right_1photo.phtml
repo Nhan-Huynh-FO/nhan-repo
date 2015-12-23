@@ -1,0 +1,99 @@
+<?php
+if (!empty ($this->data['data']))
+{
+    $name = empty($this->layout['title']) ? $this->data['info']['name'] : $this->layout['title'];
+?>
+<div class="box_category width_common boxhoptac">
+    <div class="title_box_category width_common">
+        <h2 class="txt_main_category">
+            <a href="<?php echo $this->data['info']['share_url']; ?>" title="<?php echo $name; ?>">
+                <?php echo $name; ?>
+            </a>
+        </h2>
+        <a href="<?php echo $this->data['info']['share_url']; ?>" title="<?php echo $this->data['info']['name']; ?>" class="block_arrow_title">&nbsp;</a>
+    </div>
+    <div class="content_box_category width_common">
+        <div class="block_image_news width_common">
+            <?php
+            $idFirstNews    = array_shift($this->data['data']);
+            $firstNews      = $this->objArticle->getArticleBasic($idFirstNews);
+            ?>
+            <div class="thumb">
+                <a href="<?php echo $firstNews['share_url']; ?>" title="<?php echo $firstNews['title_format']; ?>" alt="<?php echo $firstNews['title_format']; ?>">
+                    <img src="<?php echo $this->ImageurlArticle($firstNews, 'size1'); ?>" alt="<?php echo $firstNews['title_format']; ?>" title="<?php echo $firstNews['title_format']; ?>"/>
+                </a>
+            </div>
+            <h2 class="title_news">
+                <a href="<?php echo $firstNews['share_url']; ?>" title="<?php echo $firstNews['title_format']; ?>" alt="<?php echo $firstNews['title_format']; ?>" class="txt_link">
+                    <?php
+                    echo $firstNews['title'];
+                    ?>
+                    <span class="no_wrap">
+                        <?php echo $this->ArticleViewIcon($firstNews); ?>
+                        <?php echo $this->ArticleComment($firstNews); ?>
+                    </span>
+                </a>
+            </h2>
+            <div class="news_lead" data-mobile-href="<?php echo $firstNews['share_url']; ?>">
+                <?php
+                echo $firstNews['lead'];
+                ?>
+            </div>
+            <?php
+            if (!empty($this->data['data']))
+            {
+            ?>
+            <ul class="list_news_dot_3x3_300">
+                <?php
+                foreach ($this->data['data'] as $id)
+                {
+                    $article = $this->objArticle->getArticleBasic($id);
+                    if (empty($article))
+                    {
+                        continue;
+                    }
+                    ?>
+                    <li>
+                        <p>
+                            <h2>
+                                <a href="<?php echo $article['share_url']; ?>" title="<?php echo $article['title_format']; ?>" alt="<?php echo $article['title_format']; ?>">
+                                    <?php echo $article['title']; ?>
+                                </a>
+                                <span class="no_wrap">
+                                    <?php echo $this->ArticleViewIcon($article); ?>
+                                    <?php echo $this->ArticleComment($article); ?>
+                                </span>
+                            </h2>
+                        </p>
+
+                    </li>
+                    <?php
+                }
+                ?>
+            </ul>
+            <?php
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+    if (!empty($this->layout['logo1']))
+    {
+    ?>
+    <div class="bottom_hop_tac">
+        <div class="txt_hoptac">Được hợp tác bởi:</div>
+        <div class="nhataitro">
+            <a href="<?php echo $this->layout['logo1_url']; ?>">
+                <img src="<?php echo $this->layout['logo1']; ?>" alt="logo 1" class="left hoptac"></a>
+            <a href="<?php echo $this->layout['logo2_url']; ?>">
+                <img src="<?php echo $this->layout['logo2']; ?>" alt="logo 2" class="right">
+            </a>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+</div>
+<?php
+}
+?>

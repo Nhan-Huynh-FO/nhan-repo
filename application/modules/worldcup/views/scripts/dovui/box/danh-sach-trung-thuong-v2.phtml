@@ -1,0 +1,254 @@
+<style>
+    #danhsach_dovui_t .capital .result{
+	width: 30%;
+	float: left;
+	font: 400 14px/30px Arial;
+	text-align: center;
+	text-indent: 20px;
+}
+    #danhsach_dovui_t .capital .result {
+    background: none repeat scroll 0 0 #FFE200;
+    float: left;
+    font: 400 14px/30px Arial;
+    text-align: center;
+    text-indent: 23px;
+    width: 30%;
+}
+</style>
+<?php
+			
+	$strweeaward =  $this->strweeaward;
+    $arrAwardBlock = $this->arrAwardBlock;
+    $arrData1 = $this->arrData1;
+    $arrData2 = $this->arrData2;
+    $arrData3 = $this->arrData3;
+    $arrData4 = $this->arrData4;
+    $arrData5 = $this->arrData5;
+    $arrData6 = $this->arrData6;
+    $week = $this->week;
+    $objNews = Thethao_Model_News::getInstance();
+    
+    $date = new DateTime();
+    $datenow = strtotime($date->format('Y-m-d H:i:s'));
+    $date8Am = strtotime($date->format('Y-m-d 08:00:00'));
+    
+    
+    
+    if(strtotime($date->format('Y-m-d H:i:s')) >= DOVUI_EDATE)
+    {
+        $strDate = 1405875600;
+    }
+    else
+    {
+        if($datenow < $date8Am)
+            $strDate = $date->sub(new DateInterval('P2D'));
+		else
+			$strDate = $date->sub(new DateInterval('P1D'));
+		$strDate = strtotime($strDate->format('Y-m-d'));
+    }
+    if(!empty($arrAwardBlock))
+    {
+?>
+
+                
+<span id="tempSTT" style="display: none;"><?php echo $week; ?></span>
+<span id="currentWeek" style="display: none;"><?php echo $week; ?></span>
+<div id="danhsach_dovui_t" class="box_category width_common news_box_300">
+  <div class="title_box_category width_common">
+    <div class="txt_main_category"><a href="javascript:;">Danh sách trúng thưởng</a></div>
+  </div>
+  <div class="content_box_category width_common">
+    <div class="capital">
+        <div class="date">
+            <a class="btn_control btn_pre b_pre" id="b_pre" title="" href="javascript:;"><img src="<?php echo $this->configView['images']; ?>/graphics/prev_dv_mobile.png"></a>
+            <a class="btn_control btn_next b_next" id="b_next" style="display:none" title="" href="javascript:;"><img src="<?php echo $this->configView['images']; ?>/graphics/next_dv_mobile.png"></a>
+            <div id="strDate"><?php echo $strweeaward;?></div>
+        </div>
+        <div class="result"><a href="<?php echo $this->configView['url']. '/dovui/?day='.$strDate; ?>">Đáp án</a></div>
+        
+    </div>
+    <?php
+	   
+            echo $objNews->genHtmlBlockAward($arrData1,1,'Tuan 1',$week);
+       
+            echo $objNews->genHtmlBlockAward($arrData2,2,'Tuan 2',$week);
+       
+            echo $objNews->genHtmlBlockAward($arrData3,3,'Tuan 3',$week);
+       
+            echo $objNews->genHtmlBlockAward($arrData4,4,'Tuan 4',$week);
+       
+            echo $objNews->genHtmlBlockAward($arrData5,5,'Tuan 5',$week);
+       
+            echo $objNews->genHtmlBlockAward($arrData6,6,'Tuan 6',$week);
+       
+    ?>
+    <div class="dv_ft">
+        <div class="note">
+            <strong>TLĐ - <span>Trả lởi đúng</span></strong>
+            <strong>TG - <span>Thời gian trả lời</span></strong>
+        </div>
+        <div class="txt_view_more"><a href="/dovui/trungthuong" class="txt_666">Xem chi tiết</a></div>
+    </div>
+  </div>
+</div>
+<?php
+	}
+?>
+
+<script type="text/javascript">
+	$('.b_pre').click(function(){
+	    var strDate = document.getElementById("strDate");
+		var elem1 = document.getElementById("table1");
+		elem1.setAttribute("style","display:none");
+		var elem2 = document.getElementById("table2");
+		elem2.setAttribute("style","display:none");
+		var elem3 = document.getElementById("table3");
+		elem3.setAttribute("style","display:none");
+		var elem4 = document.getElementById("table4");
+		elem4.setAttribute("style","display:none");
+		var elem5 = document.getElementById("table5");
+		elem5.setAttribute("style","display:none");
+		var elem6 = document.getElementById("table6");
+		elem6.setAttribute("style","display:none");
+		
+		var el = document.getElementById( 'tempSTT' );
+		var STT = el.innerHTML;
+		
+		var elcurrentWeek = document.getElementById( 'currentWeek' );
+		var currentWeek = elcurrentWeek.innerHTML;
+		
+		
+		if(STT > 1)
+		{
+			STT = STT - 1;
+		}
+		
+		var tempSTT = document.getElementById("tempSTT");
+		tempSTT.innerHTML = STT;
+		
+		if(STT == 1)
+		{
+			var b_pre = document.getElementById("b_pre");
+			b_pre.setAttribute("style","display:none");	
+		}
+		if(STT < currentWeek)
+		{
+			var b_next = document.getElementById("b_next");
+			b_next.setAttribute("style","display:nones");	
+		}
+		if(STT == 1)
+        {
+            strDate.innerHTML = "Tuần 1 <span>(10/6 - 16/6)</span>";
+			elem1.setAttribute("style","display:nones");
+        }
+		else if(STT == 2)	
+        {
+            strDate.innerHTML = "Tuần 2 <span>(17/6 - 23/6)</span>";
+			elem2.setAttribute("style","display:nones");
+        }
+		else if(STT == 3)	
+        {
+            strDate.innerHTML = "Tuần 3 <span>(24/6 - 30/6)</span>";
+			elem3.setAttribute("style","display:nones");
+        }
+		else if(STT == 4)
+        {
+            strDate.innerHTML = "Tuần 4 <span>(01/7 - 07/07)</span>";	
+			elem4.setAttribute("style","display:nones");
+        }
+		else if(STT == 5)	
+        {
+            strDate.innerHTML = "Tuần 5 <span>(08/07 - 14/07)</span>";
+			elem5.setAttribute("style","display:nones");
+        }
+		else if(STT == 6)	
+        {
+            strDate.innerHTML = "Tuần 6 <span>(15/7 - 21/07)</span>";
+			elem6.setAttribute("style","display:nones");
+        }
+	})
+	
+	$('.b_next').click(function(){
+	   
+        var strDate = document.getElementById("strDate");
+		var elem1 = document.getElementById("table1");
+		elem1.setAttribute("style","display:none");
+		var elem2 = document.getElementById("table2");
+		elem2.setAttribute("style","display:none");
+		var elem3 = document.getElementById("table3");
+		elem3.setAttribute("style","display:none");
+		var elem4 = document.getElementById("table4");
+		elem4.setAttribute("style","display:none");
+		var elem5 = document.getElementById("table5");
+		elem5.setAttribute("style","display:none");
+		var elem6 = document.getElementById("table6");
+		elem6.setAttribute("style","display:none");
+		
+		var el = document.getElementById( 'tempSTT' );
+		var STT = el.innerHTML;
+		
+		var elcurrentWeek = document.getElementById( 'currentWeek' );
+		var currentWeek = elcurrentWeek.innerHTML;
+		
+		
+		
+	    STT = Number(STT) + Number("1");
+		
+		
+		var tempSTT = document.getElementById("tempSTT");
+		tempSTT.innerHTML = STT;
+		
+		if(STT == 1)
+		{
+			var b_pre = document.getElementById("b_pre");
+			b_pre.setAttribute("style","display:none");	
+		}
+		if(STT > 1)
+		{
+			
+			var b_pre = document.getElementById("b_pre");
+			b_pre.setAttribute("style","display:nones");
+		}
+		if(STT < currentWeek)
+		{
+			
+			var b_next = document.getElementById("b_next");
+			b_next.setAttribute("style","display:nones");	
+		}
+        if(STT >= currentWeek)
+		{
+			var b_next = document.getElementById("b_next");
+			b_next.setAttribute("style","display:none");	
+		}
+		if(STT == 1)
+        {
+            strDate.innerHTML = "Tuần 1 <span>(10/6 - 16/6)</span>";
+			elem1.setAttribute("style","display:nones");
+        }
+		else if(STT == 2)	
+        {
+            strDate.innerHTML = "Tuần 2 <span>(17/6 - 23/6)</span>";
+			elem2.setAttribute("style","display:nones");
+        }
+		else if(STT == 3)	
+        {
+            strDate.innerHTML = "Tuần 3 <span>(24/6 - 30/6)</span>";
+			elem3.setAttribute("style","display:nones");
+        }
+		else if(STT == 4)
+        {
+            strDate.innerHTML = "Tuần 4 <span>(01/7 - 07/07)</span>";	
+			elem4.setAttribute("style","display:nones");
+        }
+		else if(STT == 5)	
+        {
+            strDate.innerHTML = "Tuần 5 <span>(08/07 - 14/07)</span>";
+			elem5.setAttribute("style","display:nones");
+        }
+		else if(STT == 6)	
+        {
+            strDate.innerHTML = "Tuần 6 <span>(15/7 - 21/07)</span>";
+			elem6.setAttribute("style","display:nones");
+        }
+	})
+</script>

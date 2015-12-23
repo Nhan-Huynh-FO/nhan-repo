@@ -1,0 +1,232 @@
+<?php
+if (!empty($this->data['data']))
+{
+    $objTeam    = $this->objObject->getTeam();
+    $objMatch   = $this->objObject->getMatch();
+    $team1 = $team2 = array();
+	$arrListMatch = array();
+    $next = true;
+	foreach ($this->data['data'] as $season)
+	{
+		if (isset($season['fixtureData']) && !empty($season['fixtureData']))
+		{
+			foreach ($season['fixtureData'] as $match)
+			{
+                $date = strtotime(date("d-m-Y",($match['DatetimeHappen'] + 7*60*60)));
+
+				// echo $date; die;
+                $arrListMatch[$date][] = $match['MatchID'];
+			}
+            if (count($arrListMatch) > 2) {
+                $arrListMatch = array_slice($arrListMatch, 0, 2, true);
+            }
+            else {
+                $next = false;
+            }
+            asort($arrListMatch);
+		}
+	}
+
+    ?>
+	<div id="affcup" class="box_category news_box_300 width_common space_box category_guess_score">
+
+			<div class="title_box_category width_common">
+				<h2 class="txt_main_category"><a><?php echo $this->layout['title']; ?></a></h2>
+			</div>
+			<div class="content_box_category width_common" id="content_aff">
+				<?php
+				$firstDate 	= 0;
+				$lastDate	= 0;
+				if (!empty($arrListMatch))
+				{
+                    $j =0;
+                    $i = 0;
+					foreach ($arrListMatch as $date => $arrId)
+                    {
+                        $j++;
+						if ($j>2)
+						{
+							continue;
+						}
+                        $firstDate = $date;
+                        $j == 1 ? ($lastDate = $date) : ($firstDate = $date) ;
+						?>
+						<div class="date"><?php echo $this->DateTimeFormat($date,'long_predict'); ?></div>
+						<?php
+						$objMatch->setId($arrId);
+                        foreach($arrId as $id)
+                        {
+                            //get detail match
+                            $matchDetail = $objMatch->getDetailObjectBasic($id);
+							$matchDetail['datetime_happen'] = $matchDetail['datetime_happen'] + 7*60*60;
+                            if (empty($matchDetail))
+                            {
+                                continue;
+                            }
+                            $i++;
+                            $objTeam->setId(array($matchDetail['team1'],$matchDetail['team2']));
+                            $team1 = $objTeam->getDetailObjectBasic($matchDetail['team1']);
+                            $team2 = $objTeam->getDetailObjectBasic($matchDetail['team2']);
+                            ?>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <td class="minutes" colspan="3">
+                                            <?php if($matchDetail['status'] != 1 && $matchDetail['status'] != 2) //dang dien ra
+                                            {
+                                                echo isset($matchDetail['matchTime']) && !empty($matchDetail['matchTime'])?$matchDetail['matchTime']."'":'FT';
+                                            }
+                                            else if($matchDetail['status'] == 1)
+                                            {
+                                                echo '<div class="chuadau" style="color:#999999;">'.date('H:i',$matchDetail['datetime_happen']).'</div>';
+                                            }else if ($matchDetail['status'] == 2)
+                                            {
+                                                echo 'FT';
+                                            }
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    if(!empty($matchDetail['round'])){
+                                    ?>
+                                    <tr>
+                                        <td class="minutes" colspan="3">
+                                            <?php
+                                            echo '<div class="chuadau" style="color:#999999;">'.$matchDetail['round'].'</div>';
+                                            ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </thead>
+                                <tbody>
+                                    <tr class="current">
+                                        <td class="main_team">
+                                            <?php
+                                            if (!empty($team1['thumbnail']))
+                                            {
+                                            ?>
+                                            <img width="18" src="<?php echo $this->Imageurl($team1['thumbnail'], 'size1'); ?>" alt="<?php echo $team1['name_format']; ?>">
+                                            <?php
+                                            }
+                                            ?>
+                                            <p><a href="<?php echo ($team1['share_url']); ?>" title="<?php echo $team1['name_format']; ?>" alt="<?php echo $team1['name_format']; ?>">
+                                                <?php echo $team1['abbreviation']; ?>
+                                                </a></p>
+                                        </td>
+                                        <td class="score">
+                                            <span class="box no-border">
+											<?php
+											if($matchDetail['datetime_happen'] < time()) {
+												echo $matchDetail['goal1'];
+											}
+											?>
+											</span>
+                                            <span class="box no-border">-</span>
+                                            <span class="box no-border">
+											<?php
+											if($matchDetail['datetime_happen'] < time()) {
+												echo $matchDetail['goal2'];
+											}
+											?>
+											</span>
+                                        </td>
+                                        <td class="sub_team">
+                                            <?php
+                                            if (!empty($team2['thumbnail']))
+                                            {
+                                            ?>
+                                            <img width="18" src="<?php echo $this->Imageurl($team2['thumbnail'], 'size1'); ?>" alt="<?php echo $team2['name_format']; ?>">
+                                            <?php
+                                            }
+                                            ?>
+                                            <p><a href="<?php echo ($team2['share_url']); ?>" title="<?php echo $team2['name_format']; ?>" alt="<?php echo $team2['name_format']; ?>">
+                                                <?php echo $team2['abbreviation']; ?>
+                                                </a></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <?php
+                        }
+                    }
+				}
+				?>
+				<div class="right control_pagination">
+					<a class="icon_responsive ico_respone_04" href="javascript:;" data-type="prev" data-date="<?php echo $lastDate; ?>">&nbsp;</a>
+                    <?php
+                    if ($next) {
+                    ?>
+					<a class="icon_responsive ico_respone_05" href="javascript:;" data-type="next" data-date="<?php echo $firstDate; ?>">&nbsp;</a>
+                    <?php
+                    }
+                    ?>
+				</div>
+			</div>
+	</div>
+	<?php
+}
+?>
+<?php
+/*if (!empty($this->data['data']))
+{
+    ?>
+    <div class="box_category width_common" id="lichthidau">
+        <div class="title_box_category width_common">
+            <h2 class="txt_main_category"><a href="<?php echo $this->layout['share_url']; ?>" title="<?php echo $this->layout['title']; ?>"><?php echo $this->layout['title']; ?></a></h2>
+            <a class="block_arrow_title" href="<?php echo $this->layout['share_url']; ?>" title="<?php echo $this->layout['title']; ?>">&nbsp;</a>
+        </div>
+        <div class="content_box_category width_common">
+            <div class="ct-lichdau width_common">
+                <?php
+                foreach ($this->data['data'] as $league)
+                {
+                    if ($league['leagueId'] > 6 && (empty($league['fixtureData'])) )
+                    {
+                        continue;
+                    }
+                    ?>
+                    <div class="title-lichdau">
+                        <a href="/lich-thi-dau" title="<?php echo $league['leagueName']; ?>"><?php echo $league['leagueName']; ?></a>
+                    </div>
+                    <?php
+                    if (!empty ($league['fixtureData']))
+                    {
+                    ?>
+                    <table class="tb-lichdau">
+                        <tbody>
+                            <?php
+                            $i = 0;
+                            foreach ($league['fixtureData'] as $fixture)
+                            {
+                                if (3 < $i)
+                                {
+                                    break;
+                                }
+                                $date = $fixture['DatetimeHappen'];
+                                ?>
+                            <tr>
+                                <td class="col-1"><?php echo date('d/m H:i' , $date); ?></td>
+                                <td>
+                                    <a title="<?php echo $fixture['TeamName1'], ' - ', $fixture['TeamName2'];?>" href="<?php echo '/thong-tin-truoc-tran/','tran-',Fpt_Filter::setSeoLink($fixture['TeamName1']),'-vs-',Fpt_Filter::setSeoLink($fixture['TeamName2']),'-',$fixture['MatchID']; ?>">
+                                        <?php echo $fixture['TeamName1'], ' - ', $fixture['TeamName2'];?>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                                $i++;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                    <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+    <?php
+}*/
+?>

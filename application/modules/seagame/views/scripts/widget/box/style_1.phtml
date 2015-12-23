@@ -1,0 +1,66 @@
+<?php
+$arrDataName = array(
+    'bru' => 'Brunei','cam' => 'Cambodia', 'ina' => 'Indonesia', 'lao' => 'Laos', 'mas' => 'Malaysia', 'mya' => 'Myanmar', 'sin' => 'Singapore', 'phi' => 'Philippines', 'tha' => 'Thailand', 'tls' => 'Timor-Leste', 'vie' => 'Vietnam'
+);
+?>
+<div class="box_300_seagame box_category news_box_300 width_common space_box category_list_hc">
+    <div class="title_box_category width_common">
+        <span class="icon_lv"></span>
+        <div class="sg_label"><p>SEA Games 28</p></div>
+        <div class="txt_main_category"><a href="javascript:;">Bảng tổng sắp huy chương</a></div>
+    </div>
+    <div class="content_box_category width_common">
+        <table class="width_common">
+            <thead>
+                <tr>
+                    <th class="stt"></th>  
+                    <th class="team">Quốc gia</th>
+                    <th class="gb"><img alt="HCV" src="<?php echo $this->configView['images']; ?>/icons/icon_vang.png"></th>
+                    <th class="ll"><img alt="HCB" src="<?php echo $this->configView['images']; ?>/icons/icon_bac.png"></th>
+                    <th class="hs"><img alt="HCĐ" src="<?php echo $this->configView['images']; ?>/icons/icon_dong.png"></th>
+                    <th class="score">Tổng số</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if (!empty($this->arrData) && is_array($this->arrData))
+                {
+                    $i = 1;
+                    $j = 1;
+                    foreach ($this->arrData as $key => $value)
+                    {
+                        if ($key == '')
+                        {
+                            continue;
+                        }
+                        $key = $arrDataName[strtolower($key)];
+                        ?>
+                        <tr <?php echo $j ? 'class="bg_efefef"':''; ?>>
+                            <td class="num"><?php echo $i++; ?></td>
+                            <td class="team">
+                                <img src="<?php echo $this->configView['images']; ?>/icons/<?php echo strtolower($key); ?>_flag.jpg" alt="<?php echo $key; ?>"><?php echo $key; ?>
+                            </td>
+                            <td class="gb"><?php echo $value['gold']; ?></td>
+                            <td class="ll"><?php echo $value['silver']; ?></td>
+                            <td class="hs"><?php echo $value['bronze']; ?></td>
+                            <td class="score"><?php echo $value['total']; ?></td>
+                        </tr>
+                        <?php
+                        $j = 1-$j;
+                    }
+                }
+                else
+                {
+                    ?>
+                    <tr class="bg_efefef">
+                        <td colspan="6">
+                            Chưa có dữ liệu
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>

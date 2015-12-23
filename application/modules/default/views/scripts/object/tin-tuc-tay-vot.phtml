@@ -1,0 +1,52 @@
+<div id="col_left" class="w670">
+    <div id="cate_news_cap3" class="box_width_common">
+        <div class="content_cate">
+            <ul class="list_chandung">
+                <?php
+                if (is_array($this->arrDataNews) && !empty($this->arrDataNews))
+                {
+                    foreach ($this->arrDataNews as $id)
+                    {
+                        $detail = $this->article->getArticleBasic($id);
+                        if (!empty($detail))
+                        {
+                            ?>
+                            <li>
+                                <div class="news_images">
+                                    <a href="<?php echo $detail['share_url']; ?>" title="<?php echo $detail['title_format']; ?>"><img src="<?php echo $this->ImageurlArticle($detail, $this->imageSize['size5']); ?>" alt="<?php echo $detail['title_format']; ?> " /></a>
+                                    <p>
+                                        <b><a href="<?php echo $detail['share_url']; ?>" class="txt_black_hover_blue" title="<?php echo $detail['title_format']; ?>"><?php echo $detail['title']; ?></a></b>
+                                    </p>
+                                    <p><?php echo $detail['lead']; ?></p>
+                                </div>
+                            </li>
+                            <?php
+                        }
+                    }
+                }
+                else
+                {
+                    echo 'Hiện chưa có thông tin về tay vợt';
+                }
+                ?>
+            </ul>
+            <div class="more_bottom_detal box_width_common">
+                <div class="left"></div>
+                <div class="txt_view_more">
+                    <?php
+                    echo $this->Pagination($this->arrParamPaging, $this->limit);
+                    ?>
+                </div>
+            </div>
+            <div class="clear">&nbsp;</div>
+        </div>
+    </div>
+    <!-- InstanceEndEditable -->
+<?php echo $this->GetBlock('left'); ?>
+</div>
+<div id="col_right" class="w300 right">
+<?php echo $this->GetBlock('right'); ?>
+</div>
+<div class="box_width_common">
+<?php echo $this->GetBlock('footer'); ?>
+</div>

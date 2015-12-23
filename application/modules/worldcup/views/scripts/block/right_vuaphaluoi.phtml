@@ -1,0 +1,58 @@
+<?php
+if (!empty($this->data['data']))
+{
+    $objPlayer = $this->objObject->getPlayer();
+    $objTeam = $this->objObject->getTeam();
+    ?>
+    <div class="box_category news_box_300 width_common space_box category_goal_king">
+        <div class="title_box_category width_common">
+            <div class="txt_main_category">
+                <a href="<?php echo $this->configView['url']; ?>/vua-pha-luoi">
+                    <?php echo $this->layout['title']; ?>
+                </a>
+            </div>
+        </div>
+        <div class="content_box_category width_common">
+            <table class="width_common">
+                <tbody>
+
+                    <tr>
+                        <th width="25" class="text_center">#</th>
+                        <th>Cầu thủ</th>
+                        <th width="50">Đội bóng</th>
+                        <th width="70" class="text_center">Bàn thắng</th>
+                    </tr>
+                    <?php
+                    $i = 1;
+                    foreach ($this->data['data'] as $data)
+                    {
+                        $objPlayer->setId($data['PlayerID']);
+                        $player = $objPlayer->getDetailObjectBasic($data['PlayerID']);
+                        $objTeam->setId($data['TeamID']);
+                        $team = $objTeam->getDetailObjectBasic($data['TeamID']);
+                        ?>
+                        <tr>
+                            <td class="text_center"><?php echo $i; ?></td>
+                            <td><a href="<?php echo $this->ShareurlWorldcup($player['share_url']); ?>" title="<?php echo $this->escape($player['name_format']); ?>"><?php echo $player['name']; ?></a></td>
+                            <td class="text_right team">
+                                <a href="<?php echo $this->ShareurlWorldcup($team['share_url']); ?>" title="<?php echo $team['name_format']; ?>" alt="<?php echo $team['name_format']; ?>">
+                                    <img width="18" src="<?php echo $this->Imageurl($team['thumbnail'], 'size1'); ?>" alt="<?php echo $team['name_format']; ?>">
+                                    <?php echo substr($team['name'], 0, 3); ?>
+                                </a>
+                            </td>
+                            <td class="text_center"><b><?php echo $data['Goals']; ?></b></td>
+                        </tr>
+                        <?php
+                        $i++;
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <div class="width_common view_more">
+                <div class="txt_view_more "><a class="txt_666" href="<?php echo $this->configView['url']; ?>/vua-pha-luoi">Xem tất cả</a></div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>

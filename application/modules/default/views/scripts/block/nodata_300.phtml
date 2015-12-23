@@ -1,0 +1,42 @@
+<?php
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+$arrParam = $this->data['data'];
+
+//check block type: 1-video nhac
+if ($arrParam['block_type'] == 1)
+{
+    ?>
+    <div id="block-video-left">&nbsp;</div>
+    <script type="text/javascript">
+        $(function () {
+            if (typeof(thethao.getVideoApi) != 'undefined') {
+                thethao.getVideoApi(<?php echo intval($arrParam['folder_id']);?>, <?php echo LIMIT_LIST+intval($arrParam['limit']);?>, <?php echo intval($arrParam['limit']);?>, 'block-video-left', <?php echo intval($arrParam['exclude']);?>);
+            }
+        });
+    </script>
+<?php
+}
+else if ($arrParam['block_type'] == 2) //app the thao
+{
+    ?>
+    <div class="box_category width_common" id="box_app_thethao">
+        <h2 class="title_app">Tải App Thể thao của VnEpxress</h2>
+        <div class="item_app_thethao">
+            <a rel="nofollow" href="https://itunes.apple.com/vn/app/the-thao-vnexpress/id1042993127?mt=8" target="_blank"><img src="<?php echo $this->configView['images'] ?>/graphics/btn-app-store-2.png" alt="app store" /></a>
+            <a rel="nofollow" href="https://play.google.com/store/apps/details?id=fpt.vnexpress.sport&hl=en" target="_blank"><img src="<?php echo $this->configView['images'] ?>/graphics/btn-google-play-2.png" alt="google play" /></a>
+        </div>
+        <img src="<?php echo $this->configView['images'] ?>/graphics/qr_code.jpg" alt="qrcode" class="qr_code" />
+    </div>
+    <?php
+}
+else if ($arrParam['block_type'] == 3) //script eclick balloon
+{
+    ?>
+    <script language="javascript" type="text/javascript">(function(){var a=Math.floor(1E10*Math.random());window[a]=function(){document.write("<script src='http://e.eclick.vn/delivery/zone/3003.js'/>\x3c/script>")};var b=cookieMatch=/(^|;)[ ]*fosp_country=([^;]*)/.exec(document.cookie);if(b){if("vn"!=b[2])window[a]()}else a=document.createElement("script"),a.async=!0,a.src="http://log.eclick.vn/api?name=ip2location&callback=rab",b=document.getElementsByTagName("script")[0],b.parentNode.insertBefore(a,b)})();</script>
+    <?php
+}
+?>

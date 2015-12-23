@@ -1,0 +1,334 @@
+<div class="width_common">
+    <div class="width_common line_mid_980_300">
+        <div id="col_660" class="left">
+            <?php
+            if (!empty ($this->arrPlayer))
+            {
+            ?>
+            <div id="cate_club">
+                <div id="infor_detail_cauthu" class="box_category">
+                    <div class="left w150">
+                        <img src="<?php echo $this->Imageurl($this->arrPlayer['thumbnail'], 'size8');?>" title="<?php echo $this->arrPlayer['name_format']; ?>" alt="<?php echo $this->arrPlayer['name_format']; ?>" />
+                    </div>
+                    <div class="right block_info_cauthu">
+                        <div class="width_common">
+                            <p id="name_infor_cauthu" class="left"><?php echo $this->arrPlayer['name'];?></p>
+                            <div class="right block_share_mobile">
+                                <div class="social_share width_common">
+                                    <?php
+                                    echo $this->Articlelike($this->arrPlayer['id'], 13);
+                                    ?>
+                                    <div class="item_social hidden_320">
+                                        <div class="fb-like" data-href="<?php echo $this->arrPlayer['share_url']; ?>" data-send="false" data-layout="button_count" data-width="150" data-show-faces="true"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="width_common">
+                            <?php
+                            $birth = explode('-', $this->arrPlayer['birthday']);
+                            if(isset($birth[0]))
+                            {
+                                $age = intval(date('Y')-$birth[0]).' tuổi';
+                            }else{
+                                $age = 1000;
+                            }
+                            if($age >10 && $age <60 )
+                            {
+                                $dateSt = date('d/m/Y',strtotime($this->arrPlayer['birthday'])).' ('.$age.')';
+                            }
+                            if(!empty($dateSt)){
+                            ?>
+                            <p id="ngaysinh_infor_cauthu">
+                                <b>Ngày sinh</b>
+                                <span class="txt_666"><?php echo $dateSt; ?></span>
+                            </p>
+                            <?php
+                            }
+                            if(!empty($this->arrPlayer['nationality_name']))
+                            {
+                            ?>
+                            <p>
+                                <b>Quốc tịch</b>
+                                <span class="txt_666"><?php echo $this->arrPlayer['nationality_name']; ?></span>
+                            </p>
+                            <?php
+                             }
+                             if($this->arrPlayer['height']!=0)
+                             {
+                             ?>
+                            <p>
+                                <b>Chiều cao</b>
+                                <span class="txt_666"><?php echo $this->arrPlayer['height'].'&nbsp;Cm'; ?></span>
+                            </p>
+                            <?php
+                             }
+                             if($this->arrPlayer['weight'] !=0)
+                             {
+                             ?>
+                            <p>
+                                <b>Cân nặng</b>
+                                <span class="txt_666"><?php echo $this->arrPlayer['weight'].'&nbsp;Kg'; ?></span>
+                            </p>
+                            <?php
+                             }
+                             if($this->arrPlayer['position'] !=NULL)
+                             { ?>
+                            <p>
+                                <b>Vị trí</b>
+
+                                <span class="txt_666">
+                                    <?php
+                                    switch ($this->arrPlayer['position'])
+                                    {
+                                        case 'D':
+                                            $position = 'Hậu vệ';
+                                            break;
+                                        case 'F':
+                                            $position = 'Tiền đạo';
+                                            break;
+                                        case 'M':
+                                            $position = 'Tiền vệ';
+                                            break;
+                                        case 'G':
+                                            $position = 'Thủ môn';
+                                            break;
+                                        case 'C':
+                                            $position = 'Huấn luyện viên';
+                                            break;
+                                        case 'SUB':
+                                            $position = 'Dự bị';
+                                            break;
+                                        default :
+                                            $position = $this->arrPlayer['position'];
+                                            break;
+                                    }
+                                    echo $position;
+                                    ?>
+                                </span>
+                            </p>
+                            <?php
+                            }
+                            if($this->arrPlayer['num_coat']!=0)
+                            {
+                            ?>
+                            <p>
+                                <b>Số áo</b>
+                                <span class="txt_666"><?php  echo $this->arrPlayer['num_coat'];?></span>
+                            </p>
+                            <?php
+                            }
+                            $id = $this->arrPlayer['nationality'];
+                            if(isset($this->arrLocation[$id])){
+
+                                echo '<p><b>Đội bóng quốc gia</b><span class="txt_666">'.$this->arrLocation[$id]['name'].'</span></p>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+            }
+            if (!empty($this->assessment['data']))
+            {
+            ?>
+            <div class="width_common box_category block_item_info_cauthu">
+                <div class="title_box_category width_common">
+                    <h2 class="txt_main_category"><a>Đánh giá cầu thủ</a></h2>
+                </div>
+                <div class="width_common">
+                    <div class="padding_in_content" id="danhgia_scroll">
+                        <ul class="left">
+                            <?php
+                            foreach ($this->assessment['data'] as $data)
+                            {
+                                $percent = $data['rating_point'] * 10;
+
+                                switch ($data['rating_point'])
+                                {
+                                    case $data['rating_point'] <= 5:
+                                        $color = 'color2';
+                                        break;
+                                    case $data['rating_point']<=7:
+                                        $color = 'color3';
+                                        break;
+                                    case $data['rating_point'] < 8:
+                                        $color = 'color5';
+                                        break;
+                                    case $data['rating_point'] < 9:
+                                        $color = 'color1';
+                                        break;
+                                    default :
+                                        $color = 'color4';
+                                        break;
+                                }
+                            ?>
+                            <li>
+                                <span class="txt_666"><?php echo $data['rating_name']; ?></span>
+                                <div class="bg_bottom_scroll">
+                                    <div class="<?php echo $color; ?>" style="width:<?php echo $percent, '%'; ?>;">&nbsp;</div>
+                                </div>
+                                <span class="thongso_danhgia"><?php echo $data['rating_point']; ?></span>
+                            </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <?php
+            }
+            if(!empty($this->newsPlayer))
+            {
+            ?>
+            <div class="item_thongtin width_common box_category">
+                <div class="title_box_category width_common">
+                    <h2 class="txt_main_category">
+                        <a>Tin tức liên quan</a>
+                    </h2>
+                </div>
+                <div class="content_thongtin width_common">
+                    <?php
+                    $idFirst = array_shift($this->newsPlayer);
+                    $data = $this->objArticle->getArticleBasic($idFirst);
+                    ?>
+                    <div class="news_left_300">
+                        <a href="<?php echo $data['share_url'];?>" title="<?php echo $data['title_format'];?>">
+                            <img src="<?php echo $this->Imageurl($data['thumbnail_url'], 'size6');?>" alt="<?php echo $data['title_format'];?>">
+                        </a>
+                        <h1 class="title_news">
+                            <a href="<?php echo $data['share_url'];?>" class="txt_black_hover_blue" title="<?php echo $data['title_format'];?>"><?php echo $data['title'];?></a>
+                        </h1>
+                        <div class="width_common txt_666 txt_11">
+                            <?php echo $this->DateTimeFormat($data['publish_time'], 'short_article'); ?>
+                            <span class="no_wrap">
+                                <?php echo $this->ArticleViewIcon($data); ?>
+                                <?php echo $this->ArticleComment($data); ?>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="news_right_360">
+                        <ul class="list_dot_3x3">
+                            <?php
+                            if(!empty ($this->newsPlayer)){
+                                $c = count($this->newsPlayer);
+                                $i = 0;
+                                foreach ($this->newsPlayer as $id)
+                                {
+                                    $data = $this->objArticle->getArticleBasic($id);
+                                    if(empty($data))
+                                    {
+                                        continue;
+                                    }
+                                    $i++;
+                                ?>
+                                <h2 class="title_news">
+                                    <a href="<?php echo $data['share_url'];?>" title="<?php echo $data['title_format'];?>"><?php echo $data['title'];?></a>
+                                </h2>
+                                <div class="news_lead" data-mobile-href="<?php echo $data['share_url']; ?>"><?php echo $data['lead'];?></div>
+                                <?php
+                                }
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <?php
+            }
+            ?>
+            <?php
+            if (count($this->locals) > 0 ||  count($this->inter) > 0)
+            {
+            ?>
+            <div class="item_thongtin width_common box_category">
+                <div class="title_box_category width_common">
+                    <h2 class="txt_main_category">
+                        <a href="javascript:;">Danh hiệu</a>
+                    </h2>
+                    <div class="block_arrow_title"> </div>
+                </div>
+                <div class="content_thongtin width_common">
+                    <div class="padding_in_content" id="danhhieu_cauthu">
+                        <?php
+                        if (count($this->locals) > 0 )
+                        {
+                        ?>
+                        <div class="danhhieu_row" id="giai_trongnuoc">
+                            <p class="top_title_danhhieu">
+                                <span class="w180"><b>Giải trong nước</b></span>
+                                <span class="w90"><b>Danh hiệu</b></span>
+                                <span class="w90"><b>Số lượng</b></span>
+                                <span class="w250"><b>Chi tiết</b></span>
+                            </p>
+                            <?php
+                            $i=0;
+                            foreach($this->locals as $key=>$val)
+                            {
+                            ?>
+                            <p>
+                                <span class="w180">
+                                    <!--<img src="images/icons/icon_giaidautrongnuoc.gif" title="" alt="" />-->
+                                    <span class="txt_blue"><?php echo $val['name'];?></span>
+                                </span>
+                                <span class="w90"><b><?php echo $this->awardType[$val['award']];?></b></span>
+                                <span class="w90"><b>x<?php echo $val['total'];?></b></span>
+                                <span class="w250"><b><?php echo $val['season'];?></b></span>
+                            </p>
+
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                        <?php
+                        if (count($this->inter) > 0)
+                        {
+                        ?>
+                        <div class="danhhieu_row" id="giai_ngoainuoc">
+                            <p class="top_title_danhhieu">
+                                <span class="w180"><b>Giải quốc tế</b></span>
+                                <span class="w90"><b>Danh hiệu</b></span>
+                                <span class="w90"><b>Số lượng</b></span>
+                                <span class="w250"><b>Chi tiết</b></span>
+                            </p>
+                            <?php
+                            $i=0;
+                            foreach($this->inter as $key=>$val)
+                            {
+                            ?>
+                            <p>
+                                <span class="w180">
+                                    <!--<img src="images/icons/icon_giaidautrongnuoc.gif" title="" alt="" />-->
+                                    <span class="txt_blue"><?php echo $val['name'];?></span>
+                                </span>
+                                <span class="w90"><b><?php echo $this->awardType[$val['award']];?></b></span>
+                                <span class="w90"><b>x<?php echo $val['total'];?></b></span>
+                                <span class="w250"><b><?php echo $val['season'];?></b></span>
+                            </p>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <?php
+            }
+            ?>
+        </div>
+        <div id="col_300" class="right">
+            <?php echo $this->GetBlock('left'); ?>
+        </div>
+    </div>
+</div>
+<div class="banner_980x60">
+    <?php echo $this->GetBlock('footer'); ?>
+</div>
